@@ -1,13 +1,10 @@
+import ColorsList from "@/components/ColorsList";
 import styled from "styled-components";
 
-export default function Home() {
+export default function Home({ colors }) {
   return (
     <main>
-      <Heading>🐋Capstone Whales Template🐋</Heading>
+      <ColorsList colors={colors} />
     </main>
   );
 }
-
-const Heading = styled.h1`
-text-align: center;
-`;
