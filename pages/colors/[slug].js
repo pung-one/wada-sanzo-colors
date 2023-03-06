@@ -13,6 +13,7 @@ export default function ColorPage({ data, error }) {
   const { slug } = router.query;
 
   if (error) return <h1>Failed to load data..</h1>;
+  if (!data) return <h1>Loading...</h1>;
 
   const currentColor = data?.find((color) => color.slug === slug);
 

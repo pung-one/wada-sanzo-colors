@@ -1,4 +1,4 @@
-export default function CopyField({ value, label, onClick }) {
+export default function CopyField({ value, label }) {
   function handleCopy(event) {
     event.preventDefault();
     navigator.clipboard.writeText(value);
