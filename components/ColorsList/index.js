@@ -16,7 +16,7 @@ export default function ColorsList({ colors }) {
       <hr />
       {colors.map(({ slug, hex, name }) => {
         return (
-          <Link key={hex} href={`/colors/${slug}`}>
+          <Link key={hex}>
             <ColorBox hex={hex}>{name}</ColorBox>
           </Link>
         );
