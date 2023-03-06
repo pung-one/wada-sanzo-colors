@@ -20,18 +20,14 @@ export default function ColorPage({ data, error }) {
 
   const { name, hex, cmyk, rgb, lab } = currentColor;
 
-  function handleCopy(text) {
-    navigator.clipboard.writeText(text);
-  }
-
   return (
     <>
       <StyledColorBox hex={hex}>
         <h1>{name}</h1>
-        <CopyField label={"HEX: "} value={hex} onClick={handleCopy} />
-        <CopyField label={"RGB: "} value={rgb} onClick={handleCopy} />
-        <CopyField label={"CMYK: "} value={cmyk} onClick={handleCopy} />
-        <CopyField label={"LAB: "} value={lab} onClick={handleCopy} />
+        <CopyField label={"HEX: "} value={hex} />
+        <CopyField label={"RGB: "} value={rgb} />
+        <CopyField label={"CMYK: "} value={cmyk} />
+        <CopyField label={"LAB: "} value={lab} />
       </StyledColorBox>
       <SpecificPaletteList currentColor={currentColor} colors={data} />
     </>
