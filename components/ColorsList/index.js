@@ -6,6 +6,7 @@ const ColorBox = styled.div`
   margin: 1vh;
   line-height: 15vh;
   color: black;
+  background-color: ${({ hex }) => (hex ? hex : "")};
 `;
 
 export default function ColorsList({ colors }) {
@@ -16,13 +17,7 @@ export default function ColorsList({ colors }) {
       {colors.map(({ slug, hex, name }) => {
         return (
           <Link key={hex} href={`/colors/${slug}`}>
-            <ColorBox
-              style={{
-                backgroundColor: `${hex}`,
-              }}
-            >
-              {name}
-            </ColorBox>
+            <ColorBox hex={hex}>{name}</ColorBox>
           </Link>
         );
       })}
