@@ -14,12 +14,8 @@ export default function ColorsList({ colors }) {
     <>
       <h1>Colors</h1>
       <hr />
-      {colors.map(({ slug, hex, name }) => {
-        return (
-          <Link key={hex}>
-            <ColorBox hex={hex}>{name}</ColorBox>
-          </Link>
-        );
+      {colors.map(({ hex, name }) => {
+        return <ColorBox hex={hex}>{name}</ColorBox>;
       })}
     </>
   );
