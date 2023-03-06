@@ -15,7 +15,11 @@ export default function ColorsList({ colors }) {
       <h1>Colors</h1>
       <hr />
       {colors.map(({ hex, name }) => {
-        return <ColorBox hex={hex}>{name}</ColorBox>;
+        return (
+          <ColorBox key={name} hex={hex}>
+            {name}
+          </ColorBox>
+        );
       })}
     </>
   );
