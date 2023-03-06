@@ -1,12 +1,12 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-const ColorBox = styled.div`
+const ListColorBox = styled.div`
   height: 15vh;
   margin: 1vh;
   line-height: 15vh;
   color: black;
-  background-color: ${({ hex }) => (hex ? hex : "")};
+  background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
 export default function ColorsList({ colors }) {
@@ -17,7 +17,7 @@ export default function ColorsList({ colors }) {
       {colors.map(({ hex, name, slug }) => {
         return (
           <Link key={name} href={`/colors/${slug}`}>
-            <ColorBox hex={hex}>{name}</ColorBox>
+            <ListColorBox hex={hex}>{name}</ListColorBox>
           </Link>
         );
       })}

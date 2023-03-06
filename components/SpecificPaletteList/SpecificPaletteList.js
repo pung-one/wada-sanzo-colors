@@ -10,6 +10,7 @@ const StyledPaletteContainer = styled.div`
 
 const StyledColorBox = styled.div`
   width: 100%;
+  background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
 export default function SpecificPaletteList({ colors, currentColor }) {
@@ -17,23 +18,18 @@ export default function SpecificPaletteList({ colors, currentColor }) {
     <>
       {currentColor?.combinations.map((combi1) => {
         return (
-          <Link key={combi1} href={`/palettes/${combi1}`}>
-            <StyledPaletteContainer>
-              {combi1}
-              {colors.map((color) => {
-                if (color.combinations.some((combi2) => combi1 === combi2)) {
-                  return (
-                    <StyledColorBox
-                      key={color.name}
-                      style={{ backgroundColor: `${color.hex}` }}
-                    >
-                      {color.name}
-                    </StyledColorBox>
-                  );
-                }
-              })}
-            </StyledPaletteContainer>
-          </Link>
+          <StyledPaletteContainer key={combi1}>
+            {combi1}
+            {colors.map((color) => {
+              if (color.combinations.some((combi2) => combi1 === combi2)) {
+                return (
+                  <StyledColorBox key={color.name} hex={color.hex}>
+                    {color.name}
+                  </StyledColorBox>
+                );
+              }
+            })}
+          </StyledPaletteContainer>
         );
       })}
     </>
