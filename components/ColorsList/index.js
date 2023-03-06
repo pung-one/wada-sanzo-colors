@@ -14,11 +14,11 @@ export default function ColorsList({ colors }) {
     <>
       <h1>Colors</h1>
       <hr />
-      {colors.map(({ hex, name }) => {
+      {colors.map(({ hex, name, slug }) => {
         return (
-          <ColorBox key={name} hex={hex}>
-            {name}
-          </ColorBox>
+          <Link key={name} href={`/colors/${slug}`}>
+            <ColorBox hex={hex}>{name}</ColorBox>
+          </Link>
         );
       })}
     </>
