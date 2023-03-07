@@ -1,4 +1,4 @@
-export const colors = [
+const colors = [
   {
     name: "Hermosa Pink",
     combinations: [176, 227, 273],
@@ -1463,3 +1463,10 @@ export const colors = [
     hex: "#111314",
   },
 ];
+
+export const colorsWithSlug = colors.map((color) => {
+  return {
+    ...color,
+    slug: color.name.toLocaleLowerCase().split(" ").join("-"),
+  };
+});
