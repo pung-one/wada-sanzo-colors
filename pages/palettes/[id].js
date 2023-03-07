@@ -2,6 +2,7 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import CopyField from "@/components/CopyField";
+import Link from "next/link";
 
 const PageContainer = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const CopyFieldContainer = styled.div`
   align-self: center;
 `;
 
-const ColorBox = styled.div`
+const ColorBox = styled(Link)`
   display: flex;
   flex-direction: column;
   flex-basis: 100%;
@@ -55,9 +56,9 @@ export default function PalettePage({ data, error }) {
       <Heading>Palette #{id}</Heading>
       <hr />
       <PaletteContainer>
-        {currentPalette?.map(({ name, hex, cmyk, rgb, lab }) => {
+        {currentPalette?.map(({ name, hex, cmyk, rgb, lab, slug }) => {
           return (
-            <ColorBox key={name} hex={hex}>
+            <ColorBox hex={hex} key={name} href={`/colors/${slug}`}>
               <p>{name}</p>
               <CopyFieldContainer>
                 <CopyField label={"HEX: "} value={hex} />
