@@ -34,13 +34,12 @@ export default function PalettesList({ colors, error }) {
     );
     paletteArray.push(palette);
   }
-  console.log(paletteArray[96][1].lab[2]);
 
   return (
     <>
       {paletteArray.map((palette, i) => {
         return (
-          <StyledPaletteContainer>
+          <StyledPaletteContainer key={i}>
             <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
             {palette.map(({ name, hex, lab }) => {
               return (
