@@ -40,23 +40,21 @@ export default function PalettesList({ colors, error }) {
     <>
       {paletteArray.map((palette, i) => {
         return (
-          <Link key={i + 1} href={`/palettes/${i + 1}`}>
-            <StyledPaletteContainer>
-              <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
-              {palette.map(({ name, hex, lab }) => {
-                return (
-                  <StyledColorBox
-                    key={name}
-                    style={{
-                      backgroundColor: `${hex}`,
-                    }}
-                  >
-                    {name}
-                  </StyledColorBox>
-                );
-              })}
-            </StyledPaletteContainer>
-          </Link>
+          <StyledPaletteContainer>
+            <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
+            {palette.map(({ name, hex, lab }) => {
+              return (
+                <StyledColorBox
+                  key={name}
+                  style={{
+                    backgroundColor: `${hex}`,
+                  }}
+                >
+                  {name}
+                </StyledColorBox>
+              );
+            })}
+          </StyledPaletteContainer>
         );
       })}
     </>
