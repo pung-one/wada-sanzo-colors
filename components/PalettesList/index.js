@@ -5,22 +5,23 @@ const StyledPaletteContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: stretch;
   width: 100%;
-  margin-top: 1vh;
+  padding: 1vh;
   height: 25vh;
-  line-height: 25vh;
   color: black;
 `;
 
 const StyledColorBox = styled.div`
-  flex-basis: 100%;
-  text-decoration: none;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledPaletteNumber = styled.div`
-  left: 1vh;
   position: absolute;
+  font-size: 4vh;
+  color: white;
 `;
 
 export default function PalettesList({ colors, error }) {
@@ -49,7 +50,7 @@ export default function PalettesList({ colors, error }) {
                     backgroundColor: `${hex}`,
                   }}
                 >
-                  {name}
+                  <p>{name}</p>
                 </StyledColorBox>
               );
             })}
