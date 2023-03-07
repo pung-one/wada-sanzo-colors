@@ -50,7 +50,6 @@ export default function PalettePage({ data, error }) {
   const paletteArray = CreatePaletteArray(data);
   const currentPalette = paletteArray?.find((arr, i) => i === id - 1);
 
-  console.log(currentPalette);
   return (
     <PageContainer>
       <Heading>Palette #{id}</Heading>
