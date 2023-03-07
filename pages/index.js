@@ -1,13 +1,41 @@
-import ColorsList from "@/components/ColorsList";
+import useLocalStorageState from "use-local-storage-state";
 import styled from "styled-components";
+import ColorsList from "@/components/ColorsList";
+import TabBar from "@/components/TabBar";
+import PalettesList from "@/components/PalettesList";
+
+const ListContainer = styled.div`
+  margin: 2px;
+  border: 2px solid black;
+`;
 
 export default function Home({ error, data }) {
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
+  const [listType, setListType] = useLocalStorageState("listType", {
+    defaultValue: "colors",
+  });
+
+  function handleShowColors() {
+    setListType("colors");
+  }
+
+  function handleShowPalettes() {
+    setListType("palettes");
+  }
 
   return (
     <main>
-      <ColorsList colors={data} />
+      <ListContainer>
+        <TabBar
+          onShowColors={handleShowColors}
+          onShowPalettes={handleShowPalettes}
+          listType={listType}
+        />
+        {listType === "colors" ? (
+          <ColorsList colors={data} error={error} />
+        ) : (
+          <PalettesList colors={data} error={error} />
+        )}
+      </ListContainer>
     </main>
   );
 }
