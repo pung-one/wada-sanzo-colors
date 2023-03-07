@@ -16,7 +16,14 @@ const StyledButton = styled.button`
     props.isActive &&
     css`
       border-bottom: none;
-    `}
+    `};
+  ${(props) =>
+    props.isActive === false &&
+    css`
+      &:hover {
+    cursor: pointer;
+    box-shadow: 1px 1px grey;
+    `};
 `;
 
 export default function TabBar({ onShowColors, onShowPalettes, listType }) {
