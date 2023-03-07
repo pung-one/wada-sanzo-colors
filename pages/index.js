@@ -33,7 +33,7 @@ export default function Home({ error, data }) {
         {listType === "colors" ? (
           <ColorsList colors={data} error={error} />
         ) : (
-          <PalettesList colors={data} error={error} />
+          <PalettesList data={data} error={error} />
         )}
       </ListContainer>
     </main>

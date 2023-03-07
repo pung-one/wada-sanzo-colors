@@ -1,25 +1,33 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-const PaletteContainer = styled.div`
+const StyledPaletteContainer = styled.div`
+  position: relative;
   display: flex;
+  justify-content: center;
   width: 100%;
-  margin-top: 4vh;
+  padding: 0 1vh 0 1vh;
+  margin: 2vh 0 1vh 0;
   height: 25vh;
+  color: black;
 `;
 
-const ColorBox = styled.div`
-  width: 100%;
+const StyledColorBox = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: ${({ hex }) => (hex ? hex : null)};
   color: ${({ hex }) => (hex ? hex : null)};
   &:hover {
-    color: black;
+    color: white;
   }
 `;
 
-const PaletteNumber = styled.div`
+const StyledPaletteNumber = styled.div`
   position: absolute;
-  align-self: center;
+  font-size: 4vh;
+  color: white;
 `;
 
 export default function SpecificPaletteList({ colors, currentColor }) {
@@ -27,18 +35,20 @@ export default function SpecificPaletteList({ colors, currentColor }) {
     <>
       {currentColor?.combinations.map((combi1) => {
         return (
-          <PaletteContainer key={combi1}>
-            <PaletteNumber>{combi1}</PaletteNumber>
-            {colors.map((color) => {
-              if (color.combinations.some((combi2) => combi1 === combi2)) {
-                return (
-                  <ColorBox key={color.name} hex={color.hex}>
-                    {color.name}
-                  </ColorBox>
-                );
-              }
-            })}
-          </PaletteContainer>
+          <Link key={combi1} href={`/palettes/${combi1}`}>
+            <StyledPaletteContainer>
+              <StyledPaletteNumber>{combi1}</StyledPaletteNumber>
+              {colors.map((color) => {
+                if (color.combinations.some((combi2) => combi1 === combi2)) {
+                  return (
+                    <StyledColorBox key={color.name} hex={color.hex}>
+                      {color.name}
+                    </StyledColorBox>
+                  );
+                }
+              })}
+            </StyledPaletteContainer>
+          </Link>
         );
       })}
     </>
