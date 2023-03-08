@@ -6,6 +6,10 @@ const StyledButton = styled.button`
   padding: 5vh;
   width: 60vw;
   box-shadow: 3px 3px grey;
+  font-size: 2vh;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default function Button({ value, setFilter }) {

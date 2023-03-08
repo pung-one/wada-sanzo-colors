@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import Button from "@/components/Button";
 import useLocalStorageState from "use-local-storage-state";
-import ColorPage from "../colors/[slug]";
 import Link from "next/link";
-import PalettePage from "../palettes/[id]";
+import ColorPicker from "@/components/ColorPicker";
 
 const Header = styled.header`
   height: 10vh;
@@ -22,9 +21,12 @@ const ButtonContainer = styled.main`
 
 const StyledLink = styled(Link)`
   background-color: white;
+  color: black;
+  font-size: 2vh;
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
+  box-shadow: 3px 3px grey;
 `;
 
 export default function InspirationPage({ data, error }) {
@@ -51,13 +53,22 @@ export default function InspirationPage({ data, error }) {
             <h1>COLORS</h1>
           </Header>
           <ButtonContainer>
-            <Button value={"Random Color"} setFilter={setFilter} />
-            <Button value={"Random Palette"} setFilter={setFilter} />
             <Button value={"Pick Rainbow Color"} setFilter={setFilter} />
+            <StyledLink href={`/colors/${randomColorSlug}`}>
+              Random Color
+            </StyledLink>
+            <StyledLink href={`/palettes/${randomPaletteId}`}>
+              Random Palette
+            </StyledLink>
+            {/* <Button value={"Random Color"} setFilter={setFilter} />
+            <Button value={"Random Palette"} setFilter={setFilter} /> */}
           </ButtonContainer>
         </>
       )}
-      {filter === "Random Color" && (
+      {filter === "Pick Rainbow Color" && (
+        <ColorPicker data={data} error={error} />
+      )}
+      {/* {filter === "Random Color" && (
         <ColorPage
           data={data}
           error={error}
@@ -70,7 +81,7 @@ export default function InspirationPage({ data, error }) {
           error={error}
           randomId={randomPaletteId}
         ></PalettePage>
-      )}
+      )} */}
     </>
   );
 }
