@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
+import { uid } from "react-uid";
 
 const StyledPaletteContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 1vh;
+  padding: 0 1vh 0 1vh;
+  margin: 2vh 0 1vh 0;
   height: 25vh;
   color: black;
 `;
@@ -16,6 +19,11 @@ const StyledColorBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: ${({ hex }) => (hex ? hex : null)};
+  color: ${({ hex }) => (hex ? hex : null)};
+  &:hover {
+    color: white;
+  }
 `;
 
 const StyledPaletteNumber = styled.div`
@@ -24,37 +32,28 @@ const StyledPaletteNumber = styled.div`
   color: white;
 `;
 
-export default function PalettesList({ colors, error }) {
+export default function PalettesList({ data, error }) {
   if (error) return <h1>Failed to load data..</h1>;
-  if (!colors) return <h1>Loading...</h1>;
+  if (!data) return <h1>Loading...</h1>;
 
-  let paletteArray = [];
-  for (let i = 1; i <= 348; i++) {
-    const palette = colors?.filter((color) =>
-      color.combinations.some((combi) => combi === i)
-    );
-    paletteArray.push(palette);
-  }
+  const paletteArray = CreatePaletteArray(data);
 
   return (
     <>
       {paletteArray.map((palette, i) => {
         return (
-          <StyledPaletteContainer key={i}>
-            <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
-            {palette.map(({ name, hex, lab }) => {
-              return (
-                <StyledColorBox
-                  key={name}
-                  style={{
-                    backgroundColor: `${hex}`,
-                  }}
-                >
-                  <p>{name}</p>
-                </StyledColorBox>
-              );
-            })}
-          </StyledPaletteContainer>
+          <Link key={uid(palette)} href={`/palettes/${i + 1}`}>
+            <StyledPaletteContainer>
+              <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
+              {palette.map(({ name, hex, lab }) => {
+                return (
+                  <StyledColorBox key={name} hex={hex}>
+                    {name}
+                  </StyledColorBox>
+                );
+              })}
+            </StyledPaletteContainer>
+          </Link>
         );
       })}
     </>
