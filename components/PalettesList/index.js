@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
-import { uid } from "react-uid";
+import { uid } from "uid";
 
 const StyledPaletteContainer = styled.div`
   position: relative;
@@ -42,7 +42,7 @@ export default function PalettesList({ data, error }) {
     <>
       {paletteArray.map((palette, i) => {
         return (
-          <Link key={uid(palette)} href={`/palettes/${i + 1}`}>
+          <Link key={uid()} href={`/palettes/${i + 1}`}>
             <StyledPaletteContainer>
               <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
               {palette.map(({ name, hex, lab }) => {
