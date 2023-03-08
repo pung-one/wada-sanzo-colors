@@ -40,15 +40,20 @@ const ColorBox = styled(Link)`
   }
 `;
 
-export default function PalettePage({ data, error }) {
+export default function PalettePage({ data, error, randomId }) {
   const router = useRouter();
   const { id } = router.query;
+  let currentPalette;
 
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
   const paletteArray = CreatePaletteArray(data);
-  const currentPalette = paletteArray?.find((arr, i) => i === id - 1);
+  if (randomId) {
+    currentPalette = paletteArray?.find((arr, i) => i === randomId - 1);
+  } else {
+    currentPalette = paletteArray?.find((arr, i) => i === id - 1);
+  }
 
   return (
     <PageContainer>

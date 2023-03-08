@@ -8,14 +8,21 @@ const StyledColorBox = styled.div`
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
-export default function ColorPage({ data, error }) {
+export default function ColorPage({ data, error, randomSlug }) {
   const router = useRouter();
   const { slug } = router.query;
+  let currentColor;
 
   if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
+  if (!data) return <h1>Loading..</h1>;
 
-  const currentColor = data?.find((color) => color.slug === slug);
+  console.log(randomSlug);
+
+  if (randomSlug) {
+    currentColor = data?.find((color) => color.slug === randomSlug);
+  } else {
+    currentColor = data?.find((color) => color.slug === slug);
+  }
 
   if (!currentColor) return <h1>Loading...</h1>;
 
