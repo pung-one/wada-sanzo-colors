@@ -4,8 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import ColorPicker from "@/components/ColorPicker";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
-import ColorPage from "../colors/[slug]";
-import PalettePage from "../palettes/[id]";
 
 const Header = styled.header`
   height: 10vh;
@@ -25,7 +23,6 @@ const ButtonContainer = styled.main`
 const StyledLink = styled(Link)`
   background-color: white;
   color: black;
-  font-size: 2vh;
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
@@ -40,8 +37,9 @@ export default function InspirationPage({ data, error }) {
 
   const randomColorSlug = data[Math.floor(Math.random() * 159)]?.slug;
   const randomPaletteId = Math.floor(Math.random() * 348);
+
   const paletteArray = CreatePaletteArray(data);
-  console.log(paletteArray);
+
   function CreateRandomPaletteCssGradient() {
     const randomPalette = paletteArray[randomPaletteId];
     if (randomPalette.length === 2) {
@@ -56,7 +54,6 @@ export default function InspirationPage({ data, error }) {
     }
   }
   const randomGradient = CreateRandomPaletteCssGradient();
-  console.log(randomGradient);
 
   return (
     <>
