@@ -5,11 +5,6 @@ import Link from "next/link";
 import ColorPicker from "@/components/ColorPicker";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
-const Header = styled.header`
-  height: 10vh;
-  line-height: 10vh;
-`;
-
 const ButtonContainer = styled.main`
   display: flex;
   flex-direction: column;

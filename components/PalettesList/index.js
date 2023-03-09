@@ -10,9 +10,6 @@ const StyledPaletteContainer = styled.div`
   padding: 0 1vh 0 1vh;
   margin: 2vh 0 1vh 0;
   height: 25vh;
-  &:hover {
-    color: white;
-  }
 `;
 
 const StyledColorBox = styled.div`
