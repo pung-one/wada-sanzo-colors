@@ -10,5 +10,6 @@ export default createGlobalStyle`
     font-family: system-ui;
     font-size: 2vh;
     text-align: center;
+    color: black;
   }
 `;

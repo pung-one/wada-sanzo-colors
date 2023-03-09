@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import Button from "@/components/Button";
-import { useState } from "react";
 import Link from "next/link";
 import ColorPicker from "@/components/ColorPicker";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
@@ -15,18 +13,31 @@ const ButtonContainer = styled.main`
   background: ${({ background }) => (background ? background : null)};
 `;
 
+const StyledButton = styled.button`
+  background-color: white;
+  border: 1px solid black;
+  padding: 5vh;
+  width: 60vw;
+  box-shadow: 3px 3px grey;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const StyledLink = styled(Link)`
   background-color: white;
-  color: black;
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
   box-shadow: 3px 3px grey;
 `;
 
-export default function InspirationPage({ data, error }) {
-  const [filter, setFilter] = useState("new");
-
+export default function InspirationPage({
+  data,
+  error,
+  pickerFilter,
+  setPickerFilter,
+}) {
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading Data...</h1>;
 
@@ -52,14 +63,11 @@ export default function InspirationPage({ data, error }) {
 
   return (
     <>
-      {filter === "Pick Rainbow Color" && (
-        <button type="button" onClick={() => setFilter("new")}>
-          back
-        </button>
-      )}
-      {filter === "new" && (
+      {pickerFilter === "new" && (
         <ButtonContainer background={randomGradient}>
-          <Button value={"Pick Rainbow Color"} setFilter={setFilter} />
+          <StyledButton onClick={() => setPickerFilter("Pick Rainbow Color")}>
+            Pick Rainbow Color
+          </StyledButton>
           <StyledLink href={`/colors/${randomColorSlug}`}>
             Random Color
           </StyledLink>
@@ -68,7 +76,7 @@ export default function InspirationPage({ data, error }) {
           </StyledLink>
         </ButtonContainer>
       )}
-      {filter === "Pick Rainbow Color" && (
+      {pickerFilter === "Pick Rainbow Color" && (
         <ColorPicker data={data} error={error} />
       )}
     </>

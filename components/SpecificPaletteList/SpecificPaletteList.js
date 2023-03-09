@@ -1,6 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+`;
+
 const StyledPaletteContainer = styled.div`
   position: relative;
   display: flex;
@@ -8,7 +14,6 @@ const StyledPaletteContainer = styled.div`
   padding: 0 1vh 0 1vh;
   margin: 2vh 0 1vh 0;
   height: 25vh;
-  color: black;
 `;
 
 const StyledColorBox = styled.div`
@@ -28,7 +33,7 @@ const StyledPaletteNumber = styled.div`
 
 export default function SpecificPaletteList({ colors, currentColor }) {
   return (
-    <>
+    <Container>
       {currentColor?.combinations.map((combi1) => {
         return (
           <Link key={combi1} href={`/palettes/${combi1}`}>
@@ -43,6 +48,6 @@ export default function SpecificPaletteList({ colors, currentColor }) {
           </Link>
         );
       })}
-    </>
+    </Container>
   );
 }

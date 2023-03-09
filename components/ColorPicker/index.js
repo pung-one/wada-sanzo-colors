@@ -28,7 +28,6 @@ const ResultContainer = styled.div`
 
 const StyledLink = styled(Link)`
   background-color: ${({ hex }) => (hex ? hex : "white")};
-  color: black;
   font-size: 2vh;
   border: 1px solid black;
   padding: 5vh;

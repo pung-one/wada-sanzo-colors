@@ -5,7 +5,6 @@ const ListColorBox = styled.div`
   height: 25vh;
   margin: 1vh;
   line-height: 25vh;
-  color: black;
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 

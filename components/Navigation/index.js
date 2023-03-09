@@ -18,15 +18,19 @@ const StyledLink = styled(Link)`
   border: 1px solid black;
   width: 28vw;
   padding: 2vh;
-  color: black;
 `;
 
-export default function Layout({ children }) {
+export default function Layout({ children, setPickerFilter }) {
   return (
     <>
       {children}
       <StyledFooter>
-        <StyledLink href={"/inspiration"}>Inspiration</StyledLink>
+        <StyledLink
+          href={"/inspiration"}
+          onClick={() => setPickerFilter("new")}
+        >
+          Inspiration
+        </StyledLink>
         <StyledLink href={"/"}>Lists</StyledLink>
       </StyledFooter>
     </>
