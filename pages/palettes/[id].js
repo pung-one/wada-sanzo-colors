@@ -7,7 +7,7 @@ import Link from "next/link";
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 89vh;
 `;
 
 const Heading = styled.h1`
@@ -17,6 +17,8 @@ const Heading = styled.h1`
 
 const PaletteContainer = styled.div`
   display: flex;
+  flex-direction: ${({ length }) => (length > 2 ? "column" : null)};
+
   height: 100%;
 `;
 
@@ -59,7 +61,7 @@ export default function PalettePage({ data, error, randomId }) {
     <PageContainer>
       <Heading>Palette #{id}</Heading>
       <hr />
-      <PaletteContainer>
+      <PaletteContainer length={currentPalette.length}>
         {currentPalette?.map(({ name, hex, cmyk, rgb, lab, slug }) => {
           return (
             <ColorBox hex={hex} key={name} href={`/colors/${slug}`}>

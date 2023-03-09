@@ -4,7 +4,6 @@ import Link from "next/link";
 const StyledPaletteContainer = styled.div`
   position: relative;
   display: flex;
-  justify-content: center;
   width: 100%;
   padding: 0 1vh 0 1vh;
   margin: 2vh 0 1vh 0;
@@ -18,15 +17,12 @@ const StyledColorBox = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ hex }) => (hex ? hex : null)};
-  color: ${({ hex }) => (hex ? hex : null)};
-  &:hover {
-    color: white;
-  }
 `;
 
 const StyledPaletteNumber = styled.div`
   position: absolute;
-  font-size: 4vh;
+  font-size: 2vh;
+  padding: 2vh;
   color: white;
 `;
 
@@ -40,11 +36,7 @@ export default function SpecificPaletteList({ colors, currentColor }) {
               <StyledPaletteNumber>{combi1}</StyledPaletteNumber>
               {colors.map((color) => {
                 if (color.combinations.some((combi2) => combi1 === combi2)) {
-                  return (
-                    <StyledColorBox key={color.name} hex={color.hex}>
-                      {color.name}
-                    </StyledColorBox>
-                  );
+                  return <StyledColorBox key={color.name} hex={color.hex} />;
                 }
               })}
             </StyledPaletteContainer>

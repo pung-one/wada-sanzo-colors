@@ -6,7 +6,6 @@ import PalettesList from "@/components/PalettesList";
 
 const ListContainer = styled.div`
   margin: 2px;
-  border: 2px solid black;
 `;
 
 export default function Home({ error, data }) {

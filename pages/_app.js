@@ -1,6 +1,7 @@
 import GlobalStyle from "@/styles";
 import Head from "next/head";
 import useSWR from "swr";
+import Layout from "@/components/Navigation";
 
 const fetcher = (URL) => fetch(URL).then((response) => response.json());
 
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Colors</title>
       </Head>
-      <Component {...pageProps} data={data} error={error} />
+      <Layout>
+        <Component {...pageProps} data={data} error={error} />
+      </Layout>
     </>
   );
 }

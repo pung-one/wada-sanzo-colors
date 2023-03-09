@@ -8,6 +8,7 @@ export default createGlobalStyle`
     text-decoration: none;
     margin: 0;
     font-family: system-ui;
+    font-size: 2vh;
     text-align: center;
   }
 `;
