@@ -1060,7 +1060,7 @@ const colors = [
     hex: "#96d1aa",
   },
   {
-    name: "Calamine BLue",
+    name: "Calamine Blue",
     combinations: [20, 41, 65, 159, 176, 255, 261, 287, 291, 300],
     swatch: 3,
     cmyk: [50, 0, 20, 0],
