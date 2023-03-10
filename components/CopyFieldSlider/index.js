@@ -32,6 +32,11 @@ const StyledButton = styled.button`
   position: absolute;
   background: none;
   border: none;
+  transform: ${({ isActive, isLeftBox }) =>
+    isActive || isLeftBox ? "rotate(180deg)" : ""};
+  transform: ${({ isLeftBox, isActive }) =>
+    isLeftBox && isActive ? "rotate(360deg)" : ""};
+  transition: transform 0.3s;
   ${(props) =>
     props.isLeftBox
       ? css`
@@ -45,11 +50,6 @@ const StyledButton = styled.button`
 
 const Arrow = styled(SlArrowLeft)`
   font-size: 3vh;
-  transform: ${({ isActive, isLeftBox }) =>
-    isActive || isLeftBox ? "rotate(180deg)" : ""};
-  transform: ${({ isLeftBox, isActive }) =>
-    isLeftBox && isActive ? "rotate(360deg)" : ""};
-  transition: transform 0.3s;
 `;
 
 export default function CopyFieldSlider({
@@ -62,26 +62,29 @@ export default function CopyFieldSlider({
 }) {
   const { slug, name, hex, rgb, cmyk, lab } = color;
   return (
-    <CopyFieldContainer
-      isLarge={isLargePalette}
-      isLeftBox={!isLargePalette && index === 0}
-      isActive={isActive}
-    >
-      <StyledButton
-        onClick={() => handleSlide(index)}
+    <>
+      <CopyFieldContainer
+        isLarge={isLargePalette}
         isLeftBox={!isLargePalette && index === 0}
+        isActive={isActive ? true : undefined}
       >
-        <Arrow isLeftBox={!isLargePalette && index === 0} isActive={isActive} />
-      </StyledButton>
-      {needColorName && (
-        <Link href={`/colors/${slug}`}>
-          <h2>{name}</h2>
-        </Link>
-      )}
-      <CopyField label={"HEX"} value={hex} isLarge={isLargePalette} />
-      <CopyField label={"RGB"} value={rgb} isLarge={isLargePalette} />
-      <CopyField label={"CMYK"} value={cmyk} isLarge={isLargePalette} />
-      <CopyField label={"LAB"} value={lab} isLarge={isLargePalette} />
-    </CopyFieldContainer>
+        <StyledButton
+          onClick={() => handleSlide(index)}
+          isLeftBox={!isLargePalette && index === 0}
+          isActive={isActive}
+        >
+          <Arrow />
+        </StyledButton>
+        {needColorName && (
+          <Link href={`/colors/${slug}`}>
+            <h2>{name}</h2>
+          </Link>
+        )}
+        <CopyField label={"HEX"} value={hex} isLarge={isLargePalette} />
+        <CopyField label={"RGB"} value={rgb} isLarge={isLargePalette} />
+        <CopyField label={"CMYK"} value={cmyk} isLarge={isLargePalette} />
+        <CopyField label={"LAB"} value={lab} isLarge={isLargePalette} />
+      </CopyFieldContainer>
+    </>
   );
 }
