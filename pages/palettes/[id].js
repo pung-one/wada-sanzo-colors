@@ -32,9 +32,9 @@ const ColorBox = styled.div`
 `;
 
 export default function PalettePage({ data, error, randomId }) {
+  const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
   const { id } = router.query;
-  const [activeIndex, setActiveIndex] = useState(-1);
 
   let currentPalette;
 

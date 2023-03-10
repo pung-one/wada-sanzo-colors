@@ -22,9 +22,9 @@ const StyledColorBox = styled.div`
 `;
 
 export default function ColorPage({ data, error }) {
+  const [isActive, setIsActive] = useState(false);
   const router = useRouter();
   const { slug } = router.query;
-  const [isActive, setIsActive] = useState(false);
 
   let currentColor;
 
