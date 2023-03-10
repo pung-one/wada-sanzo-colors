@@ -32,7 +32,7 @@ export default function PalettesList({ data, error }) {
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
-  const [paletteArray, setPaletteArray] = useState(CreatePaletteArray(data));
+  const paletteArray = CreatePaletteArray(data);
 
   return (
     <>
