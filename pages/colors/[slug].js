@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import SpecificPaletteList from "@/components/SpecificPaletteList/SpecificPaletteList";
-import CopyField from "@/components/CopyField";
+import CopyFieldSlider from "@/components/CopyFieldSlider";
+import { useState } from "react";
 
 const PageContainer = styled.div`
   display: flex;
@@ -10,13 +11,21 @@ const PageContainer = styled.div`
 `;
 
 const StyledColorBox = styled.div`
-  height: 25vh;
+  height: 30vh;
+  display: flex;
+  padding: 3vh;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  overflow-x: hidden;
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
 export default function ColorPage({ data, error }) {
   const router = useRouter();
   const { slug } = router.query;
+  const [isActive, setIsActive] = useState(false);
+
   let currentColor;
 
   if (error) return <h1>Failed to load data..</h1>;
@@ -26,16 +35,23 @@ export default function ColorPage({ data, error }) {
 
   if (!currentColor) return <h1>Loading...</h1>;
 
-  const { name, hex, cmyk, rgb, lab } = currentColor;
+  const { name, hex } = currentColor;
+
+  function handleSlide() {
+    setIsActive(!isActive);
+  }
 
   return (
     <PageContainer>
       <StyledColorBox hex={hex}>
         <h1>{name}</h1>
-        <CopyField label={"HEX: "} value={hex} />
-        <CopyField label={"RGB: "} value={rgb} />
-        <CopyField label={"CMYK: "} value={cmyk} />
-        <CopyField label={"LAB: "} value={lab} />
+        <CopyFieldSlider
+          color={currentColor}
+          isLargePalette={true}
+          isActive={isActive}
+          handleSlide={handleSlide}
+          needColorName={false}
+        />
       </StyledColorBox>
       <SpecificPaletteList currentColor={currentColor} colors={data} />
     </PageContainer>

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import { uid } from "uid";
+import { useState } from "react";
 
 const StyledPaletteContainer = styled.div`
   position: relative;
@@ -31,7 +32,7 @@ export default function PalettesList({ data, error }) {
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
-  const paletteArray = CreatePaletteArray(data);
+  const [paletteArray, setPaletteArray] = useState(CreatePaletteArray(data));
 
   return (
     <>
