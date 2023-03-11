@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-const TabContainer = styled.div`
+const TabContainer = styled.nav`
   display: flex;
   justify-content: center;
   height: 10vh;

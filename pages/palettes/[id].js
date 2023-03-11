@@ -4,18 +4,18 @@ import styled from "styled-components";
 import { useState } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 
-const PageContainer = styled.div`
+const PageContainer = styled.body`
   display: flex;
   flex-direction: column;
   height: 89vh;
 `;
 
-const Heading = styled.h1`
+const Heading = styled.header`
   width: 100%;
   padding: 3vh;
 `;
 
-const PaletteContainer = styled.div`
+const PaletteContainer = styled.main`
   display: flex;
   flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
   height: 100%;
@@ -53,7 +53,9 @@ export default function PalettePage({ data, error, randomId }) {
 
   return (
     <PageContainer>
-      <Heading>Palette #{id}</Heading>
+      <Heading>
+        <h1>Palette #{id}</h1>
+      </Heading>
       <hr />
       <PaletteContainer isLarge={isLargePalette}>
         {currentPalette?.map((color, index) => {

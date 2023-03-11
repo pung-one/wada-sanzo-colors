@@ -17,7 +17,7 @@ const ColorInput = styled.input`
   background-color: white;
 `;
 
-const ResultContainer = styled.div`
+const ResultContainer = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;

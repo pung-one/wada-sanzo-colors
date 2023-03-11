@@ -1,7 +1,12 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-const ListColorBox = styled.div`
+const List = styled.ul`
+  padding: 0;
+  list-style-type: 0;
+`;
+
+const ColorBox = styled.li`
   height: 25vh;
   margin: 1vh;
   line-height: 25vh;
@@ -13,14 +18,14 @@ export default function ColorsList({ colors, error }) {
   if (!colors) return <h1>Loading...</h1>;
 
   return (
-    <>
+    <List>
       {colors.map(({ hex, name, slug }) => {
         return (
           <Link key={name} href={`/colors/${slug}`}>
-            <ListColorBox hex={hex}>{name}</ListColorBox>
+            <ColorBox hex={hex}>{name}</ColorBox>
           </Link>
         );
       })}
-    </>
+    </List>
   );
 }

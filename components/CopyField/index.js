@@ -7,13 +7,13 @@ const StyledForm = styled.form`
 `;
 
 const StyledInput = styled.input`
-  max-width: 24vw;
+  max-width: 26vw;
 `;
 
 const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
-  width: 24vw;
+  width: 26vw;
   box-shadow: 1px 1px 2px grey;
   &:active {
     box-shadow: none;

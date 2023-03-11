@@ -4,13 +4,13 @@ import SpecificPaletteList from "@/components/SpecificPaletteList/SpecificPalett
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 import { useState } from "react";
 
-const PageContainer = styled.div`
+const PageContainer = styled.body`
   display: flex;
   flex-direction: column;
-  height: 89vh;
+  margin-bottom: 11vh;
 `;
 
-const StyledColorBox = styled.div`
+const StyledColorBox = styled.header`
   height: 30vh;
   display: flex;
   padding: 3vh;

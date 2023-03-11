@@ -3,7 +3,7 @@ import { SlArrowLeft } from "react-icons/sl";
 import Link from "next/link";
 import styled, { css } from "styled-components";
 
-const CopyFieldContainer = styled.div`
+const CopyFieldContainer = styled.aside`
   position: relative;
   align-self: center;
   display: flex;
@@ -13,18 +13,18 @@ const CopyFieldContainer = styled.div`
   width: 100%;
   height: ${({ isLarge }) => (isLarge ? "100%" : "70%")};
   width: ${({ isLarge }) => (isLarge ? "85%" : "100%")};
-  transform: ${({ isActive }) => (isActive ? "translate(-83%)" : "")};
+  transform: ${({ isActive }) => (isActive ? "translate(-85%)" : "")};
   transform: ${({ isActive, isLeftBox }) =>
-    isActive && isLeftBox ? "translate(83%)" : ""};
+    isActive && isLeftBox ? "translate(85%)" : ""};
   transition: transform 0.3s;
   ${(props) =>
     props.isLeftBox
       ? css`
-          left: -83%;
+          left: -86%;
           }
         `
       : css`
-          right: -83%;
+          right: -86%;
         `}
 `;
 
