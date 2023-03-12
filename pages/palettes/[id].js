@@ -1,77 +1,76 @@
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import CopyField from "@/components/CopyField";
-import Link from "next/link";
+import { useState } from "react";
+import CopyFieldSlider from "@/components/CopyFieldSlider";
 
-const PageContainer = styled.div`
+const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
   height: 89vh;
+  margin-bottom: 11vh;
 `;
 
-const Heading = styled.h1`
+const Heading = styled.header`
   width: 100%;
   padding: 3vh;
+  border-bottom: 1px solid black;
 `;
 
 const PaletteContainer = styled.div`
   display: flex;
-  flex-direction: ${({ length }) => (length > 2 ? "column" : null)};
-
-  height: 100%;
+  flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
+  flex-grow: 1;
+  overflow-x: hidden;
 `;
 
-const CopyFieldContainer = styled.div`
-  visibility: hidden;
-  align-self: center;
-`;
-
-const ColorBox = styled(Link)`
+const ColorBox = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   flex-basis: 100%;
-  padding-top: 4vh;
+  padding: 1% 0 1%;
   background-color: ${({ hex }) => (hex ? hex : null)};
   color: ${({ hex }) => (hex ? hex : null)};
-  &:hover {
-    color: white;
-  }
-  &:hover ${CopyFieldContainer} {
-    visibility: visible;
-  }
 `;
 
 export default function PalettePage({ data, error, randomId }) {
+  const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
   const { id } = router.query;
+
   let currentPalette;
 
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
   const paletteArray = CreatePaletteArray(data);
-  if (randomId) {
-    currentPalette = paletteArray?.find((arr, i) => i === randomId - 1);
-  } else {
-    currentPalette = paletteArray?.find((arr, i) => i === id - 1);
-  }
+
+  currentPalette = paletteArray?.find((arr, i) => i === id - 1);
+
+  const isLargePalette = currentPalette?.length > 2;
+
+  const handleSlide = (index) => {
+    setActiveIndex(index === activeIndex ? -1 : index);
+  };
 
   return (
     <PageContainer>
-      <Heading>Palette #{id}</Heading>
-      <hr />
-      <PaletteContainer length={currentPalette.length}>
-        {currentPalette?.map(({ name, hex, cmyk, rgb, lab, slug }) => {
+      <Heading>
+        <h1>Palette #{id}</h1>
+      </Heading>
+      <PaletteContainer isLarge={isLargePalette}>
+        {currentPalette?.map((color, index) => {
           return (
-            <ColorBox hex={hex} key={name} href={`/colors/${slug}`}>
-              <p>{name}</p>
-              <CopyFieldContainer>
-                <CopyField label={"HEX: "} value={hex} />
-                <CopyField label={"RGB: "} value={rgb} />
-                <CopyField label={"CMYK: "} value={cmyk} />
-                <CopyField label={"LAB: "} value={lab} />
-              </CopyFieldContainer>
+            <ColorBox hex={color.hex} key={color.name}>
+              <CopyFieldSlider
+                isLargePalette={isLargePalette}
+                color={color}
+                index={index}
+                handleSlide={handleSlide}
+                isActive={index === activeIndex}
+                needColorName={true}
+              />
             </ColorBox>
           );
         })}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-const StyledFooter = styled.footer`
+const StyledFooter = styled.nav`
   position: fixed;
   display: flex;
   justify-content: space-around;

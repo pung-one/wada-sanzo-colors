@@ -1,19 +1,18 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 20vh;
+const List = styled.ul`
+  padding: 0;
+  list-style: none;
+  list-style-type: 0;
 `;
 
-const StyledPaletteContainer = styled.div`
+const StyledPaletteContainer = styled.li`
   position: relative;
   display: flex;
   width: 100%;
-  padding: 0 1vh 0 1vh;
-  margin: 2vh 0 1vh 0;
-  height: 25vh;
+  margin-top: 2vh;
+  height: 20vh;
 `;
 
 const StyledColorBox = styled.div`
@@ -24,7 +23,7 @@ const StyledColorBox = styled.div`
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
-const StyledPaletteNumber = styled.div`
+const StyledPaletteNumber = styled.span`
   position: absolute;
   font-size: 2vh;
   padding: 2vh;
@@ -33,7 +32,7 @@ const StyledPaletteNumber = styled.div`
 
 export default function SpecificPaletteList({ colors, currentColor }) {
   return (
-    <Container>
+    <List>
       {currentColor?.combinations.map((combi1) => {
         return (
           <Link key={combi1} href={`/palettes/${combi1}`}>
@@ -48,6 +47,6 @@ export default function SpecificPaletteList({ colors, currentColor }) {
           </Link>
         );
       })}
-    </Container>
+    </List>
   );
 }

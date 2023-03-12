@@ -12,4 +12,11 @@ export default createGlobalStyle`
     text-align: center;
     color: black;
   }
+  h1 {
+    font-size: 4vh;
+  }
+  h2 {
+    text-decoration: underline;
+    font-size: 2.5vh;
+  }
 `;

@@ -3,12 +3,16 @@ import Link from "next/link";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import { uid } from "uid";
 
-const StyledPaletteContainer = styled.div`
+const List = styled.ul`
+  padding: 0;
+  list-style-type: 0;
+`;
+
+const StyledPaletteContainer = styled.li`
   position: relative;
   display: flex;
   width: 100%;
-  padding: 0 1vh 0 1vh;
-  margin: 2vh 0 1vh 0;
+  margin-top: 2vh;
   height: 25vh;
 `;
 
@@ -20,7 +24,7 @@ const StyledColorBox = styled.div`
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
-const StyledPaletteNumber = styled.div`
+const StyledPaletteNumber = styled.span`
   position: absolute;
   font-size: 2vh;
   padding: 2vh;
@@ -34,19 +38,19 @@ export default function PalettesList({ data, error }) {
   const paletteArray = CreatePaletteArray(data);
 
   return (
-    <>
+    <List>
       {paletteArray.map((palette, i) => {
         return (
           <Link key={uid()} href={`/palettes/${i + 1}`}>
             <StyledPaletteContainer length={palette.length}>
               <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
-              {palette.map(({ name, hex, lab }) => {
+              {palette.map(({ name, hex }) => {
                 return <StyledColorBox key={name} hex={hex} />;
               })}
             </StyledPaletteContainer>
           </Link>
         );
       })}
-    </>
+    </List>
   );
 }

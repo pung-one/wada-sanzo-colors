@@ -2,37 +2,49 @@ import styled from "styled-components";
 import chroma from "chroma-js";
 import { useState } from "react";
 import Link from "next/link";
+import { IsColorBright } from "@/utils/IsColorBright";
 
 const StyledForm = styled.form`
   padding-top: 4vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2vh;
+  gap: 3vh;
 `;
 
 const ColorInput = styled.input`
-  width: 20vw;
-  height: 10vh;
+  width: 60vw;
+  height: 20vh;
   background-color: white;
+  box-shadow: 0 2px 5px black;
 `;
 
-const ResultContainer = styled.div`
+const StyledButton = styled.button`
+  background-color: white;
+  border: 1px solid black;
+  padding: 3vh;
+  width: 40vw;
+  box-shadow: 0 2px 5px black;
+`;
+
+const ResultContainer = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 4vh;
+  margin-top: 3vh;
   gap: 4vh;
 `;
 
 const StyledLink = styled(Link)`
   background-color: ${({ hex }) => (hex ? hex : "white")};
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
   font-size: 2vh;
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
-  box-shadow: 3px 3px grey;
+  box-shadow: 0 2px 5px black;
 `;
 
 export default function ColorPicker({ data, error }) {
@@ -59,16 +71,19 @@ export default function ColorPicker({ data, error }) {
   return (
     <>
       <StyledForm onSubmit={handleCompare}>
-        <label htmlFor="color">Pick a Color</label>
+        <label htmlFor="color">
+          <h1>Pick a Color</h1>
+        </label>
         <ColorInput id="color" type="color" />
-        <button type="submit">Find from list</button>
+        <StyledButton type="submit">Find from list</StyledButton>
       </StyledForm>
       {closestColor && (
         <ResultContainer>
-          <h2>This is the most similar color from list:</h2>
+          <p>This is the most similar color from list:</p>
           <StyledLink
             href={`/colors/${closestColor?.slug}`}
             hex={closestColor?.hex}
+            isBright={IsColorBright(closestColor?.rgb) > 130}
           >
             {closestColor?.name}
           </StyledLink>
