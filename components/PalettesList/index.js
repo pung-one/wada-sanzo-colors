@@ -12,8 +12,7 @@ const StyledPaletteContainer = styled.li`
   position: relative;
   display: flex;
   width: 100%;
-  padding: 0 1vh 0 1vh;
-  margin: 2vh 0 1vh 0;
+  margin-top: 2vh;
   height: 25vh;
 `;
 

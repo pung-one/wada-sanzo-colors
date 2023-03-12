@@ -3,27 +3,15 @@ import styled, { css } from "styled-components";
 const TabContainer = styled.nav`
   display: flex;
   justify-content: center;
-  height: 10vh;
-  margin-bottom: none;
+  height: 12vh;
 `;
 
 const StyledButton = styled.button`
   background-color: white;
   width: 100%;
   border: 1px solid black;
-  margin: 1px;
-  ${(props) =>
-    props.isActive &&
-    css`
-      border-bottom: none;
-    `};
-  ${(props) =>
-    props.isActive === false &&
-    css`
-      &:hover {
-    cursor: pointer;
-    box-shadow: 1px 1px grey;
-    `};
+  margin: 2vw 1vw 0 1vw;
+  box-shadow: ${({ isActive }) => (isActive ? null : "0 2px 5px grey")};
 `;
 
 export default function TabBar({ onShowColors, onShowPalettes, listType }) {

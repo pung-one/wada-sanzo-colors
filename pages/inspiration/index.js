@@ -18,7 +18,7 @@ const StyledButton = styled.button`
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
-  box-shadow: 3px 3px grey;
+  box-shadow: 0 2px 5px black;
   &:hover {
     cursor: pointer;
   }
@@ -29,7 +29,7 @@ const StyledLink = styled(Link)`
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
-  box-shadow: 3px 3px grey;
+  box-shadow: 0 2px 5px black;
 `;
 
 export default function InspirationPage({

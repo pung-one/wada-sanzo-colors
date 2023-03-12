@@ -17,5 +17,6 @@ export default createGlobalStyle`
   }
   h2 {
     text-decoration: underline;
+    font-size: 2.5vh;
   }
 `;

@@ -29,7 +29,9 @@ export default function CopyField({ value, label, isLarge }) {
   return (
     <StyledForm isLarge={isLarge} onSubmit={(event) => handleCopy(event)}>
       <StyledInput name="copyfield" readOnly={true} value={value} />
-      <StyledButton type="submit">copy {label}</StyledButton>
+      <StyledButton aria-label="copy color-code" type="submit">
+        copy {label}
+      </StyledButton>
     </StyledForm>
   );
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 const List = styled.ul`
   padding: 0;
+  list-style: none;
   list-style-type: 0;
 `;
 
@@ -10,9 +11,8 @@ const StyledPaletteContainer = styled.li`
   position: relative;
   display: flex;
   width: 100%;
-  padding: 0 1vh 0 1vh;
-  margin: 2vh 0 1vh 0;
-  height: 25vh;
+  margin-top: 2vh;
+  height: 20vh;
 `;
 
 const StyledColorBox = styled.div`
