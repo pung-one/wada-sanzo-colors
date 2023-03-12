@@ -8,6 +8,7 @@ const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
   height: 89vh;
+  margin-bottom: 11vh;
 `;
 
 const Heading = styled.header`
