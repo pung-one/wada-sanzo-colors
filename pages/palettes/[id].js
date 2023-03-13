@@ -3,8 +3,10 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const PageContainer = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 89vh;
@@ -12,15 +14,17 @@ const PageContainer = styled.main`
 `;
 
 const Heading = styled.header`
+  position: relative;
   width: 100%;
   padding: 3vh;
+  height: 11vh;
   border-bottom: 1px solid black;
 `;
 
 const PaletteContainer = styled.div`
   display: flex;
+  height: 78vh;
   flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
-  flex-grow: 1;
   overflow-x: hidden;
 `;
 
@@ -57,6 +61,11 @@ export default function PalettePage({ data, error, randomId }) {
   return (
     <PageContainer>
       <Heading>
+        <FavoriteButton
+          isFavorite={false}
+          isBright={true}
+          isOnDetailPalette={true}
+        />
         <h1>Palette #{id}</h1>
       </Heading>
       <PaletteContainer isLarge={isLargePalette}>

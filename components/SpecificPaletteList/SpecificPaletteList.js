@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
+import FavoriteButton from "../FavoriteButton";
 
 const List = styled.ul`
   padding: 0;
@@ -12,7 +13,7 @@ const StyledPaletteContainer = styled.li`
   display: flex;
   width: 100%;
   margin-top: 2vh;
-  height: 20vh;
+  height: 25vh;
 `;
 
 const StyledColorBox = styled.div`
@@ -37,6 +38,7 @@ export default function SpecificPaletteList({ colors, currentColor }) {
         return (
           <Link key={combi1} href={`/palettes/${combi1}`}>
             <StyledPaletteContainer>
+              <FavoriteButton isFavorite={false} isOnListElement={true} />
               <StyledPaletteNumber>{combi1}</StyledPaletteNumber>
               {colors.map((color) => {
                 if (color.combinations.some((combi2) => combi1 === combi2)) {

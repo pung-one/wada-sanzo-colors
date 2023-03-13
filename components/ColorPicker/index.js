@@ -39,12 +39,15 @@ const ResultContainer = styled.main`
 
 const StyledLink = styled(Link)`
   background-color: ${({ hex }) => (hex ? hex : "white")};
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
   font-size: 2vh;
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
   box-shadow: 0 2px 5px black;
+`;
+
+const ColorName = styled.p`
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
 
 export default function ColorPicker({ data, error }) {
@@ -83,9 +86,10 @@ export default function ColorPicker({ data, error }) {
           <StyledLink
             href={`/colors/${closestColor?.slug}`}
             hex={closestColor?.hex}
-            isBright={IsColorBright(closestColor?.rgb) > 130}
           >
-            {closestColor?.name}
+            <ColorName isBright={IsColorBright(closestColor?.rgb)}>
+              {closestColor?.name}
+            </ColorName>
           </StyledLink>
         </ResultContainer>
       )}
