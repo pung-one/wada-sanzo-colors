@@ -32,7 +32,6 @@ export default function ColorsList({
   if (error) return <h1>Failed to load data..</h1>;
   if (!colors) return <h1>Loading...</h1>;
 
-  /* console.log(favoriteColors); */
   return (
     <List>
       {colors.map(({ name, slug, rgb, hex }) => {

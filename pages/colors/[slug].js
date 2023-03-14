@@ -31,8 +31,10 @@ const StyledHeadline = styled.h1`
 export default function ColorPage({
   data,
   error,
-  onToggleFavorite,
+  onToggleFavoriteColor,
   favoriteColors,
+  onToggleFavoritePalette,
+  favoritePalettes,
 }) {
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
@@ -60,10 +62,10 @@ export default function ColorPage({
       <StyledColorBox hex={hex}>
         <FavoriteButton
           isBright={IsColorBright(rgb)}
-          isFavorite={favoriteStatus.isFavorite}
+          isFavorite={favoriteStatus?.isFavorite}
           isOnDetailColor={true}
-          name={name}
-          onToggleFavorite={onToggleFavorite}
+          toggleValue={name}
+          onToggleFavorite={onToggleFavoriteColor}
         />
         <StyledHeadline isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
         <CopyFieldSlider
@@ -74,7 +76,12 @@ export default function ColorPage({
           needColorName={false}
         />
       </StyledColorBox>
-      <SpecificPaletteList currentColor={currentColor} colors={data} />
+      <SpecificPaletteList
+        currentColor={currentColor}
+        colors={data}
+        favoritePalettes={favoritePalettes}
+        onToggleFavoritePalette={onToggleFavoritePalette}
+      />
     </PageContainer>
   );
 }

@@ -38,7 +38,12 @@ const ColorBox = styled.div`
   color: ${({ hex }) => (hex ? hex : null)};
 `;
 
-export default function PalettePage({ data, error, randomId }) {
+export default function PalettePage({
+  data,
+  error,
+  favoritePalettes,
+  onToggleFavoritePalette,
+}) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
   const { id } = router.query;
@@ -58,13 +63,17 @@ export default function PalettePage({ data, error, randomId }) {
     setActiveIndex(index === activeIndex ? -1 : index);
   };
 
+  const favoriteStatus = favoritePalettes?.find((palette) => palette.id === id);
+
   return (
     <PageContainer>
       <Heading>
         <FavoriteButton
-          isFavorite={false}
+          isFavorite={favoriteStatus?.isFavorite}
           isBright={true}
           isOnDetailPalette={true}
+          toggleValue={id}
+          onToggleFavorite={onToggleFavoritePalette}
         />
         <h1>Palette #{id}</h1>
       </Heading>

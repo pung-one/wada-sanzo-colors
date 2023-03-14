@@ -50,7 +50,6 @@ export default function PalettesList({
         const favoriteStatus = favoritePalettes?.find(
           (palette) => palette.id === paletteIndex + 1
         );
-        console.log(favoritePalettes);
         return (
           <StyledPaletteContainer key={uid()} length={palette.length}>
             {palette.map(({ name, hex, rgb }, colorIndex) => {

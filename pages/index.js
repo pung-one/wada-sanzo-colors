@@ -9,7 +9,7 @@ export default function Home({
   data,
   onToggleFavoriteColor,
   favoriteColors,
-  onToggleFavoritePalettes,
+  onToggleFavoritePalette,
   favoritePalettes,
 }) {
   const [listType, setListType] = useState("colors");
@@ -40,7 +40,7 @@ export default function Home({
         <PalettesList
           data={data}
           error={error}
-          onToggleFavorite={onToggleFavoritePalettes}
+          onToggleFavorite={onToggleFavoritePalette}
           favoritePalettes={favoritePalettes}
         />
       )}

@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
     }
   }
 
-  function handleToggleFavoritePalettes(id) {
+  function handleToggleFavoritePalette(id) {
     if (!favoritePalettes[0]) {
       setFavoritePalettes([{ id: id, isFavorite: true }]);
     } else if (!favoritePalettes.some((palette) => palette.id === id)) {
@@ -51,8 +51,6 @@ export default function App({ Component, pageProps }) {
       );
     }
   }
-
-  console.log(favoritePalettes);
 
   return (
     <>
@@ -70,7 +68,7 @@ export default function App({ Component, pageProps }) {
           favoriteColors={favoriteColors}
           onToggleFavoriteColor={handleToggleFavoriteColor}
           favoritePalettes={favoritePalettes}
-          onToggleFavoritePalettes={handleToggleFavoritePalettes}
+          onToggleFavoritePalette={handleToggleFavoritePalette}
         />
       </Layout>
     </>
