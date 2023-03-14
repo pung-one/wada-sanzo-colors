@@ -1,4 +1,4 @@
-import { useState } from "react";
+import useLocalStorageState from "use-local-storage-state";
 import styled from "styled-components";
 import ColorsList from "@/components/ColorsList";
 import TabBar from "@/components/TabBar";
@@ -17,7 +17,9 @@ export default function Home({
   onToggleFavoritePalette,
   favoritePalettesData,
 }) {
-  const [listType, setListType] = useState("colors");
+  const [listType, setListType] = useLocalStorageState("listType", {
+    defaultValue: "colors",
+  });
 
   function handleShowColors() {
     setListType("colors");
