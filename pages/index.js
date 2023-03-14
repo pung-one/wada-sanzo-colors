@@ -5,6 +5,10 @@ import TabBar from "@/components/TabBar";
 import PalettesList from "@/components/PalettesList";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
+const PageContainer = styled.main`
+  margin: 5vh 0 18vh;
+`;
+
 export default function Home({
   error,
   data,
@@ -29,12 +33,7 @@ export default function Home({
   const paletteArray = CreatePaletteArray(data);
 
   return (
-    <main>
-      <TabBar
-        onShowColors={handleShowColors}
-        onShowPalettes={handleShowPalettes}
-        listType={listType}
-      />
+    <PageContainer>
       {listType === "colors" ? (
         <ColorsList
           colors={data}
@@ -50,6 +49,11 @@ export default function Home({
           favoritePalettesData={favoritePalettesData}
         />
       )}
-    </main>
+      <TabBar
+        onShowColors={handleShowColors}
+        onShowPalettes={handleShowPalettes}
+        listType={listType}
+      />
+    </PageContainer>
   );
 }
