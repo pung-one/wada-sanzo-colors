@@ -1,13 +1,19 @@
-import useLocalStorageState from "use-local-storage-state";
+import { useState } from "react";
 import styled from "styled-components";
 import ColorsList from "@/components/ColorsList";
 import TabBar from "@/components/TabBar";
 import PalettesList from "@/components/PalettesList";
+import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
-export default function Home({ error, data }) {
-  const [listType, setListType] = useLocalStorageState("listType", {
-    defaultValue: "colors",
-  });
+export default function Home({
+  error,
+  data,
+  onToggleFavoriteColor,
+  favoriteColorsData,
+  onToggleFavoritePalette,
+  favoritePalettesData,
+}) {
+  const [listType, setListType] = useState("colors");
 
   function handleShowColors() {
     setListType("colors");
@@ -17,6 +23,11 @@ export default function Home({ error, data }) {
     setListType("palettes");
   }
 
+  if (error) return <h1>Failed to load data..</h1>;
+  if (!data) return <h1>Loading...</h1>;
+
+  const paletteArray = CreatePaletteArray(data);
+
   return (
     <main>
       <TabBar
@@ -25,9 +36,19 @@ export default function Home({ error, data }) {
         listType={listType}
       />
       {listType === "colors" ? (
-        <ColorsList colors={data} error={error} />
+        <ColorsList
+          colors={data}
+          error={error}
+          onToggleFavorite={onToggleFavoriteColor}
+          favoriteColorsData={favoriteColorsData}
+        />
       ) : (
-        <PalettesList data={data} error={error} />
+        <PalettesList
+          paletteArray={paletteArray}
+          error={error}
+          onToggleFavorite={onToggleFavoritePalette}
+          favoritePalettesData={favoritePalettesData}
+        />
       )}
     </main>
   );

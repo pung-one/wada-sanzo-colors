@@ -13,9 +13,12 @@ const CopyFieldContainer = styled.aside`
   width: ${({ isLarge, isLeftBox }) =>
     isLarge && !isLeftBox ? "100vw" : "50vw"};
   height: ${({ isLarge }) => (isLarge ? "100%" : "100%")};
-  transform: ${({ isActive }) => (isActive ? "translate(-85%)" : null)};
   transform: ${({ isActive, isLeftBox }) =>
-    isActive && isLeftBox ? "translate(85%)" : ""};
+    isActive && isLeftBox
+      ? "translate(85%)"
+      : isActive
+      ? "translate(-88%)"
+      : ""};
   left: ${({ isLeftBox }) => (isLeftBox ? "-43vw" : null)};
   right: ${({ isLarge, isLeftBox }) =>
     isLarge && !isLeftBox ? "-88vw" : "-43vw"};
@@ -27,9 +30,11 @@ const StyledButton = styled.button`
   background: none;
   border: none;
   transform: ${({ isActive, isLeftBox }) =>
-    isActive || isLeftBox ? "rotate(180deg)" : null};
-  transform: ${({ isLeftBox, isActive }) =>
-    isLeftBox && isActive ? "rotate(360deg)" : null};
+    isLeftBox && isActive
+      ? "rotate(360deg)"
+      : isActive || isLeftBox
+      ? "rotate(180deg)"
+      : null};
   transition: transform 0.3s;
   ${(props) =>
     props.isLeftBox
@@ -48,6 +53,7 @@ const Arrow = styled(SlArrowLeft)`
 
 const StyledColorName = styled.h2`
   color: ${({ isBright }) => (isBright ? "black" : "white")};
+  width: ${({ isLarge }) => (isLarge ? "76vw" : "36vw")};
 `;
 
 export default function CopyFieldSlider({
@@ -75,7 +81,7 @@ export default function CopyFieldSlider({
         </StyledButton>
         {needColorName && (
           <Link href={`/colors/${slug}`}>
-            <StyledColorName isBright={IsColorBright(rgb) > 130}>
+            <StyledColorName isBright={IsColorBright(rgb)}>
               {name}
             </StyledColorName>
           </Link>

@@ -20,18 +20,19 @@ const StyledLink = styled(Link)`
   padding: 2vh;
 `;
 
-export default function Layout({ children, setPickerFilter }) {
+export default function Layout({ children, setInspirationPageFilter }) {
   return (
     <>
       {children}
       <StyledFooter>
         <StyledLink
           href={"/inspiration"}
-          onClick={() => setPickerFilter("new")}
+          onClick={() => setInspirationPageFilter("initialPage")}
         >
           Inspiration
         </StyledLink>
         <StyledLink href={"/"}>Lists</StyledLink>
+        <StyledLink href={"/bookmarks"}>Bookmarks</StyledLink>
       </StyledFooter>
     </>
   );

@@ -4,6 +4,7 @@ import SpecificPaletteList from "@/components/SpecificPaletteList/SpecificPalett
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 import { useState } from "react";
 import { IsColorBright } from "@/utils/IsColorBright";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const PageContainer = styled.main`
   display: flex;
@@ -12,6 +13,7 @@ const PageContainer = styled.main`
 `;
 
 const StyledColorBox = styled.header`
+  position: relative;
   height: 33vh;
   display: flex;
   padding: 3vh;
@@ -23,9 +25,17 @@ const StyledColorBox = styled.header`
 
 const StyledHeadline = styled.h1`
   color: ${({ isBright }) => (isBright ? "black" : "white")};
+  padding: 2vh;
 `;
 
-export default function ColorPage({ data, error }) {
+export default function ColorPage({
+  data,
+  error,
+  onToggleFavoriteColor,
+  favoriteColorsData,
+  onToggleFavoritePalette,
+  favoritePalettesData,
+}) {
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
   const { slug } = router.query;
@@ -45,12 +55,21 @@ export default function ColorPage({ data, error }) {
     setIsActive(!isActive);
   }
 
+  const favoriteStatus = favoriteColorsData?.find(
+    (color) => color.name === name
+  );
+
   return (
     <PageContainer>
       <StyledColorBox hex={hex}>
-        <StyledHeadline isBright={IsColorBright(rgb) > 130}>
-          {name}
-        </StyledHeadline>
+        <FavoriteButton
+          isBright={IsColorBright(rgb)}
+          isFavorite={favoriteStatus?.isFavorite}
+          isOnDetailColor={true}
+          toggleValue={name}
+          onToggleFavorite={onToggleFavoriteColor}
+        />
+        <StyledHeadline isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
         <CopyFieldSlider
           color={currentColor}
           isLargePalette={true}
@@ -59,7 +78,12 @@ export default function ColorPage({ data, error }) {
           needColorName={false}
         />
       </StyledColorBox>
-      <SpecificPaletteList currentColor={currentColor} colors={data} />
+      <SpecificPaletteList
+        currentColor={currentColor}
+        colors={data}
+        favoritePalettesData={favoritePalettesData}
+        onToggleFavoritePalette={onToggleFavoritePalette}
+      />
     </PageContainer>
   );
 }

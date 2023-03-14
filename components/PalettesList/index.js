@@ -2,10 +2,13 @@ import styled from "styled-components";
 import Link from "next/link";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import { uid } from "uid";
+import FavoriteButton from "../FavoriteButton";
+import { IsColorBright } from "@/utils/IsColorBright";
 
 const List = styled.ul`
   padding: 0;
   list-style-type: 0;
+  margin-bottom: 11vh;
 `;
 
 const StyledPaletteContainer = styled.li`
@@ -19,36 +22,51 @@ const StyledPaletteContainer = styled.li`
 const StyledColorBox = styled.div`
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
 const StyledPaletteNumber = styled.span`
   position: absolute;
-  font-size: 2vh;
+  font-size: 2.5vh;
   padding: 2vh;
-  color: white;
+  text-decoration: underline;
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
 
-export default function PalettesList({ data, error }) {
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
-
-  const paletteArray = CreatePaletteArray(data);
-
+export default function PalettesList({
+  paletteArray,
+  favoritePalettesData,
+  onToggleFavorite,
+}) {
   return (
     <List>
-      {paletteArray.map((palette, i) => {
+      {paletteArray?.map((palette1) => {
+        const favoriteStatus = favoritePalettesData?.find(
+          (palette2) => palette2.id === palette1.id
+        );
         return (
-          <Link key={uid()} href={`/palettes/${i + 1}`}>
-            <StyledPaletteContainer length={palette.length}>
-              <StyledPaletteNumber>{i + 1}</StyledPaletteNumber>
-              {palette.map(({ name, hex }) => {
-                return <StyledColorBox key={name} hex={hex} />;
-              })}
-            </StyledPaletteContainer>
-          </Link>
+          <StyledPaletteContainer key={uid()} length={palette1.palette.length}>
+            {palette1.palette.map(({ name, hex, rgb }, colorIndex) => {
+              return (
+                <StyledColorBox key={name} hex={hex}>
+                  {colorIndex === 0 && (
+                    <Link href={`/palettes/${palette1.id}`}>
+                      <StyledPaletteNumber isBright={IsColorBright(rgb)}>
+                        {palette1.id}
+                      </StyledPaletteNumber>
+                    </Link>
+                  )}
+                  <FavoriteButton
+                    isFavorite={favoriteStatus?.isFavorite}
+                    isOnListElement={true}
+                    isBright={IsColorBright(rgb)}
+                    toggleValue={palette1.id}
+                    onToggleFavorite={onToggleFavorite}
+                  />
+                </StyledColorBox>
+              );
+            })}
+          </StyledPaletteContainer>
         );
       })}
     </List>

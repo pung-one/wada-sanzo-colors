@@ -3,8 +3,10 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
+import FavoriteButton from "@/components/FavoriteButton";
 
 const PageContainer = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
   height: 89vh;
@@ -12,15 +14,17 @@ const PageContainer = styled.main`
 `;
 
 const Heading = styled.header`
+  position: relative;
   width: 100%;
   padding: 3vh;
+  height: 11vh;
   border-bottom: 1px solid black;
 `;
 
 const PaletteContainer = styled.div`
   display: flex;
+  height: 78vh;
   flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
-  flex-grow: 1;
   overflow-x: hidden;
 `;
 
@@ -34,7 +38,12 @@ const ColorBox = styled.div`
   color: ${({ hex }) => (hex ? hex : null)};
 `;
 
-export default function PalettePage({ data, error, randomId }) {
+export default function PalettePage({
+  data,
+  error,
+  favoritePalettesData,
+  onToggleFavoritePalette,
+}) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
   const { id } = router.query;
@@ -54,13 +63,24 @@ export default function PalettePage({ data, error, randomId }) {
     setActiveIndex(index === activeIndex ? -1 : index);
   };
 
+  const favoriteStatus = favoritePalettesData?.find(
+    (palette) => palette.id === id
+  );
+
   return (
     <PageContainer>
       <Heading>
+        <FavoriteButton
+          isFavorite={favoriteStatus?.isFavorite}
+          isBright={true}
+          isOnDetailPalette={true}
+          toggleValue={id}
+          onToggleFavorite={onToggleFavoritePalette}
+        />
         <h1>Palette #{id}</h1>
       </Heading>
       <PaletteContainer isLarge={isLargePalette}>
-        {currentPalette?.map((color, index) => {
+        {currentPalette?.palette.map((color, index) => {
           return (
             <ColorBox hex={color.hex} key={color.name}>
               <CopyFieldSlider

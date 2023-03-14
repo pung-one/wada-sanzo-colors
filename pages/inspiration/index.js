@@ -32,8 +32,8 @@ const StyledLink = styled(Link)`
 export default function InspirationPage({
   data,
   error,
-  pickerFilter,
-  setPickerFilter,
+  inspirationPageFilter,
+  setInspirationPageFilter,
 }) {
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading Data...</h1>;
@@ -44,7 +44,7 @@ export default function InspirationPage({
   const paletteArray = CreatePaletteArray(data);
 
   function CreateRandomPaletteCssGradient() {
-    const randomPalette = paletteArray[randomPaletteId];
+    const randomPalette = paletteArray[randomPaletteId].palette;
     if (randomPalette.length === 2) {
       const randomGradient = `linear-gradient(180deg, rgba(${randomPalette[0].rgb[0]},${randomPalette[0].rgb[1]},${randomPalette[0].rgb[2]},1) 0%, rgba(${randomPalette[1].rgb[0]},${randomPalette[1].rgb[1]},${randomPalette[1].rgb[2]},1) 100%)`;
       return randomGradient;
@@ -60,9 +60,11 @@ export default function InspirationPage({
 
   return (
     <>
-      {pickerFilter === "new" && (
+      {inspirationPageFilter === "initialPage" && (
         <ButtonContainer background={randomGradient}>
-          <StyledButton onClick={() => setPickerFilter("Pick Rainbow Color")}>
+          <StyledButton
+            onClick={() => setInspirationPageFilter("Pick Rainbow Color")}
+          >
             Pick Rainbow Color
           </StyledButton>
           <StyledLink href={`/colors/${randomColorSlug}`}>
@@ -73,7 +75,7 @@ export default function InspirationPage({
           </StyledLink>
         </ButtonContainer>
       )}
-      {pickerFilter === "Pick Rainbow Color" && (
+      {inspirationPageFilter === "Pick Rainbow Color" && (
         <ColorPicker data={data} error={error} />
       )}
     </>
