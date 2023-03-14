@@ -34,31 +34,25 @@ const StyledPaletteNumber = styled.span`
 `;
 
 export default function PalettesList({
-  data,
-  error,
-  favoritePalettes,
+  paletteArray,
+  favoritePalettesData,
   onToggleFavorite,
 }) {
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
-
-  const paletteArray = CreatePaletteArray(data);
-
   return (
     <List>
-      {paletteArray.map((palette, paletteIndex) => {
-        const favoriteStatus = favoritePalettes?.find(
-          (palette) => palette.id === paletteIndex + 1
+      {paletteArray.map((palette1) => {
+        const favoriteStatus = favoritePalettesData?.find(
+          (palette2) => palette2.id === palette1.id
         );
         return (
-          <StyledPaletteContainer key={uid()} length={palette.length}>
-            {palette.map(({ name, hex, rgb }, colorIndex) => {
+          <StyledPaletteContainer key={uid()} length={palette1.palette.length}>
+            {palette1.palette.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} hex={hex}>
                   {colorIndex === 0 && (
-                    <Link href={`/palettes/${paletteIndex + 1}`}>
+                    <Link href={`/palettes/${palette1.id}`}>
                       <StyledPaletteNumber isBright={IsColorBright(rgb)}>
-                        {paletteIndex + 1}
+                        {palette1.id}
                       </StyledPaletteNumber>
                     </Link>
                   )}
@@ -66,7 +60,7 @@ export default function PalettesList({
                     isFavorite={favoriteStatus?.isFavorite}
                     isOnListElement={true}
                     isBright={IsColorBright(rgb)}
-                    toggleValue={paletteIndex + 1}
+                    toggleValue={palette1.id}
                     onToggleFavorite={onToggleFavorite}
                   />
                 </StyledColorBox>

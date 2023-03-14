@@ -35,13 +35,13 @@ const StyledPaletteNumber = styled.span`
 export default function SpecificPaletteList({
   colors,
   currentColor,
-  favoritePalettes,
+  favoritePalettesData,
   onToggleFavoritePalette,
 }) {
   return (
     <List>
       {currentColor?.combinations.map((combi1) => {
-        const favoriteStatus = favoritePalettes?.find(
+        const favoriteStatus = favoritePalettesData?.find(
           (palette) => palette.id === combi1
         );
         const palette = colors.filter((color) =>
@@ -49,7 +49,7 @@ export default function SpecificPaletteList({
         );
 
         return (
-          <StyledPaletteContainer>
+          <StyledPaletteContainer key={combi1}>
             <Link href={`/palettes/${combi1}`}></Link>
             {palette.map(({ name, hex, rgb }, colorIndex) => {
               return (

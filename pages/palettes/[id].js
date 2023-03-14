@@ -41,7 +41,7 @@ const ColorBox = styled.div`
 export default function PalettePage({
   data,
   error,
-  favoritePalettes,
+  favoritePalettesData,
   onToggleFavoritePalette,
 }) {
   const [activeIndex, setActiveIndex] = useState(-1);
@@ -63,7 +63,9 @@ export default function PalettePage({
     setActiveIndex(index === activeIndex ? -1 : index);
   };
 
-  const favoriteStatus = favoritePalettes?.find((palette) => palette.id === id);
+  const favoriteStatus = favoritePalettesData?.find(
+    (palette) => palette.id === id
+  );
 
   return (
     <PageContainer>
@@ -78,7 +80,7 @@ export default function PalettePage({
         <h1>Palette #{id}</h1>
       </Heading>
       <PaletteContainer isLarge={isLargePalette}>
-        {currentPalette?.map((color, index) => {
+        {currentPalette?.palette.map((color, index) => {
           return (
             <ColorBox hex={color.hex} key={color.name}>
               <CopyFieldSlider

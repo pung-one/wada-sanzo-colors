@@ -32,9 +32,9 @@ export default function ColorPage({
   data,
   error,
   onToggleFavoriteColor,
-  favoriteColors,
+  favoriteColorsData,
   onToggleFavoritePalette,
-  favoritePalettes,
+  favoritePalettesData,
 }) {
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
@@ -55,7 +55,9 @@ export default function ColorPage({
     setIsActive(!isActive);
   }
 
-  const favoriteStatus = favoriteColors?.find((color) => color.name === name);
+  const favoriteStatus = favoriteColorsData?.find(
+    (color) => color.name === name
+  );
 
   return (
     <PageContainer>
@@ -79,7 +81,7 @@ export default function ColorPage({
       <SpecificPaletteList
         currentColor={currentColor}
         colors={data}
-        favoritePalettes={favoritePalettes}
+        favoritePalettesData={favoritePalettesData}
         onToggleFavoritePalette={onToggleFavoritePalette}
       />
     </PageContainer>

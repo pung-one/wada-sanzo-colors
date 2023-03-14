@@ -26,7 +26,7 @@ const StyledColorName = styled.p`
 export default function ColorsList({
   colors,
   error,
-  favoriteColors,
+  favoriteColorsData,
   onToggleFavorite,
 }) {
   if (error) return <h1>Failed to load data..</h1>;
@@ -35,7 +35,7 @@ export default function ColorsList({
   return (
     <List>
       {colors.map(({ name, slug, rgb, hex }) => {
-        const favoriteStatus = favoriteColors?.find(
+        const favoriteStatus = favoriteColorsData?.find(
           (color) => color.name === name
         );
         return (

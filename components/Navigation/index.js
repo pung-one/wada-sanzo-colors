@@ -32,6 +32,7 @@ export default function Layout({ children, setInspirationPageFilter }) {
           Inspiration
         </StyledLink>
         <StyledLink href={"/"}>Lists</StyledLink>
+        <StyledLink href={"/bookmarks"}>Bookmarks</StyledLink>
       </StyledFooter>
     </>
   );

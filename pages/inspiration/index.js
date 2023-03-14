@@ -44,7 +44,7 @@ export default function InspirationPage({
   const paletteArray = CreatePaletteArray(data);
 
   function CreateRandomPaletteCssGradient() {
-    const randomPalette = paletteArray[randomPaletteId];
+    const randomPalette = paletteArray[randomPaletteId].palette;
     if (randomPalette.length === 2) {
       const randomGradient = `linear-gradient(180deg, rgba(${randomPalette[0].rgb[0]},${randomPalette[0].rgb[1]},${randomPalette[0].rgb[2]},1) 0%, rgba(${randomPalette[1].rgb[0]},${randomPalette[1].rgb[1]},${randomPalette[1].rgb[2]},1) 100%)`;
       return randomGradient;
