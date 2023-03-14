@@ -45,7 +45,7 @@ export default function Layout({
 
   return (
     <>
-      <Header>Wada Sanzo | A Dictionary of Color Combinations</Header>
+      <Header>A Dictionary of Color Combinations</Header>
       {children}
       <StyledFooter>
         <Link href={"/inspiration"}>
