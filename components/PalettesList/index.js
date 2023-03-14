@@ -40,7 +40,7 @@ export default function PalettesList({
 }) {
   return (
     <List>
-      {paletteArray.map((palette1) => {
+      {paletteArray?.map((palette1) => {
         const favoriteStatus = favoritePalettesData?.find(
           (palette2) => palette2.id === palette1.id
         );

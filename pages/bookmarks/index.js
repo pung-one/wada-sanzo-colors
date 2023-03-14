@@ -1,9 +1,9 @@
-import { useState } from "react";
 import ColorsList from "@/components/ColorsList";
 import TabBar from "@/components/TabBar";
 import PalettesList from "@/components/PalettesList";
 import useLocalStorageState from "use-local-storage-state";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
+import styled from "styled-components";
 
 export default function Home({
   error,
@@ -27,7 +27,6 @@ export default function Home({
 
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
-
   const favoriteColors = favoriteColorsData.filter((color) => color.isFavorite);
   const favoriteColorsList = data?.filter((color1) =>
     favoriteColors.some((color2) => color2.name === color1.name)
@@ -48,14 +47,21 @@ export default function Home({
         onShowPalettes={handleShowPalettes}
         listType={listType}
       />
-      {listType === "colors" ? (
+      {!favoriteColorsList[0] && listType === "colors" && (
+        <NoBookmarksInfo>No Bookmarked Colors</NoBookmarksInfo>
+      )}
+      {!favoritePalettesList[0] && listType === "palettes" && (
+        <NoBookmarksInfo>No Bookmarked Palettes</NoBookmarksInfo>
+      )}
+      {listType === "colors" && (
         <ColorsList
           colors={favoriteColorsList}
           error={error}
           onToggleFavorite={onToggleFavoriteColor}
           favoriteColorsData={favoriteColorsData}
         />
-      ) : (
+      )}
+      {listType === "palettes" && (
         <PalettesList
           paletteArray={favoritePalettesList}
           onToggleFavorite={onToggleFavoritePalette}
@@ -65,3 +71,7 @@ export default function Home({
     </main>
   );
 }
+
+const NoBookmarksInfo = styled.h1`
+  padding-top: 4vh;
+`;

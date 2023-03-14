@@ -21,41 +21,35 @@ export default function App({ Component, pageProps }) {
   );
 
   function handleToggleFavoriteColor(name) {
-    if (!favoriteColorsData[0]) {
-      setFavoriteColorsData([{ name: name, isFavorite: true }]);
-    } else if (!favoriteColorsData.some((color) => color.name === name)) {
-      setFavoriteColorsData([
-        ...favoriteColorsData,
-        { name: name, isFavorite: true },
-      ]);
-    } else {
-      setFavoriteColorsData(
-        favoriteColorsData.map((color) => {
-          if (color.name === name)
-            return { ...color, isFavorite: !color.isFavorite };
-          return color;
-        })
+    setFavoriteColorsData((prevFavoriteColorsData) => {
+      const favStatus = prevFavoriteColorsData.find(
+        (element) => element.name === name
       );
-    }
+      if (favStatus) {
+        return prevFavoriteColorsData.map((color) =>
+          color.name === name
+            ? { name: color.name, isFavorite: !color.isFavorite }
+            : color
+        );
+      }
+      return [...prevFavoriteColorsData, { name: name, isFavorite: true }];
+    });
   }
 
   function handleToggleFavoritePalette(id) {
-    if (!favoritePalettesData[0]) {
-      setFavoritePalettesData([{ id: id, isFavorite: true }]);
-    } else if (!favoritePalettesData.some((palette) => palette.id === id)) {
-      setFavoritePalettesData([
-        ...favoritePalettesData,
-        { id: id, isFavorite: true },
-      ]);
-    } else {
-      setFavoritePalettesData(
-        favoritePalettesData.map((palette) => {
-          if (palette.id === id)
-            return { ...palette, isFavorite: !palette.isFavorite };
-          return palette;
-        })
+    setFavoritePalettesData((prevFavoritePalettesData) => {
+      const favStatus = prevFavoritePalettesData.find(
+        (element) => element.id === id
       );
-    }
+      if (favStatus) {
+        return prevFavoritePalettesData.map((palette) =>
+          palette.id === id
+            ? { id: palette.id, isFavorite: !palette.isFavorite }
+            : palette
+        );
+      }
+      return [...prevFavoritePalettesData, { id: id, isFavorite: true }];
+    });
   }
 
   return (
