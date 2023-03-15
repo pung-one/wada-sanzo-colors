@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import { uid } from "uid";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
@@ -8,7 +7,6 @@ import { IsColorBright } from "@/utils/IsColorBright";
 const List = styled.ul`
   padding: 0;
   list-style-type: 0;
-  margin-bottom: 11vh;
 `;
 
 const StyledPaletteContainer = styled.li`

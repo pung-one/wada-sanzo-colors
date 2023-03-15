@@ -3,13 +3,20 @@ import Link from "next/link";
 import ColorPicker from "@/components/ColorPicker";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
+const PageContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  margin: 5vh 0 11vh;
+  height: 84vh;
+`;
+
 const ButtonContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10vh;
+  flex: 1;
   padding-top: 10vh;
-  height: 89vh;
+  gap: 10vh;
   background: ${({ background }) => (background ? background : null)};
 `;
 
@@ -59,7 +66,7 @@ export default function InspirationPage({
   const randomGradient = CreateRandomPaletteCssGradient();
 
   return (
-    <>
+    <PageContainer>
       {inspirationPageFilter === "initialPage" && (
         <ButtonContainer background={randomGradient}>
           <StyledButton
@@ -78,6 +85,6 @@ export default function InspirationPage({
       {inspirationPageFilter === "Pick Rainbow Color" && (
         <ColorPicker data={data} error={error} />
       )}
-    </>
+    </PageContainer>
   );
 }

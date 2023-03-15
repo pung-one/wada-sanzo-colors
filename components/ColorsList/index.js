@@ -7,7 +7,6 @@ const List = styled.ul`
   padding: 0;
   list-style: none;
   list-style-type: 0;
-  margin-bottom: 11vh;
 `;
 
 const ColorBox = styled.li`

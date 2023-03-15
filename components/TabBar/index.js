@@ -2,15 +2,22 @@ import styled, { css } from "styled-components";
 
 const TabContainer = styled.nav`
   display: flex;
-  justify-content: center;
-  height: 12vh;
+  position: fixed;
+  bottom: 11vh;
+  width: 100%;
+  height: 7vh;
+  justify-content: space-evenly;
+  padding: 1vh;
+  border-top: 1px solid black;
+
+  background-color: white;
 `;
 
 const StyledButton = styled.button`
   background-color: white;
-  width: 100%;
   border: 1px solid black;
-  margin: 2vw 1vw 0 1vw;
+  width: 40%;
+  padding: 1vh;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 2px 5px grey")};
 `;
 

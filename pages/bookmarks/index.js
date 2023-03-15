@@ -5,6 +5,12 @@ import useLocalStorageState from "use-local-storage-state";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
+const PageContainer = styled.main`
+  margin-top: 5vh;
+
+  margin-bottom: 18vh;
+`;
+
 export default function Home({
   error,
   data,
@@ -41,12 +47,7 @@ export default function Home({
   );
 
   return (
-    <main>
-      <TabBar
-        onShowColors={handleShowColors}
-        onShowPalettes={handleShowPalettes}
-        listType={listType}
-      />
+    <PageContainer>
       {!favoriteColorsList[0] && listType === "colors" && (
         <NoBookmarksInfo>No Bookmarked Colors</NoBookmarksInfo>
       )}
@@ -68,7 +69,12 @@ export default function Home({
           favoritePalettesData={favoritePalettesData}
         />
       )}
-    </main>
+      <TabBar
+        onShowColors={handleShowColors}
+        onShowPalettes={handleShowPalettes}
+        listType={listType}
+      />
+    </PageContainer>
   );
 }
 

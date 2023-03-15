@@ -4,13 +4,14 @@ import styled from "styled-components";
 import { useState } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 import FavoriteButton from "@/components/FavoriteButton";
+import { useEffect } from "react";
 
 const PageContainer = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 89vh;
-  margin-bottom: 11vh;
+  height: 84vh;
+  margin: 5vh 0 11vh;
 `;
 
 const Heading = styled.header`
@@ -44,20 +45,21 @@ export default function PalettePage({
   favoritePalettesData,
   onToggleFavoritePalette,
 }) {
-  const [activeIndex, setActiveIndex] = useState(-1);
   const router = useRouter();
   const { id } = router.query;
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const [currentPalette, setCurrentPalette] = useState([]);
 
-  let currentPalette;
+  useEffect(() => {
+    setCurrentPalette(
+      CreatePaletteArray(data).find((element) => element.id == id)
+    );
+  }, [data, id]);
 
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
-  const paletteArray = CreatePaletteArray(data);
-
-  currentPalette = paletteArray?.find((arr, i) => i === id - 1);
-
-  const isLargePalette = currentPalette?.length > 2;
+  const isLargePalette = currentPalette?.palette?.length > 2;
 
   const handleSlide = (index) => {
     setActiveIndex(index === activeIndex ? -1 : index);
@@ -80,7 +82,7 @@ export default function PalettePage({
         <h1>Palette #{id}</h1>
       </Heading>
       <PaletteContainer isLarge={isLargePalette}>
-        {currentPalette?.palette.map((color, index) => {
+        {currentPalette?.palette?.map((color, index) => {
           return (
             <ColorBox hex={color.hex} key={color.name}>
               <CopyFieldSlider

@@ -1,7 +1,7 @@
 import GlobalStyle from "@/styles";
 import Head from "next/head";
 import useSWR from "swr";
-import Layout from "@/components/Navigation";
+import Layout from "@/components/Layout";
 import { useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
@@ -58,7 +58,10 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Colors</title>
       </Head>
-      <Layout setInspirationPageFilter={setInspirationPageFilter}>
+      <Layout
+        inspirationPageFilter={inspirationPageFilter}
+        setInspirationPageFilter={setInspirationPageFilter}
+      >
         <Component
           {...pageProps}
           data={data}
