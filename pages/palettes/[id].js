@@ -10,7 +10,7 @@ const PageContainer = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 89vh;
+  height: 84vh;
   margin: 5vh 0 11vh;
 `;
 
