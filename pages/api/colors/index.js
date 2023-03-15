@@ -1,4 +1,3 @@
-import { useSWR } from "swr";
 import { colorsWithSlug } from "../../../data/colors.js";
 
 export default async function handler(req, res) {

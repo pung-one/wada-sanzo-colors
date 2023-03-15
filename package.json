@@ -13,6 +13,7 @@
     "chroma-js": "^2.4.2",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
+    "mongoose": "^7.0.1",
     "next": "13.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",

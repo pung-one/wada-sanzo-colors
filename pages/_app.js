@@ -2,13 +2,24 @@ import GlobalStyle from "@/styles";
 import Head from "next/head";
 import useSWR from "swr";
 import Layout from "@/components/Layout";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
 const fetcher = (URL) => fetch(URL).then((response) => response.json());
 
 export default function App({ Component, pageProps }) {
   const { data, error } = useSWR("/api/colors", fetcher);
+  const {
+    data: favData,
+    error: favDataError,
+    mutate,
+  } = useSWR("/api/favorites", fetcher);
+  const [favoriteDataTest, setFavoriteDataTest] = useLocalStorageState(
+    "favoriteDataTest",
+    {
+      defaultValue: null,
+    }
+  );
   const [inspirationPageFilter, setInspirationPageFilter] =
     useState("initialPage");
   const [favoriteColorsData, setFavoriteColorsData] = useLocalStorageState(
@@ -20,7 +31,36 @@ export default function App({ Component, pageProps }) {
     { defaultValue: [] }
   );
 
-  function handleToggleFavoriteColor(name) {
+  useEffect(() => {
+    setFavoriteDataTest(favData);
+    if (favoriteDataTest) {
+      setFavoriteColorsData(favoriteDataTest?.favoriteColors);
+      setFavoritePalettesData(favoriteDataTest?.favoritePalettes);
+    }
+  }, [favData]);
+
+  useEffect(() => {
+    async function handleUpdateFavs() {
+      const response = await fetch(`/api/favorites/`, {
+        method: "PUT",
+        body: JSON.stringify(favoriteDataTest),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        await response.json();
+        mutate();
+        console.log(response);
+      } else {
+        console.log(response);
+      }
+    }
+    handleUpdateFavs();
+  }, [favoriteDataTest]);
+
+  async function handleToggleFavoriteColor(name) {
     setFavoriteColorsData((prevFavoriteColorsData) => {
       const favStatus = prevFavoriteColorsData.find(
         (element) => element.name === name
@@ -34,7 +74,12 @@ export default function App({ Component, pageProps }) {
       }
       return [...prevFavoriteColorsData, { name: name, isFavorite: true }];
     });
+    setFavoriteDataTest((prevFavoriteDataTest) => {
+      return { ...prevFavoriteDataTest, favoriteColors: favoriteColorsData };
+    });
   }
+
+  console.log(favoriteDataTest);
 
   function handleToggleFavoritePalette(id) {
     setFavoritePalettesData((prevFavoritePalettesData) => {
@@ -49,6 +94,12 @@ export default function App({ Component, pageProps }) {
         );
       }
       return [...prevFavoritePalettesData, { id: id, isFavorite: true }];
+    });
+    setFavoriteDataTest((prevFavoriteDataTest) => {
+      return {
+        ...prevFavoriteDataTest,
+        favoritePalettes: favoritePalettesData,
+      };
     });
   }
 

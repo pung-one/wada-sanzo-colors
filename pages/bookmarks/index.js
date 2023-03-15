@@ -32,26 +32,29 @@ export default function Home({
   }
 
   if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
-  const favoriteColors = favoriteColorsData.filter((color) => color.isFavorite);
+  if (!data && !favoriteColorsData && !favoritePalettesData)
+    return <h1>Loading...</h1>;
+  const favoriteColors = favoriteColorsData?.filter(
+    (color) => color.isFavorite
+  );
   const favoriteColorsList = data?.filter((color1) =>
-    favoriteColors.some((color2) => color2.name === color1.name)
+    favoriteColors?.some((color2) => color2.name === color1.name)
   );
 
   const allPalettesArray = CreatePaletteArray(data);
-  const favoritePalettes = favoritePalettesData.filter(
+  const favoritePalettes = favoritePalettesData?.filter(
     (palette) => palette.isFavorite
   );
   const favoritePalettesList = allPalettesArray?.filter((palette1) =>
-    favoritePalettes.some((palette2) => palette2.id === palette1.id)
+    favoritePalettes?.some((palette2) => palette2.id === palette1.id)
   );
 
   return (
     <PageContainer>
-      {!favoriteColorsList[0] && listType === "colors" && (
+      {!favoriteColorsList && listType === "colors" && (
         <NoBookmarksInfo>No Bookmarked Colors</NoBookmarksInfo>
       )}
-      {!favoritePalettesList[0] && listType === "palettes" && (
+      {!favoritePalettesList && listType === "palettes" && (
         <NoBookmarksInfo>No Bookmarked Palettes</NoBookmarksInfo>
       )}
       {listType === "colors" && (

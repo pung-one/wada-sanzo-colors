@@ -36,6 +36,7 @@ export default function PalettesList({
   favoritePalettesData,
   onToggleFavorite,
 }) {
+  if (!favoritePalettesData) return <h1>Loading...</h1>;
   return (
     <List>
       {paletteArray?.map((palette1) => {
@@ -43,8 +44,11 @@ export default function PalettesList({
           (palette2) => palette2.id === palette1.id
         );
         return (
-          <StyledPaletteContainer key={uid()} length={palette1.palette.length}>
-            {palette1.palette.map(({ name, hex, rgb }, colorIndex) => {
+          <StyledPaletteContainer
+            key={uid()}
+            length={palette1?.palette?.length}
+          >
+            {palette1.palette?.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} hex={hex}>
                   {colorIndex === 0 && (
