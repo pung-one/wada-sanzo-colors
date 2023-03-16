@@ -27,8 +27,8 @@ export default function App({ Component, pageProps }) {
   );
 
   useEffect(() => {
-    setFavoriteColorsData(favData?.favoriteColors);
-    setFavoritePalettesData(favData?.favoritePalettes);
+    /* setFavoriteColorsData(favData?.favoriteColors);
+    setFavoritePalettesData(favData?.favoritePalettes); */
   }, [favData]);
 
   async function handleUpdateFavs(userName) {

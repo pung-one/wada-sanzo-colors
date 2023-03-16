@@ -25,7 +25,7 @@ const StyledButton = styled.button`
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
-  box-shadow: 0 2px 5px black;
+  box-shadow: -8px -6px 0px black;
 `;
 
 const StyledLink = styled(Link)`
@@ -33,7 +33,7 @@ const StyledLink = styled(Link)`
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
-  box-shadow: 0 2px 5px black;
+  box-shadow: -8px -6px 0px black;
 `;
 
 export default function InspirationPage({

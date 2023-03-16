@@ -30,9 +30,10 @@ const StyledFooter = styled.nav`
 
 const NavButton = styled.span`
   border: 1px solid black;
-  box-shadow: ${({ isActive }) => (isActive ? "" : "0 2px 5px grey")};
+  box-shadow: ${({ isActive }) => (isActive ? "" : "2px 3px 0 black")};
   width: 28vw;
   padding: 2vh;
+  transition: box-shadow 0.1s;
 `;
 
 export default function Layout({
