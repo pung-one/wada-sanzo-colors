@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { uid } from "uid";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
 
