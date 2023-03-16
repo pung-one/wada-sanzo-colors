@@ -5,20 +5,15 @@ import Layout from "@/components/Layout";
 import { useState, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 
+const userName = "admin";
+
 const fetcher = (URL) => fetch(URL).then((response) => response.json());
 
 export default function App({ Component, pageProps }) {
   const { data, error } = useSWR("/api/colors", fetcher);
-  const {
-    data: favData,
-    error: favDataError,
-    mutate,
-  } = useSWR("/api/favorites", fetcher);
-  const [favoriteDataTest, setFavoriteDataTest] = useLocalStorageState(
-    "favoriteDataTest",
-    {
-      defaultValue: null,
-    }
+  const { data: favData, error: favDataError } = useSWR(
+    `/api/favorites/${userName}`,
+    fetcher
   );
   const [inspirationPageFilter, setInspirationPageFilter] =
     useState("initialPage");
@@ -32,33 +27,32 @@ export default function App({ Component, pageProps }) {
   );
 
   useEffect(() => {
-    setFavoriteDataTest(favData);
-    if (favoriteDataTest) {
-      setFavoriteColorsData(favoriteDataTest?.favoriteColors);
-      setFavoritePalettesData(favoriteDataTest?.favoritePalettes);
-    }
+    setFavoriteColorsData(favData?.favoriteColors);
+    setFavoritePalettesData(favData?.favoritePalettes);
   }, [favData]);
 
-  useEffect(() => {
-    async function handleUpdateFavs() {
-      const response = await fetch(`/api/favorites/`, {
-        method: "PUT",
-        body: JSON.stringify(favoriteDataTest),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  async function handleUpdateFavs(userName) {
+    const body = {
+      user: userName,
+      favoriteColors: favoriteColorsData,
+      favoritePalettes: favoritePalettesData,
+    };
+    console.log(body);
+    const response = await fetch(`/api/favorites/${userName}`, {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-      if (response.ok) {
-        await response.json();
-        mutate();
-        console.log(response);
-      } else {
-        console.log(response);
-      }
+    if (response.ok) {
+      await response.json();
+      console.log(response);
+    } else {
+      console.error(response);
     }
-    handleUpdateFavs();
-  }, [favoriteDataTest]);
+  }
 
   async function handleToggleFavoriteColor(name) {
     setFavoriteColorsData((prevFavoriteColorsData) => {
@@ -74,12 +68,8 @@ export default function App({ Component, pageProps }) {
       }
       return [...prevFavoriteColorsData, { name: name, isFavorite: true }];
     });
-    setFavoriteDataTest((prevFavoriteDataTest) => {
-      return { ...prevFavoriteDataTest, favoriteColors: favoriteColorsData };
-    });
+    handleUpdateFavs(userName);
   }
-
-  console.log(favoriteDataTest);
 
   function handleToggleFavoritePalette(id) {
     setFavoritePalettesData((prevFavoritePalettesData) => {
@@ -95,12 +85,7 @@ export default function App({ Component, pageProps }) {
       }
       return [...prevFavoritePalettesData, { id: id, isFavorite: true }];
     });
-    setFavoriteDataTest((prevFavoriteDataTest) => {
-      return {
-        ...prevFavoriteDataTest,
-        favoritePalettes: favoritePalettesData,
-      };
-    });
+    handleUpdateFavs(userName);
   }
 
   return (

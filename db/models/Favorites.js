@@ -4,8 +4,18 @@ const { Schema } = mongoose;
 
 const favoriteSchema = new Schema({
   user: { type: String, required: true },
-  favoriteColors: { type: Array, required: true },
-  favoritePalettes: { type: Array, required: true },
+  favoriteColors: [
+    {
+      name: { type: String, required: true },
+      isFavorite: { type: Boolean, default: false },
+    },
+  ],
+  favoritePalettes: [
+    {
+      id: { type: Number, required: true },
+      isFavorite: { type: Boolean, default: false },
+    },
+  ],
 });
 
 const Favorite =

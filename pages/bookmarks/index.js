@@ -32,8 +32,8 @@ export default function Home({
   }
 
   if (error) return <h1>Failed to load data..</h1>;
-  if (!data && !favoriteColorsData && !favoritePalettesData)
-    return <h1>Loading...</h1>;
+  if (!data) return <h1>Loading...</h1>;
+
   const favoriteColors = favoriteColorsData?.filter(
     (color) => color.isFavorite
   );
