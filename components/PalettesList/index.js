@@ -36,7 +36,6 @@ export default function PalettesList({
   favoritePalettesData,
   onToggleFavorite,
 }) {
-  if (!favoritePalettesData) return <h1>Loading...</h1>;
   return (
     <List>
       {paletteArray?.map((palette1) => {

@@ -7,8 +7,12 @@ import styled from "styled-components";
 
 const PageContainer = styled.main`
   margin-top: 5vh;
-
   margin-bottom: 18vh;
+`;
+
+const NoBookmarksInfo = styled.p`
+  padding-top: 4vh;
+  font-size: 3vh;
 `;
 
 export default function Home({
@@ -51,11 +55,11 @@ export default function Home({
 
   return (
     <PageContainer>
-      {!favoriteColorsList && listType === "colors" && (
-        <NoBookmarksInfo>No Bookmarked Colors</NoBookmarksInfo>
+      {favoriteColorsList.length === 0 && listType === "colors" && (
+        <NoBookmarksInfo>No bookmarked colors</NoBookmarksInfo>
       )}
-      {!favoritePalettesList && listType === "palettes" && (
-        <NoBookmarksInfo>No Bookmarked Palettes</NoBookmarksInfo>
+      {favoritePalettesList.length === 0 && listType === "palettes" && (
+        <NoBookmarksInfo>No bookmarked palettes</NoBookmarksInfo>
       )}
       {listType === "colors" && (
         <ColorsList
@@ -80,7 +84,3 @@ export default function Home({
     </PageContainer>
   );
 }
-
-const NoBookmarksInfo = styled.h1`
-  padding-top: 4vh;
-`;

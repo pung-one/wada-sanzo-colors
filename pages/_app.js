@@ -31,13 +31,13 @@ export default function App({ Component, pageProps }) {
     setFavoritePalettesData(favData?.favoritePalettes);
   }, [favData]);
 
-  async function handleUpdateFavs(userName) {
+  async function handleUpdateFavs(userName, itemValue) {
     const body = {
       user: userName,
       favoriteColors: favoriteColorsData,
       favoritePalettes: favoritePalettesData,
     };
-    console.log(body);
+
     const response = await fetch(`/api/favorites/${userName}`, {
       method: "PUT",
       body: JSON.stringify(body),
@@ -54,21 +54,22 @@ export default function App({ Component, pageProps }) {
     }
   }
 
-  async function handleToggleFavoriteColor(name) {
+  async function handleToggleFavoriteColor(colorName) {
     setFavoriteColorsData((prevFavoriteColorsData) => {
       const favStatus = prevFavoriteColorsData.find(
-        (element) => element.name === name
+        (element) => element.name === colorName
       );
       if (favStatus) {
         return prevFavoriteColorsData.map((color) =>
-          color.name === name
+          color.name === colorName
             ? { name: color.name, isFavorite: !color.isFavorite }
             : color
         );
       }
-      return [...prevFavoriteColorsData, { name: name, isFavorite: true }];
+      return [...prevFavoriteColorsData, { name: colorName, isFavorite: true }];
     });
-    handleUpdateFavs(userName);
+    console.log(typeof colorName);
+    handleUpdateFavs(userName, colorName);
   }
 
   function handleToggleFavoritePalette(id) {
@@ -85,7 +86,7 @@ export default function App({ Component, pageProps }) {
       }
       return [...prevFavoritePalettesData, { id: id, isFavorite: true }];
     });
-    handleUpdateFavs(userName);
+    handleUpdateFavs(userName, id);
   }
 
   return (
