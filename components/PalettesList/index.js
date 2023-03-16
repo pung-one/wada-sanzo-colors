@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { uid } from "uid";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
 
@@ -43,8 +42,11 @@ export default function PalettesList({
           (palette2) => palette2.id === palette1.id
         );
         return (
-          <StyledPaletteContainer key={uid()} length={palette1.palette.length}>
-            {palette1.palette.map(({ name, hex, rgb }, colorIndex) => {
+          <StyledPaletteContainer
+            key={palette1.id}
+            length={palette1?.palette?.length}
+          >
+            {palette1.palette?.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} hex={hex}>
                   {colorIndex === 0 && (

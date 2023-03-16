@@ -18,7 +18,8 @@ const StyledButton = styled.button`
   border: 1px solid black;
   width: 40%;
   padding: 1vh;
-  box-shadow: ${({ isActive }) => (isActive ? null : "0 2px 5px grey")};
+  box-shadow: ${({ isActive }) => (isActive ? null : "2px 3px 0 black")};
+  transition: box-shadow 0.1s;
 `;
 
 export default function TabBar({ onShowColors, onShowPalettes, listType }) {
