@@ -31,7 +31,7 @@ export default function App({ Component, pageProps }) {
     setFavoritePalettesData(favData?.favoritePalettes);
   }, [favData]);
 
-  async function handleUpdateFavs(userName, itemValue) {
+  async function handleUpdateFavs(userName) {
     const body = {
       user: userName,
       favoriteColors: favoriteColorsData,
@@ -48,9 +48,8 @@ export default function App({ Component, pageProps }) {
 
     if (response.ok) {
       await response.json();
-      console.log(response);
     } else {
-      console.error(response);
+      console.error(response.status);
     }
   }
 
@@ -69,7 +68,7 @@ export default function App({ Component, pageProps }) {
       return [...prevFavoriteColorsData, { name: colorName, isFavorite: true }];
     });
     console.log(typeof colorName);
-    handleUpdateFavs(userName, colorName);
+    handleUpdateFavs(userName);
   }
 
   function handleToggleFavoritePalette(id) {
@@ -86,7 +85,7 @@ export default function App({ Component, pageProps }) {
       }
       return [...prevFavoritePalettesData, { id: id, isFavorite: true }];
     });
-    handleUpdateFavs(userName, id);
+    handleUpdateFavs(userName);
   }
 
   return (

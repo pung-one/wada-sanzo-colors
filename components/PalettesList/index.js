@@ -44,7 +44,7 @@ export default function PalettesList({
         );
         return (
           <StyledPaletteContainer
-            key={uid()}
+            key={palette1.id}
             length={palette1?.palette?.length}
           >
             {palette1.palette?.map(({ name, hex, rgb }, colorIndex) => {
