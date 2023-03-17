@@ -6,8 +6,8 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  margin-top: 10vh;
-  height: 90vh;
+  margin-top: 12vh;
+  height: 88vh;
 `;
 
 const ButtonContainer = styled.main`
@@ -15,7 +15,7 @@ const ButtonContainer = styled.main`
   flex-direction: column;
   align-items: center;
   flex: 1;
-  padding-top: 15vh;
+  padding-top: 12vh;
   gap: 10vh;
   background: ${({ background }) => (background ? background : null)};
 `;
@@ -25,7 +25,7 @@ const StyledButton = styled.button`
   border: 1px solid black;
   padding: 5vh;
   width: 60vw;
-  box-shadow: 8px 6px 0px black;
+  box-shadow: 0 0 4px black;
 `;
 
 const StyledLink = styled(Link)`
@@ -34,7 +34,7 @@ const StyledLink = styled(Link)`
   padding: 5vh;
   width: 60vw;
   text-align: center;
-  box-shadow: 8px 6px 0px black;
+  box-shadow: 0 0 4px black;
 `;
 
 export default function InspirationPage({

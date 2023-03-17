@@ -32,6 +32,8 @@ const NavBar = styled.nav`
 const NavButton = styled.div`
   border: 1px solid black;
   box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
   padding: 1vh 2vw 1vh;
   font-size: 2vh;
   text-align: center;
@@ -62,26 +64,16 @@ export default function Layout({
             onClick={() => setInspirationPageFilter("initialPage")}
           >
             Inspiration
-            {route === "/inspiration" && <StyledArrowDown />}
           </NavButton>
         </Link>
         <Link href={"/"}>
-          <NavButton isActive={route === "/"}>
-            Lists
-            {route === "/" && <StyledArrowDown />}
-          </NavButton>
+          <NavButton isActive={route === "/"}>Lists</NavButton>
         </Link>
         <Link href={"/bookmarks"}>
-          <NavButton isActive={route === "/bookmarks"}>
-            Bookmarks
-            {route === "/bookmarks" && <StyledArrowDown />}
-          </NavButton>
+          <NavButton isActive={route === "/bookmarks"}>Bookmarks</NavButton>
         </Link>
         <Link href={"/about"}>
-          <NavButton isActive={route === "/about"}>
-            About
-            {route === "/about" && <StyledArrowDown />}
-          </NavButton>
+          <NavButton isActive={route === "/about"}>About</NavButton>
         </Link>
       </NavBar>
     </>

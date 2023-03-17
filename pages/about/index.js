@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 5vh 0 11vh;
+  margin: 12vh 0 5vh;
   padding: 0 5vw 2vh 5vw;
   float: left;
 `;

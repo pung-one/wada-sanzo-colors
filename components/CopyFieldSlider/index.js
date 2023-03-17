@@ -52,6 +52,7 @@ const Arrow = styled(SlArrowLeft)`
 `;
 
 const StyledColorName = styled.h2`
+  text-align: center;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
   width: ${({ isLarge }) => (isLarge ? "76vw" : "36vw")};
 `;
@@ -81,7 +82,10 @@ export default function CopyFieldSlider({
         </StyledButton>
         {needColorName && (
           <Link href={`/colors/${slug}`}>
-            <StyledColorName isBright={IsColorBright(rgb)}>
+            <StyledColorName
+              isLarge={isLargePalette}
+              isBright={IsColorBright(rgb)}
+            >
               {name}
             </StyledColorName>
           </Link>

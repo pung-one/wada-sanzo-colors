@@ -20,6 +20,8 @@ const StyledButton = styled.button`
   font-size: 1.8vh;
   width: 40vw;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
   transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
@@ -35,7 +37,7 @@ export default function TabBar({ onShowColors, onShowPalettes, listType }) {
         onClick={() => onShowColors()}
       >
         Colors
-        {listType === "colors" && <MdKeyboardArrowDown />}
+        {/* {listType === "colors" && <MdKeyboardArrowDown />} */}
       </StyledButton>
       <StyledButton
         type="button"
@@ -43,7 +45,7 @@ export default function TabBar({ onShowColors, onShowPalettes, listType }) {
         onClick={() => onShowPalettes()}
       >
         Palettes
-        {listType === "palettes" && <MdKeyboardArrowDown />}
+        {/* {listType === "palettes" && <MdKeyboardArrowDown />} */}
       </StyledButton>
     </TabContainer>
   );
