@@ -13,8 +13,8 @@ const Article = styled.article`
 
 const Headline = styled.h2`
   margin-bottom: 2.5vh;
-  max-width: 70%;
   font-weight: lighter;
+  line-height: 3.5vh;
   font-size: 3vh;
 `;
 

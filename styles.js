@@ -9,6 +9,7 @@ export default createGlobalStyle`
     margin: 0;
     font-family: system-ui;
     font-size: 2vh;
+    padding: 0;
     color: black;
   }
   h1 {

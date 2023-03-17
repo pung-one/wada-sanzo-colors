@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Header = styled.header`
   position: fixed;
@@ -38,9 +37,10 @@ const NavButton = styled.div`
   font-size: 2vh;
   text-align: center;
   transition: box-shadow 0.1s;
+  &:hover {
+    cursor: pointer;
+  }
 `;
-
-const StyledArrowDown = styled(MdKeyboardArrowDown)``;
 
 export default function Layout({
   children,
