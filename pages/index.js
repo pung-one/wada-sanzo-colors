@@ -6,7 +6,7 @@ import PalettesList from "@/components/PalettesList";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
 const PageContainer = styled.main`
-  margin: 5vh 0 18vh;
+  margin: 19vh 0 2vh;
 `;
 
 export default function Home({
