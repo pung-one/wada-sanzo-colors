@@ -6,9 +6,9 @@ const FilterContainer = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  top: 19vh;
+  top: 20vh;
   width: 100%;
-  height: 7vh;
+  height: 6vh;
   background-color: white;
   border-bottom: 1px solid black;
 `;
@@ -18,8 +18,8 @@ const StyledButton = styled.button`
   position: relative;
   background-color: white;
   border: 1px solid black;
-  width: 25vw;
-  height: 4.6vh;
+  width: 30vw;
+  height: 4vh;
   overflow: hidden;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};

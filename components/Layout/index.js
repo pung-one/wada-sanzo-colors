@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import TabBar from "../TabBar";
 import PalettesFilter from "../PalettesFilter";
+import ColorFilter from "../ColorFilter";
 
 const Header = styled.header`
   position: fixed;
@@ -25,19 +26,23 @@ const NavBar = styled.nav`
   align-items: center;
   top: 5vh;
   width: 100%;
-  height: 7vh;
+  height: 9vh;
   background-color: white;
   border-bottom: 1px solid black;
 `;
 
 const NavButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid black;
   box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
   padding: 1vh 2vw 1vh;
   font-size: 2vh;
-  height: 4.6vh;
+  width: 22.5vw;
+  height: 6vh;
   text-align: center;
   transition: box-shadow 0.1s;
   &:hover {
@@ -92,6 +97,10 @@ export default function Layout({
           onShowPalettes={handleShowPalettes}
           listType={listType}
         />
+      ) : null}
+      {(listType === "colors" && route === "/") ||
+      (listType === "colors" && route === "/bookmarks") ? (
+        <ColorFilter />
       ) : null}
       {(listType === "palettes" && route === "/") ||
       (listType === "palettes" && route === "/bookmarks") ? (
