@@ -6,7 +6,7 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 19vh 0 2vh;
+  margin: 26vh 0 2vh;
 `;
 
 const NoBookmarksInfo = styled.p`
@@ -22,19 +22,9 @@ export default function Home({
   favoriteColorsData,
   onToggleFavoritePalette,
   favoritePalettesData,
+  listType,
+  paletteListType,
 }) {
-  const [listType, setListType] = useLocalStorageState("listType", {
-    defaultValue: "colors",
-  });
-
-  function handleShowColors() {
-    setListType("colors");
-  }
-
-  function handleShowPalettes() {
-    setListType("palettes");
-  }
-
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
@@ -74,13 +64,9 @@ export default function Home({
           paletteArray={favoritePalettesList}
           onToggleFavorite={onToggleFavoritePalette}
           favoritePalettesData={favoritePalettesData}
+          paletteListType={paletteListType}
         />
       )}
-      <TabBar
-        onShowColors={handleShowColors}
-        onShowPalettes={handleShowPalettes}
-        listType={listType}
-      />
     </PageContainer>
   );
 }

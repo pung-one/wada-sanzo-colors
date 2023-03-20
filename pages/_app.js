@@ -17,10 +17,49 @@ export default function App({ Component, pageProps }) {
   );
   const [inspirationPageFilter, setInspirationPageFilter] =
     useState("initialPage");
+
+  const [listType, setListType] = useLocalStorageState("listType", {
+    defaultValue: "colors",
+  });
+
+  const [paletteListType, setPaletteListType] = useState(0);
+
+  function handleShowPalettesWith2Colors() {
+    if (paletteListType === 2) {
+      setPaletteListType(0);
+    } else {
+      setPaletteListType(2);
+    }
+  }
+
+  function handleShowPalettesWith3Colors() {
+    if (paletteListType === 3) {
+      setPaletteListType(0);
+    } else {
+      setPaletteListType(3);
+    }
+  }
+
+  function handleShowPalettesWith4Colors() {
+    if (paletteListType === 4) {
+      setPaletteListType(0);
+    } else {
+      setPaletteListType(4);
+    }
+  }
+  function handleShowColors() {
+    setListType("colors");
+  }
+
+  function handleShowPalettes() {
+    setListType("palettes");
+  }
+
   const [favoriteColorsData, setFavoriteColorsData] = useLocalStorageState(
     "favoriteColorsData",
     { defaultValue: [] }
   );
+
   const [favoritePalettesData, setFavoritePalettesData] = useLocalStorageState(
     "favoritePalettesData",
     { defaultValue: [] }
@@ -100,11 +139,21 @@ export default function App({ Component, pageProps }) {
       <Layout
         inspirationPageFilter={inspirationPageFilter}
         setInspirationPageFilter={setInspirationPageFilter}
+        handleShowColors={handleShowColors}
+        handleShowPalettes={handleShowPalettes}
+        listType={listType}
+        paletteListType={paletteListType}
+        handleShowPalettesWith2Colors={handleShowPalettesWith2Colors}
+        handleShowPalettesWith3Colors={handleShowPalettesWith3Colors}
+        handleShowPalettesWith4Colors={handleShowPalettesWith4Colors}
+        favoritePalettesData={favoritePalettesData}
       >
         <Component
           {...pageProps}
           data={data}
           error={error}
+          listType={listType}
+          paletteListType={paletteListType}
           inspirationPageFilter={inspirationPageFilter}
           setInspirationPageFilter={setInspirationPageFilter}
           favoriteColorsData={favoriteColorsData}
