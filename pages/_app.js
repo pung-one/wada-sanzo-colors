@@ -47,7 +47,6 @@ export default function App({ Component, pageProps }) {
       setPaletteListType(4);
     }
   }
-
   function handleShowColors() {
     setListType("colors");
   }
@@ -147,6 +146,7 @@ export default function App({ Component, pageProps }) {
         handleShowPalettesWith2Colors={handleShowPalettesWith2Colors}
         handleShowPalettesWith3Colors={handleShowPalettesWith3Colors}
         handleShowPalettesWith4Colors={handleShowPalettesWith4Colors}
+        favoritePalettesData={favoritePalettesData}
       >
         <Component
           {...pageProps}

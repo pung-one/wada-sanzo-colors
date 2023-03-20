@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const FilterContainer = styled.nav`
@@ -14,6 +15,7 @@ const FilterContainer = styled.nav`
 
 const StyledButton = styled.button`
   display: flex;
+  position: relative;
   background-color: white;
   border: 1px solid black;
   width: 25vw;
@@ -36,24 +38,66 @@ const StyledBox = styled.div`
   height: 4.6vh;
 `;
 
+const StyledNumber = styled.span`
+  position: absolute;
+  right: 1vw;
+  bottom: 0.5vh;
+  font-size: 1.5vh;
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
+`;
+
 export default function PalettesFilter({
   paletteListType,
   onShowPalettesWith2Colors,
   onShowPalettesWith3Colors,
   onShowPalettesWith4Colors,
+  favoritePalettesData,
+  isAtBookmarks,
 }) {
+  const [favWithTwoColors, setFavWithTwoColors] = useState(0);
+  const [favWithThreeColors, setFavWithThreeColors] = useState(0);
+  const [favWithFourColors, setFavWithFourColors] = useState(0);
+
+  useEffect(() => {
+    setFavWithTwoColors(
+      favoritePalettesData.filter(
+        (palette) => palette.id <= 120 && palette.isFavorite
+      ).length
+    );
+    setFavWithThreeColors(
+      favoritePalettesData.filter(
+        (palette) => palette.id > 120 && palette.id <= 240 && palette.isFavorite
+      ).length
+    );
+    setFavWithFourColors(
+      favoritePalettesData.filter(
+        (palette) => palette.id > 240 && palette.isFavorite
+      ).length
+    );
+  }, [favoritePalettesData]);
+
   return (
     <FilterContainer>
       <StyledButton
         onClick={() => onShowPalettesWith2Colors()}
         isActive={paletteListType === 2}
       >
+        {isAtBookmarks && (
+          <StyledNumber isActive={paletteListType === 2}>
+            {favWithTwoColors}
+          </StyledNumber>
+        )}
         <StyledBox filter={2} isActive={paletteListType === 2} />
       </StyledButton>
       <StyledButton
         onClick={() => onShowPalettesWith3Colors()}
         isActive={paletteListType === 3}
       >
+        {isAtBookmarks && (
+          <StyledNumber isActive={paletteListType === 3}>
+            {favWithThreeColors}
+          </StyledNumber>
+        )}
         <StyledBox filter={3} isActive={paletteListType === 3} />
         <StyledBox filter={3} isActive={paletteListType === 3} />
       </StyledButton>
@@ -61,6 +105,11 @@ export default function PalettesFilter({
         onClick={() => onShowPalettesWith4Colors()}
         isActive={paletteListType === 4}
       >
+        {isAtBookmarks && (
+          <StyledNumber isActive={paletteListType === 4}>
+            {favWithFourColors}
+          </StyledNumber>
+        )}
         <StyledBox filter={4} isActive={paletteListType === 4} />
         <StyledBox filter={4} isActive={paletteListType === 4} />
         <StyledBox filter={4} isActive={paletteListType === 4} />

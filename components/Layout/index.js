@@ -56,6 +56,7 @@ export default function Layout({
   handleShowPalettesWith2Colors,
   handleShowPalettesWith3Colors,
   handleShowPalettesWith4Colors,
+  favoritePalettesData,
 }) {
   const router = useRouter();
   const route = router.route;
@@ -92,12 +93,15 @@ export default function Layout({
           listType={listType}
         />
       ) : null}
-      {(listType === "palettes" && route === "/") || route === "/bookmarks" ? (
+      {(listType === "palettes" && route === "/") ||
+      (listType === "palettes" && route === "/bookmarks") ? (
         <PalettesFilter
           paletteListType={paletteListType}
           onShowPalettesWith2Colors={handleShowPalettesWith2Colors}
           onShowPalettesWith3Colors={handleShowPalettesWith3Colors}
           onShowPalettesWith4Colors={handleShowPalettesWith4Colors}
+          favoritePalettesData={favoritePalettesData}
+          isAtBookmarks={route === "/bookmarks"}
         />
       ) : null}
     </>

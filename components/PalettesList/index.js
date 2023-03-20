@@ -54,7 +54,7 @@ export default function PalettesList({
         paletteArray.filter((palette) => palette.palette.length === 4)
       );
     }
-  }, [paletteListType]);
+  }, [paletteListType, favoritePalettesData]);
 
   return (
     <List>

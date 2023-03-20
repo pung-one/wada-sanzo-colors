@@ -22,19 +22,9 @@ export default function Home({
   favoriteColorsData,
   onToggleFavoritePalette,
   favoritePalettesData,
+  listType,
+  paletteListType,
 }) {
-  const [listType, setListType] = useLocalStorageState("listType", {
-    defaultValue: "colors",
-  });
-
-  function handleShowColors() {
-    setListType("colors");
-  }
-
-  function handleShowPalettes() {
-    setListType("palettes");
-  }
-
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
@@ -74,13 +64,9 @@ export default function Home({
           paletteArray={favoritePalettesList}
           onToggleFavorite={onToggleFavoritePalette}
           favoritePalettesData={favoritePalettesData}
+          paletteListType={paletteListType}
         />
       )}
-      <TabBar
-        onShowColors={handleShowColors}
-        onShowPalettes={handleShowPalettes}
-        listType={listType}
-      />
     </PageContainer>
   );
 }
