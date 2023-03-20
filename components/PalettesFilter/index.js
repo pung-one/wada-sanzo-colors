@@ -35,7 +35,7 @@ const StyledBox = styled.div`
     isActive ? "1px solid white" : "1px solid black"};
   width: ${({ filter }) =>
     filter === 2 ? "50%" : filter === 3 ? "33.3%" : "25%"};
-  height: 4.6vh;
+  height: 4vh;
 `;
 
 const StyledNumber = styled.span`

@@ -84,11 +84,7 @@ const StyledButton = styled.button`
             rgba(17, 19, 20, 1) 90%
           );
         `
-      : /* : props.isActive
-      ? css`
-      background-color: black;
-      ` */
-        null}
+      : null}
   background: ${({ isActive }) => (isActive ? "black" : "")};
 `;
 

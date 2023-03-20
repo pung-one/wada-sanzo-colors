@@ -6,7 +6,8 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 26vh 0 2vh;
+  margin: ${({ showsColorList }) =>
+    showsColorList ? "32vh 0 2vh" : "26vh 0 2vh"};
 `;
 
 const NoBookmarksInfo = styled.p`
@@ -44,7 +45,7 @@ export default function Home({
   );
 
   return (
-    <PageContainer>
+    <PageContainer showsColorList={listType === "colors"}>
       {favoriteColorsList.length === 0 && listType === "colors" && (
         <NoBookmarksInfo>No bookmarked colors</NoBookmarksInfo>
       )}
