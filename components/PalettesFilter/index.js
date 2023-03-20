@@ -18,6 +18,7 @@ const StyledButton = styled.button`
   border: 1px solid black;
   width: 25vw;
   height: 4.6vh;
+  overflow: hidden;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
