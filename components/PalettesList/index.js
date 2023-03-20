@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
+import { useEffect, useState } from "react";
 
 const List = styled.ul`
   padding: 0;
@@ -34,10 +35,30 @@ export default function PalettesList({
   paletteArray,
   favoritePalettesData,
   onToggleFavorite,
+  paletteListType,
 }) {
+  const [arrayToBeRendered, setArrayToBeRendered] = useState(null);
+  useEffect(() => {
+    if (paletteListType === 0) {
+      setArrayToBeRendered(paletteArray);
+    } else if (paletteListType === 2) {
+      setArrayToBeRendered(
+        paletteArray.filter((palette) => palette.palette.length === 2)
+      );
+    } else if (paletteListType === 3) {
+      setArrayToBeRendered(
+        paletteArray.filter((palette) => palette.palette.length === 3)
+      );
+    } else if (paletteListType === 4) {
+      setArrayToBeRendered(
+        paletteArray.filter((palette) => palette.palette.length === 4)
+      );
+    }
+  }, [paletteListType]);
+
   return (
     <List>
-      {paletteArray?.map((palette1) => {
+      {arrayToBeRendered?.map((palette1) => {
         const favoriteStatus = favoritePalettesData?.find(
           (palette2) => palette2.id === palette1.id
         );

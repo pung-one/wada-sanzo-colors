@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import TabBar from "../TabBar";
+import PalettesFilter from "../PalettesFilter";
 
 const Header = styled.header`
   position: fixed;
@@ -35,6 +37,7 @@ const NavButton = styled.div`
   color: ${({ isActive }) => (isActive ? "white" : "black")};
   padding: 1vh 2vw 1vh;
   font-size: 2vh;
+  height: 4.6vh;
   text-align: center;
   transition: box-shadow 0.1s;
   &:hover {
@@ -46,10 +49,16 @@ export default function Layout({
   children,
   inspirationPageFilter,
   setInspirationPageFilter,
+  handleShowColors,
+  handleShowPalettes,
+  listType,
+  paletteListType,
+  handleShowPalettesWith2Colors,
+  handleShowPalettesWith3Colors,
+  handleShowPalettesWith4Colors,
 }) {
   const router = useRouter();
   const route = router.route;
-
   return (
     <>
       <Header>A Dictionary of Color Combinations</Header>
@@ -76,6 +85,21 @@ export default function Layout({
           <NavButton isActive={route === "/about"}>About</NavButton>
         </Link>
       </NavBar>
+      {route === "/" || route === "/bookmarks" ? (
+        <TabBar
+          onShowColors={handleShowColors}
+          onShowPalettes={handleShowPalettes}
+          listType={listType}
+        />
+      ) : null}
+      {(listType === "palettes" && route === "/") || route === "/bookmarks" ? (
+        <PalettesFilter
+          paletteListType={paletteListType}
+          onShowPalettesWith2Colors={handleShowPalettesWith2Colors}
+          onShowPalettesWith3Colors={handleShowPalettesWith3Colors}
+          onShowPalettesWith4Colors={handleShowPalettesWith4Colors}
+        />
+      ) : null}
     </>
   );
 }

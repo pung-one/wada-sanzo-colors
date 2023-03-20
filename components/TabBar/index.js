@@ -1,5 +1,4 @@
-import styled, { css } from "styled-components";
-import { MdKeyboardArrowDown } from "react-icons/md";
+import styled from "styled-components";
 
 const TabContainer = styled.nav`
   position: fixed;
@@ -18,6 +17,7 @@ const StyledButton = styled.button`
   border: 1px solid black;
   padding: 1vh 2vw 1vh;
   font-size: 1.8vh;
+  height: 4.6vh;
   width: 40vw;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
@@ -37,7 +37,6 @@ export default function TabBar({ onShowColors, onShowPalettes, listType }) {
         onClick={() => onShowColors()}
       >
         Colors
-        {/* {listType === "colors" && <MdKeyboardArrowDown />} */}
       </StyledButton>
       <StyledButton
         type="button"
@@ -45,7 +44,6 @@ export default function TabBar({ onShowColors, onShowPalettes, listType }) {
         onClick={() => onShowPalettes()}
       >
         Palettes
-        {/* {listType === "palettes" && <MdKeyboardArrowDown />} */}
       </StyledButton>
     </TabContainer>
   );

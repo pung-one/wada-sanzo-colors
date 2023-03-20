@@ -6,7 +6,7 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 19vh 0 2vh;
+  margin: 26vh 0 2vh;
 `;
 
 const NoBookmarksInfo = styled.p`
