@@ -62,6 +62,13 @@ export default function Layout({
   handleShowPalettesWith3Colors,
   handleShowPalettesWith4Colors,
   favoritePalettesData,
+  colorListType,
+  handleShowSwatchOne,
+  handleShowSwatchTwo,
+  handleShowSwatchThree,
+  handleShowSwatchFour,
+  handleShowSwatchFive,
+  handleShowSwatchSix,
 }) {
   const router = useRouter();
   const route = router.route;
@@ -100,7 +107,15 @@ export default function Layout({
       ) : null}
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/bookmarks") ? (
-        <ColorFilter />
+        <ColorFilter
+          colorListType={colorListType}
+          handleShowSwatchOne={handleShowSwatchOne}
+          handleShowSwatchTwo={handleShowSwatchTwo}
+          handleShowSwatchThree={handleShowSwatchThree}
+          handleShowSwatchFour={handleShowSwatchFour}
+          handleShowSwatchFive={handleShowSwatchFive}
+          handleShowSwatchSix={handleShowSwatchSix}
+        />
       ) : null}
       {(listType === "palettes" && route === "/") ||
       (listType === "palettes" && route === "/bookmarks") ? (

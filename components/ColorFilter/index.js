@@ -93,26 +93,58 @@ const SwatchName = styled.span`
   visibility: ${({ isActive }) => (isActive ? "visible" : "hidden")};
 `;
 
-export default function ColorFilter() {
+export default function ColorFilter({
+  colorListType,
+  handleShowSwatchOne,
+  handleShowSwatchTwo,
+  handleShowSwatchThree,
+  handleShowSwatchFour,
+  handleShowSwatchFive,
+  handleShowSwatchSix,
+}) {
   return (
     <FilterContainer>
-      <StyledButton isActive={false} swatch={"red/purple"}>
-        <SwatchName isActive={false}>red/purple</SwatchName>
+      <StyledButton
+        onClick={() => handleShowSwatchOne()}
+        isActive={colorListType === 1}
+        swatch={"red/purple"}
+      >
+        <SwatchName isActive={colorListType === 1}>red/purple</SwatchName>
       </StyledButton>
-      <StyledButton isActive={false} swatch={"yellow/red"}>
-        <SwatchName isActive={false}>yellow/red</SwatchName>
+      <StyledButton
+        onClick={() => handleShowSwatchTwo()}
+        isActive={colorListType === 2}
+        swatch={"yellow/red"}
+      >
+        <SwatchName isActive={colorListType === 2}>yellow/red</SwatchName>
       </StyledButton>
-      <StyledButton swatch={"yellow/green"}>
-        <SwatchName>yellow/green</SwatchName>
+      <StyledButton
+        onClick={() => handleShowSwatchThree()}
+        isActive={colorListType === 3}
+        swatch={"yellow/green"}
+      >
+        <SwatchName isActive={colorListType === 3}>yellow/green</SwatchName>
       </StyledButton>
-      <StyledButton swatch={"blue/turquoise"}>
-        <SwatchName>blue/turquoise</SwatchName>
+      <StyledButton
+        onClick={() => handleShowSwatchFour()}
+        isActive={colorListType === 4}
+        swatch={"blue/turquoise"}
+      >
+        <SwatchName isActive={colorListType === 4}>blue/turquoise</SwatchName>
       </StyledButton>
-      <StyledButton swatch={"blue/purple"}>
-        <SwatchName>blue/purple</SwatchName>
+      <StyledButton
+        onClick={() => handleShowSwatchFive()}
+        isActive={colorListType === 5}
+        swatch={"blue/purple"}
+      >
+        <SwatchName isActive={colorListType === 5}>blue/purple</SwatchName>
       </StyledButton>
-      <StyledButton swatch={"white/grey/black"}>
-        <SwatchName>white/grey/black</SwatchName>
+      <StyledButton
+        onClick={() => handleShowSwatchSix()}
+        isActive={colorListType === 6}
+        swatch={"white/grey/black"}
+      >
+        <SwatchName isActive={colorListType === 6}>white/grey/black</SwatchName>
       </StyledButton>
     </FilterContainer>
   );
