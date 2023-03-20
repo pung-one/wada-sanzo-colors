@@ -27,9 +27,15 @@ export default function App({ Component, pageProps }) {
   );
 
   useEffect(() => {
-    setFavoriteColorsData(favData?.favoriteColors);
-    setFavoritePalettesData(favData?.favoritePalettes);
+    if (favData) {
+      setFavoriteColorsData(favData?.favoriteColors);
+      setFavoritePalettesData(favData?.favoritePalettes);
+    }
   }, [favData]);
+
+  useEffect(() => {
+    handleUpdateFavs(userName);
+  }, [favoriteColorsData, favoritePalettesData]);
 
   async function handleUpdateFavs(userName) {
     const body = {
@@ -67,7 +73,6 @@ export default function App({ Component, pageProps }) {
       }
       return [...prevFavoriteColorsData, { name: colorName, isFavorite: true }];
     });
-    handleUpdateFavs(userName);
   }
 
   function handleToggleFavoritePalette(id) {
@@ -84,7 +89,6 @@ export default function App({ Component, pageProps }) {
       }
       return [...prevFavoritePalettesData, { id: id, isFavorite: true }];
     });
-    handleUpdateFavs(userName);
   }
 
   return (

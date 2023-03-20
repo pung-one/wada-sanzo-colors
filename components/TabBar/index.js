@@ -1,25 +1,31 @@
 import styled, { css } from "styled-components";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const TabContainer = styled.nav`
-  display: flex;
   position: fixed;
-  bottom: 11vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  top: 12vh;
   width: 100%;
   height: 7vh;
-  justify-content: space-evenly;
-  padding: 1vh;
-  border-top: 1px solid black;
-
   background-color: white;
+  border-bottom: 1px solid black;
 `;
 
 const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
-  width: 40%;
-  padding: 1vh;
-  box-shadow: ${({ isActive }) => (isActive ? null : "2px 3px 0 black")};
+  padding: 1vh 2vw 1vh;
+  font-size: 1.8vh;
+  width: 40vw;
+  box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
   transition: box-shadow 0.1s;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default function TabBar({ onShowColors, onShowPalettes, listType }) {
@@ -30,14 +36,16 @@ export default function TabBar({ onShowColors, onShowPalettes, listType }) {
         isActive={listType === "colors"}
         onClick={() => onShowColors()}
       >
-        COLORS
+        Colors
+        {/* {listType === "colors" && <MdKeyboardArrowDown />} */}
       </StyledButton>
       <StyledButton
         type="button"
         isActive={listType === "palettes"}
         onClick={() => onShowPalettes()}
       >
-        PALETTES
+        Palettes
+        {/* {listType === "palettes" && <MdKeyboardArrowDown />} */}
       </StyledButton>
     </TabContainer>
   );

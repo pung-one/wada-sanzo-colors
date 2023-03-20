@@ -6,13 +6,13 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin-top: 5vh;
-  margin-bottom: 18vh;
+  margin: 19vh 0 2vh;
 `;
 
 const NoBookmarksInfo = styled.p`
   padding-top: 4vh;
   font-size: 3vh;
+  text-align: center;
 `;
 
 export default function Home({

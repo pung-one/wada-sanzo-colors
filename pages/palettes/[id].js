@@ -10,8 +10,8 @@ const PageContainer = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 84vh;
-  margin: 5vh 0 11vh;
+  height: 88vh;
+  margin-top: 12vh;
 `;
 
 const Heading = styled.header`
@@ -24,7 +24,7 @@ const Heading = styled.header`
 
 const PaletteContainer = styled.div`
   display: flex;
-  height: 78vh;
+  height: 80vh;
   flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
   overflow-x: hidden;
 `;
@@ -34,7 +34,6 @@ const ColorBox = styled.div`
   flex-direction: column;
   align-items: center;
   flex-basis: 100%;
-  padding: 1% 0 1%;
   background-color: ${({ hex }) => (hex ? hex : null)};
   color: ${({ hex }) => (hex ? hex : null)};
 `;

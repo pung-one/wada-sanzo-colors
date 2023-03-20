@@ -3,6 +3,7 @@ import chroma from "chroma-js";
 import { useState } from "react";
 import Link from "next/link";
 import { IsColorBright } from "@/utils/IsColorBright";
+import { ImArrowDown } from "react-icons/im";
 
 const StyledForm = styled.form`
   padding-top: 4vh;
@@ -12,11 +13,18 @@ const StyledForm = styled.form`
   gap: 3vh;
 `;
 
+const Arrow = styled(ImArrowDown)`
+  font-size: 4vh;
+`;
+
 const ColorInput = styled.input`
   width: 60vw;
   height: 20vh;
   background-color: white;
   box-shadow: 0 2px 5px black;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -47,11 +55,13 @@ const StyledLink = styled(Link)`
 `;
 
 const ColorName = styled.p`
+  text-align: center;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
 
 export default function ColorPicker({ data, error }) {
   const [closestColor, setClosestColor] = useState("");
+  const [isColorPicked, setIsColorPicked] = useState(false);
 
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading Data...</h1>;
@@ -77,8 +87,15 @@ export default function ColorPicker({ data, error }) {
         <label htmlFor="color">
           <h1>Pick a Color</h1>
         </label>
-        <ColorInput id="color" type="color" />
-        <StyledButton type="submit">Find from list</StyledButton>
+        <Arrow />
+        <ColorInput
+          id="color"
+          type="color"
+          onClick={() => setIsColorPicked(true)}
+        />
+        {isColorPicked && (
+          <StyledButton type="submit">Find from list</StyledButton>
+        )}
       </StyledForm>
       {closestColor && (
         <ResultContainer>

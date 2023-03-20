@@ -8,6 +8,7 @@ const Header = styled.header`
   justify-content: center;
   z-index: 1;
   width: 100%;
+  height: 5vh;
   top: 0%;
   font-size: 2.3vh;
   background-color: white;
@@ -15,25 +16,30 @@ const Header = styled.header`
   padding: 1vh 0 1vh 0;
 `;
 
-const StyledFooter = styled.nav`
+const NavBar = styled.nav`
   position: fixed;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  bottom: 0;
+  top: 5vh;
   width: 100%;
-  height: 11vh;
+  height: 7vh;
   background-color: white;
-  padding: 2vh;
-  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 `;
 
-const NavButton = styled.span`
+const NavButton = styled.div`
   border: 1px solid black;
-  box-shadow: ${({ isActive }) => (isActive ? "" : "2px 3px 0 black")};
-  width: 28vw;
-  padding: 2vh;
+  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
+  padding: 1vh 2vw 1vh;
+  font-size: 2vh;
+  text-align: center;
   transition: box-shadow 0.1s;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export default function Layout({
@@ -48,7 +54,7 @@ export default function Layout({
     <>
       <Header>A Dictionary of Color Combinations</Header>
       {children}
-      <StyledFooter>
+      <NavBar>
         <Link href={"/inspiration"}>
           <NavButton
             isActive={
@@ -66,7 +72,10 @@ export default function Layout({
         <Link href={"/bookmarks"}>
           <NavButton isActive={route === "/bookmarks"}>Bookmarks</NavButton>
         </Link>
-      </StyledFooter>
+        <Link href={"/about"}>
+          <NavButton isActive={route === "/about"}>About</NavButton>
+        </Link>
+      </NavBar>
     </>
   );
 }

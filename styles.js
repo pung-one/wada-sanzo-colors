@@ -9,14 +9,13 @@ export default createGlobalStyle`
     margin: 0;
     font-family: system-ui;
     font-size: 2vh;
-    text-align: center;
+    padding: 0;
     color: black;
   }
   h1 {
     font-size: 4vh;
   }
   h2 {
-    text-decoration: underline;
     font-size: 2.5vh;
   }
 `;

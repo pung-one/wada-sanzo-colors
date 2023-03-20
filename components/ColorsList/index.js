@@ -19,6 +19,7 @@ const ColorBox = styled.li`
 `;
 
 const StyledColorName = styled.p`
+  text-align: center;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
 

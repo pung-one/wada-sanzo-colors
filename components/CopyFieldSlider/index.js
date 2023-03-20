@@ -17,7 +17,7 @@ const CopyFieldContainer = styled.aside`
     isActive && isLeftBox
       ? "translate(85%)"
       : isActive
-      ? "translate(-88%)"
+      ? "translate(-85%)"
       : ""};
   left: ${({ isLeftBox }) => (isLeftBox ? "-43vw" : null)};
   right: ${({ isLarge, isLeftBox }) =>
@@ -52,6 +52,9 @@ const Arrow = styled(SlArrowLeft)`
 `;
 
 const StyledColorName = styled.h2`
+  text-align: center;
+  text-decoration: underline;
+  font-weight: lighter;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
   width: ${({ isLarge }) => (isLarge ? "76vw" : "36vw")};
 `;
@@ -81,7 +84,10 @@ export default function CopyFieldSlider({
         </StyledButton>
         {needColorName && (
           <Link href={`/colors/${slug}`}>
-            <StyledColorName isBright={IsColorBright(rgb)}>
+            <StyledColorName
+              isLarge={isLargePalette}
+              isBright={IsColorBright(rgb)}
+            >
               {name}
             </StyledColorName>
           </Link>
