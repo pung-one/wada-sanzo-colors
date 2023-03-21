@@ -7,9 +7,11 @@ import PalettesFilter from "../PalettesFilter";
 import ColorFilter from "../ColorFilter";
 
 const NavContainer = styled.div`
-  position: sticky;
-  top: ${({ show }) => (show ? "5vh" : "-30vh")};
+  position: ${({ isOnInspo, isOnAbout }) =>
+    isOnAbout || isOnInspo ? "fixed" : "sticky"};
+  top: ${({ show }) => (show ? "5vh" : "-23vh")};
   z-index: 1;
+  width: 100%;
   transition: top 0.5s;
 `;
 
@@ -85,13 +87,13 @@ export default function NavBar({
       };
     }
   }, [lastScrollY]);
-  console.log(show);
+  console.log(route);
 
   return (
     <NavContainer
       show={show}
-      isAtColors={listType === "colors"}
-      isAtPalettes={listType === "palettes"}
+      isOnAbout={route === "/about"}
+      isOnInspo={route === "/inspiration"}
     >
       <NavPages>
         <Link href={"/inspiration"}>
