@@ -212,6 +212,7 @@ export default function App({ Component, pageProps }) {
           error={error}
           listType={listType}
           paletteListType={paletteListType}
+          colorListType={colorListType}
           inspirationPageFilter={inspirationPageFilter}
           setInspirationPageFilter={setInspirationPageFilter}
           favoriteColorsData={favoriteColorsData}
