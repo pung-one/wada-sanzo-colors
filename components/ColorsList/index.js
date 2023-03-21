@@ -30,7 +30,6 @@ export default function ColorsList({
   onToggleFavorite,
   colorListType,
 }) {
-  console.log(colors);
   const [arrayToBeRendered, setArrayToBeRendered] = useState(null);
   useEffect(() => {
     if (colorListType === 0) {
@@ -52,7 +51,7 @@ export default function ColorsList({
 
   return (
     <List>
-      {arrayToBeRendered?.map(({ name, slug, rgb, hex }) => {
+      {arrayToBeRendered?.map(({ name, slug, rgb, hex, swatch }) => {
         const favoriteStatus = favoriteColorsData?.find(
           (color) => color.name === name
         );
@@ -64,6 +63,7 @@ export default function ColorsList({
               isOnListElement={true}
               toggleValue={name}
               onToggleFavorite={onToggleFavorite}
+              swatch={swatch}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
               <StyledColorName isBright={IsColorBright(rgb)}>

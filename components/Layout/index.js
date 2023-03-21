@@ -69,6 +69,7 @@ export default function Layout({
   handleShowSwatchFour,
   handleShowSwatchFive,
   handleShowSwatchSix,
+  favoriteColorsData,
 }) {
   const router = useRouter();
   const route = router.route;
@@ -115,6 +116,8 @@ export default function Layout({
           handleShowSwatchFour={handleShowSwatchFour}
           handleShowSwatchFive={handleShowSwatchFive}
           handleShowSwatchSix={handleShowSwatchSix}
+          favoriteColorsData={favoriteColorsData}
+          isAtBookmarks={route === "/bookmarks"}
         />
       ) : null}
       {(listType === "palettes" && route === "/") ||

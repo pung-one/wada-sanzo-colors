@@ -148,7 +148,7 @@ export default function App({ Component, pageProps }) {
     }
   }
 
-  async function handleToggleFavoriteColor(colorName) {
+  async function handleToggleFavoriteColor(colorName, colorSwatch) {
     setFavoriteColorsData((prevFavoriteColorsData) => {
       const favStatus = prevFavoriteColorsData.find(
         (element) => element.name === colorName
@@ -156,11 +156,18 @@ export default function App({ Component, pageProps }) {
       if (favStatus) {
         return prevFavoriteColorsData.map((color) =>
           color.name === colorName
-            ? { name: color.name, isFavorite: !color.isFavorite }
+            ? {
+                name: color.name,
+                swatch: color.swatch,
+                isFavorite: !color.isFavorite,
+              }
             : color
         );
       }
-      return [...prevFavoriteColorsData, { name: colorName, isFavorite: true }];
+      return [
+        ...prevFavoriteColorsData,
+        { name: colorName, swatch: colorSwatch, isFavorite: true },
+      ];
     });
   }
 

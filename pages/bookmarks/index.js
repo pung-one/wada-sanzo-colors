@@ -25,6 +25,7 @@ export default function Home({
   favoritePalettesData,
   listType,
   paletteListType,
+  colorListType,
 }) {
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
@@ -55,9 +56,9 @@ export default function Home({
       {listType === "colors" && (
         <ColorsList
           colors={favoriteColorsList}
-          error={error}
           onToggleFavorite={onToggleFavoriteColor}
           favoriteColorsData={favoriteColorsData}
+          colorListType={colorListType}
         />
       )}
       {listType === "palettes" && (
