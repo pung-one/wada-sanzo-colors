@@ -3,12 +3,10 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 
 const FilterContainer = styled.nav`
-  position: fixed;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
-  top: 20vh;
   width: 100%;
   height: 12vh;
   padding: 1vh 0 1vh;

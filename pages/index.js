@@ -4,8 +4,7 @@ import PalettesList from "@/components/PalettesList";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
 const PageContainer = styled.main`
-  margin: ${({ showsColorList }) =>
-    showsColorList ? "32vh 0 2vh" : "26vh 0 2vh"};
+  margin: 5vh 0 2vh;
 `;
 
 export default function Home({
