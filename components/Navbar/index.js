@@ -7,8 +7,7 @@ import PalettesFilter from "../PalettesFilter";
 import ColorFilter from "../ColorFilter";
 
 const NavContainer = styled.div`
-  position: ${({ isOnInspo, isOnAbout }) =>
-    isOnAbout || isOnInspo ? "fixed" : "sticky"};
+  position: ${({ isOnList }) => (isOnList ? "sticky" : "fixed")};
   top: ${({ show }) => (show ? "5vh" : "-23vh")};
   z-index: 1;
   width: 100%;
@@ -92,8 +91,7 @@ export default function NavBar({
   return (
     <NavContainer
       show={show}
-      isOnAbout={route === "/about"}
-      isOnInspo={route === "/inspiration"}
+      isOnList={route === "/" || route === "/bookmarks"}
     >
       <NavPages>
         <Link href={"/inspiration"}>
