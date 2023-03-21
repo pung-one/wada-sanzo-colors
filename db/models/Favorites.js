@@ -8,6 +8,7 @@ const favoriteSchema = new Schema({
     {
       name: { type: String, required: true },
       isFavorite: { type: Boolean, default: false },
+      swatch: { type: Number, required: true },
     },
   ],
   favoritePalettes: [

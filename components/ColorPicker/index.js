@@ -6,7 +6,7 @@ import { IsColorBright } from "@/utils/IsColorBright";
 import { ImArrowDown } from "react-icons/im";
 
 const StyledForm = styled.form`
-  padding-top: 4vh;
+  padding-top: 17vh;
   display: flex;
   flex-direction: column;
   align-items: center;

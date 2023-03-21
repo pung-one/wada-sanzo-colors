@@ -7,11 +7,10 @@ import FavoriteButton from "@/components/FavoriteButton";
 import { useEffect } from "react";
 
 const PageContainer = styled.main`
-  position: relative;
   display: flex;
   flex-direction: column;
-  height: 88vh;
-  margin-top: 12vh;
+  margin-top: 14vh;
+  height: 86vh;
 `;
 
 const Heading = styled.header`

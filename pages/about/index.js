@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 12vh 0 5vh;
-  padding: 0 5vw 2vh 5vw;
+  padding: 12vh 5vw 2vh 5vw;
+  display: flex;
+  flex-direction: column;
   float: left;
 `;
 const Article = styled.article`

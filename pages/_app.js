@@ -23,6 +23,15 @@ export default function App({ Component, pageProps }) {
   });
 
   const [paletteListType, setPaletteListType] = useState(0);
+  const [colorListType, setColorListType] = useState(0);
+
+  function handleShowColors() {
+    setListType("colors");
+  }
+
+  function handleShowPalettes() {
+    setListType("palettes");
+  }
 
   function handleShowPalettesWith2Colors() {
     if (paletteListType === 2) {
@@ -47,12 +56,53 @@ export default function App({ Component, pageProps }) {
       setPaletteListType(4);
     }
   }
-  function handleShowColors() {
-    setListType("colors");
+
+  function handleShowSwatchOne() {
+    if (colorListType === 1) {
+      setColorListType(0);
+    } else {
+      setColorListType(1);
+    }
   }
 
-  function handleShowPalettes() {
-    setListType("palettes");
+  function handleShowSwatchTwo() {
+    if (colorListType === 2) {
+      setColorListType(0);
+    } else {
+      setColorListType(2);
+    }
+  }
+
+  function handleShowSwatchThree() {
+    if (colorListType === 3) {
+      setColorListType(0);
+    } else {
+      setColorListType(3);
+    }
+  }
+
+  function handleShowSwatchFour() {
+    if (colorListType === 4) {
+      setColorListType(0);
+    } else {
+      setColorListType(4);
+    }
+  }
+
+  function handleShowSwatchFive() {
+    if (colorListType === 5) {
+      setColorListType(0);
+    } else {
+      setColorListType(5);
+    }
+  }
+
+  function handleShowSwatchSix() {
+    if (colorListType === 6) {
+      setColorListType(0);
+    } else {
+      setColorListType(6);
+    }
   }
 
   const [favoriteColorsData, setFavoriteColorsData] = useLocalStorageState(
@@ -98,7 +148,7 @@ export default function App({ Component, pageProps }) {
     }
   }
 
-  async function handleToggleFavoriteColor(colorName) {
+  async function handleToggleFavoriteColor(colorName, colorSwatch) {
     setFavoriteColorsData((prevFavoriteColorsData) => {
       const favStatus = prevFavoriteColorsData.find(
         (element) => element.name === colorName
@@ -106,11 +156,18 @@ export default function App({ Component, pageProps }) {
       if (favStatus) {
         return prevFavoriteColorsData.map((color) =>
           color.name === colorName
-            ? { name: color.name, isFavorite: !color.isFavorite }
+            ? {
+                name: color.name,
+                swatch: color.swatch,
+                isFavorite: !color.isFavorite,
+              }
             : color
         );
       }
-      return [...prevFavoriteColorsData, { name: colorName, isFavorite: true }];
+      return [
+        ...prevFavoriteColorsData,
+        { name: colorName, swatch: colorSwatch, isFavorite: true },
+      ];
     });
   }
 
@@ -147,6 +204,14 @@ export default function App({ Component, pageProps }) {
         handleShowPalettesWith3Colors={handleShowPalettesWith3Colors}
         handleShowPalettesWith4Colors={handleShowPalettesWith4Colors}
         favoritePalettesData={favoritePalettesData}
+        colorListType={colorListType}
+        handleShowSwatchOne={handleShowSwatchOne}
+        handleShowSwatchTwo={handleShowSwatchTwo}
+        handleShowSwatchThree={handleShowSwatchThree}
+        handleShowSwatchFour={handleShowSwatchFour}
+        handleShowSwatchFive={handleShowSwatchFive}
+        handleShowSwatchSix={handleShowSwatchSix}
+        favoriteColorsData={favoriteColorsData}
       >
         <Component
           {...pageProps}
@@ -154,6 +219,7 @@ export default function App({ Component, pageProps }) {
           error={error}
           listType={listType}
           paletteListType={paletteListType}
+          colorListType={colorListType}
           inspirationPageFilter={inspirationPageFilter}
           setInspirationPageFilter={setInspirationPageFilter}
           favoriteColorsData={favoriteColorsData}

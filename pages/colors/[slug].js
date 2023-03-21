@@ -9,12 +9,12 @@ import FavoriteButton from "@/components/FavoriteButton";
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  margin-top: 12vh;
+  margin-top: 14vh;
 `;
 
 const StyledColorBox = styled.header`
   position: relative;
-  height: 33vh;
+  height: 30vh;
   display: flex;
   padding: 3vh;
   align-items: center;

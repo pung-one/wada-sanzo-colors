@@ -2,6 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { IsColorBright } from "@/utils/IsColorBright";
 import FavoriteButton from "../FavoriteButton";
+import { useState, useEffect } from "react";
 
 const List = styled.ul`
   padding: 0;
@@ -25,16 +26,32 @@ const StyledColorName = styled.p`
 
 export default function ColorsList({
   colors,
-  error,
   favoriteColorsData,
   onToggleFavorite,
+  colorListType,
 }) {
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!colors) return <h1>Loading...</h1>;
+  const [arrayToBeRendered, setArrayToBeRendered] = useState(null);
+  useEffect(() => {
+    if (colorListType === 0) {
+      setArrayToBeRendered(colors);
+    } else if (colorListType === 1) {
+      setArrayToBeRendered(colors.filter((color) => color.swatch === 0));
+    } else if (colorListType === 2) {
+      setArrayToBeRendered(colors.filter((color) => color.swatch === 1));
+    } else if (colorListType === 3) {
+      setArrayToBeRendered(colors.filter((color) => color.swatch === 2));
+    } else if (colorListType === 4) {
+      setArrayToBeRendered(colors.filter((color) => color.swatch === 3));
+    } else if (colorListType === 5) {
+      setArrayToBeRendered(colors.filter((color) => color.swatch === 4));
+    } else if (colorListType === 6) {
+      setArrayToBeRendered(colors.filter((color) => color.swatch === 5));
+    }
+  }, [colorListType, favoriteColorsData]);
 
   return (
     <List>
-      {colors.map(({ name, slug, rgb, hex }) => {
+      {arrayToBeRendered?.map(({ name, slug, rgb, hex, swatch }) => {
         const favoriteStatus = favoriteColorsData?.find(
           (color) => color.name === name
         );
@@ -46,6 +63,7 @@ export default function ColorsList({
               isOnListElement={true}
               toggleValue={name}
               onToggleFavorite={onToggleFavorite}
+              swatch={swatch}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
               <StyledColorName isBright={IsColorBright(rgb)}>

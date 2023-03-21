@@ -6,7 +6,7 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 26vh 0 2vh;
+  margin: 5vh 0 2vh;
 `;
 
 const NoBookmarksInfo = styled.p`
@@ -24,6 +24,7 @@ export default function Home({
   favoritePalettesData,
   listType,
   paletteListType,
+  colorListType,
 }) {
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
@@ -44,7 +45,7 @@ export default function Home({
   );
 
   return (
-    <PageContainer>
+    <PageContainer showsColorList={listType === "colors"}>
       {favoriteColorsList.length === 0 && listType === "colors" && (
         <NoBookmarksInfo>No bookmarked colors</NoBookmarksInfo>
       )}
@@ -54,9 +55,9 @@ export default function Home({
       {listType === "colors" && (
         <ColorsList
           colors={favoriteColorsList}
-          error={error}
           onToggleFavorite={onToggleFavoriteColor}
           favoriteColorsData={favoriteColorsData}
+          colorListType={colorListType}
         />
       )}
       {listType === "palettes" && (

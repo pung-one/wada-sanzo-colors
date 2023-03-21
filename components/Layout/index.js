@@ -1,48 +1,18 @@
 import styled from "styled-components";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import TabBar from "../TabBar";
-import PalettesFilter from "../PalettesFilter";
+import NavBar from "../Navbar";
 
 const Header = styled.header`
   position: fixed;
   display: flex;
   justify-content: center;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: 5vh;
-  top: 0%;
+  top: 0;
   font-size: 2.3vh;
   background-color: white;
   border-bottom: 1px solid black;
   padding: 1vh 0 1vh 0;
-`;
-
-const NavBar = styled.nav`
-  position: fixed;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  top: 5vh;
-  width: 100%;
-  height: 7vh;
-  background-color: white;
-  border-bottom: 1px solid black;
-`;
-
-const NavButton = styled.div`
-  border: 1px solid black;
-  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
-  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
-  color: ${({ isActive }) => (isActive ? "white" : "black")};
-  padding: 1vh 2vw 1vh;
-  font-size: 2vh;
-  height: 4.6vh;
-  text-align: center;
-  transition: box-shadow 0.1s;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 export default function Layout({
@@ -57,53 +27,39 @@ export default function Layout({
   handleShowPalettesWith3Colors,
   handleShowPalettesWith4Colors,
   favoritePalettesData,
+  colorListType,
+  handleShowSwatchOne,
+  handleShowSwatchTwo,
+  handleShowSwatchThree,
+  handleShowSwatchFour,
+  handleShowSwatchFive,
+  handleShowSwatchSix,
+  favoriteColorsData,
 }) {
-  const router = useRouter();
-  const route = router.route;
   return (
     <>
       <Header>A Dictionary of Color Combinations</Header>
+      <NavBar
+        inspirationPageFilter={inspirationPageFilter}
+        setInspirationPageFilter={setInspirationPageFilter}
+        handleShowColors={handleShowColors}
+        handleShowPalettes={handleShowPalettes}
+        listType={listType}
+        paletteListType={paletteListType}
+        handleShowPalettesWith2Colors={handleShowPalettesWith2Colors}
+        handleShowPalettesWith3Colors={handleShowPalettesWith3Colors}
+        handleShowPalettesWith4Colors={handleShowPalettesWith4Colors}
+        favoritePalettesData={favoritePalettesData}
+        colorListType={colorListType}
+        handleShowSwatchOne={handleShowSwatchOne}
+        handleShowSwatchTwo={handleShowSwatchTwo}
+        handleShowSwatchThree={handleShowSwatchThree}
+        handleShowSwatchFour={handleShowSwatchFour}
+        handleShowSwatchFive={handleShowSwatchFive}
+        handleShowSwatchSix={handleShowSwatchSix}
+        favoriteColorsData={favoriteColorsData}
+      />
       {children}
-      <NavBar>
-        <Link href={"/inspiration"}>
-          <NavButton
-            isActive={
-              route === "/inspiration" &&
-              inspirationPageFilter === "initialPage"
-            }
-            onClick={() => setInspirationPageFilter("initialPage")}
-          >
-            Inspiration
-          </NavButton>
-        </Link>
-        <Link href={"/"}>
-          <NavButton isActive={route === "/"}>Lists</NavButton>
-        </Link>
-        <Link href={"/bookmarks"}>
-          <NavButton isActive={route === "/bookmarks"}>Bookmarks</NavButton>
-        </Link>
-        <Link href={"/about"}>
-          <NavButton isActive={route === "/about"}>About</NavButton>
-        </Link>
-      </NavBar>
-      {route === "/" || route === "/bookmarks" ? (
-        <TabBar
-          onShowColors={handleShowColors}
-          onShowPalettes={handleShowPalettes}
-          listType={listType}
-        />
-      ) : null}
-      {(listType === "palettes" && route === "/") ||
-      (listType === "palettes" && route === "/bookmarks") ? (
-        <PalettesFilter
-          paletteListType={paletteListType}
-          onShowPalettesWith2Colors={handleShowPalettesWith2Colors}
-          onShowPalettesWith3Colors={handleShowPalettesWith3Colors}
-          onShowPalettesWith4Colors={handleShowPalettesWith4Colors}
-          favoritePalettesData={favoritePalettesData}
-          isAtBookmarks={route === "/bookmarks"}
-        />
-      ) : null}
     </>
   );
 }

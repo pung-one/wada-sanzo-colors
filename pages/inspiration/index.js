@@ -6,8 +6,8 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  margin-top: 12vh;
-  height: 88vh;
+  top: 5vh;
+  height: 100vh;
 `;
 
 const ButtonContainer = styled.main`
@@ -15,7 +15,7 @@ const ButtonContainer = styled.main`
   flex-direction: column;
   align-items: center;
   flex: 1;
-  padding-top: 12vh;
+  padding-top: 45%;
   gap: 10vh;
   background: ${({ background }) => (background ? background : null)};
 `;

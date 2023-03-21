@@ -40,7 +40,6 @@ const StyledButton = styled.button`
     props.isLeftBox
       ? css`
           right: -1vw;
-          }
         `
       : css`
           left: -1vw;

@@ -44,6 +44,7 @@ export default function FavoriteButton({
   isBright,
   toggleValue,
   onToggleFavorite,
+  swatch,
 }) {
   return (
     <Button
@@ -52,7 +53,7 @@ export default function FavoriteButton({
       isOnColor={isOnDetailColor}
       isOnPalette={isOnDetailPalette}
       isBright={isBright}
-      onClick={() => onToggleFavorite(toggleValue)}
+      onClick={() => onToggleFavorite(toggleValue, swatch)}
     />
   );
 }
