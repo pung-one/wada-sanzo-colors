@@ -1,7 +1,5 @@
 import ColorsList from "@/components/ColorsList";
-import TabBar from "@/components/TabBar";
 import PalettesList from "@/components/PalettesList";
-import useLocalStorageState from "use-local-storage-state";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
@@ -55,9 +53,9 @@ export default function Home({
       {listType === "colors" && (
         <ColorsList
           colors={favoriteColorsList}
+          colorListType={colorListType}
           onToggleFavorite={onToggleFavoriteColor}
           favoriteColorsData={favoriteColorsData}
-          colorListType={colorListType}
         />
       )}
       {listType === "palettes" && (
