@@ -4,11 +4,11 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 5vh 0 2vh;
+  margin: 0 0 2vh;
 `;
 
 const NoFavoritesInfo = styled.p`
-  padding-top: 4vh;
+  padding-top: 50vh;
   font-size: 3vh;
   text-align: center;
 `;

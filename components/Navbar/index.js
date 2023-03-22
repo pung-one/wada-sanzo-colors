@@ -7,7 +7,7 @@ import PalettesFilter from "../PalettesFilter";
 import ColorFilter from "../ColorFilter";
 
 const NavContainer = styled.div`
-  position: ${({ isOnList }) => (isOnList ? "sticky" : "fixed")};
+  position: fixed;
   top: ${({ show }) => (!show ? "-23vh" : "5vh")};
   z-index: 1;
   width: 100%;
@@ -69,8 +69,9 @@ export default function NavBar({
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   function handleScroll() {
+    console.log(window.scrollY);
     if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY) {
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
         setShow(false);
       } else {
         setShow(true);

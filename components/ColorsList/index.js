@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 
 const List = styled.ul`
-  padding: 0;
+  padding-top: 30vh;
   list-style: none;
   list-style-type: 0;
   width: 100vw;
