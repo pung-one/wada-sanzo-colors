@@ -19,7 +19,10 @@ export default function Home({
   colorListType,
 }) {
   if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
+  if (!data) {
+    console.log("loading");
+    return <h1>Loading...</h1>;
+  }
 
   const paletteArray = CreatePaletteArray(data);
 
