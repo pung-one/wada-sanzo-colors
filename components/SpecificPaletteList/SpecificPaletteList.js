@@ -3,6 +3,7 @@ import Link from "next/link";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
 import { useState } from "react";
+import FavoriteMessage from "../FavoriteMessage";
 
 const List = styled.ul`
   padding: 0;
@@ -13,6 +14,7 @@ const List = styled.ul`
 const StyledPaletteContainer = styled.li`
   position: relative;
   display: flex;
+  justify-content: center;
   width: 100%;
   margin-top: 2vh;
   height: 25vh;
@@ -38,6 +40,8 @@ export default function SpecificPaletteList({
   favoritePalettesData,
   onToggleFavoritePalette,
 }) {
+  const [showFavMessage, setShowFavMessage] = useState(false);
+  const [favMessageId, setFavMessageId] = useState("");
   return (
     <List>
       {currentColor?.combinations.map((combi1) => {
@@ -47,9 +51,18 @@ export default function SpecificPaletteList({
         const palette = colors.filter((color) =>
           color.combinations.some((combi2) => combi1 === combi2)
         );
-
+        function handleShowFavMessage(toggleValue) {
+          setShowFavMessage(true);
+          setFavMessageId(toggleValue);
+          const timer = setTimeout(() => setShowFavMessage(false), 1000);
+        }
         return (
           <StyledPaletteContainer key={combi1}>
+            <FavoriteMessage
+              isFavorite={favoriteStatus?.isFavorite}
+              showFavMessage={showFavMessage}
+              isTriggered={combi1 === favMessageId}
+            />
             <Link href={`/palettes/${combi1}`}></Link>
             {palette.map(({ name, hex, rgb }, colorIndex) => {
               return (
@@ -67,6 +80,7 @@ export default function SpecificPaletteList({
                     isBright={IsColorBright(rgb)}
                     toggleValue={combi1}
                     onToggleFavorite={onToggleFavoritePalette}
+                    onShowFavMessage={handleShowFavMessage}
                   />
                 </StyledColorBox>
               );

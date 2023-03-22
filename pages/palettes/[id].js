@@ -1,14 +1,15 @@
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 import FavoriteButton from "@/components/FavoriteButton";
-import { useEffect } from "react";
+import FavoriteMessage from "@/components/FavoriteMessage";
 
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-top: 14vh;
   height: 86vh;
 `;
@@ -45,6 +46,8 @@ export default function PalettePage({
 }) {
   const router = useRouter();
   const { id } = router.query;
+  const [showFavMessage, setShowFavMessage] = useState(false);
+  const [favMessageId, setFavMessageId] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
   const [currentPalette, setCurrentPalette] = useState([]);
 
@@ -66,9 +69,18 @@ export default function PalettePage({
   const favoriteStatus = favoritePalettesData?.find(
     (palette) => palette.id === id
   );
-
+  function handleShowFavMessage(toggleValue) {
+    setShowFavMessage(true);
+    setFavMessageId(toggleValue);
+    const timer = setTimeout(() => setShowFavMessage(false), 1000);
+  }
   return (
     <PageContainer>
+      <FavoriteMessage
+        isFavorite={favoriteStatus?.isFavorite}
+        showFavMessage={showFavMessage}
+        isTriggered={id === favMessageId}
+      />
       <Heading>
         <FavoriteButton
           isFavorite={favoriteStatus?.isFavorite}
@@ -76,6 +88,7 @@ export default function PalettePage({
           isOnDetailPalette={true}
           toggleValue={id}
           onToggleFavorite={onToggleFavoritePalette}
+          onShowFavMessage={handleShowFavMessage}
         />
         <h1>Palette #{id}</h1>
       </Heading>

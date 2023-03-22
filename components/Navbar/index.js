@@ -86,12 +86,11 @@ export default function NavBar({
       };
     }
   }, [lastScrollY]);
-  console.log(route);
 
   return (
     <NavContainer
       show={show}
-      isOnList={route === "/" || route === "/bookmarks"}
+      isOnList={route === "/" || route === "/favorites"}
     >
       <NavPages>
         <Link href={"/inspiration"}>
@@ -108,14 +107,14 @@ export default function NavBar({
         <Link href={"/"}>
           <NavButton isActive={route === "/"}>Lists</NavButton>
         </Link>
-        <Link href={"/bookmarks"}>
-          <NavButton isActive={route === "/bookmarks"}>Bookmarks</NavButton>
+        <Link href={"/favorites"}>
+          <NavButton isActive={route === "/favorites"}>Favorites</NavButton>
         </Link>
         <Link href={"/about"}>
           <NavButton isActive={route === "/about"}>About</NavButton>
         </Link>
       </NavPages>
-      {route === "/" || route === "/bookmarks" ? (
+      {route === "/" || route === "/favorites" ? (
         <TabBar
           onShowColors={handleShowColors}
           onShowPalettes={handleShowPalettes}
@@ -123,7 +122,7 @@ export default function NavBar({
         />
       ) : null}
       {(listType === "colors" && route === "/") ||
-      (listType === "colors" && route === "/bookmarks") ? (
+      (listType === "colors" && route === "/favorites") ? (
         <ColorFilter
           colorListType={colorListType}
           handleShowSwatchOne={handleShowSwatchOne}
@@ -133,18 +132,18 @@ export default function NavBar({
           handleShowSwatchFive={handleShowSwatchFive}
           handleShowSwatchSix={handleShowSwatchSix}
           favoriteColorsData={favoriteColorsData}
-          isAtBookmarks={route === "/bookmarks"}
+          isAtfavorites={route === "/favorites"}
         />
       ) : null}
       {(listType === "palettes" && route === "/") ||
-      (listType === "palettes" && route === "/bookmarks") ? (
+      (listType === "palettes" && route === "/favorites") ? (
         <PalettesFilter
           paletteListType={paletteListType}
           onShowPalettesWith2Colors={handleShowPalettesWith2Colors}
           onShowPalettesWith3Colors={handleShowPalettesWith3Colors}
           onShowPalettesWith4Colors={handleShowPalettesWith4Colors}
           favoritePalettesData={favoritePalettesData}
-          isAtBookmarks={route === "/bookmarks"}
+          isAtfavorites={route === "/favorites"}
         />
       ) : null}
     </NavContainer>

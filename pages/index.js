@@ -4,6 +4,9 @@ import PalettesList from "@/components/PalettesList";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
 const PageContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 5vh 0 2vh;
 `;
 

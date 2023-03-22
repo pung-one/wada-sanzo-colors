@@ -9,7 +9,7 @@ const PageContainer = styled.main`
   margin: 5vh 0 2vh;
 `;
 
-const NoBookmarksInfo = styled.p`
+const NoFavoritesInfo = styled.p`
   padding-top: 4vh;
   font-size: 3vh;
   text-align: center;
@@ -47,10 +47,10 @@ export default function Home({
   return (
     <PageContainer showsColorList={listType === "colors"}>
       {favoriteColorsList.length === 0 && listType === "colors" && (
-        <NoBookmarksInfo>No bookmarked colors</NoBookmarksInfo>
+        <NoFavoritesInfo>No bookmarked colors</NoFavoritesInfo>
       )}
       {favoritePalettesList.length === 0 && listType === "palettes" && (
-        <NoBookmarksInfo>No bookmarked palettes</NoBookmarksInfo>
+        <NoFavoritesInfo>No bookmarked palettes</NoFavoritesInfo>
       )}
       {listType === "colors" && (
         <ColorsList
