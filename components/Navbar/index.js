@@ -132,7 +132,7 @@ export default function NavBar({
           handleShowSwatchFive={handleShowSwatchFive}
           handleShowSwatchSix={handleShowSwatchSix}
           favoriteColorsData={favoriteColorsData}
-          isAtfavorites={route === "/favorites"}
+          isAtFavorites={route === "/favorites"}
         />
       ) : null}
       {(listType === "palettes" && route === "/") ||
@@ -143,7 +143,7 @@ export default function NavBar({
           onShowPalettesWith3Colors={handleShowPalettesWith3Colors}
           onShowPalettesWith4Colors={handleShowPalettesWith4Colors}
           favoritePalettesData={favoritePalettesData}
-          isAtfavorites={route === "/favorites"}
+          isAtFavorites={route === "/favorites"}
         />
       ) : null}
     </NavContainer>
