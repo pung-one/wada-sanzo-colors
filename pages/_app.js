@@ -4,6 +4,7 @@ import useSWR from "swr";
 import Layout from "@/components/Layout";
 import { useState, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import { useRouter } from "next/router";
 
 const userName = "admin";
 
@@ -15,6 +16,8 @@ export default function App({ Component, pageProps }) {
     `/api/favorites/${userName}`,
     fetcher
   );
+  const router = useRouter();
+  const route = router.route;
   const [inspirationPageFilter, setInspirationPageFilter] =
     useState("initialPage");
 
@@ -104,6 +107,11 @@ export default function App({ Component, pageProps }) {
       setColorListType(6);
     }
   }
+
+  useEffect(() => {
+    setColorListType(0);
+    setPaletteListType(0);
+  }, [route]);
 
   const [favoriteColorsData, setFavoriteColorsData] = useLocalStorageState(
     "favoriteColorsData",

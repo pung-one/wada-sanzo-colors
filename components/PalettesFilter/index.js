@@ -50,7 +50,7 @@ export default function PalettesFilter({
   onShowPalettesWith3Colors,
   onShowPalettesWith4Colors,
   favoritePalettesData,
-  isAtBookmarks,
+  isAtFavorites,
 }) {
   const [favWithTwoColors, setFavWithTwoColors] = useState(0);
   const [favWithThreeColors, setFavWithThreeColors] = useState(0);
@@ -80,7 +80,7 @@ export default function PalettesFilter({
         onClick={() => onShowPalettesWith2Colors()}
         isActive={paletteListType === 2}
       >
-        {isAtBookmarks && (
+        {isAtFavorites && (
           <StyledNumber isActive={paletteListType === 2}>
             {favWithTwoColors}
           </StyledNumber>
@@ -91,7 +91,7 @@ export default function PalettesFilter({
         onClick={() => onShowPalettesWith3Colors()}
         isActive={paletteListType === 3}
       >
-        {isAtBookmarks && (
+        {isAtFavorites && (
           <StyledNumber isActive={paletteListType === 3}>
             {favWithThreeColors}
           </StyledNumber>
@@ -103,7 +103,7 @@ export default function PalettesFilter({
         onClick={() => onShowPalettesWith4Colors()}
         isActive={paletteListType === 4}
       >
-        {isAtBookmarks && (
+        {isAtFavorites && (
           <StyledNumber isActive={paletteListType === 4}>
             {favWithFourColors}
           </StyledNumber>

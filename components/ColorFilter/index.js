@@ -110,7 +110,7 @@ export default function ColorFilter({
   handleShowSwatchFive,
   handleShowSwatchSix,
   favoriteColorsData,
-  isAtBookmarks,
+  isAtFavorites,
 }) {
   const [favsSwatchOne, setFavsSwatchOne] = useState(0);
   const [favsSwatchTwo, setFavsSwatchTwo] = useState(0);
@@ -159,7 +159,7 @@ export default function ColorFilter({
         swatch={"red/purple"}
       >
         <SwatchName isActive={colorListType === 1}>red/purple</SwatchName>
-        {isAtBookmarks && <StyledNumber>{favsSwatchOne}</StyledNumber>}
+        {isAtFavorites && <StyledNumber>{favsSwatchOne}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchTwo()}
@@ -167,7 +167,7 @@ export default function ColorFilter({
         swatch={"yellow/red"}
       >
         <SwatchName isActive={colorListType === 2}>yellow/red</SwatchName>
-        {isAtBookmarks && <StyledNumber>{favsSwatchTwo}</StyledNumber>}
+        {isAtFavorites && <StyledNumber>{favsSwatchTwo}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchThree()}
@@ -175,7 +175,7 @@ export default function ColorFilter({
         swatch={"yellow/green"}
       >
         <SwatchName isActive={colorListType === 3}>yellow/green</SwatchName>
-        {isAtBookmarks && <StyledNumber>{favsSwatchThree}</StyledNumber>}
+        {isAtFavorites && <StyledNumber>{favsSwatchThree}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchFour()}
@@ -183,7 +183,7 @@ export default function ColorFilter({
         swatch={"blue/turquoise"}
       >
         <SwatchName isActive={colorListType === 4}>blue/turquoise</SwatchName>
-        {isAtBookmarks && <StyledNumber>{favsSwatchFour}</StyledNumber>}
+        {isAtFavorites && <StyledNumber>{favsSwatchFour}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchFive()}
@@ -191,7 +191,7 @@ export default function ColorFilter({
         swatch={"blue/purple"}
       >
         <SwatchName isActive={colorListType === 5}>blue/purple</SwatchName>
-        {isAtBookmarks && <StyledNumber>{favsSwatchFive}</StyledNumber>}
+        {isAtFavorites && <StyledNumber>{favsSwatchFive}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchSix()}
@@ -199,7 +199,7 @@ export default function ColorFilter({
         swatch={"white/grey/black"}
       >
         <SwatchName isActive={colorListType === 6}>white/grey/black</SwatchName>
-        {isAtBookmarks && <StyledNumber>{favsSwatchSix}</StyledNumber>}
+        {isAtFavorites && <StyledNumber>{favsSwatchSix}</StyledNumber>}
       </StyledButton>
     </FilterContainer>
   );

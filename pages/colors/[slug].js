@@ -5,6 +5,7 @@ import CopyFieldSlider from "@/components/CopyFieldSlider";
 import { useState } from "react";
 import { IsColorBright } from "@/utils/IsColorBright";
 import FavoriteButton from "@/components/FavoriteButton";
+import FavoriteMessage from "@/components/FavoriteMessage";
 
 const PageContainer = styled.main`
   display: flex;
@@ -39,6 +40,8 @@ export default function ColorPage({
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
   const { slug } = router.query;
+  const [showFavMessage, setShowFavMessage] = useState(false);
+  const [favMessageName, setFavMessageName] = useState("");
 
   let currentColor;
 
@@ -55,6 +58,12 @@ export default function ColorPage({
     setIsActive(!isActive);
   }
 
+  function handleShowFavMessage(toggleValue) {
+    setShowFavMessage(true);
+    setFavMessageName(toggleValue);
+    const timer = setTimeout(() => setShowFavMessage(false), 1000);
+  }
+
   const favoriteStatus = favoriteColorsData?.find(
     (color) => color.name === name
   );
@@ -62,12 +71,18 @@ export default function ColorPage({
   return (
     <PageContainer>
       <StyledColorBox hex={hex}>
+        <FavoriteMessage
+          isFavorite={favoriteStatus?.isFavorite}
+          showFavMessage={showFavMessage}
+          isTriggered={name === favMessageName}
+        />
         <FavoriteButton
           isBright={IsColorBright(rgb)}
           isFavorite={favoriteStatus?.isFavorite}
           isOnDetailColor={true}
           toggleValue={name}
           onToggleFavorite={onToggleFavoriteColor}
+          onShowFavMessage={handleShowFavMessage}
         />
         <StyledHeadline isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
         <CopyFieldSlider

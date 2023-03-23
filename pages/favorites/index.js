@@ -1,16 +1,14 @@
 import ColorsList from "@/components/ColorsList";
-import TabBar from "@/components/TabBar";
 import PalettesList from "@/components/PalettesList";
-import useLocalStorageState from "use-local-storage-state";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  margin: 5vh 0 2vh;
+  margin: 0 0 2vh;
 `;
 
-const NoBookmarksInfo = styled.p`
-  padding-top: 4vh;
+const NoFavoritesInfo = styled.p`
+  padding-top: 50vh;
   font-size: 3vh;
   text-align: center;
 `;
@@ -47,17 +45,17 @@ export default function Home({
   return (
     <PageContainer showsColorList={listType === "colors"}>
       {favoriteColorsList.length === 0 && listType === "colors" && (
-        <NoBookmarksInfo>No bookmarked colors</NoBookmarksInfo>
+        <NoFavoritesInfo>No bookmarked colors</NoFavoritesInfo>
       )}
       {favoritePalettesList.length === 0 && listType === "palettes" && (
-        <NoBookmarksInfo>No bookmarked palettes</NoBookmarksInfo>
+        <NoFavoritesInfo>No bookmarked palettes</NoFavoritesInfo>
       )}
       {listType === "colors" && (
         <ColorsList
           colors={favoriteColorsList}
+          colorListType={colorListType}
           onToggleFavorite={onToggleFavoriteColor}
           favoriteColorsData={favoriteColorsData}
-          colorListType={colorListType}
         />
       )}
       {listType === "palettes" && (

@@ -3,15 +3,18 @@ import Link from "next/link";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
 import { useEffect, useState } from "react";
+import FavoriteMessage from "../FavoriteMessage";
 
 const List = styled.ul`
-  padding: 0;
+  padding-top: 24vh;
   list-style-type: 0;
+  width: 100vw;
 `;
 
 const StyledPaletteContainer = styled.li`
   position: relative;
   display: flex;
+  justify-content: center;
   width: 100%;
   margin-top: 2vh;
   height: 25vh;
@@ -37,6 +40,8 @@ export default function PalettesList({
   onToggleFavorite,
   paletteListType,
 }) {
+  const [showFavMessage, setShowFavMessage] = useState(false);
+  const [favMessageId, setFavMessageId] = useState("");
   const [arrayToBeRendered, setArrayToBeRendered] = useState(null);
   useEffect(() => {
     if (paletteListType === 0) {
@@ -62,11 +67,21 @@ export default function PalettesList({
         const favoriteStatus = favoritePalettesData?.find(
           (palette2) => palette2.id === palette1.id
         );
+        function handleShowFavMessage(toggleValue) {
+          setShowFavMessage(true);
+          setFavMessageId(toggleValue);
+          const timer = setTimeout(() => setShowFavMessage(false), 1000);
+        }
         return (
           <StyledPaletteContainer
             key={palette1.id}
             length={palette1?.palette?.length}
           >
+            <FavoriteMessage
+              isFavorite={favoriteStatus?.isFavorite}
+              showFavMessage={showFavMessage}
+              isTriggered={palette1.id === favMessageId}
+            />
             {palette1.palette?.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} hex={hex}>
@@ -83,6 +98,7 @@ export default function PalettesList({
                     isBright={IsColorBright(rgb)}
                     toggleValue={palette1.id}
                     onToggleFavorite={onToggleFavorite}
+                    onShowFavMessage={handleShowFavMessage}
                   />
                 </StyledColorBox>
               );
