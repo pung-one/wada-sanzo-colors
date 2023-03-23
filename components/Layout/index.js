@@ -56,10 +56,9 @@ export default function Layout({
   const { data: session } = useSession();
   useEffect(() => {
     if (session) {
-      setUser({ ...session.user.name });
+      setUser(session.user.name);
     }
   }, [session]);
-  console.log(user);
 
   return (
     <>

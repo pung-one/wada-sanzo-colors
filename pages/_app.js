@@ -7,30 +7,22 @@ import useLocalStorageState from "use-local-storage-state";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
 
-const userName = "admin";
-
 const fetcher = (URL) => fetch(URL).then((response) => response.json());
 
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
+  const [user, setUser] = useState("public");
   const { data, error } = useSWR("/api/colors", fetcher);
 
   const { data: favData, error: favDataError } = useSWR(
-    `/api/favorites/${userName}`,
+    `/api/favorites/${user}`,
     fetcher
   );
 
   const router = useRouter();
   const route = router.route;
-
-  const [inspirationPageFilter, setInspirationPageFilter] =
-    useState("initialPage");
-
-  const [listType, setListType] = useLocalStorageState("listType", {
-    defaultValue: "colors",
-  });
 
   const [favoriteColorsData, setFavoriteColorsData] = useLocalStorageState(
     "favoriteColorsData",
@@ -42,7 +34,12 @@ export default function App({
     { defaultValue: [] }
   );
 
-  const [user, setUser] = useState("public");
+  const [listType, setListType] = useLocalStorageState("listType", {
+    defaultValue: "colors",
+  });
+
+  const [inspirationPageFilter, setInspirationPageFilter] =
+    useState("initialPage");
 
   const [paletteListType, setPaletteListType] = useState(0);
 
@@ -54,24 +51,26 @@ export default function App({
   }, [route]);
 
   useEffect(() => {
-    if (favData) {
+    if (favData && user !== "public") {
       setFavoriteColorsData(favData?.favoriteColors);
       setFavoritePalettesData(favData?.favoritePalettes);
     }
   }, [favData]);
 
   useEffect(() => {
-    handleUpdateFavs(userName);
+    if (user !== "public") {
+      handleUpdateFavs(user);
+    }
   }, [favoriteColorsData, favoritePalettesData]);
 
-  async function handleUpdateFavs(userName) {
+  async function handleUpdateFavs(user) {
     const body = {
-      user: userName,
+      user: user,
       favoriteColors: favoriteColorsData,
       favoritePalettes: favoritePalettesData,
     };
 
-    const response = await fetch(`/api/favorites/${userName}`, {
+    const response = await fetch(`/api/favorites/${user}`, {
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
