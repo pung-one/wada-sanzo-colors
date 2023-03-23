@@ -41,10 +41,20 @@ export default function SignIn() {
             <br />
             Whithout signing in they will only be stored in the browser.
           </Article>
-          <StyledButton onClick={() => signIn("google")}>
+          <StyledButton
+            onClick={(e) => {
+              e.preventDefault();
+              signIn("google");
+            }}
+          >
             Sign in with Google
           </StyledButton>
-          <StyledButton onClick={() => signIn("github")}>
+          <StyledButton
+            onClick={(e) => {
+              e.preventDefault();
+              signIn("github");
+            }}
+          >
             Sign in with Github
           </StyledButton>
         </>
