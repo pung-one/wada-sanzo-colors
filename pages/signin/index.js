@@ -22,7 +22,7 @@ const StyledButton = styled.button`
 
 const Article = styled.article`
   width: 70vw;
-  padding-bottom: 7vh;
+  padding-bottom: 7.5vh;
 `;
 
 export default function SignIn() {
