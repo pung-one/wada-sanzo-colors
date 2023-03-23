@@ -73,7 +73,6 @@ export default function Layout({
       setUser(session.user.name);
     }
   }, [session]);
-  console.log(session);
   return (
     <>
       <Header>
