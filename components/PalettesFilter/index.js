@@ -58,17 +58,17 @@ export default function PalettesFilter({
 
   useEffect(() => {
     setFavWithTwoColors(
-      favoritePalettesData.filter(
+      favoritePalettesData?.filter(
         (palette) => palette.id <= 120 && palette.isFavorite
       ).length
     );
     setFavWithThreeColors(
-      favoritePalettesData.filter(
+      favoritePalettesData?.filter(
         (palette) => palette.id > 120 && palette.id <= 240 && palette.isFavorite
       ).length
     );
     setFavWithFourColors(
-      favoritePalettesData.filter(
+      favoritePalettesData?.filter(
         (palette) => palette.id > 240 && palette.isFavorite
       ).length
     );
