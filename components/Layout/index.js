@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import NavBar from "../Navbar";
-import { useSession, signIn, signOut } from "next-auth/react";
+import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 
 const Header = styled.header`
@@ -17,7 +18,20 @@ const Header = styled.header`
   padding: 1vh 0 1vh 3vw;
 `;
 
-const SignInOutButton = styled.button`
+const SignOutButton = styled.button`
+  position: absolute;
+  right: 2vw;
+  height: 3vh;
+  font-size: 1.8vh;
+  padding: 0 1vw 0 1vw;
+  background-color: white;
+  border: 1px solid black;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const SignInButton = styled(Link)`
   position: absolute;
   right: 2vw;
   height: 3vh;
@@ -59,24 +73,22 @@ export default function Layout({
       setUser(session.user.name);
     }
   }, [session]);
-
+  console.log(session);
   return (
     <>
       <Header>
         A Dictionary of Color Combinations
         {session && (
-          <SignInOutButton
+          <SignOutButton
             onClick={() => {
               signOut();
               setUser("public");
             }}
           >
             Sign Out
-          </SignInOutButton>
+          </SignOutButton>
         )}
-        {!session && (
-          <SignInOutButton onClick={() => signIn()}>Sign In</SignInOutButton>
-        )}
+        {!session && <SignInButton href={"/signin"}>Sign In</SignInButton>}
       </Header>
       <NavBar
         inspirationPageFilter={inspirationPageFilter}
