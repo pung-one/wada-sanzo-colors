@@ -28,4 +28,7 @@ export default async function handler(request, response) {
       return response.status(200).json(updateFavorites);
     }
   }
+  return response
+    .status(200)
+    .json("You are not signed in, so you won't get anything here");
 }
