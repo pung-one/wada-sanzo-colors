@@ -79,7 +79,7 @@ export default function Layout({
     }
   }, [session]);
 
-  async function handleSignOut()) {
+  async function handleSignOut() {
     setShowSignOutMessage(true);
     setUser("public");
     setTimeout(() => signOut(), 1500);
