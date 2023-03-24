@@ -4,6 +4,7 @@ import styled from "styled-components";
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
+  text-align: center;
   align-items: center;
   padding-top: 20vh;
 `;
@@ -31,7 +32,10 @@ export default function SignIn() {
   return (
     <PageContainer>
       {session ? (
-        <h1>You are signed in.</h1>
+        <h1>
+          You are signed in as <br />
+          {session.user.name}.
+        </h1>
       ) : (
         <>
           <Article>

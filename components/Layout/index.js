@@ -2,7 +2,8 @@ import styled from "styled-components";
 import NavBar from "../Navbar";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import SignOutMessage from "../SignOutMessage";
 
 const Header = styled.header`
   position: fixed;
@@ -33,6 +34,8 @@ const SignOutButton = styled.button`
 
 const SignInButton = styled(Link)`
   position: absolute;
+  display: flex;
+  align-items: center;
   right: 2vw;
   height: 3vh;
   font-size: 1.8vh;
@@ -68,22 +71,27 @@ export default function Layout({
   favoriteColorsData,
 }) {
   const { data: session } = useSession();
+  const [showSignOutMessage, setShowSignOutMessage] = useState(false);
+
   useEffect(() => {
     if (session) {
       setUser(session.user.name);
     }
   }, [session]);
+
+  async function handleSignOut() {
+    setShowSignOutMessage(true);
+    setUser("public");
+    setTimeout(() => signOut(), 1500);
+  }
+
   return (
     <>
+      <SignOutMessage showSignOutMessage={showSignOutMessage} />
       <Header>
         A Dictionary of Color Combinations
         {session && (
-          <SignOutButton
-            onClick={() => {
-              signOut();
-              setUser("public");
-            }}
-          >
+          <SignOutButton onClick={() => handleSignOut()}>
             Sign Out
           </SignOutButton>
         )}
