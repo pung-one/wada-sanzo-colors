@@ -212,8 +212,6 @@ export default function App({
       </Head>
       <SessionProvider session={session}>
         <Layout
-          user={user}
-          setUser={setUser}
           inspirationPageFilter={inspirationPageFilter}
           setInspirationPageFilter={setInspirationPageFilter}
           handleShowColors={handleShowColors}
@@ -237,6 +235,7 @@ export default function App({
             {...pageProps}
             data={data}
             error={error}
+            setUser={setUser}
             listType={listType}
             paletteListType={paletteListType}
             colorListType={colorListType}

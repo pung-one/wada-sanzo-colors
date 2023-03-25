@@ -10,7 +10,7 @@ const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 14vh;
+  margin-top: 14.5vh;
   height: 86vh;
 `;
 

@@ -8,7 +8,7 @@ import ColorFilter from "../ColorFilter";
 
 const NavContainer = styled.div`
   position: fixed;
-  top: ${({ show }) => (!show ? "-23vh" : "5vh")};
+  top: ${({ show }) => (!show ? "-23vh" : "5.5vh")};
   z-index: 1;
   width: 100%;
   transition: top 0.5s;

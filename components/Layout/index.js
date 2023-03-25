@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import NavBar from "../Navbar";
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
-import { useState, useEffect } from "react";
-import SignOutMessage from "../SignOutMessage";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const Header = styled.header`
   position: fixed;
@@ -11,7 +10,7 @@ const Header = styled.header`
   align-items: center;
   z-index: 2;
   width: 100%;
-  height: 5vh;
+  height: 5.5vh;
   top: 0;
   font-size: 2vh;
   background-color: white;
@@ -19,20 +18,7 @@ const Header = styled.header`
   padding: 1vh 0 1vh 3vw;
 `;
 
-const SignOutButton = styled.button`
-  position: absolute;
-  right: 2vw;
-  height: 3vh;
-  font-size: 1.8vh;
-  padding: 0 1vw 0 1vw;
-  background-color: white;
-  border: 1px solid black;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const SignInButton = styled(Link)`
+const SignInOutButton = styled(Link)`
   position: absolute;
   display: flex;
   align-items: center;
@@ -42,6 +28,7 @@ const SignInButton = styled(Link)`
   padding: 0 1vw 0 1vw;
   background-color: white;
   border: 1px solid black;
+  box-shadow: 0 0 2px black;
   &:hover {
     cursor: pointer;
   }
@@ -49,8 +36,6 @@ const SignInButton = styled(Link)`
 
 export default function Layout({
   children,
-  user,
-  setUser,
   inspirationPageFilter,
   setInspirationPageFilter,
   handleShowColors,
@@ -70,32 +55,11 @@ export default function Layout({
   handleShowSwatchSix,
   favoriteColorsData,
 }) {
-  const { data: session } = useSession();
-  const [showSignOutMessage, setShowSignOutMessage] = useState(false);
-
-  useEffect(() => {
-    if (session) {
-      setUser(session.user.name);
-    }
-  }, [session]);
-
-  async function handleSignOut() {
-    setShowSignOutMessage(true);
-    setUser("public");
-    setTimeout(() => signOut(), 1500);
-  }
-
   return (
     <>
-      <SignOutMessage showSignOutMessage={showSignOutMessage} />
       <Header>
         A Dictionary of Color Combinations
-        {session && (
-          <SignOutButton onClick={() => handleSignOut()}>
-            Sign Out
-          </SignOutButton>
-        )}
-        {!session && <SignInButton href={"/signin"}>Sign In</SignInButton>}
+        <SignInOutButton href={"/signin"}>Sign In/Out</SignInOutButton>
       </Header>
       <NavBar
         inspirationPageFilter={inspirationPageFilter}
