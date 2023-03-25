@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import NavBar from "../Navbar";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const Header = styled.header`
   position: fixed;
@@ -26,9 +25,10 @@ const SignInOutButton = styled(Link)`
   height: 3vh;
   font-size: 1.8vh;
   padding: 0 1vw 0 1vw;
-  background-color: white;
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
   border: 1px solid black;
-  box-shadow: 0 0 2px black;
+  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
   &:hover {
     cursor: pointer;
   }
@@ -55,11 +55,16 @@ export default function Layout({
   handleShowSwatchSix,
   favoriteColorsData,
 }) {
+  const router = useRouter();
+  const route = router.route;
+  console.log(route);
   return (
     <>
       <Header>
         A Dictionary of Color Combinations
-        <SignInOutButton href={"/signin"}>Sign In/Out</SignInOutButton>
+        <SignInOutButton isActive={route === "/signin"} href={"/signin"}>
+          Sign In/Out
+        </SignInOutButton>
       </Header>
       <NavBar
         inspirationPageFilter={inspirationPageFilter}
