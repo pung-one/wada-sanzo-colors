@@ -38,7 +38,7 @@ const NavButton = styled.div`
   width: 22.5vw;
   height: 6vh;
   text-align: center;
-  transition: box-shadow 0.1s;
+  transition: all 0.2s;
   &:hover {
     cursor: pointer;
   }

@@ -7,6 +7,7 @@ const Header = styled.header`
   position: fixed;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   z-index: 2;
   width: 100%;
   height: 5.5vh;
@@ -17,11 +18,10 @@ const Header = styled.header`
   padding: 1vh 0 1vh 3vw;
 `;
 
-const SignInOutButton = styled(Link)`
-  position: absolute;
+const SignInOutButton = styled.div`
   display: flex;
   align-items: center;
-  right: 2vw;
+  margin-right: 2vw;
   height: 3vh;
   font-size: 1.8vh;
   padding: 0 1vw 0 1vw;
@@ -29,6 +29,7 @@ const SignInOutButton = styled(Link)`
   color: ${({ isActive }) => (isActive ? "white" : "black")};
   border: 1px solid black;
   box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
+  transition: all 0.2s;
   &:hover {
     cursor: pointer;
   }
@@ -62,9 +63,11 @@ export default function Layout({
     <>
       <Header>
         A Dictionary of Color Combinations
-        <SignInOutButton isActive={route === "/signin"} href={"/signin"}>
-          Sign In/Out
-        </SignInOutButton>
+        <Link href={"/signin"}>
+          <SignInOutButton isActive={route === "/signin"}>
+            Sign In/Out
+          </SignInOutButton>
+        </Link>
       </Header>
       <NavBar
         inspirationPageFilter={inspirationPageFilter}
