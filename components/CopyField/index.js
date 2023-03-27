@@ -29,28 +29,20 @@ const StyledButton = styled.span`
   transition: box-shadow 0.2s;
 `;
 
-export default function CopyField({ name, value, label, isLarge }) {
-  function handleCopy(event) {
+export default function CopyField({ value, label, isLarge, onShowMessage }) {
+  function handleCopy() {
     navigator.clipboard.writeText(value);
   }
 
   return (
-    <StyledButton isLarge={isLarge} onClick={() => handleCopy()}>
+    <StyledButton
+      isLarge={isLarge}
+      onClick={() => {
+        handleCopy();
+        onShowMessage(value, label);
+      }}
+    >
       {label}
     </StyledButton>
-    /* <StyledForm isLarge={isLarge} onSubmit={(event) => handleCopy(event)}>
-      <StyledInput
-        aria-label={`${label}-code of color: ${name}`}
-        name="copyfield"
-        readOnly={true}
-        value={value}
-      />
-      <StyledButton
-        aria-label={`copy ${label}-code of color: ${name}`}
-        type="submit"
-      >
-        copy {label}
-      </StyledButton>
-    </StyledForm> */
   );
 }

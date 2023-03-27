@@ -2,11 +2,12 @@ import CopyField from "@/components/CopyField";
 import { SlArrowLeft } from "react-icons/sl";
 import Link from "next/link";
 import styled, { css } from "styled-components";
+import { useState } from "react";
 import { IsColorBright } from "@/utils/IsColorBright";
+import CopyColorCodeMessage from "../CopyColorCodeMessage";
 
 const SliderContainer = styled.aside`
   position: relative;
-  top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -86,7 +87,19 @@ export default function CopyFieldSlider({
   isActive,
   needColorName,
 }) {
+  const [showMessage, setShowMessage] = useState(false);
+  const [label, setLabel] = useState("");
+  const [copyValue, setCopyValue] = useState("");
+
   const { slug, name, hex, rgb, cmyk, lab } = color;
+
+  function handleShowMessage(value, label) {
+    setShowMessage(true);
+    setCopyValue(value);
+    setLabel(label);
+    setTimeout(() => setShowMessage(false), 1500);
+  }
+
   return (
     <>
       <SliderContainer
@@ -94,6 +107,12 @@ export default function CopyFieldSlider({
         isLeftBox={!isLargePalette && index === 0}
         isActive={isActive}
       >
+        <CopyColorCodeMessage
+          isLarge={isLargePalette}
+          showMessage={showMessage}
+          value={copyValue}
+          label={label}
+        />
         <StyledButton
           onClick={() => handleSlide(index)}
           isLeftBox={!isLargePalette && index === 0}
@@ -122,6 +141,7 @@ export default function CopyFieldSlider({
             isLarge={isLargePalette}
             isOnColorPage={!needColorName}
             name={name}
+            onShowMessage={handleShowMessage}
           />
           <CopyField
             label={"RGB"}
@@ -129,6 +149,7 @@ export default function CopyFieldSlider({
             isLarge={isLargePalette}
             isOnColorPage={!needColorName}
             name={name}
+            onShowMessage={handleShowMessage}
           />
           <CopyField
             label={"CMYK"}
@@ -136,6 +157,7 @@ export default function CopyFieldSlider({
             isLarge={isLargePalette}
             isOnColorPage={!needColorName}
             name={name}
+            onShowMessage={handleShowMessage}
           />
           <CopyField
             label={"LAB"}
@@ -143,6 +165,7 @@ export default function CopyFieldSlider({
             isLarge={isLargePalette}
             isOnColorPage={!needColorName}
             name={name}
+            onShowMessage={handleShowMessage}
           />
         </CopyFieldContainer>
       </SliderContainer>
