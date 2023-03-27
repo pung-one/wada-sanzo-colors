@@ -10,28 +10,39 @@ const StyledInput = styled.input`
   max-width: 26vw;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.span`
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
   background-color: white;
   border: 1px solid black;
-  width: 26vw;
-  box-shadow: 1px 1px 2px grey;
+  width: ${({ isLarge }) => (isLarge ? "25vw" : "20vw")};
+  height: ${({ isLarge }) => (isLarge ? "100%" : "70%")};
+  box-shadow: 0 0 3px black;
+  &:hover {
+    cursor: pointer;
+  }
   &:active {
     box-shadow: none;
   }
+  transition: box-shadow 0.2s;
 `;
 
-export default function CopyField({ value, label, isLarge }) {
-  function handleCopy(event) {
-    event.preventDefault();
+export default function CopyField({ value, label, isLarge, onShowMessage }) {
+  function handleCopy() {
     navigator.clipboard.writeText(value);
   }
 
   return (
-    <StyledForm isLarge={isLarge} onSubmit={(event) => handleCopy(event)}>
-      <StyledInput name="copyfield" readOnly={true} value={value} />
-      <StyledButton aria-label="copy color-code" type="submit">
-        copy {label}
-      </StyledButton>
-    </StyledForm>
+    <StyledButton
+      isLarge={isLarge}
+      onClick={() => {
+        handleCopy();
+        onShowMessage(value, label);
+      }}
+    >
+      {label}
+    </StyledButton>
   );
 }

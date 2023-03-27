@@ -10,14 +10,14 @@ import FavoriteMessage from "@/components/FavoriteMessage";
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  margin-top: 14vh;
+  margin-top: 14.5vh;
 `;
 
 const StyledColorBox = styled.header`
   position: relative;
   height: 30vh;
   display: flex;
-  padding: 3vh;
+  padding: 3vh 0 0 0;
   align-items: center;
   flex-direction: column;
   overflow-x: hidden;
@@ -26,7 +26,9 @@ const StyledColorBox = styled.header`
 
 const StyledHeadline = styled.h1`
   color: ${({ isBright }) => (isBright ? "black" : "white")};
-  padding: 2vh;
+  font-size: 3vh;
+  font-weight: lighter;
+  padding: 2vh 0 4vh;
 `;
 
 export default function ColorPage({

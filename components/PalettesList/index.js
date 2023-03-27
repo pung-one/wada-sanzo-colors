@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 
 const List = styled.ul`
-  padding-top: 24vh;
+  padding-top: 26.5vh;
   list-style-type: 0;
   width: 100vw;
 `;
@@ -29,6 +29,7 @@ const StyledColorBox = styled.div`
 const StyledPaletteNumber = styled.span`
   position: absolute;
   font-size: 2.5vh;
+  font-weight: lighter;
   padding: 2vh;
   text-decoration: underline;
   color: ${({ isBright }) => (isBright ? "black" : "white")};

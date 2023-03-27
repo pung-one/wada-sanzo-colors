@@ -79,6 +79,7 @@ export default function PalettesFilter({
       <StyledButton
         onClick={() => onShowPalettesWith2Colors()}
         isActive={paletteListType === 2}
+        aria-label={"only show combinations with two colors"}
       >
         {isAtFavorites && (
           <StyledNumber isActive={paletteListType === 2}>
@@ -90,6 +91,7 @@ export default function PalettesFilter({
       <StyledButton
         onClick={() => onShowPalettesWith3Colors()}
         isActive={paletteListType === 3}
+        aria-label={"only show combinations with three colors"}
       >
         {isAtFavorites && (
           <StyledNumber isActive={paletteListType === 3}>
@@ -102,6 +104,7 @@ export default function PalettesFilter({
       <StyledButton
         onClick={() => onShowPalettesWith4Colors()}
         isActive={paletteListType === 4}
+        aria-label={"only show combinations with four colors"}
       >
         {isAtFavorites && (
           <StyledNumber isActive={paletteListType === 4}>

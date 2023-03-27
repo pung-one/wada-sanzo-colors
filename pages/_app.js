@@ -209,11 +209,13 @@ export default function App({
       <GlobalStyle />
       <Head>
         <title>Colors</title>
+        <meta
+          name="description"
+          content="This website offers an interactive adaptation of the book 'A Dictionary of Color Combinations Vol. 1' by Wada Sanzo, that allows users to access and copy the colors CMYK, RGB, HEX, and LAB codes."
+        />
       </Head>
       <SessionProvider session={session}>
         <Layout
-          user={user}
-          setUser={setUser}
           inspirationPageFilter={inspirationPageFilter}
           setInspirationPageFilter={setInspirationPageFilter}
           handleShowColors={handleShowColors}
@@ -237,6 +239,7 @@ export default function App({
             {...pageProps}
             data={data}
             error={error}
+            setUser={setUser}
             listType={listType}
             paletteListType={paletteListType}
             colorListType={colorListType}

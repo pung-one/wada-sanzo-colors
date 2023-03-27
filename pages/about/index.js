@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const PageContainer = styled.main`
-  padding: 12vh 5vw 2vh 5vw;
+  padding: 13vh 5vw 2vh 5vw;
   display: flex;
   flex-direction: column;
   float: left;

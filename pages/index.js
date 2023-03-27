@@ -7,6 +7,10 @@ const PageContainer = styled.main`
   margin: 0 0 2vh;
 `;
 
+const ErrorMessage = styled.h1`
+  margin-top: 40vh;
+`;
+
 export default function Home({
   error,
   data,
@@ -18,8 +22,8 @@ export default function Home({
   paletteListType,
   colorListType,
 }) {
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
+  if (error) return <ErrorMessage>Failed to load data..</ErrorMessage>;
+  if (!data) return <ErrorMessage>Loading...</ErrorMessage>;
 
   const paletteArray = CreatePaletteArray(data);
 
