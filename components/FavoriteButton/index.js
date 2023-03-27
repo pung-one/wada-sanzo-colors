@@ -58,6 +58,7 @@ export default function FavoriteButton({
         onToggleFavorite(toggleValue, swatch);
         onShowFavMessage(toggleValue);
       }}
+      aria-label={"favor or defavor a color or combination"}
     />
   );
 }

@@ -29,6 +29,7 @@ const StyledColorBox = styled.div`
 const StyledPaletteNumber = styled.span`
   position: absolute;
   font-size: 2.5vh;
+  font-weight: lighter;
   padding: 2vh;
   text-decoration: underline;
   color: ${({ isBright }) => (isBright ? "black" : "white")};

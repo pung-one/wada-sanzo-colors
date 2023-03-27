@@ -157,6 +157,7 @@ export default function ColorFilter({
         onClick={() => handleShowSwatchOne()}
         isActive={colorListType === 1}
         swatch={"red/purple"}
+        aria-label={"only show colors from swatch nr. 1: red/purple"}
       >
         <SwatchName isActive={colorListType === 1}>red/purple</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchOne}</StyledNumber>}
@@ -165,6 +166,7 @@ export default function ColorFilter({
         onClick={() => handleShowSwatchTwo()}
         isActive={colorListType === 2}
         swatch={"yellow/red"}
+        aria-label={"only show colors from swatch nr. 2: yellow/red"}
       >
         <SwatchName isActive={colorListType === 2}>yellow/red</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchTwo}</StyledNumber>}
@@ -173,6 +175,7 @@ export default function ColorFilter({
         onClick={() => handleShowSwatchThree()}
         isActive={colorListType === 3}
         swatch={"yellow/green"}
+        aria-label={"only show colors from swatch nr. 3: yellow/green"}
       >
         <SwatchName isActive={colorListType === 3}>yellow/green</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchThree}</StyledNumber>}
@@ -181,6 +184,7 @@ export default function ColorFilter({
         onClick={() => handleShowSwatchFour()}
         isActive={colorListType === 4}
         swatch={"blue/turquoise"}
+        aria-label={"only show colors from swatch nr. 4: blue/turquoise"}
       >
         <SwatchName isActive={colorListType === 4}>blue/turquoise</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchFour}</StyledNumber>}
@@ -189,6 +193,7 @@ export default function ColorFilter({
         onClick={() => handleShowSwatchFive()}
         isActive={colorListType === 5}
         swatch={"blue/purple"}
+        aria-label={"only show colors from swatch nr. 5: blue/purple"}
       >
         <SwatchName isActive={colorListType === 5}>blue/purple</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchFive}</StyledNumber>}
@@ -197,6 +202,7 @@ export default function ColorFilter({
         onClick={() => handleShowSwatchSix()}
         isActive={colorListType === 6}
         swatch={"white/grey/black"}
+        aria-label={"only show colors from swatch nr. 6: white/grey/black"}
       >
         <SwatchName isActive={colorListType === 6}>white/grey/black</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchSix}</StyledNumber>}

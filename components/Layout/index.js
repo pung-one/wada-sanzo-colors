@@ -13,6 +13,7 @@ const Header = styled.header`
   height: 5.5vh;
   top: 0;
   font-size: 2vh;
+  font-weight: lighter;
   background-color: white;
   border-bottom: 1px solid black;
   padding: 1vh 0 1vh 3vw;
@@ -24,6 +25,7 @@ const SignInOutButton = styled.div`
   margin-right: 2vw;
   height: 3vh;
   font-size: 1.8vh;
+  font-weight: normal;
   padding: 0 1vw 0 1vw;
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
@@ -58,7 +60,6 @@ export default function Layout({
 }) {
   const router = useRouter();
   const route = router.route;
-  console.log(route);
   return (
     <>
       <Header>

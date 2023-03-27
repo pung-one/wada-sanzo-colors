@@ -27,6 +27,8 @@ const ColorBox = styled.li`
 
 const StyledColorName = styled.p`
   text-align: center;
+  font-size: 2.5vh;
+  font-weight: lighter;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
 
@@ -63,20 +65,23 @@ export default function ColorsList({
         const favoriteStatus = favoriteColorsData?.find(
           (color) => color.name === name
         );
+
         function handleShowFavMessage(toggleValue) {
           setShowFavMessage(true);
           setFavMessageName(toggleValue);
           const timer = setTimeout(() => setShowFavMessage(false), 1000);
         }
+
+        const isBright = IsColorBright(rgb);
         return (
-          <ColorBox key={name} isBright={IsColorBright(rgb)} hex={hex}>
+          <ColorBox key={name} isBright={isBright} hex={hex}>
             <FavoriteMessage
               isFavorite={favoriteStatus?.isFavorite}
               showFavMessage={showFavMessage}
               isTriggered={name === favMessageName}
             />
             <FavoriteButton
-              isBright={IsColorBright(rgb)}
+              isBright={isBright}
               isFavorite={favoriteStatus?.isFavorite}
               isOnListElement={true}
               toggleValue={name}
@@ -85,9 +90,7 @@ export default function ColorsList({
               swatch={swatch}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
-              <StyledColorName isBright={IsColorBright(rgb)}>
-                {name}
-              </StyledColorName>
+              <StyledColorName isBright={isBright}>{name}</StyledColorName>
             </Link>
           </ColorBox>
         );

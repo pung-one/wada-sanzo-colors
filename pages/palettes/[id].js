@@ -20,6 +20,8 @@ const Heading = styled.header`
   padding: 3vh;
   height: 11vh;
   border-bottom: 1px solid black;
+  font-size: 4vh;
+  font-weight: lighter;
 `;
 
 const PaletteContainer = styled.div`
@@ -90,7 +92,7 @@ export default function PalettePage({
           onToggleFavorite={onToggleFavoritePalette}
           onShowFavMessage={handleShowFavMessage}
         />
-        <h1>Palette #{id}</h1>
+        Combination #{id}
       </Heading>
       <PaletteContainer isLarge={isLargePalette}>
         {currentPalette?.palette?.map((color, index) => {

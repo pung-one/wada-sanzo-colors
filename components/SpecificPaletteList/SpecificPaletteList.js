@@ -29,6 +29,7 @@ const StyledColorBox = styled.div`
 const StyledPaletteNumber = styled.span`
   position: absolute;
   font-size: 2.5vh;
+  font-weight: lighter;
   padding: 2vh;
   text-decoration: underline;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
@@ -68,7 +69,10 @@ export default function SpecificPaletteList({
               return (
                 <StyledColorBox key={name} hex={hex}>
                   {colorIndex === 0 && (
-                    <Link href={`/palettes/${combi1}`}>
+                    <Link
+                      aria-label={`go to color-combination with nr ${combi1}`}
+                      href={`/palettes/${combi1}`}
+                    >
                       <StyledPaletteNumber isBright={IsColorBright(rgb)}>
                         {combi1}
                       </StyledPaletteNumber>
