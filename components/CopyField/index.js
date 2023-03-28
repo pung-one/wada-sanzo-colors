@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: ${({ isLarge }) => (!isLarge ? "column" : null)};
-  margin: 1px;
-`;
-
-const StyledInput = styled.input`
-  max-width: 26vw;
-`;
-
 const StyledButton = styled.span`
   display: flex;
   position: relative;

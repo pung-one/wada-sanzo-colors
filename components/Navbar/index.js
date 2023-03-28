@@ -9,7 +9,7 @@ import ColorFilter from "../ColorFilter";
 const NavContainer = styled.div`
   position: fixed;
   top: ${({ show }) => (!show ? "-23vh" : "5.5vh")};
-  z-index: 1;
+  z-index: 5;
   width: 100%;
   transition: top 0.5s;
 `;
@@ -38,7 +38,7 @@ const NavButton = styled.div`
   width: 22.5vw;
   height: 6vh;
   text-align: center;
-  transition: all 0.2s;
+  transition: all 0.7s;
   &:hover {
     cursor: pointer;
   }

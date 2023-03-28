@@ -66,12 +66,10 @@ export default function AboutPage() {
           </Link>
           ). The original 6-volume work Haishoku Soukan (The complete collection
           of color combinations) by Wada Sanzo, from which the book is derived,
-          was published from 1933 to 1934. It was a period permeated with a new
-          atmosphere brought on by the influence of western culture. The concept
-          of &quot;combining colors&quot; was not generally recognized at the
-          time, so, samplers of color combinations containing specific color
-          combination patterns were highly unusual. Hashoku Soukan was the
-          precursor of such samplers.
+          was published from 1933 to 1934. The concept of &quot;combining
+          colors&quot; was not generally recognized at the time, so, samplers of
+          color combinations containing specific color combination patterns were
+          highly unusual. Hashoku Soukan was the precursor of such samplers.
         </p>
       </Article>
       <Footer>
@@ -88,12 +86,6 @@ export default function AboutPage() {
             https://github.com/mattdesl/dictionary-of-colour-combinations
           </Link>
         </Info>
-        {/* <Info>
-          Thank you for Inspiration:{" "}
-          <Link href="https://sanzo-wada.dmbk.io/">
-            https://sanzo-wada.dmbk.io/
-          </Link>
-        </Info> */}
       </Footer>
     </PageContainer>
   );

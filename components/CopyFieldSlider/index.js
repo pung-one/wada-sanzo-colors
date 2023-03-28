@@ -3,7 +3,7 @@ import { SlArrowLeft } from "react-icons/sl";
 import Link from "next/link";
 import styled, { css } from "styled-components";
 import { useState } from "react";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import CopyColorCodeMessage from "../CopyColorCodeMessage";
 
 const SliderContainer = styled.aside`
@@ -29,7 +29,7 @@ const SliderContainer = styled.aside`
 
 const StyledButton = styled.button`
   position: absolute;
-  z-index: 5;
+  z-index: 2;
   background: none;
   border: none;
   transform: ${({ isActive, isLeftBox }) =>
@@ -61,6 +61,7 @@ const StyledColorName = styled.h2`
   text-align: center;
   text-decoration: underline;
   font-weight: lighter;
+  width: ${({ isLarge }) => (isLarge ? "100vw" : "35vw")};
   color: ${({ isBright }) => (isBright ? "black" : "white")};
   left: ${({ isLarge }) => (isLarge ? "-3vw" : "0")};
 `;

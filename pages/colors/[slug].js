@@ -3,7 +3,7 @@ import styled from "styled-components";
 import SpecificPaletteList from "@/components/SpecificPaletteList/SpecificPaletteList";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 import { useState } from "react";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import FavoriteButton from "@/components/FavoriteButton";
 import FavoriteMessage from "@/components/FavoriteMessage";
 

@@ -26,6 +26,9 @@ const StyledButton = styled.button`
   padding: 5vh;
   width: 60vw;
   box-shadow: 0 0 4px black;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledLink = styled(Link)`

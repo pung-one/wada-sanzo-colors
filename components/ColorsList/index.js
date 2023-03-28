@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styled from "styled-components";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import FavoriteButton from "../FavoriteButton";
 import { useState, useEffect } from "react";
 import FavoriteMessage from "../FavoriteMessage";
@@ -72,16 +72,15 @@ export default function ColorsList({
           const timer = setTimeout(() => setShowFavMessage(false), 1000);
         }
 
-        const isBright = IsColorBright(rgb);
         return (
-          <ColorBox key={name} isBright={isBright} hex={hex}>
+          <ColorBox key={name} isBright={IsColorBright(rgb)} hex={hex}>
             <FavoriteMessage
               isFavorite={favoriteStatus?.isFavorite}
               showFavMessage={showFavMessage}
               isTriggered={name === favMessageName}
             />
             <FavoriteButton
-              isBright={isBright}
+              isBright={IsColorBright(rgb)}
               isFavorite={favoriteStatus?.isFavorite}
               isOnListElement={true}
               toggleValue={name}
@@ -90,7 +89,9 @@ export default function ColorsList({
               swatch={swatch}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
-              <StyledColorName isBright={isBright}>{name}</StyledColorName>
+              <StyledColorName isBright={IsColorBright(rgb)}>
+                {name}
+              </StyledColorName>
             </Link>
           </ColorBox>
         );

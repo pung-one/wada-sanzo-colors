@@ -2,7 +2,7 @@ import styled from "styled-components";
 import chroma from "chroma-js";
 import { useState } from "react";
 import Link from "next/link";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { ImArrowDown } from "react-icons/im";
 
 const StyledForm = styled.form`
@@ -33,6 +33,9 @@ const StyledButton = styled.button`
   padding: 3vh;
   width: 40vw;
   box-shadow: 0 2px 5px black;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const ResultContainer = styled.main`

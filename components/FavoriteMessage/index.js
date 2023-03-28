@@ -8,7 +8,7 @@ const FavMessage = styled.span`
   top: 40%;
   width: 50vw;
   height: 6vh;
-  z-index: 5;
+  z-index: 4;
   background-color: white;
   border: 1px solid black;
   overflow: hidden;
