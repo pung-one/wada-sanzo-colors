@@ -34,7 +34,7 @@ export default function SignIn({ setUser }) {
         you to access them later.
         <br />
         <br />
-        Whithout signing in they will only be stored in the browser.
+        Whithout signing in, they will only be stored in the browser.
       </Article>
       <ButtonContainer>
         {session ? (

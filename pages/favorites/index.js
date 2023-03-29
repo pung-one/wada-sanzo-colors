@@ -14,8 +14,8 @@ export default function Favorites({
   paletteListType,
   colorListType,
 }) {
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading...</h1>;
+  if (error) return <ErrorMessage>Failed to load data..</ErrorMessage>;
+  if (!data) return <ErrorMessage>Loading..</ErrorMessage>;
 
   const favoriteColors = favoriteColorsData?.filter(
     (color) => color.isFavorite
@@ -68,4 +68,9 @@ const NoFavoritesInfo = styled.p`
   padding-top: 50vh;
   font-size: 3vh;
   text-align: center;
+`;
+
+const ErrorMessage = styled.h1`
+  text-align: center;
+  margin-top: 40vh;
 `;

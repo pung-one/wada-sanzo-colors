@@ -15,7 +15,7 @@ export default function Home({
   colorListType,
 }) {
   if (error) return <ErrorMessage>Failed to load data..</ErrorMessage>;
-  if (!data) return <ErrorMessage>Loading...</ErrorMessage>;
+  if (!data) return <ErrorMessage>Loading..</ErrorMessage>;
 
   const paletteArray = CreatePaletteArray(data);
 
@@ -45,5 +45,6 @@ const PageContainer = styled.main`
 `;
 
 const ErrorMessage = styled.h1`
+  text-align: center;
   margin-top: 40vh;
 `;
