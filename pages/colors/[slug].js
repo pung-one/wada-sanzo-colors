@@ -10,7 +10,7 @@ import FavoriteMessage from "@/components/FavoriteMessage";
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  margin-top: 14.5vh;
+  margin-top: 15.5vh;
 `;
 
 const StyledColorBox = styled.header`
