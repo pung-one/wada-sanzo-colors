@@ -7,7 +7,7 @@ export default function FavoriteMessage({
 }) {
   return (
     <FavMessage showFavMessage={showFavMessage} isTriggered={isTriggered}>
-      {isFavorite ? <p>Saved to Favorites</p> : <p>Removed from Favorites</p>}
+      {isFavorite ? "Saved to Favorites" : "Removed from Favorites"}
     </FavMessage>
   );
 }

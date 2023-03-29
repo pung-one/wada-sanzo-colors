@@ -63,7 +63,7 @@ const PageContainer = styled.main`
   height: 100vh;
 `;
 
-const ButtonContainer = styled.main`
+const ButtonContainer = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;

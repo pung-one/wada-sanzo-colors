@@ -18,7 +18,7 @@ export default function CopyField({ value, label, isLarge, onShowMessage }) {
   );
 }
 
-const StyledButton = styled.span`
+const StyledButton = styled.button`
   display: flex;
   position: relative;
   justify-content: center;

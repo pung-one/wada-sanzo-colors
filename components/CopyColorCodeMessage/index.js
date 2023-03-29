@@ -3,7 +3,7 @@ import styled from "styled-components";
 export default function CopyColorCodeMessage({ showMessage, label, isLarge }) {
   return (
     <FavMessage showMessage={showMessage} isLarge={isLarge}>
-      <p>{label}-code saved to clipboard.</p>
+      {label}-code saved to clipboard.
     </FavMessage>
   );
 }
