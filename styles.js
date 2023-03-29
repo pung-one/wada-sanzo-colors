@@ -1,6 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
+@font-face {
+  font-family: "AvenirLT Light";
+  src: local("AvenirLT-Light"),
+    url("./src/fonts/AvenirLT-Light.ttf") format("truetype");
+}
   *,
   *::before,
   *::after {

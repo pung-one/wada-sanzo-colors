@@ -6,7 +6,7 @@ import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  top: 5vh;
+  top: 6.5vh;
   height: 100vh;
 `;
 

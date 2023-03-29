@@ -10,7 +10,7 @@ const Header = styled.header`
   justify-content: space-between;
   z-index: 6;
   width: 100%;
-  height: 5.5vh;
+  height: 6.5vh;
   top: 0;
   font-size: 2vh;
   font-weight: lighter;
@@ -23,10 +23,10 @@ const SignInOutButton = styled.div`
   display: flex;
   align-items: center;
   margin-right: 2vw;
-  height: 3vh;
+  height: 4.5vh;
   font-size: 1.8vh;
   font-weight: normal;
-  padding: 0 1vw 0 1vw;
+  padding: 0 1.5vw 0 1.5vw;
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
   border: 1px solid black;
