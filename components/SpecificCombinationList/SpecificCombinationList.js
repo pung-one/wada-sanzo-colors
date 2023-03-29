@@ -5,21 +5,21 @@ import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 
-export default function SpecificPaletteList({
+export default function SpecificCombinationList({
   colors,
   currentColor,
-  favoritePalettesData,
-  onToggleFavoritePalette,
+  favoriteCombinationsData,
+  onToggleFavoriteCombination,
 }) {
   const [showFavMessage, setShowFavMessage] = useState(false);
   const [favMessageId, setFavMessageId] = useState("");
   return (
     <List>
       {currentColor?.combinations.map((combi1) => {
-        const favoriteStatus = favoritePalettesData?.find(
-          (palette) => palette.id === combi1
+        const favoriteStatus = favoriteCombinationsData?.find(
+          (combination) => combination.id === combi1
         );
-        const palette = colors.filter((color) =>
+        const combination = colors.filter((color) =>
           color.combinations.some((combi2) => combi1 === combi2)
         );
         function handleShowFavMessage(toggleValue) {
@@ -28,24 +28,24 @@ export default function SpecificPaletteList({
           const timer = setTimeout(() => setShowFavMessage(false), 1000);
         }
         return (
-          <StyledPaletteContainer key={combi1}>
+          <StyledCombinationContainer key={combi1}>
             <FavoriteMessage
               isFavorite={favoriteStatus?.isFavorite}
               showFavMessage={showFavMessage}
               isTriggered={combi1 === favMessageId}
             />
-            <Link href={`/palettes/${combi1}`}></Link>
-            {palette.map(({ name, hex, rgb }, colorIndex) => {
+            <Link href={`/combinations/${combi1}`}></Link>
+            {combination.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} hex={hex}>
                   {colorIndex === 0 && (
                     <Link
                       aria-label={`go to color-combination with nr ${combi1}`}
-                      href={`/palettes/${combi1}`}
+                      href={`/combinations/${combi1}`}
                     >
-                      <StyledPaletteNumber isBright={IsColorBright(rgb)}>
+                      <StyledCombinationNumber isBright={IsColorBright(rgb)}>
                         {combi1}
-                      </StyledPaletteNumber>
+                      </StyledCombinationNumber>
                     </Link>
                   )}
                   <FavoriteButton
@@ -53,13 +53,13 @@ export default function SpecificPaletteList({
                     isOnListElement={true}
                     isBright={IsColorBright(rgb)}
                     toggleValue={combi1}
-                    onToggleFavorite={onToggleFavoritePalette}
+                    onToggleFavorite={onToggleFavoriteCombination}
                     onShowFavMessage={handleShowFavMessage}
                   />
                 </StyledColorBox>
               );
             })}
-          </StyledPaletteContainer>
+          </StyledCombinationContainer>
         );
       })}
     </List>
@@ -72,7 +72,7 @@ const List = styled.ul`
   list-style-type: 0;
 `;
 
-const StyledPaletteContainer = styled.li`
+const StyledCombinationContainer = styled.li`
   position: relative;
   display: flex;
   justify-content: center;
@@ -87,7 +87,7 @@ const StyledColorBox = styled.div`
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
-const StyledPaletteNumber = styled.span`
+const StyledCombinationNumber = styled.span`
   position: absolute;
   font-size: 2.5vh;
   font-weight: lighter;

@@ -4,7 +4,7 @@ export default function FavoriteButton({
   isFavorite,
   isOnListElement,
   isOnDetailColor,
-  isOnDetailPalette,
+  isOnDetailCombination,
   isBright,
   toggleValue,
   onToggleFavorite,
@@ -16,7 +16,7 @@ export default function FavoriteButton({
       isFavorite={isFavorite}
       isOnList={isOnListElement}
       isOnColor={isOnDetailColor}
-      isOnPalette={isOnDetailPalette}
+      isOnCombination={isOnDetailCombination}
       isBright={isBright}
       onClick={() => {
         onToggleFavorite(toggleValue, swatch);
@@ -53,7 +53,7 @@ const Button = styled.button`
       top: 19%;
     `};
   ${(props) =>
-    props.isOnPalette &&
+    props.isOnCombination &&
     css`
       right: 8%;
       top: 36%;

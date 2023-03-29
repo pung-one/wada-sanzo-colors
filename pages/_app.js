@@ -29,10 +29,8 @@ export default function App({
     { defaultValue: [] }
   );
 
-  const [favoritePalettesData, setFavoritePalettesData] = useLocalStorageState(
-    "favoritePalettesData",
-    { defaultValue: [] }
-  );
+  const [favoriteCombinationsData, setFavoriteCombinationsData] =
+    useLocalStorageState("favoriteCombinationsData", { defaultValue: [] });
 
   const [listType, setListType] = useLocalStorageState("listType", {
     defaultValue: "colors",
@@ -41,19 +39,19 @@ export default function App({
   const [inspirationPageFilter, setInspirationPageFilter] =
     useState("initialPage");
 
-  const [paletteListType, setPaletteListType] = useState(0);
+  const [combinationListType, setCombinationListType] = useState(0);
 
   const [colorListType, setColorListType] = useState(0);
 
   useEffect(() => {
     setColorListType(0);
-    setPaletteListType(0);
+    setCombinationListType(0);
   }, [route]);
 
   useEffect(() => {
     if (favData && user !== "public") {
       setFavoriteColorsData(favData?.favoriteColors);
-      setFavoritePalettesData(favData?.favoritePalettes);
+      setFavoriteCombinationsData(favData?.favoriteCombinations);
     }
   }, [favData]);
 
@@ -61,13 +59,13 @@ export default function App({
     if (user !== "public") {
       handleUpdateFavs(user);
     }
-  }, [favoriteColorsData, favoritePalettesData]);
+  }, [favoriteColorsData, favoriteCombinationsData]);
 
   async function handleUpdateFavs(user) {
     const body = {
       user: user,
       favoriteColors: favoriteColorsData,
-      favoritePalettes: favoritePalettesData,
+      favoriteCombinations: favoriteCombinationsData,
     };
 
     const response = await fetch(`/api/favorites/${user}`, {
@@ -108,19 +106,19 @@ export default function App({
     });
   }
 
-  function handleToggleFavoritePalette(id) {
-    setFavoritePalettesData((prevFavoritePalettesData) => {
-      const favStatus = prevFavoritePalettesData.find(
+  function handleToggleFavoriteCombination(id) {
+    setFavoriteCombinationsData((prevFavoriteCombinationsData) => {
+      const favStatus = prevFavoriteCombinationsData.find(
         (element) => element.id === id
       );
       if (favStatus) {
-        return prevFavoritePalettesData.map((palette) =>
-          palette.id === id
-            ? { id: palette.id, isFavorite: !palette.isFavorite }
-            : palette
+        return prevFavoriteCombinationsData.map((combination) =>
+          combination.id === id
+            ? { id: combination.id, isFavorite: !combination.isFavorite }
+            : combination
         );
       }
-      return [...prevFavoritePalettesData, { id: id, isFavorite: true }];
+      return [...prevFavoriteCombinationsData, { id: id, isFavorite: true }];
     });
   }
 
@@ -128,31 +126,31 @@ export default function App({
     setListType("colors");
   }
 
-  function handleShowPalettes() {
-    setListType("palettes");
+  function handleShowCombinations() {
+    setListType("combinations");
   }
 
-  function handleShowPalettesWith2Colors() {
-    if (paletteListType === 2) {
-      setPaletteListType(0);
+  function handleShowCombinationsWith2Colors() {
+    if (combinationListType === 2) {
+      setCombinationListType(0);
     } else {
-      setPaletteListType(2);
+      setCombinationListType(2);
     }
   }
 
-  function handleShowPalettesWith3Colors() {
-    if (paletteListType === 3) {
-      setPaletteListType(0);
+  function handleShowCombinationsWith3Colors() {
+    if (combinationListType === 3) {
+      setCombinationListType(0);
     } else {
-      setPaletteListType(3);
+      setCombinationListType(3);
     }
   }
 
-  function handleShowPalettesWith4Colors() {
-    if (paletteListType === 4) {
-      setPaletteListType(0);
+  function handleShowCombinationsWith4Colors() {
+    if (combinationListType === 4) {
+      setCombinationListType(0);
     } else {
-      setPaletteListType(4);
+      setCombinationListType(4);
     }
   }
 
@@ -219,13 +217,13 @@ export default function App({
           inspirationPageFilter={inspirationPageFilter}
           setInspirationPageFilter={setInspirationPageFilter}
           handleShowColors={handleShowColors}
-          handleShowPalettes={handleShowPalettes}
+          handleShowCombinations={handleShowCombinations}
           listType={listType}
-          paletteListType={paletteListType}
-          handleShowPalettesWith2Colors={handleShowPalettesWith2Colors}
-          handleShowPalettesWith3Colors={handleShowPalettesWith3Colors}
-          handleShowPalettesWith4Colors={handleShowPalettesWith4Colors}
-          favoritePalettesData={favoritePalettesData}
+          combinationListType={combinationListType}
+          handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+          handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+          handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          favoriteCombinationsData={favoriteCombinationsData}
           colorListType={colorListType}
           handleShowSwatchOne={handleShowSwatchOne}
           handleShowSwatchTwo={handleShowSwatchTwo}
@@ -241,14 +239,14 @@ export default function App({
             error={error}
             setUser={setUser}
             listType={listType}
-            paletteListType={paletteListType}
+            combinationListType={combinationListType}
             colorListType={colorListType}
             inspirationPageFilter={inspirationPageFilter}
             setInspirationPageFilter={setInspirationPageFilter}
             favoriteColorsData={favoriteColorsData}
             onToggleFavoriteColor={handleToggleFavoriteColor}
-            favoritePalettesData={favoritePalettesData}
-            onToggleFavoritePalette={handleToggleFavoritePalette}
+            favoriteCombinationsData={favoriteCombinationsData}
+            onToggleFavoriteCombination={handleToggleFavoriteCombination}
           />
         </Layout>
       </SessionProvider>

@@ -13,7 +13,7 @@ export default async function handler(request, response) {
         favorites = await Favorite.create({
           user: user,
           favoriteColors: [],
-          favoritePalettes: [],
+          favoriteCombinations: [],
         });
       }
 

@@ -1,23 +1,23 @@
 import styled from "styled-components";
 import ColorsList from "@/components/ColorsList";
-import PalettesList from "@/components/PalettesList";
-import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
+import CombinationsList from "@/components/CombinationsList";
+import { CreateCombinationArray } from "@/utils/CreateCombinationArray";
 
 export default function Home({
   error,
   data,
   onToggleFavoriteColor,
   favoriteColorsData,
-  onToggleFavoritePalette,
-  favoritePalettesData,
+  onToggleFavoriteCombination,
+  favoriteCombinationsData,
   listType,
-  paletteListType,
+  combinationListType,
   colorListType,
 }) {
   if (error) return <ErrorMessage>Failed to load data..</ErrorMessage>;
   if (!data) return <ErrorMessage>Loading..</ErrorMessage>;
 
-  const paletteArray = CreatePaletteArray(data);
+  const combinationArray = CreateCombinationArray(data);
 
   return (
     <PageContainer showsColorList={listType === "colors"}>
@@ -29,11 +29,11 @@ export default function Home({
           favoriteColorsData={favoriteColorsData}
         />
       ) : (
-        <PalettesList
-          paletteArray={paletteArray}
-          paletteListType={paletteListType}
-          onToggleFavorite={onToggleFavoritePalette}
-          favoritePalettesData={favoritePalettesData}
+        <CombinationsList
+          combinationArray={combinationArray}
+          combinationListType={combinationListType}
+          onToggleFavorite={onToggleFavoriteCombination}
+          favoriteCombinationsData={favoriteCombinationsData}
         />
       )}
     </PageContainer>

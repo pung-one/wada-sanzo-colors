@@ -1,11 +1,13 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import PalettesFilter from ".";
+import CombinationsFilter from ".";
 
-const favoritePalettesData = [];
+const favoriteCombinationsData = [];
 
 test("shows filter button", () => {
-  render(<PalettesFilter favoritePalettesData={favoritePalettesData} />);
+  render(
+    <CombinationsFilter favoriteCombinationsData={favoriteCombinationsData} />
+  );
   const button = screen.getAllByRole("button");
   expect(button[0]).toBeInTheDocument();
   expect(button[1]).toBeInTheDocument();

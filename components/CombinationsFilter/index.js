@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function PalettesFilter({
-  paletteListType,
-  onShowPalettesWith2Colors,
-  onShowPalettesWith3Colors,
-  onShowPalettesWith4Colors,
-  favoritePalettesData,
+export default function CombinationsFilter({
+  combinationListType,
+  onShowCombinationsWith2Colors,
+  onShowCombinationsWith3Colors,
+  onShowCombinationsWith4Colors,
+  favoriteCombinationsData,
   isAtFavorites,
 }) {
   const [favWithTwoColors, setFavWithTwoColors] = useState(0);
@@ -15,62 +15,65 @@ export default function PalettesFilter({
 
   useEffect(() => {
     setFavWithTwoColors(
-      favoritePalettesData?.filter(
-        (palette) => palette.id <= 120 && palette.isFavorite
+      favoriteCombinationsData?.filter(
+        (combination) => combination.id <= 120 && combination.isFavorite
       ).length
     );
     setFavWithThreeColors(
-      favoritePalettesData?.filter(
-        (palette) => palette.id > 120 && palette.id <= 240 && palette.isFavorite
+      favoriteCombinationsData?.filter(
+        (combination) =>
+          combination.id > 120 &&
+          combination.id <= 240 &&
+          combination.isFavorite
       ).length
     );
     setFavWithFourColors(
-      favoritePalettesData?.filter(
-        (palette) => palette.id > 240 && palette.isFavorite
+      favoriteCombinationsData?.filter(
+        (combination) => combination.id > 240 && combination.isFavorite
       ).length
     );
-  }, [favoritePalettesData]);
+  }, [favoriteCombinationsData]);
 
   return (
     <FilterContainer>
       <StyledButton
-        onClick={() => onShowPalettesWith2Colors()}
-        isActive={paletteListType === 2}
+        onClick={() => onShowCombinationsWith2Colors()}
+        isActive={combinationListType === 2}
         aria-label={"only show combinations with two colors"}
       >
         {isAtFavorites && (
-          <StyledNumber isActive={paletteListType === 2}>
+          <StyledNumber isActive={combinationListType === 2}>
             {favWithTwoColors}
           </StyledNumber>
         )}
-        <StyledBox filter={2} isActive={paletteListType === 2} />
+        <StyledBox filter={2} isActive={combinationListType === 2} />
       </StyledButton>
       <StyledButton
-        onClick={() => onShowPalettesWith3Colors()}
-        isActive={paletteListType === 3}
+        onClick={() => onShowCombinationsWith3Colors()}
+        isActive={combinationListType === 3}
         aria-label={"only show combinations with three colors"}
       >
         {isAtFavorites && (
-          <StyledNumber isActive={paletteListType === 3}>
+          <StyledNumber isActive={combinationListType === 3}>
             {favWithThreeColors}
           </StyledNumber>
         )}
-        <StyledBox filter={3} isActive={paletteListType === 3} />
-        <StyledBox filter={3} isActive={paletteListType === 3} />
+        <StyledBox filter={3} isActive={combinationListType === 3} />
+        <StyledBox filter={3} isActive={combinationListType === 3} />
       </StyledButton>
       <StyledButton
-        onClick={() => onShowPalettesWith4Colors()}
-        isActive={paletteListType === 4}
+        onClick={() => onShowCombinationsWith4Colors()}
+        isActive={combinationListType === 4}
         aria-label={"only show combinations with four colors"}
       >
         {isAtFavorites && (
-          <StyledNumber isActive={paletteListType === 4}>
+          <StyledNumber isActive={combinationListType === 4}>
             {favWithFourColors}
           </StyledNumber>
         )}
-        <StyledBox filter={4} isActive={paletteListType === 4} />
-        <StyledBox filter={4} isActive={paletteListType === 4} />
-        <StyledBox filter={4} isActive={paletteListType === 4} />
+        <StyledBox filter={4} isActive={combinationListType === 4} />
+        <StyledBox filter={4} isActive={combinationListType === 4} />
+        <StyledBox filter={4} isActive={combinationListType === 4} />
       </StyledButton>
     </FilterContainer>
   );

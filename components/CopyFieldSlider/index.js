@@ -7,7 +7,7 @@ import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import CopyColorCodeMessage from "../CopyColorCodeMessage";
 
 export default function CopyFieldSlider({
-  isLargePalette,
+  isLargeCombination,
   color,
   index,
   handleSlide,
@@ -30,19 +30,19 @@ export default function CopyFieldSlider({
   return (
     <>
       <SliderContainer
-        isLarge={isLargePalette}
-        isLeftBox={!isLargePalette && index === 0}
+        isLarge={isLargeCombination}
+        isLeftBox={!isLargeCombination && index === 0}
         isActive={isActive}
       >
         <CopyColorCodeMessage
-          isLarge={isLargePalette}
+          isLarge={isLargeCombination}
           showMessage={showMessage}
           value={copyValue}
           label={label}
         />
         <StyledButton
           onClick={() => handleSlide(index)}
-          isLeftBox={!isLargePalette && index === 0}
+          isLeftBox={!isLargeCombination && index === 0}
           isActive={isActive}
           aria-label={"show and hide color-codes"}
         >
@@ -51,7 +51,7 @@ export default function CopyFieldSlider({
         {needColorName && (
           <Link href={`/colors/${slug}`}>
             <StyledColorName
-              isLarge={isLargePalette}
+              isLarge={isLargeCombination}
               isBright={IsColorBright(rgb)}
             >
               {name}
@@ -59,13 +59,13 @@ export default function CopyFieldSlider({
           </Link>
         )}
         <CopyFieldContainer
-          isLarge={isLargePalette}
-          isLeftBox={!isLargePalette && index === 0}
+          isLarge={isLargeCombination}
+          isLeftBox={!isLargeCombination && index === 0}
         >
           <CopyField
             label={"HEX"}
             value={hex}
-            isLarge={isLargePalette}
+            isLarge={isLargeCombination}
             isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}
@@ -73,7 +73,7 @@ export default function CopyFieldSlider({
           <CopyField
             label={"RGB"}
             value={rgb}
-            isLarge={isLargePalette}
+            isLarge={isLargeCombination}
             isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}
@@ -81,7 +81,7 @@ export default function CopyFieldSlider({
           <CopyField
             label={"CMYK"}
             value={cmyk}
-            isLarge={isLargePalette}
+            isLarge={isLargeCombination}
             isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}
@@ -89,7 +89,7 @@ export default function CopyFieldSlider({
           <CopyField
             label={"LAB"}
             value={lab}
-            isLarge={isLargePalette}
+            isLarge={isLargeCombination}
             isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}

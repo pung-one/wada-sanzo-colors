@@ -5,38 +5,44 @@ import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { useEffect, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 
-export default function PalettesList({
-  paletteArray,
-  favoritePalettesData,
+export default function CombinationsList({
+  combinationArray,
+  favoriteCombinationsData,
   onToggleFavorite,
-  paletteListType,
+  combinationListType,
 }) {
   const [showFavMessage, setShowFavMessage] = useState(false);
   const [favMessageId, setFavMessageId] = useState("");
   const [arrayToBeRendered, setArrayToBeRendered] = useState(null);
   useEffect(() => {
-    if (paletteListType === 0) {
-      setArrayToBeRendered(paletteArray);
-    } else if (paletteListType === 2) {
+    if (combinationListType === 0) {
+      setArrayToBeRendered(combinationArray);
+    } else if (combinationListType === 2) {
       setArrayToBeRendered(
-        paletteArray.filter((palette) => palette.palette.length === 2)
+        combinationArray.filter(
+          (combination) => combination.combination.length === 2
+        )
       );
-    } else if (paletteListType === 3) {
+    } else if (combinationListType === 3) {
       setArrayToBeRendered(
-        paletteArray.filter((palette) => palette.palette.length === 3)
+        combinationArray.filter(
+          (combination) => combination.combination.length === 3
+        )
       );
-    } else if (paletteListType === 4) {
+    } else if (combinationListType === 4) {
       setArrayToBeRendered(
-        paletteArray.filter((palette) => palette.palette.length === 4)
+        combinationArray.filter(
+          (combination) => combination.combination.length === 4
+        )
       );
     }
-  }, [paletteListType, favoritePalettesData]);
+  }, [combinationListType, favoriteCombinationsData]);
 
   return (
     <List>
-      {arrayToBeRendered?.map((palette1) => {
-        const favoriteStatus = favoritePalettesData?.find(
-          (palette2) => palette2.id === palette1.id
+      {arrayToBeRendered?.map((combination1) => {
+        const favoriteStatus = favoriteCombinationsData?.find(
+          (combination2) => combination2.id === combination1.id
         );
         function handleShowFavMessage(toggleValue) {
           setShowFavMessage(true);
@@ -44,37 +50,37 @@ export default function PalettesList({
           const timer = setTimeout(() => setShowFavMessage(false), 1000);
         }
         return (
-          <StyledPaletteContainer
-            key={palette1.id}
-            length={palette1?.palette?.length}
+          <StyledCombinationContainer
+            key={combination1.id}
+            length={combination1?.combination?.length}
           >
             <FavoriteMessage
               isFavorite={favoriteStatus?.isFavorite}
               showFavMessage={showFavMessage}
-              isTriggered={palette1.id === favMessageId}
+              isTriggered={combination1.id === favMessageId}
             />
-            {palette1.palette?.map(({ name, hex, rgb }, colorIndex) => {
+            {combination1.combination?.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} hex={hex}>
                   {colorIndex === 0 && (
-                    <Link href={`/palettes/${palette1.id}`}>
-                      <StyledPaletteNumber isBright={IsColorBright(rgb)}>
-                        {palette1.id}
-                      </StyledPaletteNumber>
+                    <Link href={`/combinations/${combination1.id}`}>
+                      <StyledCombinationNumber isBright={IsColorBright(rgb)}>
+                        {combination1.id}
+                      </StyledCombinationNumber>
                     </Link>
                   )}
                   <FavoriteButton
                     isFavorite={favoriteStatus?.isFavorite}
                     isOnListElement={true}
                     isBright={IsColorBright(rgb)}
-                    toggleValue={palette1.id}
+                    toggleValue={combination1.id}
                     onToggleFavorite={onToggleFavorite}
                     onShowFavMessage={handleShowFavMessage}
                   />
                 </StyledColorBox>
               );
             })}
-          </StyledPaletteContainer>
+          </StyledCombinationContainer>
         );
       })}
     </List>
@@ -87,7 +93,7 @@ const List = styled.ul`
   width: 100vw;
 `;
 
-const StyledPaletteContainer = styled.li`
+const StyledCombinationContainer = styled.li`
   position: relative;
   display: flex;
   justify-content: center;
@@ -102,7 +108,7 @@ const StyledColorBox = styled.div`
   background-color: ${({ hex }) => (hex ? hex : null)};
 `;
 
-const StyledPaletteNumber = styled.span`
+const StyledCombinationNumber = styled.span`
   position: absolute;
   font-size: 2.5vh;
   font-weight: lighter;

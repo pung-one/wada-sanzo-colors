@@ -8,13 +8,13 @@ export default function Layout({
   inspirationPageFilter,
   setInspirationPageFilter,
   handleShowColors,
-  handleShowPalettes,
+  handleShowCombinations,
   listType,
-  paletteListType,
-  handleShowPalettesWith2Colors,
-  handleShowPalettesWith3Colors,
-  handleShowPalettesWith4Colors,
-  favoritePalettesData,
+  combinationListType,
+  handleShowCombinationsWith2Colors,
+  handleShowCombinationsWith3Colors,
+  handleShowCombinationsWith4Colors,
+  favoriteCombinationsData,
   colorListType,
   handleShowSwatchOne,
   handleShowSwatchTwo,
@@ -40,13 +40,13 @@ export default function Layout({
         inspirationPageFilter={inspirationPageFilter}
         setInspirationPageFilter={setInspirationPageFilter}
         handleShowColors={handleShowColors}
-        handleShowPalettes={handleShowPalettes}
+        handleShowCombinations={handleShowCombinations}
         listType={listType}
-        paletteListType={paletteListType}
-        handleShowPalettesWith2Colors={handleShowPalettesWith2Colors}
-        handleShowPalettesWith3Colors={handleShowPalettesWith3Colors}
-        handleShowPalettesWith4Colors={handleShowPalettesWith4Colors}
-        favoritePalettesData={favoritePalettesData}
+        combinationListType={combinationListType}
+        handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+        handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+        handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+        favoriteCombinationsData={favoriteCombinationsData}
         colorListType={colorListType}
         handleShowSwatchOne={handleShowSwatchOne}
         handleShowSwatchTwo={handleShowSwatchTwo}

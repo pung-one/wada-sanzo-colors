@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 import ColorPicker from "@/components/ColorPicker";
-import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
+import { CreateCombinationArray } from "@/utils/CreateCombinationArray";
 
 export default function InspirationPage({
   data,
@@ -13,24 +13,24 @@ export default function InspirationPage({
   if (!data) return <h1>Loading Data...</h1>;
 
   const randomColorSlug = data[Math.floor(Math.random() * 159)]?.slug;
-  const randomPaletteId = Math.floor(Math.random() * 348);
+  const randomCombinationId = Math.floor(Math.random() * 348);
 
-  const paletteArray = CreatePaletteArray(data);
+  const combinationArray = CreateCombinationArray(data);
 
-  function CreateRandomPaletteCssGradient() {
-    const randomPalette = paletteArray[randomPaletteId].palette;
-    if (randomPalette.length === 2) {
-      const randomGradient = `linear-gradient(180deg, rgba(${randomPalette[0].rgb[0]},${randomPalette[0].rgb[1]},${randomPalette[0].rgb[2]},1) 0%, rgba(${randomPalette[1].rgb[0]},${randomPalette[1].rgb[1]},${randomPalette[1].rgb[2]},1) 100%)`;
+  function CreateRandomCombinationCssGradient() {
+    const randomCombination = combinationArray[randomCombinationId].combination;
+    if (randomCombination.length === 2) {
+      const randomGradient = `linear-gradient(180deg, rgba(${randomCombination[0].rgb[0]},${randomCombination[0].rgb[1]},${randomCombination[0].rgb[2]},1) 0%, rgba(${randomCombination[1].rgb[0]},${randomCombination[1].rgb[1]},${randomCombination[1].rgb[2]},1) 100%)`;
       return randomGradient;
-    } else if (randomPalette.length === 3) {
-      const randomGradient = `linear-gradient(180deg, rgba(${randomPalette[0].rgb[0]},${randomPalette[0].rgb[1]},${randomPalette[0].rgb[2]},1) 0%, rgba(${randomPalette[1].rgb[0]},${randomPalette[1].rgb[1]},${randomPalette[1].rgb[2]},1) 50%, rgba(${randomPalette[2].rgb[0]},${randomPalette[2].rgb[1]},${randomPalette[2].rgb[2]},1) 100%)`;
+    } else if (randomCombination.length === 3) {
+      const randomGradient = `linear-gradient(180deg, rgba(${randomCombination[0].rgb[0]},${randomCombination[0].rgb[1]},${randomCombination[0].rgb[2]},1) 0%, rgba(${randomCombination[1].rgb[0]},${randomCombination[1].rgb[1]},${randomCombination[1].rgb[2]},1) 50%, rgba(${randomCombination[2].rgb[0]},${randomCombination[2].rgb[1]},${randomCombination[2].rgb[2]},1) 100%)`;
       return randomGradient;
     } else {
-      const randomGradient = `linear-gradient(180deg, rgba(${randomPalette[0].rgb[0]},${randomPalette[0].rgb[1]},${randomPalette[0].rgb[2]},1) 0%, rgba(${randomPalette[1].rgb[0]},${randomPalette[1].rgb[1]},${randomPalette[1].rgb[2]},1) 25%, rgba(${randomPalette[2].rgb[0]},${randomPalette[2].rgb[1]},${randomPalette[2].rgb[2]},1) 75%, rgba(${randomPalette[3].rgb[0]},${randomPalette[3].rgb[1]},${randomPalette[3].rgb[2]},1) 100%)`;
+      const randomGradient = `linear-gradient(180deg, rgba(${randomCombination[0].rgb[0]},${randomCombination[0].rgb[1]},${randomCombination[0].rgb[2]},1) 0%, rgba(${randomCombination[1].rgb[0]},${randomCombination[1].rgb[1]},${randomCombination[1].rgb[2]},1) 25%, rgba(${randomCombination[2].rgb[0]},${randomCombination[2].rgb[1]},${randomCombination[2].rgb[2]},1) 75%, rgba(${randomCombination[3].rgb[0]},${randomCombination[3].rgb[1]},${randomCombination[3].rgb[2]},1) 100%)`;
       return randomGradient;
     }
   }
-  const randomGradient = CreateRandomPaletteCssGradient();
+  const randomGradient = CreateRandomCombinationCssGradient();
 
   return (
     <PageContainer>
@@ -44,8 +44,8 @@ export default function InspirationPage({
           <StyledLink href={`/colors/${randomColorSlug}`}>
             Random Color
           </StyledLink>
-          <StyledLink href={`/palettes/${randomPaletteId}`}>
-            Random Palette
+          <StyledLink href={`/combinations/${randomCombinationId}`}>
+            Random Combination
           </StyledLink>
         </ButtonContainer>
       )}

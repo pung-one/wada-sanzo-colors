@@ -1,4 +1,4 @@
-import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
+import { CreateCombinationArray } from "@/utils/CreateCombinationArray";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
@@ -6,36 +6,36 @@ import CopyFieldSlider from "@/components/CopyFieldSlider";
 import FavoriteButton from "@/components/FavoriteButton";
 import FavoriteMessage from "@/components/FavoriteMessage";
 
-export default function PalettePage({
+export default function CombinationPage({
   data,
   error,
-  favoritePalettesData,
-  onToggleFavoritePalette,
+  favoriteCombinationsData,
+  onToggleFavoriteCombination,
 }) {
   const router = useRouter();
   const { id } = router.query;
   const [showFavMessage, setShowFavMessage] = useState(false);
   const [favMessageId, setFavMessageId] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
-  const [currentPalette, setCurrentPalette] = useState([]);
+  const [currentCombination, setCurrentCombination] = useState([]);
 
   useEffect(() => {
-    setCurrentPalette(
-      CreatePaletteArray(data).find((element) => element.id == id)
+    setCurrentCombination(
+      CreateCombinationArray(data).find((element) => element.id == id)
     );
   }, [data, id]);
 
   if (error) return <h1>Failed to load data..</h1>;
   if (!data) return <h1>Loading...</h1>;
 
-  const isLargePalette = currentPalette?.palette?.length > 2;
+  const isLargeCombination = currentCombination?.combination?.length > 2;
 
   const handleSlide = (index) => {
     setActiveIndex(index === activeIndex ? -1 : index);
   };
 
-  const favoriteStatus = favoritePalettesData?.find(
-    (palette) => palette.id === id
+  const favoriteStatus = favoriteCombinationsData?.find(
+    (combination) => combination.id === id
   );
   function handleShowFavMessage(toggleValue) {
     setShowFavMessage(true);
@@ -53,19 +53,19 @@ export default function PalettePage({
         <FavoriteButton
           isFavorite={favoriteStatus?.isFavorite}
           isBright={true}
-          isOnDetailPalette={true}
+          isOnDetailCombination={true}
           toggleValue={id}
-          onToggleFavorite={onToggleFavoritePalette}
+          onToggleFavorite={onToggleFavoriteCombination}
           onShowFavMessage={handleShowFavMessage}
         />
         Combination #{id}
       </Heading>
-      <PaletteContainer isLarge={isLargePalette}>
-        {currentPalette?.palette?.map((color, index) => {
+      <CombinationContainer isLarge={isLargeCombination}>
+        {currentCombination?.combination?.map((color, index) => {
           return (
             <ColorBox hex={color.hex} key={color.name}>
               <CopyFieldSlider
-                isLargePalette={isLargePalette}
+                isLargeCombination={isLargeCombination}
                 color={color}
                 index={index}
                 handleSlide={handleSlide}
@@ -75,7 +75,7 @@ export default function PalettePage({
             </ColorBox>
           );
         })}
-      </PaletteContainer>
+      </CombinationContainer>
     </PageContainer>
   );
 }
@@ -98,7 +98,7 @@ const Heading = styled.header`
   font-weight: lighter;
 `;
 
-const PaletteContainer = styled.div`
+const CombinationContainer = styled.div`
   display: flex;
   height: 80vh;
   flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};

@@ -1,6 +1,6 @@
 import ColorsList from "@/components/ColorsList";
-import PalettesList from "@/components/PalettesList";
-import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
+import CombinationsList from "@/components/CombinationsList";
+import { CreateCombinationArray } from "@/utils/CreateCombinationArray";
 import styled from "styled-components";
 
 export default function Favorites({
@@ -8,10 +8,10 @@ export default function Favorites({
   data,
   onToggleFavoriteColor,
   favoriteColorsData,
-  onToggleFavoritePalette,
-  favoritePalettesData,
+  onToggleFavoriteCombination,
+  favoriteCombinationsData,
   listType,
-  paletteListType,
+  combinationListType,
   colorListType,
 }) {
   if (error) return <ErrorMessage>Failed to load data..</ErrorMessage>;
@@ -24,12 +24,15 @@ export default function Favorites({
     favoriteColors?.some((color2) => color2.name === color1.name)
   );
 
-  const allPalettesArray = CreatePaletteArray(data);
-  const favoritePalettes = favoritePalettesData?.filter(
-    (palette) => palette.isFavorite
+  const allCombinationsArray = CreateCombinationArray(data);
+  const favoriteCombinations = favoriteCombinationsData?.filter(
+    (combination) => combination.isFavorite
   );
-  const favoritePalettesList = allPalettesArray?.filter((palette1) =>
-    favoritePalettes?.some((palette2) => palette2.id === palette1.id)
+  const favoriteCombinationsList = allCombinationsArray?.filter(
+    (combination1) =>
+      favoriteCombinations?.some(
+        (combination2) => combination2.id === combination1.id
+      )
   );
 
   return (
@@ -37,8 +40,8 @@ export default function Favorites({
       {favoriteColorsList.length === 0 && listType === "colors" && (
         <NoFavoritesInfo>No favorite colors.</NoFavoritesInfo>
       )}
-      {favoritePalettesList.length === 0 && listType === "palettes" && (
-        <NoFavoritesInfo>No favorite palettes.</NoFavoritesInfo>
+      {favoriteCombinationsList.length === 0 && listType === "combinations" && (
+        <NoFavoritesInfo>No favorite combinations.</NoFavoritesInfo>
       )}
       {listType === "colors" && (
         <ColorsList
@@ -48,12 +51,12 @@ export default function Favorites({
           favoriteColorsData={favoriteColorsData}
         />
       )}
-      {listType === "palettes" && (
-        <PalettesList
-          paletteArray={favoritePalettesList}
-          onToggleFavorite={onToggleFavoritePalette}
-          favoritePalettesData={favoritePalettesData}
-          paletteListType={paletteListType}
+      {listType === "combinations" && (
+        <CombinationsList
+          combinationArray={favoriteCombinationsList}
+          onToggleFavorite={onToggleFavoriteCombination}
+          favoriteCombinationsData={favoriteCombinationsData}
+          combinationListType={combinationListType}
         />
       )}
     </PageContainer>

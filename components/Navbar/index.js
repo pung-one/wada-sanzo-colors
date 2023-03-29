@@ -3,20 +3,20 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import TabBar from "../TabBar";
-import PalettesFilter from "../PalettesFilter";
+import CombinationsFilter from "../CombinationsFilter";
 import ColorFilter from "../ColorFilter";
 
 export default function NavBar({
   inspirationPageFilter,
   setInspirationPageFilter,
   handleShowColors,
-  handleShowPalettes,
+  handleShowCombinations,
   listType,
-  paletteListType,
-  handleShowPalettesWith2Colors,
-  handleShowPalettesWith3Colors,
-  handleShowPalettesWith4Colors,
-  favoritePalettesData,
+  combinationListType,
+  handleShowCombinationsWith2Colors,
+  handleShowCombinationsWith3Colors,
+  handleShowCombinationsWith4Colors,
+  favoriteCombinationsData,
   colorListType,
   handleShowSwatchOne,
   handleShowSwatchTwo,
@@ -79,7 +79,7 @@ export default function NavBar({
       {route === "/" || route === "/favorites" ? (
         <TabBar
           onShowColors={handleShowColors}
-          onShowPalettes={handleShowPalettes}
+          onShowCombinations={handleShowCombinations}
           listType={listType}
         />
       ) : null}
@@ -97,14 +97,14 @@ export default function NavBar({
           isAtFavorites={route === "/favorites"}
         />
       ) : null}
-      {(listType === "palettes" && route === "/") ||
-      (listType === "palettes" && route === "/favorites") ? (
-        <PalettesFilter
-          paletteListType={paletteListType}
-          onShowPalettesWith2Colors={handleShowPalettesWith2Colors}
-          onShowPalettesWith3Colors={handleShowPalettesWith3Colors}
-          onShowPalettesWith4Colors={handleShowPalettesWith4Colors}
-          favoritePalettesData={favoritePalettesData}
+      {(listType === "combinations" && route === "/") ||
+      (listType === "combinations" && route === "/favorites") ? (
+        <CombinationsFilter
+          combinationListType={combinationListType}
+          onShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+          onShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+          onShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          favoriteCombinationsData={favoriteCombinationsData}
           isAtFavorites={route === "/favorites"}
         />
       ) : null}

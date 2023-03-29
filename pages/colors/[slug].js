@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import SpecificPaletteList from "@/components/SpecificPaletteList/SpecificPaletteList";
+import SpecificCombinationList from "@/components/SpecificCombinationList/SpecificCombinationList";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 import { useState } from "react";
 import { IsColorBright } from "@/utils/IsColorBright/index.js";
@@ -12,8 +12,8 @@ export default function ColorPage({
   error,
   onToggleFavoriteColor,
   favoriteColorsData,
-  onToggleFavoritePalette,
-  favoritePalettesData,
+  onToggleFavoriteCombination,
+  favoriteCombinationsData,
 }) {
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
@@ -65,17 +65,17 @@ export default function ColorPage({
         <StyledHeadline isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
         <CopyFieldSlider
           color={currentColor}
-          isLargePalette={true}
+          isLargeCombination={true}
           isActive={isActive}
           handleSlide={handleSlide}
           needColorName={false}
         />
       </StyledColorBox>
-      <SpecificPaletteList
+      <SpecificCombinationList
         currentColor={currentColor}
         colors={data}
-        favoritePalettesData={favoritePalettesData}
-        onToggleFavoritePalette={onToggleFavoritePalette}
+        favoriteCombinationsData={favoriteCombinationsData}
+        onToggleFavoriteCombination={onToggleFavoriteCombination}
       />
     </PageContainer>
   );

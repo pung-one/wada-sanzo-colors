@@ -1,11 +1,11 @@
-import { CreatePaletteArray } from ".";
+import { CreateCombinationArray } from ".";
 import { colorsWithSlug } from "../../data/colors";
 
-describe("CreatePalettesArray", () => {
+describe("CreateCombinationsArray", () => {
   test("should return an array with length 348", () => {
     const data = colorsWithSlug;
 
-    const result = CreatePaletteArray(data);
+    const result = CreateCombinationArray(data);
 
     expect(result).toHaveLength(348);
   });

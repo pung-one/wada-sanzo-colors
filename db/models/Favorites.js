@@ -11,7 +11,7 @@ const favoriteSchema = new Schema({
       swatch: { type: Number, required: true },
     },
   ],
-  favoritePalettes: [
+  favoriteCombinations: [
     {
       id: { type: Number, required: true },
       isFavorite: { type: Boolean, default: false },

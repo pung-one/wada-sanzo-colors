@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function TabBar({ onShowColors, onShowPalettes, listType }) {
+export default function TabBar({ onShowColors, onShowCombinations, listType }) {
   return (
     <TabContainer>
       <StyledButton
@@ -12,10 +12,10 @@ export default function TabBar({ onShowColors, onShowPalettes, listType }) {
       </StyledButton>
       <StyledButton
         type="button"
-        isActive={listType === "palettes"}
-        onClick={() => onShowPalettes()}
+        isActive={listType === "combinations"}
+        onClick={() => onShowCombinations()}
       >
-        Palettes
+        Combinations
       </StyledButton>
     </TabContainer>
   );
