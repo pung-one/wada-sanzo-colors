@@ -5,6 +5,9 @@
 
 ## Description
 
+- This website offers an interactive adaptation of the book "A Dictionary of Color Combinations Vol. 1" which is based on Wada Sanzo's famous color collection. The web-application allows users to explore the List of 159 colors and 348 color combinations. The colors can be filtered by their color-group and the combinations can be filtered by the number of colors they contain.
+- On the detail pages of each color or combination the user has access to the **CMYK**, **RGB**, **HEX**, and **LAB** codes (Thanks to [Matt DesLauriers](https://github.com/mattdesl/dictionary-of-colour-combinations)).
+- The Inspiration page offers the possibility to get a random color or random color-combination from the lists as well as access to the color-picker-component, which lets the user input a color with an color-type-input field and returns the most similar color from Wada Sanzo's list (thanks to [chroma.js](https://gka.github.io/chroma.js/) package, which i used for color-comparison).
 - It is also possible to bookmark colors and combinations in a user-profile (sign in with your google or github account). The favored colors or combinations will then be saved in a MongoDB data-base to access them later. If the user does not sign in, the favorites will be stored in the browsers local storage.
 
 ## Demo
