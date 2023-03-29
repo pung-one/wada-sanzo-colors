@@ -5,7 +5,6 @@
 
 ## Description
 
-
 - It is also possible to bookmark colors and combinations in a user-profile (sign in with your google or github account). The favored colors or combinations will then be saved in a MongoDB data-base to access them later. If the user does not sign in, the favorites will be stored in the browsers local storage.
 
 ## Demo
