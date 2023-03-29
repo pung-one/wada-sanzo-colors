@@ -30,7 +30,7 @@ export default function Layout({
     <>
       <Header>
         A Dictionary of Color Combinations
-        <Link href={"/signin"}>
+        <Link href={"/signin"} passHref legacyBehavior>
           <SignInOutButton isActive={route === "/signin"}>
             Sign In/Out
           </SignInOutButton>
@@ -77,7 +77,7 @@ const Header = styled.header`
   padding: 1vh 0 1vh 3vw;
 `;
 
-const SignInOutButton = styled.div`
+const SignInOutButton = styled.a`
   display: flex;
   align-items: center;
   margin-right: 2vw;

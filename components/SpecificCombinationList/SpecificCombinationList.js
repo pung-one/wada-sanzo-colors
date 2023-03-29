@@ -34,7 +34,6 @@ export default function SpecificCombinationList({
               showFavMessage={showFavMessage}
               isTriggered={combi1 === favMessageId}
             />
-            <Link href={`/combinations/${combi1}`}></Link>
             {combination.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} hex={hex}>
