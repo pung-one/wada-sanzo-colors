@@ -1,5 +1,13 @@
 import styled from "styled-components";
 
+export default function CopyColorCodeMessage({ showMessage, label, isLarge }) {
+  return (
+    <FavMessage showMessage={showMessage} isLarge={isLarge}>
+      {label}-code saved to clipboard.
+    </FavMessage>
+  );
+}
+
 const FavMessage = styled.span`
   position: absolute;
   display: flex;
@@ -15,11 +23,3 @@ const FavMessage = styled.span`
   transform: ${({ showMessage }) => (showMessage ? "scale(1)" : "scale(0)")};
   transition: all 0.2s;
 `;
-
-export default function CopyColorCodeMessage({ showMessage, label, isLarge }) {
-  return (
-    <FavMessage showMessage={showMessage} isLarge={isLarge}>
-      <p>{label}-code saved to clipboard.</p>
-    </FavMessage>
-  );
-}

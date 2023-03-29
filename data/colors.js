@@ -1467,6 +1467,11 @@ const colors = [
 export const colorsWithSlug = colors.map((color) => {
   return {
     ...color,
-    slug: color.name.toLocaleLowerCase().split(" ").join("-"),
+    slug: color.name
+      .toLocaleLowerCase()
+      .replace("/", "")
+      .split(" ")
+      .join("-")
+      .replace("--", "-"),
   };
 });

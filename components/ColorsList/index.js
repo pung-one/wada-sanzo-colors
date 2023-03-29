@@ -1,36 +1,9 @@
 import Link from "next/link";
 import styled from "styled-components";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import FavoriteButton from "../FavoriteButton";
 import { useState, useEffect } from "react";
 import FavoriteMessage from "../FavoriteMessage";
-
-const List = styled.ul`
-  padding-top: 32.5vh;
-  list-style: none;
-  list-style-type: 0;
-  width: 100vw;
-`;
-
-const ColorBox = styled.li`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 25vh;
-  margin-top: 2vh;
-  line-height: 25vh;
-  overflow-x: hidden;
-  background-color: ${({ hex }) => (hex ? hex : null)};
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-`;
-
-const StyledColorName = styled.p`
-  text-align: center;
-  font-size: 2.5vh;
-  font-weight: lighter;
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-`;
 
 export default function ColorsList({
   colors,
@@ -72,16 +45,15 @@ export default function ColorsList({
           const timer = setTimeout(() => setShowFavMessage(false), 1000);
         }
 
-        const isBright = IsColorBright(rgb);
         return (
-          <ColorBox key={name} isBright={isBright} hex={hex}>
+          <ColorBox key={name} isBright={IsColorBright(rgb)} hex={hex}>
             <FavoriteMessage
               isFavorite={favoriteStatus?.isFavorite}
               showFavMessage={showFavMessage}
               isTriggered={name === favMessageName}
             />
             <FavoriteButton
-              isBright={isBright}
+              isBright={IsColorBright(rgb)}
               isFavorite={favoriteStatus?.isFavorite}
               isOnListElement={true}
               toggleValue={name}
@@ -90,7 +62,9 @@ export default function ColorsList({
               swatch={swatch}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
-              <StyledColorName isBright={isBright}>{name}</StyledColorName>
+              <StyledColorName isBright={IsColorBright(rgb)}>
+                {name}
+              </StyledColorName>
             </Link>
           </ColorBox>
         );
@@ -98,3 +72,30 @@ export default function ColorsList({
     </List>
   );
 }
+
+const List = styled.ul`
+  padding-top: 33.5vh;
+  list-style: none;
+  list-style-type: 0;
+  width: 100vw;
+`;
+
+const ColorBox = styled.li`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 25vh;
+  margin-top: 2vh;
+  line-height: 25vh;
+  overflow-x: hidden;
+  background-color: ${({ hex }) => (hex ? hex : null)};
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+`;
+
+const StyledColorName = styled.p`
+  text-align: center;
+  font-size: 2.5vh;
+  font-weight: lighter;
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+`;

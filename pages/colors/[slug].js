@@ -1,43 +1,19 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import SpecificPaletteList from "@/components/SpecificPaletteList/SpecificPaletteList";
+import SpecificCombinationList from "@/components/SpecificCombinationList/SpecificCombinationList";
 import CopyFieldSlider from "@/components/CopyFieldSlider";
 import { useState } from "react";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import FavoriteButton from "@/components/FavoriteButton";
 import FavoriteMessage from "@/components/FavoriteMessage";
-
-const PageContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  margin-top: 14.5vh;
-`;
-
-const StyledColorBox = styled.header`
-  position: relative;
-  height: 30vh;
-  display: flex;
-  padding: 3vh 0 0 0;
-  align-items: center;
-  flex-direction: column;
-  overflow-x: hidden;
-  background-color: ${({ hex }) => (hex ? hex : null)};
-`;
-
-const StyledHeadline = styled.h1`
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-  font-size: 3vh;
-  font-weight: lighter;
-  padding: 2vh 0 4vh;
-`;
 
 export default function ColorPage({
   data,
   error,
   onToggleFavoriteColor,
   favoriteColorsData,
-  onToggleFavoritePalette,
-  favoritePalettesData,
+  onToggleFavoriteCombination,
+  favoriteCombinationsData,
 }) {
   const [isActive, setIsActive] = useState(false);
   const router = useRouter();
@@ -89,18 +65,42 @@ export default function ColorPage({
         <StyledHeadline isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
         <CopyFieldSlider
           color={currentColor}
-          isLargePalette={true}
+          isLargeCombination={true}
           isActive={isActive}
           handleSlide={handleSlide}
           needColorName={false}
         />
       </StyledColorBox>
-      <SpecificPaletteList
+      <SpecificCombinationList
         currentColor={currentColor}
         colors={data}
-        favoritePalettesData={favoritePalettesData}
-        onToggleFavoritePalette={onToggleFavoritePalette}
+        favoriteCombinationsData={favoriteCombinationsData}
+        onToggleFavoriteCombination={onToggleFavoriteCombination}
       />
     </PageContainer>
   );
 }
+
+const PageContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  margin-top: 15.5vh;
+`;
+
+const StyledColorBox = styled.header`
+  position: relative;
+  height: 30vh;
+  display: flex;
+  padding: 3vh 0 0 0;
+  align-items: center;
+  flex-direction: column;
+  overflow-x: hidden;
+  background-color: ${({ hex }) => (hex ? hex : null)};
+`;
+
+const StyledHeadline = styled.h1`
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+  font-size: 3vh;
+  font-weight: lighter;
+  padding: 2vh 0 4vh;
+`;

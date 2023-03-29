@@ -3,8 +3,102 @@ import { SlArrowLeft } from "react-icons/sl";
 import Link from "next/link";
 import styled, { css } from "styled-components";
 import { useState } from "react";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import CopyColorCodeMessage from "../CopyColorCodeMessage";
+
+export default function CopyFieldSlider({
+  isLargeCombination,
+  color,
+  index,
+  handleSlide,
+  isActive,
+  needColorName,
+}) {
+  const [showMessage, setShowMessage] = useState(false);
+  const [label, setLabel] = useState("");
+  const [copyValue, setCopyValue] = useState("");
+
+  const { slug, name, hex, rgb, cmyk, lab } = color;
+
+  function handleShowMessage(value, label) {
+    setShowMessage(true);
+    setCopyValue(value);
+    setLabel(label);
+    setTimeout(() => setShowMessage(false), 1500);
+  }
+
+  return (
+    <>
+      <SliderContainer
+        isLarge={isLargeCombination}
+        isLeftBox={!isLargeCombination && index === 0}
+        isActive={isActive}
+      >
+        <CopyColorCodeMessage
+          isLarge={isLargeCombination}
+          showMessage={showMessage}
+          value={copyValue}
+          label={label}
+        />
+        <StyledButton
+          onClick={() => handleSlide(index)}
+          isLeftBox={!isLargeCombination && index === 0}
+          isActive={isActive}
+          aria-label={"show and hide color-codes"}
+        >
+          <Arrow />
+        </StyledButton>
+        {needColorName && (
+          <Link href={`/colors/${slug}`}>
+            <StyledColorName
+              isLarge={isLargeCombination}
+              isBright={IsColorBright(rgb)}
+            >
+              {name}
+            </StyledColorName>
+          </Link>
+        )}
+        <CopyFieldContainer
+          isLarge={isLargeCombination}
+          isLeftBox={!isLargeCombination && index === 0}
+        >
+          <CopyField
+            label={"HEX"}
+            value={hex}
+            isLarge={isLargeCombination}
+            isOnColorPage={!needColorName}
+            name={name}
+            onShowMessage={handleShowMessage}
+          />
+          <CopyField
+            label={"RGB"}
+            value={rgb}
+            isLarge={isLargeCombination}
+            isOnColorPage={!needColorName}
+            name={name}
+            onShowMessage={handleShowMessage}
+          />
+          <CopyField
+            label={"CMYK"}
+            value={cmyk}
+            isLarge={isLargeCombination}
+            isOnColorPage={!needColorName}
+            name={name}
+            onShowMessage={handleShowMessage}
+          />
+          <CopyField
+            label={"LAB"}
+            value={lab}
+            isLarge={isLargeCombination}
+            isOnColorPage={!needColorName}
+            name={name}
+            onShowMessage={handleShowMessage}
+          />
+        </CopyFieldContainer>
+      </SliderContainer>
+    </>
+  );
+}
 
 const SliderContainer = styled.aside`
   position: relative;
@@ -29,7 +123,7 @@ const SliderContainer = styled.aside`
 
 const StyledButton = styled.button`
   position: absolute;
-  z-index: 5;
+  z-index: 2;
   background: none;
   border: none;
   transform: ${({ isActive, isLeftBox }) =>
@@ -61,6 +155,7 @@ const StyledColorName = styled.h2`
   text-align: center;
   text-decoration: underline;
   font-weight: lighter;
+  width: ${({ isLarge }) => (isLarge ? "100vw" : "35vw")};
   color: ${({ isBright }) => (isBright ? "black" : "white")};
   left: ${({ isLarge }) => (isLarge ? "-3vw" : "0")};
 `;
@@ -78,97 +173,3 @@ const CopyFieldContainer = styled.div`
   left: ${({ isLarge }) => (isLarge ? "-3vw" : "0")};
   padding-bottom: 2vh;
 `;
-
-export default function CopyFieldSlider({
-  isLargePalette,
-  color,
-  index,
-  handleSlide,
-  isActive,
-  needColorName,
-}) {
-  const [showMessage, setShowMessage] = useState(false);
-  const [label, setLabel] = useState("");
-  const [copyValue, setCopyValue] = useState("");
-
-  const { slug, name, hex, rgb, cmyk, lab } = color;
-
-  function handleShowMessage(value, label) {
-    setShowMessage(true);
-    setCopyValue(value);
-    setLabel(label);
-    setTimeout(() => setShowMessage(false), 1500);
-  }
-
-  return (
-    <>
-      <SliderContainer
-        isLarge={isLargePalette}
-        isLeftBox={!isLargePalette && index === 0}
-        isActive={isActive}
-      >
-        <CopyColorCodeMessage
-          isLarge={isLargePalette}
-          showMessage={showMessage}
-          value={copyValue}
-          label={label}
-        />
-        <StyledButton
-          onClick={() => handleSlide(index)}
-          isLeftBox={!isLargePalette && index === 0}
-          isActive={isActive}
-          aria-label={"show and hide color-codes"}
-        >
-          <Arrow />
-        </StyledButton>
-        {needColorName && (
-          <Link href={`/colors/${slug}`}>
-            <StyledColorName
-              isLarge={isLargePalette}
-              isBright={IsColorBright(rgb)}
-            >
-              {name}
-            </StyledColorName>
-          </Link>
-        )}
-        <CopyFieldContainer
-          isLarge={isLargePalette}
-          isLeftBox={!isLargePalette && index === 0}
-        >
-          <CopyField
-            label={"HEX"}
-            value={hex}
-            isLarge={isLargePalette}
-            isOnColorPage={!needColorName}
-            name={name}
-            onShowMessage={handleShowMessage}
-          />
-          <CopyField
-            label={"RGB"}
-            value={rgb}
-            isLarge={isLargePalette}
-            isOnColorPage={!needColorName}
-            name={name}
-            onShowMessage={handleShowMessage}
-          />
-          <CopyField
-            label={"CMYK"}
-            value={cmyk}
-            isLarge={isLargePalette}
-            isOnColorPage={!needColorName}
-            name={name}
-            onShowMessage={handleShowMessage}
-          />
-          <CopyField
-            label={"LAB"}
-            value={lab}
-            isLarge={isLargePalette}
-            isOnColorPage={!needColorName}
-            name={name}
-            onShowMessage={handleShowMessage}
-          />
-        </CopyFieldContainer>
-      </SliderContainer>
-    </>
-  );
-}

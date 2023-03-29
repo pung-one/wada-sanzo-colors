@@ -2,62 +2,8 @@ import styled from "styled-components";
 import chroma from "chroma-js";
 import { useState } from "react";
 import Link from "next/link";
-import { IsColorBright } from "@/utils/IsColorBright";
+import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { ImArrowDown } from "react-icons/im";
-
-const StyledForm = styled.form`
-  padding-top: 17vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3vh;
-`;
-
-const Arrow = styled(ImArrowDown)`
-  font-size: 4vh;
-`;
-
-const ColorInput = styled.input`
-  width: 60vw;
-  height: 20vh;
-  background-color: white;
-  box-shadow: 0 2px 5px black;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const StyledButton = styled.button`
-  background-color: white;
-  border: 1px solid black;
-  padding: 3vh;
-  width: 40vw;
-  box-shadow: 0 2px 5px black;
-`;
-
-const ResultContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 4vh;
-  margin-top: 3vh;
-  gap: 4vh;
-`;
-
-const StyledLink = styled(Link)`
-  background-color: ${({ hex }) => (hex ? hex : "white")};
-  font-size: 2vh;
-  border: 1px solid black;
-  padding: 5vh;
-  width: 60vw;
-  box-shadow: 0 2px 5px black;
-`;
-
-const ColorName = styled.p`
-  text-align: center;
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-`;
 
 export default function ColorPicker({ data, error }) {
   const [closestColor, setClosestColor] = useState("");
@@ -113,3 +59,60 @@ export default function ColorPicker({ data, error }) {
     </>
   );
 }
+
+const StyledForm = styled.form`
+  padding-top: 17vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+`;
+
+const Arrow = styled(ImArrowDown)`
+  font-size: 4vh;
+`;
+
+const ColorInput = styled.input`
+  width: 60vw;
+  height: 20vh;
+  background-color: white;
+  box-shadow: 0 2px 5px black;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledButton = styled.button`
+  background-color: white;
+  border: 1px solid black;
+  padding: 3vh;
+  width: 40vw;
+  box-shadow: 0 2px 5px black;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ResultContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4vh;
+  margin-top: 3vh;
+  gap: 4vh;
+`;
+
+const StyledLink = styled(Link)`
+  background-color: ${({ hex }) => (hex ? hex : "white")};
+  font-size: 2vh;
+  border: 1px solid black;
+  padding: 5vh;
+  width: 60vw;
+  box-shadow: 0 2px 5px black;
+`;
+
+const ColorName = styled.p`
+  text-align: center;
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+`;

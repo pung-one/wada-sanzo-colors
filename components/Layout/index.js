@@ -3,52 +3,18 @@ import NavBar from "../Navbar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Header = styled.header`
-  position: fixed;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 2;
-  width: 100%;
-  height: 5.5vh;
-  top: 0;
-  font-size: 2vh;
-  font-weight: lighter;
-  background-color: white;
-  border-bottom: 1px solid black;
-  padding: 1vh 0 1vh 3vw;
-`;
-
-const SignInOutButton = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 2vw;
-  height: 3vh;
-  font-size: 1.8vh;
-  font-weight: normal;
-  padding: 0 1vw 0 1vw;
-  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
-  color: ${({ isActive }) => (isActive ? "white" : "black")};
-  border: 1px solid black;
-  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
-  transition: all 0.2s;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
 export default function Layout({
   children,
   inspirationPageFilter,
   setInspirationPageFilter,
   handleShowColors,
-  handleShowPalettes,
+  handleShowCombinations,
   listType,
-  paletteListType,
-  handleShowPalettesWith2Colors,
-  handleShowPalettesWith3Colors,
-  handleShowPalettesWith4Colors,
-  favoritePalettesData,
+  combinationListType,
+  handleShowCombinationsWith2Colors,
+  handleShowCombinationsWith3Colors,
+  handleShowCombinationsWith4Colors,
+  favoriteCombinationsData,
   colorListType,
   handleShowSwatchOne,
   handleShowSwatchTwo,
@@ -64,7 +30,7 @@ export default function Layout({
     <>
       <Header>
         A Dictionary of Color Combinations
-        <Link href={"/signin"}>
+        <Link href={"/signin"} passHref legacyBehavior>
           <SignInOutButton isActive={route === "/signin"}>
             Sign In/Out
           </SignInOutButton>
@@ -74,13 +40,13 @@ export default function Layout({
         inspirationPageFilter={inspirationPageFilter}
         setInspirationPageFilter={setInspirationPageFilter}
         handleShowColors={handleShowColors}
-        handleShowPalettes={handleShowPalettes}
+        handleShowCombinations={handleShowCombinations}
         listType={listType}
-        paletteListType={paletteListType}
-        handleShowPalettesWith2Colors={handleShowPalettesWith2Colors}
-        handleShowPalettesWith3Colors={handleShowPalettesWith3Colors}
-        handleShowPalettesWith4Colors={handleShowPalettesWith4Colors}
-        favoritePalettesData={favoritePalettesData}
+        combinationListType={combinationListType}
+        handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+        handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+        handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+        favoriteCombinationsData={favoriteCombinationsData}
         colorListType={colorListType}
         handleShowSwatchOne={handleShowSwatchOne}
         handleShowSwatchTwo={handleShowSwatchTwo}
@@ -94,3 +60,37 @@ export default function Layout({
     </>
   );
 }
+
+const Header = styled.header`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 6;
+  width: 100%;
+  height: 6.5vh;
+  top: 0;
+  font-size: 2vh;
+  font-weight: lighter;
+  background-color: white;
+  border-bottom: 1px solid black;
+  padding: 1vh 0 1vh 3vw;
+`;
+
+const SignInOutButton = styled.a`
+  display: flex;
+  align-items: center;
+  margin-right: 2vw;
+  height: 4.5vh;
+  font-size: 1.8vh;
+  font-weight: normal;
+  padding: 0 1.5vw 0 1.5vw;
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
+  border: 1px solid black;
+  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
+  transition: all 0.2s;
+  &:hover {
+    cursor: pointer;
+  }
+`;
