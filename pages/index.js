@@ -3,14 +3,6 @@ import ColorsList from "@/components/ColorsList";
 import PalettesList from "@/components/PalettesList";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
-const PageContainer = styled.main`
-  margin: 0 0 2vh;
-`;
-
-const ErrorMessage = styled.h1`
-  margin-top: 40vh;
-`;
-
 export default function Home({
   error,
   data,
@@ -47,3 +39,11 @@ export default function Home({
     </PageContainer>
   );
 }
+
+const PageContainer = styled.main`
+  margin: 0 0 2vh;
+`;
+
+const ErrorMessage = styled.h1`
+  margin-top: 40vh;
+`;

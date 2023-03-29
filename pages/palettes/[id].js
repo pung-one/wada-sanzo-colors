@@ -6,40 +6,6 @@ import CopyFieldSlider from "@/components/CopyFieldSlider";
 import FavoriteButton from "@/components/FavoriteButton";
 import FavoriteMessage from "@/components/FavoriteMessage";
 
-const PageContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 15.5vh;
-  height: 86vh;
-`;
-
-const Heading = styled.header`
-  position: relative;
-  width: 100%;
-  padding: 3vh;
-  height: 11vh;
-  border-bottom: 1px solid black;
-  font-size: 4vh;
-  font-weight: lighter;
-`;
-
-const PaletteContainer = styled.div`
-  display: flex;
-  height: 80vh;
-  flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
-  overflow-x: hidden;
-`;
-
-const ColorBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-basis: 100%;
-  background-color: ${({ hex }) => (hex ? hex : null)};
-  color: ${({ hex }) => (hex ? hex : null)};
-`;
-
 export default function PalettePage({
   data,
   error,
@@ -113,3 +79,37 @@ export default function PalettePage({
     </PageContainer>
   );
 }
+
+const PageContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15.5vh;
+  height: 86vh;
+`;
+
+const Heading = styled.header`
+  position: relative;
+  width: 100%;
+  padding: 3vh;
+  height: 11vh;
+  border-bottom: 1px solid black;
+  font-size: 4vh;
+  font-weight: lighter;
+`;
+
+const PaletteContainer = styled.div`
+  display: flex;
+  height: 80vh;
+  flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
+  overflow-x: hidden;
+`;
+
+const ColorBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-basis: 100%;
+  background-color: ${({ hex }) => (hex ? hex : null)};
+  color: ${({ hex }) => (hex ? hex : null)};
+`;

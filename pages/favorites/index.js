@@ -3,17 +3,7 @@ import PalettesList from "@/components/PalettesList";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 import styled from "styled-components";
 
-const PageContainer = styled.main`
-  margin: 0 0 2vh;
-`;
-
-const NoFavoritesInfo = styled.p`
-  padding-top: 50vh;
-  font-size: 3vh;
-  text-align: center;
-`;
-
-export default function Home({
+export default function Favorites({
   error,
   data,
   onToggleFavoriteColor,
@@ -45,10 +35,10 @@ export default function Home({
   return (
     <PageContainer showsColorList={listType === "colors"}>
       {favoriteColorsList.length === 0 && listType === "colors" && (
-        <NoFavoritesInfo>No bookmarked colors</NoFavoritesInfo>
+        <NoFavoritesInfo>No favorite colors.</NoFavoritesInfo>
       )}
       {favoritePalettesList.length === 0 && listType === "palettes" && (
-        <NoFavoritesInfo>No bookmarked palettes</NoFavoritesInfo>
+        <NoFavoritesInfo>No favorite palettes.</NoFavoritesInfo>
       )}
       {listType === "colors" && (
         <ColorsList
@@ -69,3 +59,13 @@ export default function Home({
     </PageContainer>
   );
 }
+
+const PageContainer = styled.main`
+  margin: 0 0 2vh;
+`;
+
+const NoFavoritesInfo = styled.p`
+  padding-top: 50vh;
+  font-size: 3vh;
+  text-align: center;
+`;

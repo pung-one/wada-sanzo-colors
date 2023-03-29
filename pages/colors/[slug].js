@@ -7,30 +7,6 @@ import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import FavoriteButton from "@/components/FavoriteButton";
 import FavoriteMessage from "@/components/FavoriteMessage";
 
-const PageContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  margin-top: 15.5vh;
-`;
-
-const StyledColorBox = styled.header`
-  position: relative;
-  height: 30vh;
-  display: flex;
-  padding: 3vh 0 0 0;
-  align-items: center;
-  flex-direction: column;
-  overflow-x: hidden;
-  background-color: ${({ hex }) => (hex ? hex : null)};
-`;
-
-const StyledHeadline = styled.h1`
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-  font-size: 3vh;
-  font-weight: lighter;
-  padding: 2vh 0 4vh;
-`;
-
 export default function ColorPage({
   data,
   error,
@@ -104,3 +80,27 @@ export default function ColorPage({
     </PageContainer>
   );
 }
+
+const PageContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  margin-top: 15.5vh;
+`;
+
+const StyledColorBox = styled.header`
+  position: relative;
+  height: 30vh;
+  display: flex;
+  padding: 3vh 0 0 0;
+  align-items: center;
+  flex-direction: column;
+  overflow-x: hidden;
+  background-color: ${({ hex }) => (hex ? hex : null)};
+`;
+
+const StyledHeadline = styled.h1`
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+  font-size: 3vh;
+  font-weight: lighter;
+  padding: 2vh 0 4vh;
+`;

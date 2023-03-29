@@ -5,36 +5,6 @@ import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { useEffect, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 
-const List = styled.ul`
-  padding-top: 27.5vh;
-  list-style-type: 0;
-  width: 100vw;
-`;
-
-const StyledPaletteContainer = styled.li`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 2vh;
-  height: 25vh;
-`;
-
-const StyledColorBox = styled.div`
-  flex: 1;
-  display: flex;
-  background-color: ${({ hex }) => (hex ? hex : null)};
-`;
-
-const StyledPaletteNumber = styled.span`
-  position: absolute;
-  font-size: 2.5vh;
-  font-weight: lighter;
-  padding: 2vh;
-  text-decoration: underline;
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-`;
-
 export default function PalettesList({
   paletteArray,
   favoritePalettesData,
@@ -110,3 +80,33 @@ export default function PalettesList({
     </List>
   );
 }
+
+const List = styled.ul`
+  padding-top: 27.5vh;
+  list-style-type: 0;
+  width: 100vw;
+`;
+
+const StyledPaletteContainer = styled.li`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2vh;
+  height: 25vh;
+`;
+
+const StyledColorBox = styled.div`
+  flex: 1;
+  display: flex;
+  background-color: ${({ hex }) => (hex ? hex : null)};
+`;
+
+const StyledPaletteNumber = styled.span`
+  position: absolute;
+  font-size: 2.5vh;
+  font-weight: lighter;
+  padding: 2vh;
+  text-decoration: underline;
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+`;

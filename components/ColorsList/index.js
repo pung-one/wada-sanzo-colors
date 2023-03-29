@@ -5,33 +5,6 @@ import FavoriteButton from "../FavoriteButton";
 import { useState, useEffect } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 
-const List = styled.ul`
-  padding-top: 33.5vh;
-  list-style: none;
-  list-style-type: 0;
-  width: 100vw;
-`;
-
-const ColorBox = styled.li`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 25vh;
-  margin-top: 2vh;
-  line-height: 25vh;
-  overflow-x: hidden;
-  background-color: ${({ hex }) => (hex ? hex : null)};
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-`;
-
-const StyledColorName = styled.p`
-  text-align: center;
-  font-size: 2.5vh;
-  font-weight: lighter;
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
-`;
-
 export default function ColorsList({
   colors,
   favoriteColorsData,
@@ -99,3 +72,30 @@ export default function ColorsList({
     </List>
   );
 }
+
+const List = styled.ul`
+  padding-top: 33.5vh;
+  list-style: none;
+  list-style-type: 0;
+  width: 100vw;
+`;
+
+const ColorBox = styled.li`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 25vh;
+  margin-top: 2vh;
+  line-height: 25vh;
+  overflow-x: hidden;
+  background-color: ${({ hex }) => (hex ? hex : null)};
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+`;
+
+const StyledColorName = styled.p`
+  text-align: center;
+  font-size: 2.5vh;
+  font-weight: lighter;
+  color: ${({ isBright }) => (isBright ? "black" : "white")};
+`;

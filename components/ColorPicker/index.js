@@ -5,6 +5,61 @@ import Link from "next/link";
 import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { ImArrowDown } from "react-icons/im";
 
+export default function ColorPicker({ data, error }) {
+  const [closestColor, setClosestColor] = useState("");
+  const [isColorPicked, setIsColorPicked] = useState(false);
+
+  if (error) return <h1>Failed to load data..</h1>;
+  if (!data) return <h1>Loading Data...</h1>;
+
+  function handleCompare(event) {
+    event.preventDefault();
+    const inputColor = event.target.color.value;
+    data?.reduce((acc, currVal, currInd) => {
+      let dist = chroma.distance(inputColor, currVal.hex);
+      if (acc < dist) {
+        return acc;
+      } else {
+        acc = dist;
+        setClosestColor(data[currInd]);
+      }
+      return acc;
+    });
+  }
+
+  return (
+    <>
+      <StyledForm onSubmit={handleCompare}>
+        <label htmlFor="color">
+          <h1>Pick a Color</h1>
+        </label>
+        <Arrow />
+        <ColorInput
+          id="color"
+          type="color"
+          onClick={() => setIsColorPicked(true)}
+        />
+        {isColorPicked && (
+          <StyledButton type="submit">Find from list</StyledButton>
+        )}
+      </StyledForm>
+      {closestColor && (
+        <ResultContainer>
+          <p>This is the most similar color from list:</p>
+          <StyledLink
+            href={`/colors/${closestColor?.slug}`}
+            hex={closestColor?.hex}
+          >
+            <ColorName isBright={IsColorBright(closestColor?.rgb)}>
+              {closestColor?.name}
+            </ColorName>
+          </StyledLink>
+        </ResultContainer>
+      )}
+    </>
+  );
+}
+
 const StyledForm = styled.form`
   padding-top: 17vh;
   display: flex;
@@ -61,58 +116,3 @@ const ColorName = styled.p`
   text-align: center;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
-
-export default function ColorPicker({ data, error }) {
-  const [closestColor, setClosestColor] = useState("");
-  const [isColorPicked, setIsColorPicked] = useState(false);
-
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading Data...</h1>;
-
-  function handleCompare(event) {
-    event.preventDefault();
-    const inputColor = event.target.color.value;
-    data?.reduce((acc, currVal, currInd) => {
-      let dist = chroma.distance(inputColor, currVal.hex);
-      if (acc < dist) {
-        return acc;
-      } else {
-        acc = dist;
-        setClosestColor(data[currInd]);
-      }
-      return acc;
-    });
-  }
-
-  return (
-    <>
-      <StyledForm onSubmit={handleCompare}>
-        <label htmlFor="color">
-          <h1>Pick a Color</h1>
-        </label>
-        <Arrow />
-        <ColorInput
-          id="color"
-          type="color"
-          onClick={() => setIsColorPicked(true)}
-        />
-        {isColorPicked && (
-          <StyledButton type="submit">Find from list</StyledButton>
-        )}
-      </StyledForm>
-      {closestColor && (
-        <ResultContainer>
-          <p>This is the most similar color from list:</p>
-          <StyledLink
-            href={`/colors/${closestColor?.slug}`}
-            hex={closestColor?.hex}
-          >
-            <ColorName isBright={IsColorBright(closestColor?.rgb)}>
-              {closestColor?.name}
-            </ColorName>
-          </StyledLink>
-        </ResultContainer>
-      )}
-    </>
-  );
-}

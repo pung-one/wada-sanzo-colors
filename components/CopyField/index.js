@@ -1,5 +1,23 @@
 import styled from "styled-components";
 
+export default function CopyField({ value, label, isLarge, onShowMessage }) {
+  function handleCopy() {
+    navigator.clipboard.writeText(value);
+  }
+
+  return (
+    <StyledButton
+      isLarge={isLarge}
+      onClick={() => {
+        handleCopy();
+        onShowMessage(value, label);
+      }}
+    >
+      {label}
+    </StyledButton>
+  );
+}
+
 const StyledButton = styled.span`
   display: flex;
   position: relative;
@@ -18,21 +36,3 @@ const StyledButton = styled.span`
   }
   transition: box-shadow 0.2s;
 `;
-
-export default function CopyField({ value, label, isLarge, onShowMessage }) {
-  function handleCopy() {
-    navigator.clipboard.writeText(value);
-  }
-
-  return (
-    <StyledButton
-      isLarge={isLarge}
-      onClick={() => {
-        handleCopy();
-        onShowMessage(value, label);
-      }}
-    >
-      {label}
-    </StyledButton>
-  );
-}

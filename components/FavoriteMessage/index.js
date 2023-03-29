@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export default function FavoriteMessage({
+  showFavMessage,
+  isFavorite,
+  isTriggered,
+}) {
+  return (
+    <FavMessage showFavMessage={showFavMessage} isTriggered={isTriggered}>
+      {isFavorite ? <p>Saved to Favorites</p> : <p>Removed from Favorites</p>}
+    </FavMessage>
+  );
+}
+
 const FavMessage = styled.span`
   position: absolute;
   display: flex;
@@ -16,15 +28,3 @@ const FavMessage = styled.span`
     showFavMessage && isTriggered ? "scale(1)" : "scale(0)"};
   transition: all 0.2s;
 `;
-
-export default function FavoriteMessage({
-  showFavMessage,
-  isFavorite,
-  isTriggered,
-}) {
-  return (
-    <FavMessage showFavMessage={showFavMessage} isTriggered={isTriggered}>
-      {isFavorite ? <p>Saved to Favorites</p> : <p>Removed from Favorites</p>}
-    </FavMessage>
-  );
-}

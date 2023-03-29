@@ -3,6 +3,72 @@ import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { MdInfo } from "react-icons/md";
 
+export default function SignIn({ setUser }) {
+  const { data: session } = useSession();
+  const [showSignOutMessage, setShowSignOutMessage] = useState(false);
+
+  useEffect(() => {
+    if (session) {
+      setUser(session.user.name);
+    }
+  }, [session]);
+
+  async function handleSignOut() {
+    setShowSignOutMessage(true);
+    setUser("public");
+    setTimeout(() => signOut(), 1500);
+  }
+
+  return (
+    <PageContainer>
+      <SessionStatus>
+        <InfoSymbol />
+        <SessionStatusText>
+          {session
+            ? `You are signed in as "${session.user.name}".`
+            : "You are not signed in."}
+        </SessionStatusText>
+      </SessionStatus>
+      <Article>
+        When signed in, your favorite Colors and Combinations will be stored for
+        you to access them later.
+        <br />
+        <br />
+        Whithout signing in they will only be stored in the browser.
+      </Article>
+      <ButtonContainer>
+        {session ? (
+          <>
+            <StyledButton onClick={() => handleSignOut()}>
+              Sign Out
+            </StyledButton>
+            <SigningOutMessage showSignOutMessage={showSignOutMessage}>
+              Signing out...
+            </SigningOutMessage>
+          </>
+        ) : (
+          <>
+            <StyledButton
+              onClick={() => {
+                signIn("google");
+              }}
+            >
+              Sign in with Google
+            </StyledButton>
+            <StyledButton
+              onClick={() => {
+                signIn("github");
+              }}
+            >
+              Sign in with Github
+            </StyledButton>
+          </>
+        )}
+      </ButtonContainer>
+    </PageContainer>
+  );
+}
+
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
@@ -69,69 +135,3 @@ const SigningOutMessage = styled.aside`
     showSignOutMessage ? "scale(1)" : "scale(0)"};
   transition: all 0.3s;
 `;
-
-export default function SignIn({ setUser }) {
-  const { data: session } = useSession();
-  const [showSignOutMessage, setShowSignOutMessage] = useState(false);
-
-  useEffect(() => {
-    if (session) {
-      setUser(session.user.name);
-    }
-  }, [session]);
-
-  async function handleSignOut() {
-    setShowSignOutMessage(true);
-    setUser("public");
-    setTimeout(() => signOut(), 1500);
-  }
-
-  return (
-    <PageContainer>
-      <SessionStatus>
-        <InfoSymbol />
-        <SessionStatusText>
-          {session
-            ? `You are signed in as "${session.user.name}".`
-            : "You are not signed in."}
-        </SessionStatusText>
-      </SessionStatus>
-      <Article>
-        When signed in, your favorite Colors and Combinations will be stored for
-        you to access them later.
-        <br />
-        <br />
-        Whithout signing in they will only be stored in the browser.
-      </Article>
-      <ButtonContainer>
-        {session ? (
-          <>
-            <StyledButton onClick={() => handleSignOut()}>
-              Sign Out
-            </StyledButton>
-            <SigningOutMessage showSignOutMessage={showSignOutMessage}>
-              Signing out...
-            </SigningOutMessage>
-          </>
-        ) : (
-          <>
-            <StyledButton
-              onClick={() => {
-                signIn("google");
-              }}
-            >
-              Sign in with Google
-            </StyledButton>
-            <StyledButton
-              onClick={() => {
-                signIn("github");
-              }}
-            >
-              Sign in with Github
-            </StyledButton>
-          </>
-        )}
-      </ButtonContainer>
-    </PageContainer>
-  );
-}

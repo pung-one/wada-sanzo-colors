@@ -3,43 +3,6 @@ import Link from "next/link";
 import ColorPicker from "@/components/ColorPicker";
 import { CreatePaletteArray } from "@/utils/CreatePaletteArray";
 
-const PageContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  top: 6.5vh;
-  height: 100vh;
-`;
-
-const ButtonContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-  padding-top: 45%;
-  gap: 10vh;
-  background: ${({ background }) => (background ? background : null)};
-`;
-
-const StyledButton = styled.button`
-  background-color: white;
-  border: 1px solid black;
-  padding: 5vh;
-  width: 60vw;
-  box-shadow: 0 0 4px black;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  background-color: white;
-  border: 1px solid black;
-  padding: 5vh;
-  width: 60vw;
-  text-align: center;
-  box-shadow: 0 0 4px black;
-`;
-
 export default function InspirationPage({
   data,
   error,
@@ -92,3 +55,40 @@ export default function InspirationPage({
     </PageContainer>
   );
 }
+
+const PageContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  top: 6.5vh;
+  height: 100vh;
+`;
+
+const ButtonContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding-top: 45%;
+  gap: 10vh;
+  background: ${({ background }) => (background ? background : null)};
+`;
+
+const StyledButton = styled.button`
+  background-color: white;
+  border: 1px solid black;
+  padding: 5vh;
+  width: 60vw;
+  box-shadow: 0 0 4px black;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  background-color: white;
+  border: 1px solid black;
+  padding: 5vh;
+  width: 60vw;
+  text-align: center;
+  box-shadow: 0 0 4px black;
+`;

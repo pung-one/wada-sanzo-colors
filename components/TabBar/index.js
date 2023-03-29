@@ -1,5 +1,26 @@
 import styled from "styled-components";
 
+export default function TabBar({ onShowColors, onShowPalettes, listType }) {
+  return (
+    <TabContainer>
+      <StyledButton
+        type="button"
+        isActive={listType === "colors"}
+        onClick={() => onShowColors()}
+      >
+        Colors
+      </StyledButton>
+      <StyledButton
+        type="button"
+        isActive={listType === "palettes"}
+        onClick={() => onShowPalettes()}
+      >
+        Palettes
+      </StyledButton>
+    </TabContainer>
+  );
+}
+
 const TabContainer = styled.nav`
   display: flex;
   justify-content: space-around;
@@ -28,24 +49,3 @@ const StyledButton = styled.button`
     cursor: pointer;
   }
 `;
-
-export default function TabBar({ onShowColors, onShowPalettes, listType }) {
-  return (
-    <TabContainer>
-      <StyledButton
-        type="button"
-        isActive={listType === "colors"}
-        onClick={() => onShowColors()}
-      >
-        Colors
-      </StyledButton>
-      <StyledButton
-        type="button"
-        isActive={listType === "palettes"}
-        onClick={() => onShowPalettes()}
-      >
-        Palettes
-      </StyledButton>
-    </TabContainer>
-  );
-}

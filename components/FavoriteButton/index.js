@@ -1,5 +1,32 @@
 import styled, { css } from "styled-components";
 
+export default function FavoriteButton({
+  isFavorite,
+  isOnListElement,
+  isOnDetailColor,
+  isOnDetailPalette,
+  isBright,
+  toggleValue,
+  onToggleFavorite,
+  onShowFavMessage,
+  swatch,
+}) {
+  return (
+    <Button
+      isFavorite={isFavorite}
+      isOnList={isOnListElement}
+      isOnColor={isOnDetailColor}
+      isOnPalette={isOnDetailPalette}
+      isBright={isBright}
+      onClick={() => {
+        onToggleFavorite(toggleValue, swatch);
+        onShowFavMessage(toggleValue);
+      }}
+      aria-label={"favor or defavor a color or combination"}
+    />
+  );
+}
+
 const Button = styled.button`
   position: absolute;
   width: 3vh;
@@ -35,30 +62,3 @@ const Button = styled.button`
     cursor: pointer;
   }
 `;
-
-export default function FavoriteButton({
-  isFavorite,
-  isOnListElement,
-  isOnDetailColor,
-  isOnDetailPalette,
-  isBright,
-  toggleValue,
-  onToggleFavorite,
-  onShowFavMessage,
-  swatch,
-}) {
-  return (
-    <Button
-      isFavorite={isFavorite}
-      isOnList={isOnListElement}
-      isOnColor={isOnDetailColor}
-      isOnPalette={isOnDetailPalette}
-      isBright={isBright}
-      onClick={() => {
-        onToggleFavorite(toggleValue, swatch);
-        onShowFavMessage(toggleValue);
-      }}
-      aria-label={"favor or defavor a color or combination"}
-    />
-  );
-}
