@@ -35,7 +35,7 @@ export default function CombinationPage({
   };
 
   const favoriteStatus = favoriteCombinationsData?.find(
-    (combination) => combination.id === id
+    (combination) => combination.id == id
   );
   function handleShowFavMessage(toggleValue) {
     setShowFavMessage(true);
@@ -47,14 +47,14 @@ export default function CombinationPage({
       <FavoriteMessage
         isFavorite={favoriteStatus?.isFavorite}
         showFavMessage={showFavMessage}
-        isTriggered={id === favMessageId}
+        isTriggered={id == favMessageId}
       />
       <Heading>
         <FavoriteButton
           isFavorite={favoriteStatus?.isFavorite}
           isBright={true}
           isOnDetailCombination={true}
-          toggleValue={id}
+          toggleValue={currentCombination?.id}
           onToggleFavorite={onToggleFavoriteCombination}
           onShowFavMessage={handleShowFavMessage}
         />
@@ -85,7 +85,7 @@ const PageContainer = styled.main`
   flex-direction: column;
   align-items: center;
   margin-top: 15.5vh;
-  height: 86vh;
+  height: 84.5vh;
 `;
 
 const Heading = styled.header`
