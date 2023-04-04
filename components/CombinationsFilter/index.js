@@ -92,6 +92,7 @@ const FilterContainer = styled.nav`
 const StyledButton = styled.button`
   display: flex;
   position: relative;
+  align-items: center;
   background-color: white;
   border: 1px solid black;
   width: 30vw;

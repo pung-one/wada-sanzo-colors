@@ -46,7 +46,7 @@ export default function CopyFieldSlider({
           isActive={isActive}
           aria-label={"show and hide color-codes"}
         >
-          <Arrow />
+          <Arrow isBright={IsColorBright(rgb)} />
         </StyledButton>
         {needColorName && (
           <Link href={`/colors/${slug}`}>
@@ -66,7 +66,6 @@ export default function CopyFieldSlider({
             label={"HEX"}
             value={hex}
             isLarge={isLargeCombination}
-            isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}
           />
@@ -74,7 +73,6 @@ export default function CopyFieldSlider({
             label={"RGB"}
             value={rgb}
             isLarge={isLargeCombination}
-            isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}
           />
@@ -82,7 +80,6 @@ export default function CopyFieldSlider({
             label={"CMYK"}
             value={cmyk}
             isLarge={isLargeCombination}
-            isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}
           />
@@ -90,7 +87,6 @@ export default function CopyFieldSlider({
             label={"LAB"}
             value={lab}
             isLarge={isLargeCombination}
-            isOnColorPage={!needColorName}
             name={name}
             onShowMessage={handleShowMessage}
           />
@@ -147,7 +143,8 @@ const StyledButton = styled.button`
 `;
 
 const Arrow = styled(SlArrowLeft)`
-  font-size: 3vh;
+  font-size: 4vh;
+  fill: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
 
 const StyledColorName = styled.h2`
@@ -167,7 +164,7 @@ const CopyFieldContainer = styled.div`
     isLarge ? "1fr 1fr / 1fr 1fr" : "1fr 1fr 1fr 1fr / 1fr"};
   justify-items: center;
   padding: ${({ isLarge }) => (isLarge ? "2vh 0 0 0" : "5vh 0 0")};
-  gap: ${({ isLarge }) => (isLarge ? "2vh" : "")};
+  gap: ${({ isLarge }) => (isLarge ? "1vh" : "")};
   width: ${({ isLarge }) => (isLarge ? "70vw" : "50vw")};
   height: ${({ isLarge }) => (isLarge ? "100%" : "80%")};
   left: ${({ isLarge }) => (isLarge ? "-3vw" : "0")};
