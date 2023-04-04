@@ -84,6 +84,7 @@ const ColorBox = styled.li`
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   height: 25vh;
   margin-top: 2vh;
   overflow-x: hidden;
@@ -93,6 +94,7 @@ const ColorBox = styled.li`
 
 const StyledColorName = styled.p`
   position: absolute;
+  left: 0;
   font-size: 2.5vh;
   font-weight: lighter;
   padding: 2vh 0 0 3vh;
