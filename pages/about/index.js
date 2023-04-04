@@ -65,6 +65,10 @@ const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
   float: left;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 61.8vw;
+    padding: 7vh 5vw 2vh 5vw;
+  }
 `;
 const Article = styled.article`
   text-align: start;

@@ -14,7 +14,7 @@ const FavMessage = styled.span`
   justify-content: center;
   align-items: center;
   left: ${({ isLarge }) => (isLarge ? "14%" : "")};
-  width: ${({ isLarge }) => (isLarge ? "65vw" : "40vw")};
+  width: ${({ isLarge }) => (isLarge ? "60%" : "40%")};
   padding: 2vh;
   z-index: 5;
   background-color: white;

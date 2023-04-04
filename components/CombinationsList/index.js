@@ -93,9 +93,11 @@ export default function CombinationsList({
 }
 
 const List = styled.ul`
-  padding-top: 27.5vh;
+  padding-top: 33.5vh;
   list-style-type: 0;
-  width: 100vw;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    padding-top: 6.5vh;
+  }
 `;
 
 const StyledCombinationContainer = styled.li`

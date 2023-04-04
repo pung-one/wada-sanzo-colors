@@ -65,6 +65,9 @@ export default function Favorites({
 
 const PageContainer = styled.main`
   margin: 0 0 2vh;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 61.8vw;
+  }
 `;
 
 const NoFavoritesInfo = styled.p`

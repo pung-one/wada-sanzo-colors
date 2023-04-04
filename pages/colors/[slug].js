@@ -85,6 +85,10 @@ const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
   margin-top: 15.5vh;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 61.8vw;
+    margin-top: 6.5vh;
+  }
 `;
 
 const StyledColorBox = styled.header`

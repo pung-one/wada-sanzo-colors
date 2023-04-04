@@ -74,10 +74,12 @@ export default function ColorsList({
 }
 
 const List = styled.ul`
-  padding-top: 33.5vh;
+  padding-top: 42.5vh;
   list-style: none;
   list-style-type: 0;
-  width: 100vw;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    padding-top: 6.5vh;
+  }
 `;
 
 const ColorBox = styled.li`

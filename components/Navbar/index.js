@@ -114,10 +114,17 @@ export default function NavBar({
 
 const NavContainer = styled.div`
   position: fixed;
-  top: ${({ show }) => (!show ? "-23vh" : "6.5vh")};
   z-index: 5;
+  top: ${({ show }) => (!show ? "-30vh" : "6.5vh")};
   width: 100%;
   transition: top 0.5s;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    top: ${({ show }) => (!show ? "6.5vh" : "6.5vh")};
+    right: 0;
+    width: 38.2vw;
+    height: 100vh;
+    border-left: 1px solid black;
+  }
 `;
 
 const NavPages = styled.nav`
@@ -129,6 +136,9 @@ const NavPages = styled.nav`
   height: 9vh;
   background-color: white;
   border-bottom: 1px solid black;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    flex-direction: column;
+  }
 `;
 
 const NavButton = styled.a`
@@ -141,10 +151,16 @@ const NavButton = styled.a`
   color: ${({ isActive }) => (isActive ? "white" : "black")};
   padding: 1vh 2vw 1vh;
   font-size: 2vh;
-  width: 22.5vw;
   height: 6vh;
+  width: 22.5%;
   text-align: center;
   &:hover {
     cursor: pointer;
+  }
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 100%;
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid black;
   }
 `;

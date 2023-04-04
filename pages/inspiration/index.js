@@ -58,6 +58,9 @@ export default function InspirationPage({
 
 const PageContainer = styled.main`
   position: relative;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 61.8vw;
+  }
 `;
 
 const ButtonContainer = styled.section`
@@ -76,7 +79,7 @@ const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
   padding: 5vh;
-  width: 60vw;
+  width: 60%;
   box-shadow: 0 0 4px black;
   &:hover {
     cursor: pointer;
@@ -87,7 +90,7 @@ const StyledLink = styled(Link)`
   background-color: white;
   border: 1px solid black;
   padding: 5vh;
-  width: 60vw;
+  width: 60%;
   text-align: center;
   box-shadow: 0 0 4px black;
 `;

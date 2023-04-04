@@ -75,6 +75,9 @@ const PageContainer = styled.main`
   text-align: center;
   align-items: center;
   padding-top: 20vh;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 61.8vw;
+  }
 `;
 
 const SessionStatus = styled.span`
@@ -96,7 +99,7 @@ const SessionStatusText = styled.p`
 const Article = styled.article`
   position: relative;
   padding-top: 5vh;
-  width: 70vw;
+  width: 80%;
 `;
 
 const ButtonContainer = styled.div`
@@ -104,6 +107,7 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 100%;
   padding: 8vh 0 3vh;
 `;
 
@@ -111,7 +115,7 @@ const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
   padding: 5vh;
-  width: 60vw;
+  width: 60%;
   box-shadow: 0 0 4px black;
   margin-bottom: 5vh;
   &:hover {
