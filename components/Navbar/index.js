@@ -55,9 +55,6 @@ export default function NavBar({
       isOnList={route === "/" || route === "/favorites"}
     >
       <NavPages>
-        <Link href={"/"} passHref legacyBehavior>
-          <NavButton isActive={route === "/"}>Lists</NavButton>
-        </Link>
         <Link href={"/inspiration"} passHref legacyBehavior>
           <NavButton
             isActive={
@@ -68,6 +65,9 @@ export default function NavBar({
           >
             Inspiration
           </NavButton>
+        </Link>
+        <Link href={"/"} passHref legacyBehavior>
+          <NavButton isActive={route === "/"}>Collection</NavButton>
         </Link>
         <Link href={"/favorites"} passHref legacyBehavior>
           <NavButton isActive={route === "/favorites"}>Favorites</NavButton>
@@ -144,7 +144,6 @@ const NavButton = styled.a`
   width: 22.5vw;
   height: 6vh;
   text-align: center;
-  transition: all 0.2s;
   &:hover {
     cursor: pointer;
   }

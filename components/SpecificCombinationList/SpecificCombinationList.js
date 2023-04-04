@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Link from "next/link";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright/index.js";
@@ -42,8 +42,11 @@ export default function SpecificCombinationList({
                       aria-label={`go to color-combination with nr ${combi1}`}
                       href={`/combinations/${combi1}`}
                     >
-                      <StyledCombinationNumber isBright={IsColorBright(rgb)}>
-                        {combi1}
+                      <StyledCombinationNumber
+                        isBright={IsColorBright(rgb)}
+                        isOnLargeCombination={combination.length > 3}
+                      >
+                        {`Combi #${combi1}`}
                       </StyledCombinationNumber>
                     </Link>
                   )}
@@ -90,7 +93,14 @@ const StyledCombinationNumber = styled.span`
   position: absolute;
   font-size: 2.5vh;
   font-weight: lighter;
-  padding: 2vh;
+  padding: 2vh 0 0 3vh;
   text-decoration: underline;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
+  ${(props) =>
+    props.isOnLargeCombination
+      ? css`
+          max-width: 23vw;
+          overflow-wrap: break-word;
+        `
+      : null}
 `;

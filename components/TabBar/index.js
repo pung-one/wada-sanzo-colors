@@ -44,7 +44,6 @@ const StyledButton = styled.button`
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
-  transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
   }

@@ -25,8 +25,8 @@ const StyledButton = styled.button`
   align-items: center;
   background-color: white;
   border: 1px solid black;
-  width: ${({ isLarge }) => (isLarge ? "25vw" : "20vw")};
-  height: ${({ isLarge }) => (isLarge ? "100%" : "70%")};
+  width: ${({ isLarge }) => (isLarge ? "30vw" : "20vw")};
+  height: ${({ isLarge }) => (isLarge ? "100%" : "75%")};
   box-shadow: 0 0 3px black;
   &:hover {
     cursor: pointer;
