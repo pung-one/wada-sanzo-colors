@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Link from "next/link";
 import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright/index.js";
@@ -59,27 +59,32 @@ export default function CombinationsList({
               showFavMessage={showFavMessage}
               isTriggered={combination1.id === favMessageId}
             />
-            {combination1.combination?.map(({ name, hex, rgb }, colorIndex) => {
-              return (
-                <StyledColorBox key={name} hex={hex}>
-                  {colorIndex === 0 && (
-                    <Link href={`/combinations/${combination1.id}`}>
-                      <StyledCombinationNumber isBright={IsColorBright(rgb)}>
-                        {combination1.id}
-                      </StyledCombinationNumber>
-                    </Link>
-                  )}
-                  <FavoriteButton
-                    isFavorite={favoriteStatus?.isFavorite}
-                    isOnListElement={true}
-                    isBright={IsColorBright(rgb)}
-                    toggleValue={combination1.id}
-                    onToggleFavorite={onToggleFavorite}
-                    onShowFavMessage={handleShowFavMessage}
-                  />
-                </StyledColorBox>
-              );
-            })}
+            {combination1.combination?.map(
+              ({ name, hex, rgb }, colorIndex, array) => {
+                return (
+                  <StyledColorBox key={name} hex={hex}>
+                    {colorIndex === 0 && (
+                      <Link href={`/combinations/${combination1.id}`}>
+                        <StyledCombinationNumber
+                          isBright={IsColorBright(rgb)}
+                          isOnLargeCombination={array.length > 3}
+                        >
+                          {`Combi #${combination1.id}`}
+                        </StyledCombinationNumber>
+                      </Link>
+                    )}
+                    <FavoriteButton
+                      isFavorite={favoriteStatus?.isFavorite}
+                      isOnListElement={true}
+                      isBright={IsColorBright(rgb)}
+                      toggleValue={combination1.id}
+                      onToggleFavorite={onToggleFavorite}
+                      onShowFavMessage={handleShowFavMessage}
+                    />
+                  </StyledColorBox>
+                );
+              }
+            )}
           </StyledCombinationContainer>
         );
       })}
@@ -112,7 +117,14 @@ const StyledCombinationNumber = styled.span`
   position: absolute;
   font-size: 2.5vh;
   font-weight: lighter;
-  padding: 2vh;
+  padding: 2vh 0 0 3vh;
   text-decoration: underline;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
+  ${(props) =>
+    props.isOnLargeCombination
+      ? css`
+          max-width: 23vw;
+          overflow-wrap: break-word;
+        `
+      : null}
 `;

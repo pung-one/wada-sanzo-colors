@@ -29,8 +29,8 @@ export default function FavoriteButton({
 
 const Button = styled.button`
   position: absolute;
-  width: 3vh;
-  height: 3vh;
+  width: 3.5vh;
+  height: 3.5vh;
   background-color: ${({ isFavorite, isBright }) =>
     isFavorite && isBright
       ? "black"

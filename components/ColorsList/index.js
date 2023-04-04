@@ -84,18 +84,18 @@ const ColorBox = styled.li`
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
   height: 25vh;
   margin-top: 2vh;
-  line-height: 25vh;
   overflow-x: hidden;
   background-color: ${({ hex }) => (hex ? hex : null)};
   color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;
 
 const StyledColorName = styled.p`
-  text-align: center;
+  position: absolute;
   font-size: 2.5vh;
   font-weight: lighter;
+  padding: 2vh 0 0 3vh;
+  text-decoration: underline;
   color: ${({ isBright }) => (isBright ? "black" : "white")};
 `;

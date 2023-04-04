@@ -40,12 +40,12 @@ export default function ColorPicker({ data, error }) {
           onClick={() => setIsColorPicked(true)}
         />
         {isColorPicked && (
-          <StyledButton type="submit">Find from list</StyledButton>
+          <StyledButton type="submit">Find from collection</StyledButton>
         )}
       </StyledForm>
       {closestColor && (
         <ResultContainer>
-          <p>This is the most similar color from list:</p>
+          <p>The most similar color from the collection:</p>
           <StyledLink
             href={`/colors/${closestColor?.slug}`}
             hex={closestColor?.hex}

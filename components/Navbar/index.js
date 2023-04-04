@@ -144,7 +144,6 @@ const NavButton = styled.a`
   width: 22.5vw;
   height: 6vh;
   text-align: center;
-  transition: all 0.2s;
   &:hover {
     cursor: pointer;
   }

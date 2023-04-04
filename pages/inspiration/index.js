@@ -57,18 +57,17 @@ export default function InspirationPage({
 }
 
 const PageContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  top: 6.5vh;
-  height: 100vh;
+  position: relative;
 `;
 
 const ButtonContainer = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  flex: 1;
-  padding-top: 45%;
+  height: 93.5vh;
+  top: 6.5vh;
   gap: 10vh;
   background: ${({ background }) => (background ? background : null)};
 `;
