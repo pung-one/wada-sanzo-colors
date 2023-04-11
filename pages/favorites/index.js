@@ -74,6 +74,10 @@ const NoFavoritesInfo = styled.p`
   padding-top: 50vh;
   font-size: 3vh;
   text-align: center;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 61.8vw;
+    margin-left: 38.2vw;
+  }
 `;
 
 const ErrorMessage = styled.h1`
@@ -81,5 +85,6 @@ const ErrorMessage = styled.h1`
   margin-top: 40vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 61.8vw;
+    left: 38.2vw;
   }
 `;

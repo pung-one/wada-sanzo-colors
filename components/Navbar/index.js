@@ -118,13 +118,6 @@ const NavContainer = styled.div`
   top: ${({ show }) => (!show ? "-30vh" : "6.5vh")};
   width: 100%;
   transition: top 0.5s;
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    top: 80px;
-    right: 0;
-    width: 38.2vw;
-    height: 100vh;
-    border-left: 1px solid black;
-  }
 `;
 
 const NavPages = styled.nav`
@@ -136,9 +129,6 @@ const NavPages = styled.nav`
   height: 9vh;
   background-color: white;
   border-bottom: 1px solid black;
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    flex-direction: column;
-  }
 `;
 
 const NavButton = styled.a`
@@ -156,11 +146,5 @@ const NavButton = styled.a`
   text-align: center;
   &:hover {
     cursor: pointer;
-  }
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 100%;
-    border: none;
-    box-shadow: none;
-    border-bottom: 1px solid black;
   }
 `;

@@ -122,6 +122,15 @@ const FilterContainer = styled.nav`
   padding: 1vh 0 1vh;
   background-color: white;
   border-bottom: 1px solid black;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    position: fixed;
+    top: 6.5vh;
+    right: 0;
+    gap: 1.5vh;
+    width: 61.8vw;
+    height: 12vh;
+    padding: 1.5vh 0 1.5vh;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -196,6 +205,10 @@ const StyledButton = styled.button`
         `
       : null}
   background: ${({ isActive }) => (isActive ? "black" : "")};
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 26%;
+    height: 3.5vh;
+  }
 `;
 
 const SwatchName = styled.span`

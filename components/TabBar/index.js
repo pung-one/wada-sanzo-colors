@@ -31,7 +31,10 @@ const TabContainer = styled.nav`
   background-color: white;
   border-bottom: 1px solid black;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    height: 100%;
     flex-direction: column;
+    padding: 0;
+    border-bottom: none;
   }
 `;
 
@@ -41,7 +44,6 @@ const StyledButton = styled.button`
   justify-content: center;
   background-color: white;
   border: 1px solid black;
-  font-size: vh;
   height: 6vh;
   width: 45%;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
@@ -52,8 +54,15 @@ const StyledButton = styled.button`
   }
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 90%;
+    height: 6vh;
+    margin-left: 10%;
     border: none;
+
     box-shadow: none;
+    box-shadow: none;
+    background-color: white;
+    color: black;
     border-bottom: 1px solid black;
+    border-left: 1px solid black;
   }
 `;

@@ -41,9 +41,11 @@ export default function Home({
 }
 
 const PageContainer = styled.main`
+  position: relative;
   margin: 0 0 2vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 61.8vw;
+    left: 38.2vw;
   }
 `;
 
@@ -52,5 +54,6 @@ const ErrorMessage = styled.h1`
   margin-top: 40vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 61.8vw;
+    right: 0;
   }
 `;

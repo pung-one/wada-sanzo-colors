@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { SlArrowRight } from "react-icons/sl";
 import TabBar from "../TabBar";
 import CombinationsFilter from "../CombinationsFilter";
 import ColorFilter from "../ColorFilter";
 
-export default function NavBar({
+export default function NavBarDesktop({
   inspirationPageFilter,
   setInspirationPageFilter,
   handleShowColors,
@@ -28,32 +28,9 @@ export default function NavBar({
 }) {
   const router = useRouter();
   const route = router.route;
-  const [show, setShow] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  function handleScroll() {
-    if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY && window.scrollY > 100) {
-        setShow(false);
-      } else {
-        setShow(true);
-      }
-      setLastScrollY(window.scrollY);
-    }
-  }
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }
-  }, [lastScrollY]);
 
   return (
-    <NavContainer
-      show={show}
-      isOnList={route === "/" || route === "/favorites"}
-    >
+    <NavContainer isOnList={route === "/" || route === "/favorites"}>
       <NavPages>
         <Link href={"/inspiration"} passHref legacyBehavior>
           <NavButton
@@ -67,22 +44,57 @@ export default function NavBar({
           </NavButton>
         </Link>
         <Link href={"/"} passHref legacyBehavior>
-          <NavButton isActive={route === "/"}>Collection</NavButton>
+          <NavButton isActive={route === "/"}>
+            <Arrow isActive={route === "/"} />
+            Collection
+          </NavButton>
         </Link>
+        {route === "/" && (
+          <TabBar
+            onShowColors={handleShowColors}
+            onShowCombinations={handleShowCombinations}
+            listType={listType}
+            isInDesktopMode={true}
+            route={route}
+            colorListType={colorListType}
+            handleShowSwatchOne={handleShowSwatchOne}
+            handleShowSwatchTwo={handleShowSwatchTwo}
+            handleShowSwatchThree={handleShowSwatchThree}
+            handleShowSwatchFour={handleShowSwatchFour}
+            handleShowSwatchFive={handleShowSwatchFive}
+            handleShowSwatchSix={handleShowSwatchSix}
+            favoriteColorsData={favoriteColorsData}
+            isAtFavorites={false}
+          />
+        )}
         <Link href={"/favorites"} passHref legacyBehavior>
-          <NavButton isActive={route === "/favorites"}>Favorites</NavButton>
+          <NavButton isActive={route === "/favorites"}>
+            <Arrow isActive={route === "/favorites"} />
+            Favorites
+          </NavButton>
         </Link>
+        {route === "/favorites" && (
+          <TabBar
+            onShowColors={handleShowColors}
+            onShowCombinations={handleShowCombinations}
+            listType={listType}
+            isInDesktopMode={true}
+            route={route}
+            colorListType={colorListType}
+            handleShowSwatchOne={handleShowSwatchOne}
+            handleShowSwatchTwo={handleShowSwatchTwo}
+            handleShowSwatchThree={handleShowSwatchThree}
+            handleShowSwatchFour={handleShowSwatchFour}
+            handleShowSwatchFive={handleShowSwatchFive}
+            handleShowSwatchSix={handleShowSwatchSix}
+            favoriteColorsData={favoriteColorsData}
+            isAtFavorites={true}
+          />
+        )}
         <Link href={"/about"} passHref legacyBehavior>
           <NavButton isActive={route === "/about"}>About</NavButton>
         </Link>
       </NavPages>
-      {route === "/" || route === "/favorites" ? (
-        <TabBar
-          onShowColors={handleShowColors}
-          onShowCombinations={handleShowCombinations}
-          listType={listType}
-        />
-      ) : null}
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
         <ColorFilter
@@ -114,53 +126,46 @@ export default function NavBar({
 
 const NavContainer = styled.div`
   position: fixed;
+  top: 6.5vh;
   z-index: 5;
-  top: ${({ show }) => (!show ? "-30vh" : "6.5vh")};
-  width: 100%;
-  transition: top 0.5s;
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    top: 80px;
-    right: 0;
-    width: 38.2vw;
-    height: 100vh;
-    border-left: 1px solid black;
-  }
+  left: 0;
+  width: 38.2vw;
+  height: 100vh;
+  border-right: 1px solid black;
 `;
 
 const NavPages = styled.nav`
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 9vh;
   background-color: white;
-  border-bottom: 1px solid black;
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    flex-direction: column;
-  }
 `;
 
 const NavButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
-  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
-  color: ${({ isActive }) => (isActive ? "white" : "black")};
   padding: 1vh 2vw 1vh;
   font-size: 2vh;
   height: 6vh;
-  width: 22.5%;
+  width: 100%;
   text-align: center;
+  /*  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")}; */
+  border-bottom: 1px solid black;
   &:hover {
     cursor: pointer;
   }
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 100%;
-    border: none;
-    box-shadow: none;
-    border-bottom: 1px solid black;
-  }
+`;
+
+const Arrow = styled(SlArrowRight)`
+  position: absolute;
+  left: 0;
+  width: 10%;
+  /*  fill: ${({ isActive }) => (isActive ? "white" : "black")}; */
+  transform: ${({ isActive }) => (isActive ? "rotate(90deg)" : "")};
+  transition: transform 0.2s;
 `;

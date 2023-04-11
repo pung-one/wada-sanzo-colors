@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import NavBar from "../Navbar";
+import NavBarDesktop from "../NavBarDesktop";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function Layout({
   children,
@@ -24,8 +26,23 @@ export default function Layout({
   handleShowSwatchSix,
   favoriteColorsData,
 }) {
+  const [viewportWidth, setViewportWidth] = useState("");
+  const [viewportHeight, setViewportHeight] = useState("");
   const router = useRouter();
   const route = router.route;
+
+  function handleResize() {
+    setViewportWidth(window.innerWidth);
+    setViewportHeight(window.innerHeight);
+  }
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
   return (
     <>
       <Header>
@@ -36,26 +53,49 @@ export default function Layout({
           </SignInOutButton>
         </Link>
       </Header>
-      <NavBar
-        inspirationPageFilter={inspirationPageFilter}
-        setInspirationPageFilter={setInspirationPageFilter}
-        handleShowColors={handleShowColors}
-        handleShowCombinations={handleShowCombinations}
-        listType={listType}
-        combinationListType={combinationListType}
-        handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
-        handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
-        handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
-        favoriteCombinationsData={favoriteCombinationsData}
-        colorListType={colorListType}
-        handleShowSwatchOne={handleShowSwatchOne}
-        handleShowSwatchTwo={handleShowSwatchTwo}
-        handleShowSwatchThree={handleShowSwatchThree}
-        handleShowSwatchFour={handleShowSwatchFour}
-        handleShowSwatchFive={handleShowSwatchFive}
-        handleShowSwatchSix={handleShowSwatchSix}
-        favoriteColorsData={favoriteColorsData}
-      />
+      {viewportWidth < 1024 && viewportHeight > viewportWidth ? (
+        <NavBar
+          inspirationPageFilter={inspirationPageFilter}
+          setInspirationPageFilter={setInspirationPageFilter}
+          handleShowColors={handleShowColors}
+          handleShowCombinations={handleShowCombinations}
+          listType={listType}
+          combinationListType={combinationListType}
+          handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+          handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+          handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          favoriteCombinationsData={favoriteCombinationsData}
+          colorListType={colorListType}
+          handleShowSwatchOne={handleShowSwatchOne}
+          handleShowSwatchTwo={handleShowSwatchTwo}
+          handleShowSwatchThree={handleShowSwatchThree}
+          handleShowSwatchFour={handleShowSwatchFour}
+          handleShowSwatchFive={handleShowSwatchFive}
+          handleShowSwatchSix={handleShowSwatchSix}
+          favoriteColorsData={favoriteColorsData}
+        />
+      ) : (
+        <NavBarDesktop
+          inspirationPageFilter={inspirationPageFilter}
+          setInspirationPageFilter={setInspirationPageFilter}
+          handleShowColors={handleShowColors}
+          handleShowCombinations={handleShowCombinations}
+          listType={listType}
+          combinationListType={combinationListType}
+          handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+          handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+          handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          favoriteCombinationsData={favoriteCombinationsData}
+          colorListType={colorListType}
+          handleShowSwatchOne={handleShowSwatchOne}
+          handleShowSwatchTwo={handleShowSwatchTwo}
+          handleShowSwatchThree={handleShowSwatchThree}
+          handleShowSwatchFour={handleShowSwatchFour}
+          handleShowSwatchFive={handleShowSwatchFive}
+          handleShowSwatchSix={handleShowSwatchSix}
+          favoriteColorsData={favoriteColorsData}
+        />
+      )}
       {children}
     </>
   );
