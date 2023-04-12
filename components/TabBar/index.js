@@ -1,22 +1,67 @@
 import styled from "styled-components";
+import { TfiArrowRight } from "react-icons/tfi";
+import { useState, useEffect } from "react";
 
 export default function TabBar({ onShowColors, onShowCombinations, listType }) {
+  const [viewportWidth, setViewportWidth] = useState("");
+  const [viewportHeight, setViewportHeight] = useState("");
+
+  function handleResize() {
+    setViewportWidth(window.innerWidth);
+    setViewportHeight(window.innerHeight);
+  }
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
   return (
     <TabContainer>
-      <StyledButton
-        type="button"
-        isActive={listType === "colors"}
-        onClick={() => onShowColors()}
-      >
-        Colors
-      </StyledButton>
-      <StyledButton
-        type="button"
-        isActive={listType === "combinations"}
-        onClick={() => onShowCombinations()}
-      >
-        Combinations
-      </StyledButton>
+      {viewportWidth < 1024 && viewportHeight > viewportWidth ? (
+        <StyledButton
+          type="button"
+          isActive={listType === "colors"}
+          onClick={() => onShowColors()}
+        >
+          Colors
+        </StyledButton>
+      ) : (
+        <Tab>
+          <IsActiveArrow $isActive={listType === "colors"} />
+          <StyledButton
+            type="button"
+            isActive={listType === "colors"}
+            onClick={() => onShowColors()}
+          >
+            Colors
+          </StyledButton>
+        </Tab>
+      )}
+      {viewportWidth < 1024 && viewportHeight > viewportWidth ? (
+        <StyledButton
+          type="button"
+          isActive={listType === "combinations"}
+          onClick={() => onShowCombinations()}
+        >
+          Combinations
+        </StyledButton>
+      ) : (
+        <Tab>
+          <IsActiveArrow $isActive={listType === "combinations"} />
+          <StyledButton
+            type="button"
+            isActive={listType === "combinations"}
+            onClick={() => onShowCombinations()}
+          >
+            Combinations
+          </StyledButton>
+        </Tab>
+      )}
     </TabContainer>
   );
 }
@@ -34,8 +79,20 @@ const TabContainer = styled.nav`
     height: 100%;
     flex-direction: column;
     padding: 0;
-    border-bottom: none;
   }
+`;
+
+const Tab = styled.section`
+  display: flex;
+  width: 100%;
+`;
+
+const IsActiveArrow = styled(TfiArrowRight)`
+  width: 10%;
+  font-size: 2vh;
+  margin: auto;
+  transform: ${(props) => (props.$isActive ? "scaleX(1)" : "scaleX(0)")};
+  transition: transform 0.3s;
 `;
 
 const StyledButton = styled.button`
@@ -55,14 +112,17 @@ const StyledButton = styled.button`
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 90%;
     height: 6vh;
-    margin-left: 10%;
     border: none;
-
     box-shadow: none;
-    box-shadow: none;
-    background-color: white;
-    color: black;
-    border-bottom: 1px solid black;
+    border-top: ${({ isActive }) =>
+      isActive ? "1px solid white" : "1px solid black"};
     border-left: 1px solid black;
+    &:hover {
+      cursor: pointer;
+      box-shadow: inset 0 0 1px black;
+    }
+    &:active {
+      box-shadow: inset 0 0 3px black;
+    }
   }
 `;

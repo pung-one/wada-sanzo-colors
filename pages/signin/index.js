@@ -76,7 +76,8 @@ const PageContainer = styled.main`
   align-items: center;
   padding-top: 20vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
+    width: 70%;
+    margin-left: 30%;
   }
 `;
 

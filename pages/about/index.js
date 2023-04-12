@@ -35,10 +35,7 @@ export default function AboutPage() {
           </Link>
           ). The original 6-volume work Haishoku Soukan (The complete collection
           of color combinations) by Wada Sanzo, from which the book is derived,
-          was published from 1933 to 1934. The concept of &quot;combining
-          colors&quot; was not generally recognized at the time, so, samplers of
-          color combinations containing specific color combination patterns were
-          highly unusual. Hashoku Soukan was the precursor of such samplers.
+          was published from 1933 to 1934.
         </p>
       </Article>
       <Footer>
@@ -66,7 +63,8 @@ const PageContainer = styled.main`
   flex-direction: column;
   float: left;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
+    width: 70%;
+    margin-left: 30%;
     padding: 7vh 5vw 2vh 5vw;
   }
 `;

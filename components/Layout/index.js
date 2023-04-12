@@ -38,6 +38,8 @@ export default function Layout({
 
   useEffect(() => {
     if (typeof window !== undefined) {
+      setViewportWidth(window.innerWidth);
+      setViewportHeight(window.innerHeight);
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
     }

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { SlArrowRight } from "react-icons/sl";
 import TabBar from "../TabBar";
@@ -26,11 +27,15 @@ export default function NavBarDesktop({
   handleShowSwatchSix,
   favoriteColorsData,
 }) {
+  const [showTabBar, setShowTabBar] = useState(false);
   const router = useRouter();
   const route = router.route;
+  useEffect(() => {
+    setShowTabBar(true);
+  }, [route]);
 
   return (
-    <NavContainer isOnList={route === "/" || route === "/favorites"}>
+    <NavContainer>
       <NavPages>
         <Link href={"/inspiration"} passHref legacyBehavior>
           <NavButton
@@ -44,53 +49,41 @@ export default function NavBarDesktop({
           </NavButton>
         </Link>
         <Link href={"/"} passHref legacyBehavior>
-          <NavButton isActive={route === "/"}>
-            <Arrow isActive={route === "/"} />
+          <NavButton
+            isActive={route === "/"}
+            onClick={() => {
+              setShowTabBar(!showTabBar);
+            }}
+          >
+            <Arrow $isOpen={showTabBar} $isActive={route === "/"} />
             Collection
           </NavButton>
         </Link>
-        {route === "/" && (
+        {route === "/" && showTabBar ? (
           <TabBar
             onShowColors={handleShowColors}
             onShowCombinations={handleShowCombinations}
             listType={listType}
-            isInDesktopMode={true}
-            route={route}
-            colorListType={colorListType}
-            handleShowSwatchOne={handleShowSwatchOne}
-            handleShowSwatchTwo={handleShowSwatchTwo}
-            handleShowSwatchThree={handleShowSwatchThree}
-            handleShowSwatchFour={handleShowSwatchFour}
-            handleShowSwatchFive={handleShowSwatchFive}
-            handleShowSwatchSix={handleShowSwatchSix}
-            favoriteColorsData={favoriteColorsData}
-            isAtFavorites={false}
           />
-        )}
+        ) : null}
         <Link href={"/favorites"} passHref legacyBehavior>
-          <NavButton isActive={route === "/favorites"}>
-            <Arrow isActive={route === "/favorites"} />
+          <NavButton
+            isActive={route === "/favorites"}
+            onClick={() => {
+              setShowTabBar(!showTabBar);
+            }}
+          >
+            <Arrow $isOpen={showTabBar} $isActive={route === "/favorites"} />
             Favorites
           </NavButton>
         </Link>
-        {route === "/favorites" && (
+        {route === "/favorites" && showTabBar ? (
           <TabBar
             onShowColors={handleShowColors}
             onShowCombinations={handleShowCombinations}
             listType={listType}
-            isInDesktopMode={true}
-            route={route}
-            colorListType={colorListType}
-            handleShowSwatchOne={handleShowSwatchOne}
-            handleShowSwatchTwo={handleShowSwatchTwo}
-            handleShowSwatchThree={handleShowSwatchThree}
-            handleShowSwatchFour={handleShowSwatchFour}
-            handleShowSwatchFive={handleShowSwatchFive}
-            handleShowSwatchSix={handleShowSwatchSix}
-            favoriteColorsData={favoriteColorsData}
-            isAtFavorites={true}
           />
-        )}
+        ) : null}
         <Link href={"/about"} passHref legacyBehavior>
           <NavButton isActive={route === "/about"}>About</NavButton>
         </Link>
@@ -129,9 +122,10 @@ const NavContainer = styled.div`
   top: 6.5vh;
   z-index: 5;
   left: 0;
-  width: 38.2vw;
-  height: 100vh;
+  width: 30%;
+  height: 100%;
   border-right: 1px solid black;
+  border-bottom: 1px solid black;
 `;
 
 const NavPages = styled.nav`
@@ -141,7 +135,6 @@ const NavPages = styled.nav`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  background-color: white;
 `;
 
 const NavButton = styled.a`
@@ -153,11 +146,15 @@ const NavButton = styled.a`
   height: 6vh;
   width: 100%;
   text-align: center;
-  /*  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
-  color: ${({ isActive }) => (isActive ? "white" : "black")}; */
   border-bottom: 1px solid black;
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
   &:hover {
     cursor: pointer;
+    box-shadow: inset 0 0 1px black;
+  }
+  &:active {
+    box-shadow: inset 0 0 3px black;
   }
 `;
 
@@ -165,7 +162,8 @@ const Arrow = styled(SlArrowRight)`
   position: absolute;
   left: 0;
   width: 10%;
-  /*  fill: ${({ isActive }) => (isActive ? "white" : "black")}; */
-  transform: ${({ isActive }) => (isActive ? "rotate(90deg)" : "")};
-  transition: transform 0.2s;
+  fill: ${(props) => (props.$isActive ? "white" : "black")};
+  transform: ${(props) =>
+    props.$isOpen && props.$isActive ? "rotate(90deg)" : ""};
+  transition: transform 0.3s;
 `;

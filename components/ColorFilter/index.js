@@ -127,9 +127,10 @@ const FilterContainer = styled.nav`
     top: 6.5vh;
     right: 0;
     gap: 1.5vh;
-    width: 61.8vw;
+    width: 70%;
     height: 12vh;
     padding: 1.5vh 0 1.5vh;
+    margin-left: 30%;
   }
 `;
 
@@ -147,6 +148,7 @@ const StyledButton = styled.button`
   transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
   ${(props) =>
     props.swatch === "red/purple"

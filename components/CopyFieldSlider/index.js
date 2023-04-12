@@ -47,7 +47,7 @@ export default function CopyFieldSlider({
           isActive={isActive}
           aria-label={"show and hide color-codes"}
         >
-          <Arrow isBright={IsColorBright(rgb)} />
+          <Arrow $isBright={IsColorBright(rgb)} />
         </StyledButton>
         {needColorName && (
           <Link href={`/colors/${slug}`}>
@@ -148,7 +148,7 @@ const StyledButton = styled.button`
 
 const Arrow = styled(SlArrowLeft)`
   font-size: 4vh;
-  fill: ${({ isBright }) => (isBright ? "black" : "white")};
+  fill: ${(props) => (props.$isBright ? "black" : "white")};
 `;
 
 const StyledColorName = styled.h2`

@@ -59,7 +59,8 @@ export default function InspirationPage({
 const PageContainer = styled.main`
   position: relative;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
+    width: 70%;
+    margin-left: 30%;
   }
 `;
 

@@ -66,7 +66,8 @@ export default function Favorites({
 const PageContainer = styled.main`
   margin: 0 0 2vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
+    width: 70%;
+    margin-left: 30%;
   }
 `;
 
@@ -74,17 +75,13 @@ const NoFavoritesInfo = styled.p`
   padding-top: 50vh;
   font-size: 3vh;
   text-align: center;
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
-    margin-left: 38.2vw;
-  }
 `;
 
 const ErrorMessage = styled.h1`
   text-align: center;
   margin-top: 40vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
-    left: 38.2vw;
+    width: 70%;
+    margin-left: 30%;s
   }
 `;

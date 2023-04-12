@@ -87,8 +87,8 @@ const PageContainer = styled.main`
   margin-top: 15.5vh;
   height: 84.5vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
-    margin-top: 6.5vh;
+    width: 70%;
+    margin: 6.5vh 0 0 30%;
     height: 93.5vh;
   }
 `;

@@ -44,8 +44,8 @@ const PageContainer = styled.main`
   position: relative;
   margin: 0 0 2vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
-    left: 38.2vw;
+    width: 70%;
+    margin-left: 30%;
   }
 `;
 
@@ -53,7 +53,7 @@ const ErrorMessage = styled.h1`
   text-align: center;
   margin-top: 40vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 61.8vw;
-    right: 0;
+    width: 70%;
+    margin-left: 30%;
   }
 `;

@@ -87,6 +87,16 @@ const FilterContainer = styled.nav`
   height: 9vh;
   background-color: white;
   border-bottom: 1px solid black;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    position: fixed;
+    top: 6.5vh;
+    right: 0;
+    gap: 1.5vh;
+    width: 70%;
+    height: 10vh;
+    padding: 1.5vh 0 1.5vh;
+    margin-left: 30%;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -104,6 +114,7 @@ const StyledButton = styled.button`
   transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
 `;
 
