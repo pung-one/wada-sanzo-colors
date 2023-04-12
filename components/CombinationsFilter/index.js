@@ -84,9 +84,19 @@ const FilterContainer = styled.nav`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 6vh;
+  height: 9vh;
   background-color: white;
   border-bottom: 1px solid black;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    position: fixed;
+    top: 6.5vh;
+    right: 0;
+    gap: 1.5vh;
+    width: 70%;
+    height: 10vh;
+    padding: 1.5vh 0 1.5vh;
+    margin-left: 30%;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -95,8 +105,8 @@ const StyledButton = styled.button`
   align-items: center;
   background-color: white;
   border: 1px solid black;
-  width: 30vw;
-  height: 4vh;
+  width: 30%;
+  height: 6vh;
   overflow: hidden;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
@@ -104,6 +114,7 @@ const StyledButton = styled.button`
   transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
 `;
 
@@ -112,7 +123,7 @@ const StyledBox = styled.div`
     isActive ? "1px solid white" : "1px solid black"};
   width: ${({ filter }) =>
     filter === 2 ? "50%" : filter === 3 ? "33.3%" : "25%"};
-  height: 4vh;
+  height: 6vh;
 `;
 
 const StyledNumber = styled.span`

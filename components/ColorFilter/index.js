@@ -118,10 +118,20 @@ const FilterContainer = styled.nav`
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
-  height: 12vh;
+  height: 18vh;
   padding: 1vh 0 1vh;
   background-color: white;
   border-bottom: 1px solid black;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    position: fixed;
+    top: 6.5vh;
+    right: 0;
+    gap: 1.5vh;
+    width: 70%;
+    height: 12vh;
+    padding: 1.5vh 0 1.5vh;
+    margin-left: 30%;
+  }
 `;
 
 const StyledButton = styled.button`
@@ -131,13 +141,14 @@ const StyledButton = styled.button`
   align-items: center;
   background-color: white;
   border: 1px solid black;
-  height: 4vh;
-  width: 30vw;
+  height: 6vh;
+  width: 30%;
   overflow: hidden;
   box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
   transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
   ${(props) =>
     props.swatch === "red/purple"
@@ -196,6 +207,10 @@ const StyledButton = styled.button`
         `
       : null}
   background: ${({ isActive }) => (isActive ? "black" : "")};
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 26%;
+    height: 3.5vh;
+  }
 `;
 
 const SwatchName = styled.span`

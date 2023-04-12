@@ -43,10 +43,11 @@ export default function CopyFieldSlider({
         <StyledButton
           onClick={() => handleSlide(index)}
           isLeftBox={!isLargeCombination && index === 0}
+          isLarge={isLargeCombination}
           isActive={isActive}
           aria-label={"show and hide color-codes"}
         >
-          <Arrow isBright={IsColorBright(rgb)} />
+          <Arrow $isBright={IsColorBright(rgb)} />
         </StyledButton>
         {needColorName && (
           <Link href={`/colors/${slug}`}>
@@ -103,7 +104,7 @@ const SliderContainer = styled.aside`
   align-items: center;
   justify-content: center;
   padding: ${({ isLarge }) => (isLarge ? "2vh 0 1vh" : "8vh 0 10vh")};
-  width: ${({ isLarge }) => (isLarge ? "100vw" : "50vw")};
+  width: 100%;
   height: 100%;
   transform: ${({ isActive, isLeftBox }) =>
     isActive && isLeftBox
@@ -111,9 +112,8 @@ const SliderContainer = styled.aside`
       : isActive
       ? "translate(-85%)"
       : ""};
-  left: ${({ isLeftBox }) => (isLeftBox ? "-43vw" : null)};
-  right: ${({ isLarge, isLeftBox }) =>
-    isLarge && !isLeftBox ? "-88vw" : "-43vw"};
+  right: ${({ isLeftBox }) => (isLeftBox ? null : "-88%")};
+  left: ${({ isLeftBox }) => (isLeftBox ? "-88%" : null)};
   transition: transform 0.3s;
 `;
 
@@ -129,13 +129,17 @@ const StyledButton = styled.button`
       ? "rotate(180deg)"
       : null};
   transition: transform 0.3s;
-  ${(props) =>
-    props.isLeftBox
+  ${({ isLeftBox, isLarge }) =>
+    isLeftBox
       ? css`
-          right: -1vw;
+          right: -15%;
+        `
+      : !isLeftBox && !isLarge
+      ? css`
+          left: -15%;
         `
       : css`
-          left: -1vw;
+          left: -3%;
         `}
   &:hover {
     cursor: pointer;
@@ -144,17 +148,16 @@ const StyledButton = styled.button`
 
 const Arrow = styled(SlArrowLeft)`
   font-size: 4vh;
-  fill: ${({ isBright }) => (isBright ? "black" : "white")};
+  fill: ${(props) => (props.$isBright ? "black" : "white")};
 `;
 
 const StyledColorName = styled.h2`
-  position: relative;
   text-align: center;
   text-decoration: underline;
   font-weight: lighter;
-  width: ${({ isLarge }) => (isLarge ? "100vw" : "35vw")};
+  margin: auto;
+  width: ${({ isLarge }) => (isLarge ? "100%" : "90%")};
   color: ${({ isBright }) => (isBright ? "black" : "white")};
-  left: ${({ isLarge }) => (isLarge ? "-3vw" : "0")};
 `;
 
 const CopyFieldContainer = styled.div`
@@ -164,9 +167,8 @@ const CopyFieldContainer = styled.div`
     isLarge ? "1fr 1fr / 1fr 1fr" : "1fr 1fr 1fr 1fr / 1fr"};
   justify-items: center;
   padding: ${({ isLarge }) => (isLarge ? "2vh 0 0 0" : "5vh 0 0")};
-  gap: ${({ isLarge }) => (isLarge ? "1vh" : "")};
-  width: ${({ isLarge }) => (isLarge ? "70vw" : "50vw")};
+  gap: ${({ isLarge }) => (isLarge ? "2vw" : "")};
   height: ${({ isLarge }) => (isLarge ? "100%" : "80%")};
-  left: ${({ isLarge }) => (isLarge ? "-3vw" : "0")};
+  width: ${({ isLarge }) => (isLarge ? "60%" : "50%")};
   padding-bottom: 2vh;
 `;

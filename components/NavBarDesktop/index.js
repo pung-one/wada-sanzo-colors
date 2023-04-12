@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { SlArrowRight } from "react-icons/sl";
 import TabBar from "../TabBar";
 import CombinationsFilter from "../CombinationsFilter";
 import ColorFilter from "../ColorFilter";
 
-export default function NavBar({
+export default function NavBarDesktop({
   inspirationPageFilter,
   setInspirationPageFilter,
   handleShowColors,
@@ -26,34 +27,15 @@ export default function NavBar({
   handleShowSwatchSix,
   favoriteColorsData,
 }) {
+  const [showTabBar, setShowTabBar] = useState(false);
   const router = useRouter();
   const route = router.route;
-  const [show, setShow] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  function handleScroll() {
-    if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY && window.scrollY > 100) {
-        setShow(false);
-      } else {
-        setShow(true);
-      }
-      setLastScrollY(window.scrollY);
-    }
-  }
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }
-  }, [lastScrollY]);
+    setShowTabBar(true);
+  }, [route]);
 
   return (
-    <NavContainer
-      show={show}
-      isOnList={route === "/" || route === "/favorites"}
-    >
+    <NavContainer>
       <NavPages>
         <Link href={"/inspiration"} passHref legacyBehavior>
           <NavButton
@@ -67,22 +49,45 @@ export default function NavBar({
           </NavButton>
         </Link>
         <Link href={"/"} passHref legacyBehavior>
-          <NavButton isActive={route === "/"}>Collection</NavButton>
+          <NavButton
+            isActive={route === "/"}
+            onClick={() => {
+              setShowTabBar(!showTabBar);
+            }}
+          >
+            <Arrow $isOpen={showTabBar} $isActive={route === "/"} />
+            Collection
+          </NavButton>
         </Link>
+        {route === "/" && showTabBar ? (
+          <TabBar
+            onShowColors={handleShowColors}
+            onShowCombinations={handleShowCombinations}
+            listType={listType}
+          />
+        ) : null}
         <Link href={"/favorites"} passHref legacyBehavior>
-          <NavButton isActive={route === "/favorites"}>Favorites</NavButton>
+          <NavButton
+            isActive={route === "/favorites"}
+            onClick={() => {
+              setShowTabBar(!showTabBar);
+            }}
+          >
+            <Arrow $isOpen={showTabBar} $isActive={route === "/favorites"} />
+            Favorites
+          </NavButton>
         </Link>
+        {route === "/favorites" && showTabBar ? (
+          <TabBar
+            onShowColors={handleShowColors}
+            onShowCombinations={handleShowCombinations}
+            listType={listType}
+          />
+        ) : null}
         <Link href={"/about"} passHref legacyBehavior>
           <NavButton isActive={route === "/about"}>About</NavButton>
         </Link>
       </NavPages>
-      {route === "/" || route === "/favorites" ? (
-        <TabBar
-          onShowColors={handleShowColors}
-          onShowCombinations={handleShowCombinations}
-          listType={listType}
-        />
-      ) : null}
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
         <ColorFilter
@@ -114,38 +119,52 @@ export default function NavBar({
 
 const NavContainer = styled.div`
   position: fixed;
+  top: 6.5vh;
   z-index: 5;
-  top: ${({ show }) => (!show ? "-30vh" : "6.5vh")};
-  width: 100%;
-  transition: top 0.5s;
+  left: 0;
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 `;
 
 const NavPages = styled.nav`
   position: relative;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 9vh;
-  background-color: white;
-  border-bottom: 1px solid black;
 `;
 
 const NavButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
-  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
-  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
-  color: ${({ isActive }) => (isActive ? "white" : "black")};
   padding: 1vh 2vw 1vh;
   font-size: 2vh;
   height: 6vh;
-  width: 22.5%;
+  width: 100%;
   text-align: center;
+  border-bottom: 1px solid black;
+  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
+  color: ${({ isActive }) => (isActive ? "white" : "black")};
+  transition: all 0.1s;
   &:hover {
     cursor: pointer;
-    box-shadow: none;
+    box-shadow: inset 0 0 2px black;
   }
+  &:active {
+    box-shadow: inset 0 0 3px black;
+  }
+`;
+
+const Arrow = styled(SlArrowRight)`
+  position: absolute;
+  left: 0;
+  width: 10%;
+  fill: ${(props) => (props.$isActive ? "white" : "black")};
+  transform: ${(props) =>
+    props.$isOpen && props.$isActive ? "rotate(90deg)" : ""};
+  transition: transform 0.3s;
 `;

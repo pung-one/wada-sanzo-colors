@@ -86,6 +86,11 @@ const PageContainer = styled.main`
   align-items: center;
   margin-top: 15.5vh;
   height: 84.5vh;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 70%;
+    margin: 6.5vh 0 0 30%;
+    height: 93.5vh;
+  }
 `;
 
 const Heading = styled.header`
@@ -100,16 +105,17 @@ const Heading = styled.header`
 
 const CombinationContainer = styled.div`
   display: flex;
-  height: 80vh;
+  height: 84.5vh;
+  width: 100%;
   flex-direction: ${({ isLarge }) => (isLarge ? "column" : null)};
   overflow-x: hidden;
 `;
 
 const ColorBox = styled.div`
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-basis: 100%;
   background-color: ${({ hex }) => (hex ? hex : null)};
-  color: ${({ hex }) => (hex ? hex : null)};
 `;
