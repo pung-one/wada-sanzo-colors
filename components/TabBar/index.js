@@ -88,11 +88,12 @@ const Tab = styled.section`
 `;
 
 const IsActiveArrow = styled(TfiArrowRight)`
+  position: relative;
   width: 10%;
   font-size: 2vh;
   margin: auto;
-  transform: ${(props) => (props.$isActive ? "scaleX(1)" : "scaleX(0)")};
-  transition: transform 0.3s;
+  left: ${(props) => (props.$isActive ? "0" : "-10%")};
+  transition: left 0.3s;
 `;
 
 const StyledButton = styled.button`
@@ -108,6 +109,7 @@ const StyledButton = styled.button`
   color: ${({ isActive }) => (isActive ? "white" : "black")};
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 90%;

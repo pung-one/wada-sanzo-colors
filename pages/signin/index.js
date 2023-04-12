@@ -121,6 +121,7 @@ const StyledButton = styled.button`
   margin-bottom: 5vh;
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
 `;
 

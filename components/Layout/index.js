@@ -134,5 +134,6 @@ const SignInOutButton = styled.a`
   transition: all 0.2s;
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
 `;

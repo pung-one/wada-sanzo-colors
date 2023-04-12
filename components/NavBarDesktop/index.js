@@ -149,9 +149,10 @@ const NavButton = styled.a`
   border-bottom: 1px solid black;
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
+  transition: all 0.1s;
   &:hover {
     cursor: pointer;
-    box-shadow: inset 0 0 1px black;
+    box-shadow: inset 0 0 2px black;
   }
   &:active {
     box-shadow: inset 0 0 3px black;

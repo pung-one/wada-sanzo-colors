@@ -6,21 +6,24 @@ export default function AboutPage() {
       <Article>
         <Headline>Wada Sanzo</Headline>
         <p>
-          Wada Sanzo (1883-1967) was a Japanese artist, teacher, and researcher
-          who devoted his life to the study of color theory. He believed that
-          color was not just a decorative element, but a powerful tool for
-          communication and expression. Wada developed his own unique color
-          system, which was based on the traditional Japanese sense of color, as
-          well as Western color theory. Wada&apos;s color system focused on the
-          relationships between colors and their emotional and cultural
-          associations. He categorized colors into different schemes, such as
-          monochromatic, complementary, triadic, and more. He also explored the
-          use of color in different artistic mediums, such as painting,
-          printmaking, and textile design. Wada&apos;s work on color theory had
-          a significant impact on the development of modern graphic design in
-          Japan. His teachings and philosophy influenced generations of
-          designers and artists, and his ideas about color continue to be
-          studied and applied in various fields today.
+          <Link href="https://en.wikipedia.org/wiki/Sanzo_Wada" target="_blank">
+            Wada Sanzo
+          </Link>{" "}
+          (1883-1967) was a Japanese artist, teacher, and researcher who devoted
+          his life to the study of color theory. He believed that color was not
+          just a decorative element, but a powerful tool for communication and
+          expression. Wada developed his own unique color system, which was
+          based on the traditional Japanese sense of color, as well as Western
+          color theory. Wada&apos;s color system focused on the relationships
+          between colors and their emotional and cultural associations. He
+          categorized colors into different schemes, such as monochromatic,
+          complementary, triadic, and more. He also explored the use of color in
+          different artistic mediums, such as painting, printmaking, and textile
+          design. Wada&apos;s work on color theory had a significant impact on
+          the development of modern graphic design in Japan. His teachings and
+          philosophy influenced generations of designers and artists, and his
+          ideas about color continue to be studied and applied in various fields
+          today.
         </p>
       </Article>
       <Article>
@@ -30,7 +33,10 @@ export default function AboutPage() {
           of 348 color combinations based on 159 colors. This website offers an
           interactive adaptation of the collection that allows users to access
           and copy the CMYK, RGB, HEX, and LAB codes (Thanks to{" "}
-          <Link href="https://github.com/mattdesl/dictionary-of-colour-combinations">
+          <Link
+            href="https://github.com/mattdesl/dictionary-of-colour-combinations"
+            target="_blank"
+          >
             Matt DesLauriers
           </Link>
           ). The original 6-volume work Haishoku Soukan (The complete collection
@@ -42,13 +48,16 @@ export default function AboutPage() {
         <Headline>Impressum</Headline>
         <Info>
           GitHub:{" "}
-          <Link href="https://github.com/pung-one">
+          <Link href="https://github.com/pung-one" target="_blank">
             https://github.com/pung-one
           </Link>
         </Info>
         <Info>
           Source of Digital Color Collection:{" "}
-          <Link href="https://github.com/mattdesl/dictionary-of-colour-combinations">
+          <Link
+            href="https://github.com/mattdesl/dictionary-of-colour-combinations"
+            target="_blank"
+          >
             https://github.com/mattdesl/dictionary-of-colour-combinations
           </Link>
         </Info>

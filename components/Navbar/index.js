@@ -146,5 +146,6 @@ const NavButton = styled.a`
   text-align: center;
   &:hover {
     cursor: pointer;
+    box-shadow: none;
   }
 `;

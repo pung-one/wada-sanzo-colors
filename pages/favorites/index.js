@@ -82,6 +82,6 @@ const ErrorMessage = styled.h1`
   margin-top: 40vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
-    margin-left: 30%;s
+    margin-left: 30%;
   }
 `;
