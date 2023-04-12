@@ -48,7 +48,7 @@ export default function InspirationPage({
           <StyledLink href={`/colors/${randomColorSlug}`}>
             Random Color
           </StyledLink>
-          <StyledLink href={`/combinations/${randomCombinationId}`}>
+          <StyledLink href={`/combinations/${Math.floor(Math.random() * 348)}`}>
             Random Combination
           </StyledLink>
           <EasterEgg href={`/combinations/${randomCombination.id}`}>

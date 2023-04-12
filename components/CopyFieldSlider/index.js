@@ -129,7 +129,7 @@ const StyledButton = styled.button`
       ? "rotate(180deg)"
       : null};
   transition: transform 0.3s;
-  ${({ isLeftBox, isLarge }) =>
+  ${({ isLeftBox, isLarge, isActive }) =>
     isLeftBox
       ? css`
           right: -15%;
@@ -139,7 +139,7 @@ const StyledButton = styled.button`
           left: -15%;
         `
       : css`
-          left: -3%;
+          left: 0;
         `}
   &:hover {
     cursor: pointer;
@@ -167,7 +167,7 @@ const CopyFieldContainer = styled.div`
     isLarge ? "1fr 1fr / 1fr 1fr" : "1fr 1fr 1fr 1fr / 1fr"};
   justify-items: center;
   padding: ${({ isLarge }) => (isLarge ? "2vh 0 0 0" : "5vh 0 0")};
-  gap: ${({ isLarge }) => (isLarge ? "2vw" : "")};
+  gap: ${({ isLarge }) => (isLarge ? "1vh" : "")};
   height: ${({ isLarge }) => (isLarge ? "100%" : "80%")};
   width: ${({ isLarge }) => (isLarge ? "60%" : "50%")};
   padding-bottom: 2vh;
