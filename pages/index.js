@@ -51,7 +51,7 @@ const PageContainer = styled.main`
 
 const ErrorMessage = styled.h1`
   text-align: center;
-  margin-top: 40vh;
+  margin-top: 50vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
