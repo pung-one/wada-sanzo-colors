@@ -12,7 +12,7 @@
 
 ## Demo
 
-You can find the hosted page [here](https://capstone-project-omega-two.vercel.app/) (the design is currently optimized for mobile-devices).
+You can find the hosted page [here](https://wada-sanzo-colors.com/).
 
 ## Genesis
 
