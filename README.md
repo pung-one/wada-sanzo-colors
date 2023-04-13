@@ -1,6 +1,9 @@
 # COLORS - The Dictionary of Color Combinations
 
-![sample_for_github_readme](https://user-images.githubusercontent.com/86004796/228552658-3c511218-c6ea-4cd6-996a-4dc28f896784.png)
+![github_screenshot(1)](https://user-images.githubusercontent.com/86004796/231727138-5672af02-a2c3-4227-b16e-e763a5ba1723.png)
+
+<img src="https://user-images.githubusercontent.com/86004796/231725513-06f8f7e5-58c3-4f61-b4bd-1e782ea1148a.png" width="48%" />  <img src="https://user-images.githubusercontent.com/86004796/231725935-b341076d-ad4c-4532-8c75-8adcf37006bf.png" width="48%" />
+
 ![book_sample](https://user-images.githubusercontent.com/86004796/228552731-e4a9a951-f0c0-4e68-b4d0-2aa2ccd71fcc.png)
 
 ## Description
