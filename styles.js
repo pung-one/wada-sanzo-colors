@@ -4,7 +4,7 @@ export default createGlobalStyle`
 @font-face {
   font-family: "AvenirLT Light";
   src: local("AvenirLT-Light"),
-    url("./src/fonts/AvenirLT-Light.ttf") format("truetype");
+    url("./fonts/fonts/AvenirLT-Light.ttf") format("truetype");
 }
   *,
   *::before,
@@ -12,7 +12,7 @@ export default createGlobalStyle`
     box-sizing: border-box;
     text-decoration: none;
     margin: 0;
-    font-family: system-ui;
+    font-family: "AvenirLT Light", system-ui, sans-serif;
     font-size: 2vh;
     padding: 0;
     color: black;
