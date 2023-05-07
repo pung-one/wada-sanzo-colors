@@ -141,11 +141,9 @@ const NavButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1vh 2vw 1vh;
   font-size: 2vh;
   height: 6vh;
   width: 100%;
-  text-align: center;
   border-bottom: 1px solid black;
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
