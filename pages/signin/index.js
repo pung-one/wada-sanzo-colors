@@ -11,6 +11,7 @@ export default function SignIn({ setUser }) {
     if (session) {
       setUser(session.user.name);
     }
+    console.log(session);
   }, [session]);
 
   async function handleSignOut() {
