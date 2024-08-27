@@ -37,6 +37,7 @@ export default function ColorPicker({ data, error }) {
         <ColorInput
           id="color"
           type="color"
+          defaultValue="#b5b1d8"
           onClick={() => setIsColorPicked(true)}
         />
         {isColorPicked && (
