@@ -99,6 +99,12 @@ export default function Layout({
         />
       )}
       {children}
+      <DonationButton
+        href="https://www.paypal.com/donate/?hosted_button_id=PAFRAKM2HQWVY"
+        target="_blank"
+      >
+        Donate
+      </DonationButton>
     </>
   );
 }
@@ -129,6 +135,25 @@ const SignInOutButton = styled.a`
   padding: 0 1.5vw 0 1.5vw;
   background-color: ${({ isActive }) => (isActive ? "black" : "white")};
   color: ${({ isActive }) => (isActive ? "white" : "black")};
+  border: 1px solid black;
+  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
+  transition: all 0.2s;
+  &:hover {
+    cursor: pointer;
+    box-shadow: none;
+  }
+`;
+
+const DonationButton = styled.a`
+  z-index: 999;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  font-size: 1.8vh;
+  font-weight: normal;
+  padding: 10px;
+  background-color: white;
+  color: black;
   border: 1px solid black;
   box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
   transition: all 0.2s;

@@ -26,13 +26,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head>
-          <title>Colors</title>
-          <meta
-            name="description"
-            content="This website offers an interactive adaptation of the book 'A Dictionary of Color Combinations Vol. 1' by Wada Sanzo, that allows users to access and copy the colors CMYK, RGB, HEX, and LAB codes."
-          />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

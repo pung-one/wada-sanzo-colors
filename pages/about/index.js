@@ -74,7 +74,7 @@ const PageContainer = styled.main`
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
-    padding: 7vh 5vw 2vh 5vw;
+    padding: 7vh 5vw 10vh 5vw;
   }
 `;
 const Article = styled.article`
@@ -91,7 +91,7 @@ const Headline = styled.h2`
 `;
 
 const Footer = styled.footer`
-  margin-top: 5vh;
+  margin: 5vh 0 10vh;
 `;
 
 const Link = styled.a`
