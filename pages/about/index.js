@@ -52,8 +52,8 @@ export default function AboutPage() {
             https://github.com/pung-one
           </Link>
           <br />
-          (if you want to support me please use the "Donate" button in the lower
-          left corner)
+          (if you want to support me please use the &quot;Donate&quot; button in
+          the lower left corner)
         </Info>
         <Info>
           Source of Digital Color Collection:{" "}

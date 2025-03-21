@@ -36,6 +36,16 @@ export default function SignIn({ setUser }) {
         <br />
         <br />
         Whithout signing in, they will only be stored in the browser.
+        <br />
+        <br />
+        (This service is free, but i appreciate a{" "}
+        <a
+          href="https://www.paypal.com/donate/?hosted_button_id=PAFRAKM2HQWVY"
+          target="_blank"
+        >
+          donation
+        </a>{" "}
+        for maintenance and development.)
       </Article>
       <ButtonContainer>
         {session ? (
@@ -102,6 +112,9 @@ const Article = styled.article`
   position: relative;
   padding-top: 5vh;
   width: 80%;
+  a {
+    text-decoration: underline;
+  }
 `;
 
 const ButtonContainer = styled.div`
