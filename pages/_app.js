@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { useRouter } from "next/router";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/next";
 
 const fetcher = (URL) => fetch(URL).then((response) => response.json());
 
@@ -257,6 +258,7 @@ export default function App({
             favoriteCombinationsData={favoriteCombinationsData}
             onToggleFavoriteCombination={handleToggleFavoriteCombination}
           />
+          <Analytics />
         </Layout>
       </SessionProvider>
     </>
