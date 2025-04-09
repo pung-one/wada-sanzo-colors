@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { RxExternalLink } from "react-icons/rx";
 
 export default function AboutPage() {
   return (
@@ -42,8 +43,29 @@ export default function AboutPage() {
           ). The original 6-volume work Haishoku Soukan (The complete collection
           of color combinations) by Wada Sanzo, from which the book is derived,
           was published from 1933 to 1934.
+          <br />
+          <br />
+          <b>
+            You can buy the{" "}
+            <Link href="https://amzn.to/3Ge6wkl" target="_blank">
+              &quot;A Dictionary of Color Combinations Vol. 1&quot; here on
+              Amazon <RxExternalLink />
+            </Link>
+            .
+          </b>
+          <br />
+          <br />
+          <b>
+            Or the{" "}
+            <Link href="https://amzn.to/3RaFJba" target="_blank">
+              &quot;Dictionary Of Color Combinations Volume 2&quot; here{" "}
+              <RxExternalLink />
+            </Link>
+            .
+          </b>
         </p>
       </Article>
+
       <Footer>
         <Headline>Impressum</Headline>
         <Info>
