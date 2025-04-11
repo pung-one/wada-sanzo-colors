@@ -1,8 +1,12 @@
 "use client";
 
 import { ColorObject } from "@/lib/types";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
+import FavoriteButton from "../FavoriteButton";
+import { IsColorBright } from "@/utils/IsColorBright";
+import FavoriteMessage from "../FavoriteMessage";
+import { ActionContext } from "@/lib/actionsContext";
 
 type Props = {
   colorObject: ColorObject;
@@ -15,17 +19,21 @@ export function ColorDetail({ colorObject }: Props) {
   const [showFavMessage, setShowFavMessage] = useState(false);
   const [favMessageName, setFavMessageName] = useState("");
 
+  const actionContext = useContext(ActionContext);
+
+  if (!actionContext) return <h1>Loading...</h1>;
+
   function handleSlide() {
     setIsActive(!isActive);
   }
 
-  function handleShowFavMessage(toggleValue) {
+  function handleShowFavMessage(toggleValue: string) {
     setShowFavMessage(true);
     setFavMessageName(toggleValue);
     const timer = setTimeout(() => setShowFavMessage(false), 1000);
   }
 
-  const favoriteStatus = favoriteColorsData?.find(
+  const favoriteStatus = actionContext.favoriteColorsData.find(
     (color) => color.name === name
   );
 
@@ -42,7 +50,7 @@ export function ColorDetail({ colorObject }: Props) {
           isFavorite={favoriteStatus?.isFavorite}
           isOnDetailColor={true}
           toggleValue={name}
-          onToggleFavorite={onToggleFavoriteColor}
+          onToggleFavorite={actionContext.onToggleFavoriteColor}
           onShowFavMessage={handleShowFavMessage}
         />
 

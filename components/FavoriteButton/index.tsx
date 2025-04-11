@@ -1,26 +1,38 @@
 import styled, { css } from "styled-components";
 import { TfiArrowDown } from "react-icons/tfi";
 
+type Props = {
+  isFavorite: boolean;
+  isOnListElement?: boolean;
+  isOnDetailColor?: boolean;
+  isOnDetailCombination: boolean;
+  isBright: boolean;
+  toggleValue: number | string;
+  onToggleFavorite:
+    | ((id: number) => void)
+    | ((colorName: string, colorSwatch: number) => void);
+  onShowFavMessage: (id: number | string) => void;
+};
+
 export default function FavoriteButton({
   isFavorite,
-  isOnListElement,
-  isOnDetailColor,
+  isOnListElement = false,
+  isOnDetailColor = false,
   isOnDetailCombination,
   isBright,
   toggleValue,
   onToggleFavorite,
   onShowFavMessage,
-  swatch,
-}) {
+}: Props) {
   return (
     <Button
-      isFavorite={isFavorite}
-      isOnList={isOnListElement}
-      isOnColor={isOnDetailColor}
-      isOnCombination={isOnDetailCombination}
-      isBright={isBright}
+      $isFavorite={isFavorite}
+      $isBright={isBright}
+      $isOnList={isOnListElement}
+      $isOnColor={isOnDetailColor}
+      $isOnCombination={isOnDetailCombination}
       onClick={() => {
-        onToggleFavorite(toggleValue, swatch);
+        onToggleFavorite(toggleValue);
         onShowFavMessage(toggleValue);
       }}
       aria-label={"favor or defavor a color or combination"}
@@ -30,7 +42,10 @@ export default function FavoriteButton({
   );
 }
 
-const Arrow = styled(TfiArrowDown)`
+const Arrow = styled(TfiArrowDown)<{
+  $isFavorite: boolean;
+  $isBright: boolean;
+}>`
   font-size: 1.7vh;
   fill: ${(props) =>
     props.$isFavorite && props.$isBright
@@ -44,36 +59,42 @@ const Arrow = styled(TfiArrowDown)`
   transition: all 0.2s;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{
+  $isFavorite: boolean;
+  $isBright: boolean;
+  $isOnList: boolean;
+  $isOnColor: boolean;
+  $isOnCombination: boolean;
+}>`
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 3.5vh;
   height: 3.5vh;
-  background-color: ${({ isFavorite, isBright }) =>
-    isFavorite && isBright
+  background-color: ${({ $isFavorite, $isBright }) =>
+    $isFavorite && $isBright
       ? "black"
-      : isFavorite && !isBright
+      : $isFavorite && !$isBright
       ? "white"
       : "transparent"};
-  border: ${({ isBright }) =>
-    isBright ? "1px solid black" : "1px solid white"};
+  border: ${({ $isBright }) =>
+    $isBright ? "1px solid black" : "1px solid white"};
   border-radius: 50%;
   ${(props) =>
-    props.isOnList &&
+    props.$isOnList &&
     css`
       right: 4%;
       top: 10%;
     `}
   ${(props) =>
-    props.isOnColor &&
+    props.$isOnColor &&
     css`
       right: 6%;
       top: 19%;
     `};
   ${(props) =>
-    props.isOnCombination &&
+    props.$isOnCombination &&
     css`
       right: 8%;
       top: 36%;

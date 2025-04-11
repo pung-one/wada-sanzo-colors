@@ -1,12 +1,12 @@
 import { colorsWithSlug } from "@/data/colors";
 import { createCombinationArray } from "@/utils/helper";
-import HomePage from "@/components/pageWrappers/HomePage";
+import LandingPage from "@/components/pageWrappers/LandingPage";
 
-export default function Home() {
+export default function Landing() {
   const combinationArray = createCombinationArray(colorsWithSlug);
 
   return (
-    <HomePage
+    <LandingPage
       colorsWithSlug={colorsWithSlug}
       combinationArray={combinationArray}
     />

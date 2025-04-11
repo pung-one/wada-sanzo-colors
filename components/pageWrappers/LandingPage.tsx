@@ -12,7 +12,10 @@ type Props = {
   combinationArray: CombinationObject[];
 };
 
-export default function HomePage({ colorsWithSlug, combinationArray }: Props) {
+export default function LandingPage({
+  colorsWithSlug,
+  combinationArray,
+}: Props) {
   const actionContext = useContext(ActionContext);
 
   return (

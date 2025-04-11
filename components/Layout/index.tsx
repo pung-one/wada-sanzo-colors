@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 import { ActionContext } from "@/lib/actionsContext";
 import { useLocalStorage } from "@/utils/useLocalStorage";
+import { FavoriteColor } from "@/lib/types";
 
 const fetcher = (URL: string) => fetch(URL).then((response) => response.json());
 
@@ -80,10 +81,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     }
   }
 
-  async function handleToggleFavoriteColor(
-    colorName: string,
-    colorSwatch: string
-  ) {
+  function handleToggleFavoriteColor(colorName: string, colorSwatch: number) {
     setFavoriteColorsData(() => {
       const favStatus = favoriteColorsData.find(
         (element: any) => element.name === colorName
@@ -106,7 +104,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     });
   }
 
-  function handleToggleFavoriteCombination(id: string) {
+  function handleToggleFavoriteCombination(id: number) {
     setFavoriteCombinationsData(() => {
       const favStatus = favoriteCombinationsData.find(
         (element: any) => element.id === id
