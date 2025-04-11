@@ -8,3 +8,8 @@ export type ColorObject = {
   hex: string;
   slug?: string;
 };
+
+export type CombinationObject = {
+  id: number;
+  combination: ColorObject[];
+};
