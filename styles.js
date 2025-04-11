@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-export default createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: "AvenirLTStd-Book";
   src: local("AvenirLTStd-Book"),

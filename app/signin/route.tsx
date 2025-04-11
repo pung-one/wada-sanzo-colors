@@ -1,22 +1,25 @@
 import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { MdInfo } from "react-icons/md";
+import { ActionContext } from "@/lib/actionsContext";
 
-export default function SignIn({ setUser }) {
+export default function SignIn() {
   const { data: session } = useSession();
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 
+  const actionContext = useContext(ActionContext);
+
   useEffect(() => {
-    if (session) {
-      setUser(session.user.name);
+    if (session && actionContext) {
+      actionContext.setUser(session.user?.name || "public");
     }
     console.log(session);
   }, [session]);
 
   async function handleSignOut() {
     setShowSignOutMessage(true);
-    setUser("public");
+    actionContext?.setUser("public");
     setTimeout(() => signOut(), 1500);
   }
 
@@ -26,7 +29,7 @@ export default function SignIn({ setUser }) {
         <InfoSymbol />
         <SessionStatusText>
           {session
-            ? `You are signed in as "${session.user.name}".`
+            ? `You are signed in as "${session?.user?.name}".`
             : "You are not signed in."}
         </SessionStatusText>
       </SessionStatus>
@@ -53,7 +56,7 @@ export default function SignIn({ setUser }) {
             <StyledButton onClick={() => handleSignOut()}>
               Sign Out
             </StyledButton>
-            <SigningOutMessage showSignOutMessage={showSignOutMessage}>
+            <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
               Signing out...
             </SigningOutMessage>
           </>
@@ -139,7 +142,7 @@ const StyledButton = styled.button`
   }
 `;
 
-const SigningOutMessage = styled.aside`
+const SigningOutMessage = styled.aside<{ $showSignOutMessage: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -151,7 +154,7 @@ const SigningOutMessage = styled.aside`
   background-color: white;
   border: 1px solid black;
   overflow: hidden;
-  transform: ${({ showSignOutMessage }) =>
-    showSignOutMessage ? "scale(1)" : "scale(0)"};
+  transform: ${({ $showSignOutMessage }) =>
+    $showSignOutMessage ? "scale(1)" : "scale(0)"};
   transition: all 0.3s;
 `;

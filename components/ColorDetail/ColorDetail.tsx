@@ -1,36 +1,19 @@
-import { useRouter } from "next/router";
-import styled from "styled-components";
-import SpecificCombinationList from "@/components/SpecificCombinationList/SpecificCombinationList";
-import CopyFieldSlider from "@/components/CopyFieldSlider";
-import { useState } from "react";
-import { IsColorBright } from "@/utils/IsColorBright/index.js";
-import FavoriteButton from "@/components/FavoriteButton";
-import FavoriteMessage from "@/components/FavoriteMessage";
+"use client";
 
-export default function ColorPage({
-  data,
-  error,
-  onToggleFavoriteColor,
-  favoriteColorsData,
-  onToggleFavoriteCombination,
-  favoriteCombinationsData,
-}) {
+import { ColorObject } from "@/lib/types";
+import { useState } from "react";
+import styled from "styled-components";
+
+type Props = {
+  colorObject: ColorObject;
+};
+
+export function ColorDetail({ colorObject }: Props) {
+  const { name, hex, rgb } = colorObject;
+
   const [isActive, setIsActive] = useState(false);
-  const router = useRouter();
-  const { slug } = router.query;
   const [showFavMessage, setShowFavMessage] = useState(false);
   const [favMessageName, setFavMessageName] = useState("");
-
-  let currentColor;
-
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading..</h1>;
-
-  currentColor = data?.find((color) => color.slug === slug);
-
-  if (!currentColor) return <h1>Loading...</h1>;
-
-  const { name, hex, rgb } = currentColor;
 
   function handleSlide() {
     setIsActive(!isActive);
@@ -48,7 +31,7 @@ export default function ColorPage({
 
   return (
     <PageContainer>
-      <StyledColorBox hex={hex}>
+      <StyledColorBox $hex={hex}>
         <FavoriteMessage
           isFavorite={favoriteStatus?.isFavorite}
           showFavMessage={showFavMessage}
@@ -62,7 +45,9 @@ export default function ColorPage({
           onToggleFavorite={onToggleFavoriteColor}
           onShowFavMessage={handleShowFavMessage}
         />
-        <StyledHeadline isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
+
+        <StyledHeadline $isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
+
         <CopyFieldSlider
           color={currentColor}
           isLargeCombination={true}
@@ -92,7 +77,7 @@ const PageContainer = styled.main`
   }
 `;
 
-const StyledColorBox = styled.header`
+const StyledColorBox = styled.header<{ $hex: string }>`
   position: relative;
   height: 30vh;
   display: flex;
@@ -100,11 +85,11 @@ const StyledColorBox = styled.header`
   align-items: center;
   flex-direction: column;
   overflow-x: hidden;
-  background-color: ${({ hex }) => (hex ? hex : null)};
+  background-color: ${({ $hex }) => $hex};
 `;
 
-const StyledHeadline = styled.h1`
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
+const StyledHeadline = styled.h1<{ $isBright: boolean }>`
+  color: ${({ $isBright }) => ($isBright ? "black" : "white")};
   font-size: 3vh;
   font-weight: lighter;
   padding: 2vh 0 4vh;

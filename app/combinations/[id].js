@@ -1,4 +1,4 @@
-import { CreateCombinationArray } from "@/utils/CreateCombinationArray";
+import { createCombinationArray } from "@/utils/helper";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
@@ -21,7 +21,7 @@ export default function CombinationPage({
 
   useEffect(() => {
     setCurrentCombination(
-      CreateCombinationArray(data).find((element) => element.id == id)
+      createCombinationArray(data).find((element) => element.id == id)
     );
   }, [data, id]);
 

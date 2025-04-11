@@ -118,6 +118,9 @@ const NavContainer = styled.div`
   top: ${({ show }) => (!show ? "-30vh" : "6.5vh")};
   width: 100%;
   transition: top 0.5s;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    display: none;
+  }
 `;
 
 const NavPages = styled.nav`

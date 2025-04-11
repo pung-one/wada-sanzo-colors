@@ -1,4 +1,6 @@
-const colors = [
+import { ColorObject } from "../lib/types";
+
+const colors: ColorObject[] = [
   {
     name: "Hermosa Pink",
     combinations: [176, 227, 273],
@@ -1464,7 +1466,7 @@ const colors = [
   },
 ];
 
-export const colorsWithSlug = colors.map((color) => {
+export const colorsWithSlug: ColorObject[] = colors.map((color) => {
   return {
     ...color,
     slug: color.name

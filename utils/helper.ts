@@ -1,4 +1,6 @@
-export function createCombinationArray(data) {
+import { ColorObject } from "@/lib/types";
+
+export function createCombinationArray(data: ColorObject[]) {
   let combinationArray = [];
   for (let i = 1; i <= 348; i++) {
     const combination = {

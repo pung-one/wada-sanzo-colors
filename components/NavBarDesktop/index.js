@@ -126,6 +126,9 @@ const NavContainer = styled.div`
   height: 100%;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+  @media screen and (max-width: 1024px), screen and (orientation: portrait) {
+    display: none;
+  }
 `;
 
 const NavPages = styled.nav`
