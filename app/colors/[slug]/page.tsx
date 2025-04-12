@@ -1,4 +1,4 @@
-import { ColorDetail } from "@/components/pageWrappers/ColorDetail";
+import { ColorDetail } from "@/components/ColorDetail/ColorDetail";
 import { colorsWithSlug } from "@/data/colors";
 
 export async function generateStaticParams() {
@@ -7,7 +7,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({
+export default async function ColorPage({
   params,
 }: {
   params: Promise<{ slug: string }>;

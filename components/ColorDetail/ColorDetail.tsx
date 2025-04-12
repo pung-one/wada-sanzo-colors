@@ -7,13 +7,14 @@ import FavoriteButton from "../FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
 import FavoriteMessage from "../FavoriteMessage";
 import { ActionContext } from "@/lib/actionsContext";
+import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 
 type Props = {
   colorObject: ColorObject;
 };
 
 export function ColorDetail({ colorObject }: Props) {
-  const { name, hex, rgb } = colorObject;
+  const { name, hex, rgb, swatch } = colorObject;
 
   const [isActive, setIsActive] = useState(false);
   const [showFavMessage, setShowFavMessage] = useState(false);
@@ -46,26 +47,28 @@ export function ColorDetail({ colorObject }: Props) {
           isTriggered={name === favMessageName}
         />
         <FavoriteButton
+          isOnDetailColor
           isBright={IsColorBright(rgb)}
           isFavorite={favoriteStatus?.isFavorite}
-          isOnDetailColor={true}
-          toggleValue={name}
-          onToggleFavorite={actionContext.onToggleFavoriteColor}
-          onShowFavMessage={handleShowFavMessage}
+          onToggleFavorite={() =>
+            actionContext.onToggleFavoriteColor(name, swatch)
+          }
+          onShowFavMessage={() => handleShowFavMessage(name)}
         />
 
         <StyledHeadline $isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
 
         <CopyFieldSlider
-          color={currentColor}
-          isLargeCombination={true}
+          isLargeCombination
+          color={colorObject}
           isActive={isActive}
           handleSlide={handleSlide}
           needColorName={false}
         />
       </StyledColorBox>
+
       <SpecificCombinationList
-        currentColor={currentColor}
+        currentColor={colorObject}
         colors={data}
         favoriteCombinationsData={favoriteCombinationsData}
         onToggleFavoriteCombination={onToggleFavoriteCombination}

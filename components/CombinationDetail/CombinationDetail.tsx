@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
-import CopyFieldSlider from "@/components/CopyFieldSlider";
+import CopyFieldSlider from "@/components/CopyFieldSlider/CopyFieldSlider";
 import FavoriteMessage from "@/components/FavoriteMessage";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "@/lib/actionsContext";
@@ -59,7 +59,7 @@ export function CombinationDetail({
                 isLargeCombination={isLargeCombination}
                 color={color}
                 index={index}
-                handleSlide={handleSlide}
+                onHandleSlide={() => handleSlide(index)}
                 isActive={index === activeIndex}
                 needColorName={true}
               />

@@ -5,22 +5,18 @@ type Props = {
   isFavorite: boolean;
   isOnListElement?: boolean;
   isOnDetailColor?: boolean;
-  isOnDetailCombination: boolean;
+  isOnDetailCombination?: boolean;
   isBright: boolean;
-  toggleValue: number | string;
-  onToggleFavorite:
-    | ((id: number) => void)
-    | ((colorName: string, colorSwatch: number) => void);
-  onShowFavMessage: (id: number | string) => void;
+  onToggleFavorite: () => void;
+  onShowFavMessage: () => void;
 };
 
 export default function FavoriteButton({
   isFavorite,
   isOnListElement = false,
   isOnDetailColor = false,
-  isOnDetailCombination,
+  isOnDetailCombination = false,
   isBright,
-  toggleValue,
   onToggleFavorite,
   onShowFavMessage,
 }: Props) {
@@ -32,8 +28,8 @@ export default function FavoriteButton({
       $isOnColor={isOnDetailColor}
       $isOnCombination={isOnDetailCombination}
       onClick={() => {
-        onToggleFavorite(toggleValue);
-        onShowFavMessage(toggleValue);
+        onToggleFavorite();
+        onShowFavMessage();
       }}
       aria-label={"favor or defavor a color or combination"}
     >

@@ -1,16 +1,28 @@
 import styled from "styled-components";
 
-export default function CopyField({ value, label, isLarge, onShowMessage }) {
+type Props = {
+  value: string | number[];
+  label: string;
+  isLarge: boolean;
+  onShowMessage: () => void;
+};
+
+export default function CopyField({
+  value,
+  label,
+  isLarge,
+  onShowMessage,
+}: Props) {
   function handleCopy() {
-    navigator.clipboard.writeText(value);
+    navigator.clipboard.writeText(value.toString());
   }
 
   return (
     <StyledButton
-      isLarge={isLarge}
+      $isLarge={isLarge}
       onClick={() => {
         handleCopy();
-        onShowMessage(value, label);
+        onShowMessage();
       }}
     >
       {label}
@@ -18,7 +30,7 @@ export default function CopyField({ value, label, isLarge, onShowMessage }) {
   );
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $isLarge: boolean }>`
   display: flex;
   position: relative;
   justify-content: center;
@@ -26,7 +38,7 @@ const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
   width: 100%;
-  height: ${({ isLarge }) => (isLarge ? "100%" : "75%")};
+  height: ${({ $isLarge }) => ($isLarge ? "100%" : "75%")};
   box-shadow: 0 0 3px black;
   &:hover {
     cursor: pointer;
