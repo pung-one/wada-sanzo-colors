@@ -1,4 +1,4 @@
-import { Layout } from "../components/Layout";
+import { Layout } from "../components/Layout/Layout";
 import StyledComponentsRegistry from "../lib/registry";
 import { GlobalStyle } from "../styles";
 import { Metadata } from "next";

@@ -16,5 +16,14 @@ export default async function ColorPage({
 
   const color = colorsWithSlug.find((color) => color.slug === slug);
 
-  return <ColorDetail colorObject={color!} />;
+  const combinations = color?.combinations.map((id1) => {
+    return {
+      id: id1,
+      colors: colorsWithSlug.filter((color) =>
+        color.combinations.some((id2) => id1 === id2)
+      ),
+    };
+  });
+
+  return <ColorDetail colorObject={color!} combinations={combinations!} />;
 }

@@ -3,17 +3,22 @@
 import { ColorObject } from "@/lib/types";
 import { useContext, useState } from "react";
 import styled from "styled-components";
-import FavoriteButton from "../FavoriteButton";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { IsColorBright } from "@/utils/IsColorBright";
 import FavoriteMessage from "../FavoriteMessage";
 import { ActionContext } from "@/lib/actionsContext";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
+import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
 
 type Props = {
   colorObject: ColorObject;
+  combinations: {
+    id: number;
+    colors: ColorObject[];
+  }[];
 };
 
-export function ColorDetail({ colorObject }: Props) {
+export function ColorDetail({ colorObject, combinations }: Props) {
   const { name, hex, rgb, swatch } = colorObject;
 
   const [isActive, setIsActive] = useState(false);
@@ -24,17 +29,13 @@ export function ColorDetail({ colorObject }: Props) {
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  function handleSlide() {
-    setIsActive(!isActive);
-  }
-
   function handleShowFavMessage(toggleValue: string) {
     setShowFavMessage(true);
     setFavMessageName(toggleValue);
     const timer = setTimeout(() => setShowFavMessage(false), 1000);
   }
 
-  const favoriteStatus = actionContext.favoriteColorsData.find(
+  const favoriteStatus = actionContext.favoriteColorsData.some(
     (color) => color.name === name
   );
 
@@ -42,14 +43,14 @@ export function ColorDetail({ colorObject }: Props) {
     <PageContainer>
       <StyledColorBox $hex={hex}>
         <FavoriteMessage
-          isFavorite={favoriteStatus?.isFavorite}
+          isFavorite={favoriteStatus}
           showFavMessage={showFavMessage}
           isTriggered={name === favMessageName}
         />
         <FavoriteButton
           isOnDetailColor
           isBright={IsColorBright(rgb)}
-          isFavorite={favoriteStatus?.isFavorite}
+          isFavorite={!!favoriteStatus}
           onToggleFavorite={() =>
             actionContext.onToggleFavoriteColor(name, swatch)
           }
@@ -62,17 +63,12 @@ export function ColorDetail({ colorObject }: Props) {
           isLargeCombination
           color={colorObject}
           isActive={isActive}
-          handleSlide={handleSlide}
+          onHandleSlide={() => setIsActive(!isActive)}
           needColorName={false}
         />
       </StyledColorBox>
 
-      <SpecificCombinationList
-        currentColor={colorObject}
-        colors={data}
-        favoriteCombinationsData={favoriteCombinationsData}
-        onToggleFavoriteCombination={onToggleFavoriteCombination}
-      />
+      <SpecificCombinationList combinations={combinations} />
     </PageContainer>
   );
 }

@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { FavoriteColor, FavoriteCombination } from "./types";
 
 export type ContextProps = {
   setUser: (val: string) => void;
@@ -7,9 +8,9 @@ export type ContextProps = {
   colorListType: number;
   inspirationPageFilter: string;
   setInspirationPageFilter: (val: string) => void;
-  favoriteColorsData: any[];
+  favoriteColorsData: FavoriteColor[];
   onToggleFavoriteColor: (colorName: any, colorSwatch: any) => void;
-  favoriteCombinationsData: any[];
+  favoriteCombinationsData: FavoriteCombination[];
   onToggleFavoriteCombination: (id: number) => void;
 };
 

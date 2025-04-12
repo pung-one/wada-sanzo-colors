@@ -4,7 +4,7 @@ import CopyFieldSlider from "@/components/CopyFieldSlider/CopyFieldSlider";
 import FavoriteMessage from "@/components/FavoriteMessage";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "@/lib/actionsContext";
-import FavoriteButton from "../FavoriteButton";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
 export function CombinationDetail({
   combination,
@@ -25,7 +25,7 @@ export function CombinationDetail({
     setActiveIndex(index === activeIndex ? -1 : index);
   };
 
-  const favoriteStatus = actionContext.favoriteCombinationsData.find(
+  const favoriteStatus = actionContext.favoriteCombinationsData.some(
     (comb) => comb.id == combination.id
   );
   function handleShowFavMessage(toggleValue: number) {
@@ -36,18 +36,19 @@ export function CombinationDetail({
   return (
     <PageContainer>
       <FavoriteMessage
-        isFavorite={favoriteStatus?.isFavorite}
+        isFavorite={favoriteStatus}
         showFavMessage={showFavMessage}
         isTriggered={combination.id == favMessageId}
       />
       <Heading>
         <FavoriteButton
-          isFavorite={favoriteStatus?.isFavorite}
+          isFavorite={favoriteStatus}
           isBright={true}
           isOnDetailCombination={true}
-          toggleValue={combination.id}
-          onToggleFavorite={actionContext.onToggleFavoriteCombination}
-          onShowFavMessage={handleShowFavMessage}
+          onToggleFavorite={() =>
+            actionContext.onToggleFavoriteCombination(combination.id)
+          }
+          onShowFavMessage={() => handleShowFavMessage(combination.id)}
         />
         Combination #{combination.id}
       </Heading>

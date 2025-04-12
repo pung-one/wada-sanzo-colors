@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styled from "styled-components";
 import { IsColorBright } from "@/utils/IsColorBright/index.js";
-import FavoriteButton from "../FavoriteButton";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useState, useEffect } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 
