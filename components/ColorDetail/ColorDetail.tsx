@@ -4,11 +4,11 @@ import { ColorObject } from "@/lib/types";
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-import { IsColorBright } from "@/utils/IsColorBright";
 import FavoriteMessage from "../FavoriteMessage";
-import { ActionContext } from "@/lib/actionsContext";
+import { ActionContext } from "@/components/Layout/ActionsContext";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
+import { isColorBright } from "@/utils/helper";
 
 type Props = {
   colorObject: ColorObject;
@@ -49,7 +49,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
         />
         <FavoriteButton
           isOnDetailColor
-          isBright={IsColorBright(rgb)}
+          isBright={isColorBright(rgb)}
           isFavorite={!!favoriteStatus}
           onToggleFavorite={() =>
             actionContext.onToggleFavoriteColor(name, swatch)
@@ -57,7 +57,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
           onShowFavMessage={() => handleShowFavMessage(name)}
         />
 
-        <StyledHeadline $isBright={IsColorBright(rgb)}>{name}</StyledHeadline>
+        <StyledHeadline $isBright={isColorBright(rgb)}>{name}</StyledHeadline>
 
         <CopyFieldSlider
           isLargeCombination

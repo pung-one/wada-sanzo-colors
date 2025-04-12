@@ -3,9 +3,9 @@ import { SlArrowLeft } from "react-icons/sl";
 import Link from "next/link";
 import styled, { css } from "styled-components";
 import { useState } from "react";
-import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import CopyColorCodeMessage from "../CopyColorCodeMessage/CopyColorCodeMessage";
 import { ColorObject } from "@/lib/types";
+import { isColorBright } from "@/utils/helper";
 
 type Props = {
   isLargeCombination: boolean;
@@ -55,13 +55,13 @@ export default function CopyFieldSlider({
           $isActive={isActive}
           aria-label={"show and hide color-codes"}
         >
-          <Arrow $isBright={IsColorBright(rgb)} />
+          <Arrow $isBright={isColorBright(rgb)} />
         </StyledButton>
         {needColorName && (
           <Link href={`/colors/${slug}`}>
             <StyledColorName
               $isLarge={isLargeCombination}
-              $isBright={IsColorBright(rgb)}
+              $isBright={isColorBright(rgb)}
             >
               {name}
             </StyledColorName>

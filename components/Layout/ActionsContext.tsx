@@ -1,5 +1,7 @@
+"use client";
+
 import { createContext } from "react";
-import { FavoriteColor, FavoriteCombination } from "./types";
+import { FavoriteColor, FavoriteCombination } from "../../lib/types";
 
 export type ContextProps = {
   setUser: (val: string) => void;

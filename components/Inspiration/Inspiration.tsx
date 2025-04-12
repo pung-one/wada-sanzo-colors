@@ -1,28 +1,36 @@
+"use client";
+
 import styled from "styled-components";
 import Link from "next/link";
-import ColorPicker from "@/components/ColorPicker";
-import { CreateCombinationArray } from "@/utils/CreateCombinationArray";
-import { useState } from "react";
+import ColorPicker from "@/components/ColorPicker/ColorPicker";
+import { useContext } from "react";
+import { ActionContext } from "../Layout/ActionsContext";
+import { ColorObject } from "@/lib/types";
+import { createCombinationArray } from "@/utils/helper";
 
-export default function InspirationPage({
-  data,
-  error,
-  inspirationPageFilter,
-  setInspirationPageFilter,
-}) {
-  let randomCombination;
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading Data...</h1>;
+export function Inspiration({ colors }: { colors: ColorObject[] }) {
+  let randomCombination: any;
 
-  const randomColorSlug = data[Math.floor(Math.random() * 159)]?.slug;
+  const actionContext = useContext(ActionContext);
+
+  if (!actionContext) return <h1>Loading...</h1>;
+
+  const { inspirationPageFilter, setInspirationPageFilter } = actionContext;
+
+  const randomColorSlug = colors[Math.floor(Math.random() * 159)]?.slug;
   const randomCombinationId = Math.floor(Math.random() * 348);
 
-  const combinationArray = CreateCombinationArray(data);
+  const combinationArray = createCombinationArray(colors);
 
-  function CreateRandomCombinationCssGradient() {
+  function createRandomCombinationCssGradient() {
     randomCombination = combinationArray.find(
       (combi) => combi.id == randomCombinationId
     );
+
+    if (!randomCombination) {
+      return;
+    }
+
     if (randomCombination.combination.length === 2) {
       const randomGradient = `linear-gradient(180deg, rgba(${randomCombination.combination[0].rgb[0]},${randomCombination.combination[0].rgb[1]},${randomCombination.combination[0].rgb[2]},1) 0%, rgba(${randomCombination.combination[1].rgb[0]},${randomCombination.combination[1].rgb[1]},${randomCombination.combination[1].rgb[2]},1) 100%)`;
       return randomGradient;
@@ -34,12 +42,12 @@ export default function InspirationPage({
       return randomGradient;
     }
   }
-  const randomGradient = CreateRandomCombinationCssGradient();
+  const randomGradient = createRandomCombinationCssGradient();
 
   return (
     <PageContainer>
       {inspirationPageFilter === "initialPage" && (
-        <ButtonContainer background={randomGradient}>
+        <ButtonContainer $background={randomGradient!}>
           <StyledButton
             onClick={() => setInspirationPageFilter("Pick Rainbow Color")}
           >
@@ -57,7 +65,7 @@ export default function InspirationPage({
         </ButtonContainer>
       )}
       {inspirationPageFilter === "Pick Rainbow Color" && (
-        <ColorPicker data={data} error={error} />
+        <ColorPicker colors={colors} />
       )}
     </PageContainer>
   );
@@ -71,7 +79,7 @@ const PageContainer = styled.main`
   }
 `;
 
-const ButtonContainer = styled.section`
+const ButtonContainer = styled.section<{ $background: string }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -80,7 +88,7 @@ const ButtonContainer = styled.section`
   height: 93.5vh;
   top: 6.5vh;
   gap: 10vh;
-  background: ${({ background }) => (background ? background : null)};
+  background: ${({ $background }) => $background};
 `;
 
 const StyledButton = styled.button`

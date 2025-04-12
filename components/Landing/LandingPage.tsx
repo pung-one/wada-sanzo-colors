@@ -1,10 +1,10 @@
 "use client";
 
 import styled from "styled-components";
-import ColorsList from "@/components/ColorsList";
-import CombinationsList from "@/components/CombinationsList";
+import ColorsList from "@/components/ColorsList/ColorsList";
+import CombinationsList from "@/components/CombinationsList/CombinationsList";
 import { useContext } from "react";
-import { ActionContext } from "@/lib/actionsContext";
+import { ActionContext } from "@/components/Layout/ActionsContext";
 import { ColorObject, CombinationObject } from "@/lib/types";
 
 type Props = {
@@ -21,12 +21,7 @@ export default function LandingPage({
   return (
     <PageContainer>
       {actionContext?.listType === "colors" ? (
-        <ColorsList
-          colors={colorsWithSlug}
-          colorListType={actionContext?.colorListType}
-          onToggleFavorite={actionContext?.onToggleFavoriteColor}
-          favoriteColorsData={actionContext?.favoriteColorsData}
-        />
+        <ColorsList colors={colorsWithSlug} />
       ) : (
         <CombinationsList
           combinationArray={combinationArray}

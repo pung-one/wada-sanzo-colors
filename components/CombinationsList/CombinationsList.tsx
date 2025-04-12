@@ -1,9 +1,11 @@
+"use client";
+
 import styled, { css } from "styled-components";
 import Link from "next/link";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { useEffect, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
+import { isColorBright } from "@/utils/helper";
 
 export default function CombinationsList({
   combinationArray,
@@ -66,7 +68,7 @@ export default function CombinationsList({
                     {colorIndex === 0 && (
                       <Link href={`/combinations/${combination1.id}`}>
                         <StyledCombinationNumber
-                          isBright={IsColorBright(rgb)}
+                          isBright={isColorBright(rgb)}
                           isOnLargeCombination={array.length > 3}
                         >
                           {`Combi #${combination1.id}`}
@@ -76,7 +78,7 @@ export default function CombinationsList({
                     <FavoriteButton
                       isFavorite={favoriteStatus?.isFavorite}
                       isOnListElement={true}
-                      isBright={IsColorBright(rgb)}
+                      isBright={isColorBright(rgb)}
                       toggleValue={combination1.id}
                       onToggleFavorite={onToggleFavorite}
                       onShowFavMessage={handleShowFavMessage}

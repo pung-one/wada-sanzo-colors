@@ -1,5 +1,5 @@
-import ColorsList from "@/components/ColorsList";
-import CombinationsList from "@/components/CombinationsList";
+import ColorsList from "@/components/ColorsList/ColorsList";
+import CombinationsList from "@/components/CombinationsList/CombinationsList";
 import { CreateCombinationArray } from "@/utils/CreateCombinationArray";
 import styled from "styled-components";
 

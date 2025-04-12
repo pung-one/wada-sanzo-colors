@@ -7,9 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { ActionContext } from "@/lib/actionsContext";
+import { ActionContext } from "@/components/Layout/ActionsContext";
 import { useLocalStorage } from "@/utils/useLocalStorage";
-import { FavoriteColor } from "@/lib/types";
 
 const fetcher = (URL: string) => fetch(URL).then((response) => response.json());
 

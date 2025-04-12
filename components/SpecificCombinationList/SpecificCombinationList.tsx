@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { useContext, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { ColorObject } from "@/lib/types";
-import { ActionContext } from "@/lib/actionsContext";
+import { ActionContext } from "@/components/Layout/ActionsContext";
+import { isColorBright } from "@/utils/helper";
 
 type Props = {
   combinations: {
@@ -51,7 +51,7 @@ export default function SpecificCombinationList({ combinations }: Props) {
                       href={`/combinations/${combi1}`}
                     >
                       <StyledCombinationNumber
-                        $isBright={IsColorBright(rgb)}
+                        $isBright={isColorBright(rgb)}
                         $isOnLargeCombination={combi1.colors.length > 3}
                       >
                         {`Combi #${combi1}`}
@@ -61,7 +61,7 @@ export default function SpecificCombinationList({ combinations }: Props) {
                   <FavoriteButton
                     isFavorite={favoriteStatus}
                     isOnListElement={true}
-                    isBright={IsColorBright(rgb)}
+                    isBright={isColorBright(rgb)}
                     onToggleFavorite={() =>
                       actionContext.onToggleFavoriteCombination(combi1.id)
                     }

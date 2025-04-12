@@ -2,34 +2,34 @@ import styled from "styled-components";
 import chroma from "chroma-js";
 import { useState } from "react";
 import Link from "next/link";
-import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import { ImArrowDown } from "react-icons/im";
+import { isColorBright } from "@/utils/helper";
+import { ColorObject } from "@/lib/types";
 
-export default function ColorPicker({ data, error }) {
-  const [closestColor, setClosestColor] = useState("");
+export default function ColorPicker({ colors }: { colors: ColorObject[] }) {
+  const [closestColor, setClosestColor] = useState<ColorObject>();
   const [isColorPicked, setIsColorPicked] = useState(false);
 
-  if (error) return <h1>Failed to load data..</h1>;
-  if (!data) return <h1>Loading Data...</h1>;
-
-  function handleCompare(event) {
+  function handleCompare(event: any) {
     event.preventDefault();
     const inputColor = event.target.color.value;
-    data?.reduce((acc, currVal, currInd) => {
-      let dist = chroma.distance(inputColor, currVal.hex);
-      if (acc < dist) {
-        return acc;
+
+    let closestDist: number | undefined = undefined;
+
+    colors.forEach((currColor, currInd) => {
+      let dist = chroma.distance(inputColor, currColor.hex);
+      if (!closestDist || closestDist > dist) {
+        closestDist = dist;
+        setClosestColor(colors[currInd]);
       } else {
-        acc = dist;
-        setClosestColor(data[currInd]);
+        return;
       }
-      return acc;
     });
   }
 
   return (
     <>
-      <StyledForm onSubmit={handleCompare}>
+      <StyledForm onSubmit={(e) => handleCompare}>
         <label htmlFor="color">
           <h1>Pick a Color</h1>
         </label>
@@ -49,9 +49,9 @@ export default function ColorPicker({ data, error }) {
           <p>The most similar color from the collection:</p>
           <StyledLink
             href={`/colors/${closestColor?.slug}`}
-            hex={closestColor?.hex}
+            $hex={closestColor?.hex}
           >
-            <ColorName isBright={IsColorBright(closestColor?.rgb)}>
+            <ColorName $isBright={isColorBright(closestColor?.rgb)}>
               {closestColor?.name}
             </ColorName>
           </StyledLink>
@@ -104,8 +104,8 @@ const ResultContainer = styled.main`
   gap: 4vh;
 `;
 
-const StyledLink = styled(Link)`
-  background-color: ${({ hex }) => (hex ? hex : "white")};
+const StyledLink = styled(Link)<{ $hex: string }>`
+  background-color: ${({ $hex }) => $hex};
   font-size: 2vh;
   border: 1px solid black;
   padding: 5vh;
@@ -113,7 +113,7 @@ const StyledLink = styled(Link)`
   box-shadow: 0 2px 5px black;
 `;
 
-const ColorName = styled.p`
+const ColorName = styled.p<{ $isBright: boolean }>`
   text-align: center;
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
+  color: ${({ $isBright }) => ($isBright ? "black" : "white")};
 `;

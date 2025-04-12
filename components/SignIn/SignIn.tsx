@@ -1,10 +1,12 @@
+"use client";
+
 import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import { MdInfo } from "react-icons/md";
-import { ActionContext } from "@/lib/actionsContext";
+import { ActionContext } from "@/components/Layout/ActionsContext";
 
-export default function SignIn() {
+export function SignIn() {
   const { data: session } = useSession();
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 

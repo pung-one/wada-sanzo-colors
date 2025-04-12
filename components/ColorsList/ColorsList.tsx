@@ -1,19 +1,30 @@
+"use client";
+
 import Link from "next/link";
 import styled from "styled-components";
-import { IsColorBright } from "@/utils/IsColorBright/index.js";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import FavoriteMessage from "../FavoriteMessage";
+import { ColorObject, FavoriteColor } from "@/lib/types";
+import { ActionContext } from "../Layout/ActionsContext";
+import { isColorBright } from "@/utils/helper";
 
-export default function ColorsList({
-  colors,
-  favoriteColorsData,
-  onToggleFavorite,
-  colorListType,
-}) {
+type Props = {
+  colors: ColorObject[];
+};
+
+export default function ColorsList({ colors }: Props) {
   const [showFavMessage, setShowFavMessage] = useState(false);
   const [favMessageName, setFavMessageName] = useState("");
-  const [arrayToBeRendered, setArrayToBeRendered] = useState(null);
+  const [arrayToBeRendered, setArrayToBeRendered] = useState<ColorObject[]>();
+
+  const actionContext = useContext(ActionContext);
+
+  if (!actionContext) return <h1>Loading...</h1>;
+
+  const { colorListType, favoriteColorsData, onToggleFavoriteColor } =
+    actionContext;
+
   useEffect(() => {
     if (colorListType === 0) {
       setArrayToBeRendered(colors);
@@ -35,34 +46,34 @@ export default function ColorsList({
   return (
     <List>
       {arrayToBeRendered?.map(({ name, slug, rgb, hex, swatch }) => {
-        const favoriteStatus = favoriteColorsData?.find(
+        const favoriteStatus = favoriteColorsData?.some(
           (color) => color.name === name
         );
 
-        function handleShowFavMessage(toggleValue) {
+        function handleShowFavMessage(toggleValue: string) {
           setShowFavMessage(true);
           setFavMessageName(toggleValue);
           const timer = setTimeout(() => setShowFavMessage(false), 1000);
         }
 
         return (
-          <ColorBox key={name} isBright={IsColorBright(rgb)} hex={hex}>
+          <ColorBox key={name} $isBright={isColorBright(rgb)} $hex={hex}>
             <FavoriteMessage
-              isFavorite={favoriteStatus?.isFavorite}
+              isFavorite={favoriteStatus}
               showFavMessage={showFavMessage}
               isTriggered={name === favMessageName}
             />
             <FavoriteButton
-              isBright={IsColorBright(rgb)}
-              isFavorite={favoriteStatus?.isFavorite}
+              isBright={isColorBright(rgb)}
+              isFavorite={favoriteStatus}
               isOnListElement={true}
-              toggleValue={name}
-              onToggleFavorite={onToggleFavorite}
-              onShowFavMessage={handleShowFavMessage}
-              swatch={swatch}
+              onToggleFavorite={() =>
+                actionContext.onToggleFavoriteColor(name, swatch)
+              }
+              onShowFavMessage={() => handleShowFavMessage(name)}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
-              <StyledColorName isBright={IsColorBright(rgb)}>
+              <StyledColorName $isBright={isColorBright(rgb)}>
                 {name}
               </StyledColorName>
             </Link>
@@ -82,7 +93,10 @@ const List = styled.ul`
   }
 `;
 
-const ColorBox = styled.li`
+const ColorBox = styled.li<{
+  $hex: string;
+  $isBright: boolean;
+}>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -90,16 +104,18 @@ const ColorBox = styled.li`
   height: 25vh;
   margin-top: 2vh;
   overflow-x: hidden;
-  background-color: ${({ hex }) => (hex ? hex : null)};
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
+  background-color: ${({ $hex }) => $hex};
+  color: ${({ $isBright }) => ($isBright ? "black" : "white")};
 `;
 
-const StyledColorName = styled.p`
+const StyledColorName = styled.p<{
+  $isBright: boolean;
+}>`
   position: absolute;
   left: 0;
   font-size: 2.5vh;
   font-weight: lighter;
   padding: 2vh 0 0 3vh;
   text-decoration: underline;
-  color: ${({ isBright }) => (isBright ? "black" : "white")};
+  color: ${({ $isBright }) => ($isBright ? "black" : "white")};
 `;
