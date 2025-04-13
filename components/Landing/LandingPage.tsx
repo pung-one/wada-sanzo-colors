@@ -23,12 +23,7 @@ export default function LandingPage({
       {actionContext?.listType === "colors" ? (
         <ColorsList colors={colorsWithSlug} />
       ) : (
-        <CombinationsList
-          combinationArray={combinationArray}
-          combinationListType={actionContext?.combinationListType}
-          onToggleFavorite={actionContext?.onToggleFavoriteCombination}
-          favoriteCombinationsData={actionContext?.favoriteCombinationsData}
-        />
+        <CombinationsList combinations={combinationArray} />
       )}
     </PageContainer>
   );
