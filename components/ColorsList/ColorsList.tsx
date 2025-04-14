@@ -5,9 +5,9 @@ import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useState, useEffect, useContext } from "react";
 import FavoriteMessage from "../FavoriteMessage";
-import { ColorObject, FavoriteColor } from "@/lib/types";
-import { ActionContext } from "../Layout/ActionsContext";
+import { ColorObject } from "@/lib/types";
 import { isColorBright } from "@/utils/helper";
+import { ActionContext } from "../Layout/Layout";
 
 type Props = {
   colors: ColorObject[];

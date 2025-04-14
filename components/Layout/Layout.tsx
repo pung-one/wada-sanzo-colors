@@ -5,10 +5,25 @@ import NavBar from "../Navbar";
 import NavBarDesktop from "../NavBarDesktop";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import useSWR from "swr";
-import { ActionContext } from "@/components/Layout/ActionsContext";
 import { useLocalStorage } from "@/utils/useLocalStorage";
+import { FavoriteColor, FavoriteCombination } from "@/lib/types";
+
+export type ContextProps = {
+  setUser: (val: string) => void;
+  listType: string;
+  combinationListType: number;
+  colorListType: number;
+  inspirationPageFilter: string;
+  setInspirationPageFilter: (val: string) => void;
+  favoriteColorsData: FavoriteColor[];
+  onToggleFavoriteColor: (colorName: any, colorSwatch: any) => void;
+  favoriteCombinationsData: FavoriteCombination[];
+  onToggleFavoriteCombination: (id: number) => void;
+};
+
+export const ActionContext = createContext<ContextProps | null>(null);
 
 const fetcher = (URL: string) => fetch(URL).then((response) => response.json());
 

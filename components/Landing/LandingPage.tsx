@@ -4,26 +4,23 @@ import styled from "styled-components";
 import ColorsList from "@/components/ColorsList/ColorsList";
 import CombinationsList from "@/components/CombinationsList/CombinationsList";
 import { useContext } from "react";
-import { ActionContext } from "@/components/Layout/ActionsContext";
+import { ActionContext } from "../Layout/Layout";
 import { ColorObject, CombinationObject } from "@/lib/types";
 
 type Props = {
-  colorsWithSlug: ColorObject[];
-  combinationArray: CombinationObject[];
+  colors: ColorObject[];
+  combinations: CombinationObject[];
 };
 
-export default function LandingPage({
-  colorsWithSlug,
-  combinationArray,
-}: Props) {
+export default function LandingPage({ colors, combinations }: Props) {
   const actionContext = useContext(ActionContext);
 
   return (
     <PageContainer>
       {actionContext?.listType === "colors" ? (
-        <ColorsList colors={colorsWithSlug} />
+        <ColorsList colors={colors} />
       ) : (
-        <CombinationsList combinations={combinationArray} />
+        <CombinationsList combinations={combinations} />
       )}
     </PageContainer>
   );

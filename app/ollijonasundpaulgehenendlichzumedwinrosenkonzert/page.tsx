@@ -1,15 +1,20 @@
+"use client";
+
 import Countdown from "react-countdown";
 import styled from "styled-components";
 
 export default function CountdownPage() {
   return (
-    <PageContainer>
-      <Headline>
-        Wann gehen Olli, Jonas und Paul endlich zum Edwin Rosen Konzert?
-      </Headline>
+    <>
+      <h1>hhi</h1>
+      {/* <PageContainer>
+        <Headline>
+          Wann gehen Olli, Jonas und Paul endlich zum Edwin Rosen Konzert?
+        </Headline>
 
-      <Countdown date={"2025-11-08T12:20:00.00"} />
-    </PageContainer>
+        <Countdown date={"2025-11-08T12:20:00.00"} />
+      </PageContainer> */}
+    </>
   );
 }
 

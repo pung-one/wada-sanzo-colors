@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 import { isColorBright } from "@/utils/helper";
 import { CombinationObject } from "@/lib/types";
-import { ActionContext } from "../Layout/ActionsContext";
+import { ActionContext } from "../Layout/Layout";
 
 type Props = {
   combinations: CombinationObject[];

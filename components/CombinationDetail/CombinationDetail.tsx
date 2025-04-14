@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider/CopyFieldSlider";
 import FavoriteMessage from "@/components/FavoriteMessage";
 import { CombinationObject } from "@/lib/types";
-import { ActionContext } from "@/components/Layout/ActionsContext";
+import { ActionContext } from "../Layout/Layout";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
 export function CombinationDetail({

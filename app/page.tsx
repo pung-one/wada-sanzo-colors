@@ -6,9 +6,6 @@ export default function Landing() {
   const combinationArray = createCombinationArray(colorsWithSlug);
 
   return (
-    <LandingPage
-      colorsWithSlug={colorsWithSlug}
-      combinationArray={combinationArray}
-    />
+    <LandingPage colors={colorsWithSlug} combinations={combinationArray} />
   );
 }

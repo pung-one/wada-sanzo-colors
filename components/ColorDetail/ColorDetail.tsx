@@ -5,10 +5,10 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import FavoriteMessage from "../FavoriteMessage";
-import { ActionContext } from "@/components/Layout/ActionsContext";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
 import { isColorBright } from "@/utils/helper";
+import { ActionContext } from "../Layout/Layout";
 
 type Props = {
   colorObject: ColorObject;

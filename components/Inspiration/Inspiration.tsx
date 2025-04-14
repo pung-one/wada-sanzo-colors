@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import ColorPicker from "@/components/ColorPicker/ColorPicker";
 import { useContext } from "react";
-import { ActionContext } from "../Layout/ActionsContext";
+import { ActionContext } from "../Layout/Layout";
 import { ColorObject } from "@/lib/types";
 import { createCombinationArray } from "@/utils/helper";
 

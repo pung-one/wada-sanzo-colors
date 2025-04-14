@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { ColorObject } from "@/lib/types";
-import { ActionContext } from "@/components/Layout/ActionsContext";
+import { ActionContext } from "../Layout/Layout";
 import { isColorBright } from "@/utils/helper";
 
 type Props = {

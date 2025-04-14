@@ -4,7 +4,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
 import { useState, useEffect, useContext } from "react";
 import { MdInfo } from "react-icons/md";
-import { ActionContext } from "@/components/Layout/ActionsContext";
+import { ActionContext } from "../Layout/Layout";
 
 export function SignIn() {
   const { data: session } = useSession();
