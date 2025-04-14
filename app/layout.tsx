@@ -2,10 +2,9 @@ import { Layout } from "../components/Layout/Layout";
 import StyledComponentsRegistry from "../lib/registry";
 import { GlobalStyle } from "../styles";
 import { Metadata } from "next";
-import ReactDOM from "react-dom";
-import React from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { getSession, SessionProvider } from "next-auth/react";
+import localFont from "next/font/local";
 
 export const metadata: Metadata = {
   title: "Wada Sanzo Colors",
@@ -35,9 +34,10 @@ export const metadata: Metadata = {
   },
 };
 
-ReactDOM.preload("/fonts/AvenirLTStd-Book.otf", {
-  as: "font",
-  crossOrigin: "",
+const AvenirLTStdBook = localFont({
+  src: "./AvenirLTStd-Book.otf",
+  display: "swap",
+  variable: "--AvenirLTStdBook",
 });
 
 export default async function RootLayout({
@@ -48,7 +48,7 @@ export default async function RootLayout({
   const session = await getSession();
 
   return (
-    <html lang="en">
+    <html lang="en" className={AvenirLTStdBook.className}>
       <body>
         <StyledComponentsRegistry>
           <GlobalStyle />
