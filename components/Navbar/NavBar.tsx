@@ -1,35 +1,45 @@
+"use client";
+
 import styled from "styled-components";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
-import TabBar from "../TabBar";
-import CombinationsFilter from "../CombinationsFilter";
-import ColorFilter from "../ColorFilter";
+import { useState, useEffect, useContext } from "react";
+import CombinationsFilter from "../CombinationsFilter/CombinationsFilter";
+import ColorFilter from "../ColorFilter/ColorFilter";
+import { ActionContext } from "../Layout/Layout";
+import { TabBar } from "../TabBar/TabBar";
+import { usePathname } from "next/navigation";
+
+type Props = {
+  handleShowColors: () => void;
+  handleShowCombinations: () => void;
+  handleShowCombinationsWith2Colors: () => void;
+  handleShowCombinationsWith3Colors: () => void;
+  handleShowCombinationsWith4Colors: () => void;
+  handleShowSwatchOne: () => void;
+  handleShowSwatchTwo: () => void;
+  handleShowSwatchThree: () => void;
+  handleShowSwatchFour: () => void;
+  handleShowSwatchFive: () => void;
+  handleShowSwatchSix: () => void;
+};
 
 export default function NavBar({
-  inspirationPageFilter,
-  setInspirationPageFilter,
   handleShowColors,
   handleShowCombinations,
-  listType,
-  combinationListType,
   handleShowCombinationsWith2Colors,
   handleShowCombinationsWith3Colors,
   handleShowCombinationsWith4Colors,
-  favoriteCombinationsData,
-  colorListType,
   handleShowSwatchOne,
   handleShowSwatchTwo,
   handleShowSwatchThree,
   handleShowSwatchFour,
   handleShowSwatchFive,
   handleShowSwatchSix,
-  favoriteColorsData,
-}) {
-  const router = useRouter();
-  const route = router.route;
+}: Props) {
+  const route = usePathname();
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+
   function handleScroll() {
     if (typeof window !== "undefined") {
       if (window.scrollY > lastScrollY && window.scrollY > 100) {
@@ -40,6 +50,14 @@ export default function NavBar({
       setLastScrollY(window.scrollY);
     }
   }
+
+  const actionContext = useContext(ActionContext);
+
+  if (!actionContext) return <h1>Loading...</h1>;
+
+  const { listType, inspirationPageFilter, setInspirationPageFilter } =
+    actionContext;
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", handleScroll);
@@ -50,31 +68,28 @@ export default function NavBar({
   }, [lastScrollY]);
 
   return (
-    <NavContainer
-      show={show}
-      isOnList={route === "/" || route === "/favorites"}
-    >
+    <NavContainer $show={show}>
       <NavPages>
-        <Link href={"/inspiration"} passHref legacyBehavior>
-          <NavButton
-            isActive={
-              route === "/inspiration" &&
-              inspirationPageFilter === "initialPage"
-            }
-            onClick={() => setInspirationPageFilter("initialPage")}
-          >
-            Inspiration
-          </NavButton>
-        </Link>
-        <Link href={"/"} passHref legacyBehavior>
-          <NavButton isActive={route === "/"}>Collection</NavButton>
-        </Link>
-        <Link href={"/favorites"} passHref legacyBehavior>
-          <NavButton isActive={route === "/favorites"}>Favorites</NavButton>
-        </Link>
-        <Link href={"/about"} passHref legacyBehavior>
-          <NavButton isActive={route === "/about"}>About</NavButton>
-        </Link>
+        <NavButton
+          href={"/inspiration"}
+          $isActive={
+            route === "/inspiration" && inspirationPageFilter === "initialPage"
+          }
+          onClick={() => setInspirationPageFilter("initialPage")}
+        >
+          Inspiration
+        </NavButton>
+
+        <NavButton href={"/"} $isActive={route === "/"}>
+          Collection
+        </NavButton>
+
+        <NavButton href={"/favorites"} $isActive={route === "/favorites"}>
+          Favorites
+        </NavButton>
+        <NavButton href={"/about"} $isActive={route === "/about"}>
+          About
+        </NavButton>
       </NavPages>
       {route === "/" || route === "/favorites" ? (
         <TabBar
@@ -86,25 +101,21 @@ export default function NavBar({
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
         <ColorFilter
-          colorListType={colorListType}
           handleShowSwatchOne={handleShowSwatchOne}
           handleShowSwatchTwo={handleShowSwatchTwo}
           handleShowSwatchThree={handleShowSwatchThree}
           handleShowSwatchFour={handleShowSwatchFour}
           handleShowSwatchFive={handleShowSwatchFive}
           handleShowSwatchSix={handleShowSwatchSix}
-          favoriteColorsData={favoriteColorsData}
           isAtFavorites={route === "/favorites"}
         />
       ) : null}
       {(listType === "combinations" && route === "/") ||
       (listType === "combinations" && route === "/favorites") ? (
         <CombinationsFilter
-          combinationListType={combinationListType}
           onShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
           onShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
           onShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
-          favoriteCombinationsData={favoriteCombinationsData}
           isAtFavorites={route === "/favorites"}
         />
       ) : null}
@@ -112,10 +123,10 @@ export default function NavBar({
   );
 }
 
-const NavContainer = styled.div`
+const NavContainer = styled.div<{ $show: boolean }>`
   position: fixed;
   z-index: 5;
-  top: ${({ show }) => (!show ? "-30vh" : "6.5vh")};
+  top: ${({ $show }) => (!$show ? "-30vh" : "6.5vh")};
   width: 100%;
   transition: top 0.5s;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
@@ -134,14 +145,14 @@ const NavPages = styled.nav`
   border-bottom: 1px solid black;
 `;
 
-const NavButton = styled.a`
+const NavButton = styled(Link)<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid black;
-  box-shadow: ${({ isActive }) => (isActive ? "" : "0 0 2px black")};
-  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
-  color: ${({ isActive }) => (isActive ? "white" : "black")};
+  box-shadow: ${({ $isActive }) => ($isActive ? "" : "0 0 2px black")};
+  background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
+  color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   padding: 1vh 2vw 1vh;
   font-size: 2vh;
   height: 6vh;

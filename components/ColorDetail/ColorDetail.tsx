@@ -4,30 +4,31 @@ import { ColorObject } from "@/lib/types";
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-import FavoriteMessage from "../FavoriteMessage";
+import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
 import { isColorBright } from "@/utils/helper";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
-  colorObject: ColorObject;
-  combinations: {
+  colorObject?: ColorObject;
+  combinations?: {
     id: number;
     colors: ColorObject[];
   }[];
 };
 
 export function ColorDetail({ colorObject, combinations }: Props) {
-  const { name, hex, rgb, swatch } = colorObject;
-
   const [isActive, setIsActive] = useState(false);
   const [showFavMessage, setShowFavMessage] = useState(false);
   const [favMessageName, setFavMessageName] = useState("");
 
   const actionContext = useContext(ActionContext);
 
-  if (!actionContext) return <h1>Loading...</h1>;
+  if (!actionContext || !colorObject || !combinations)
+    return <h1>Loading...</h1>;
+
+  const { name, hex, rgb, swatch } = colorObject;
 
   function handleShowFavMessage(toggleValue: string) {
     setShowFavMessage(true);

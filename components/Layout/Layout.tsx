@@ -1,14 +1,14 @@
 "use client";
 
 import styled from "styled-components";
-import NavBar from "../Navbar";
-import NavBarDesktop from "../NavBarDesktop";
+import NavBar from "../Navbar/NavBar";
+import NavBarDesktop from "../NavBarDesktop/NavBarDesktop";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { createContext, useEffect, useState } from "react";
 import useSWR from "swr";
 import { useLocalStorage } from "@/utils/useLocalStorage";
 import { FavoriteColor, FavoriteCombination } from "@/lib/types";
+import { usePathname } from "next/navigation";
 
 export type ContextProps = {
   setUser: (val: string) => void;
@@ -28,8 +28,7 @@ export const ActionContext = createContext<ContextProps | null>(null);
 const fetcher = (URL: string) => fetch(URL).then((response) => response.json());
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const router = useRouter();
-  const route = router.route;
+  const route = usePathname();
 
   const [user, setUser] = useState<string>("public");
 
@@ -218,54 +217,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Header>
         A Dictionary of Color Combinations
-        <Link href={"/signin"} passHref legacyBehavior>
-          <SignInOutButton $isActive={route === "/signin"}>
-            Sign In/Out
-          </SignInOutButton>
-        </Link>
+        <SignInOutButton $isActive={route === "/signin"} href={"/signin"}>
+          Sign In/Out
+        </SignInOutButton>
       </Header>
-
-      <NavBar
-        inspirationPageFilter={inspirationPageFilter}
-        setInspirationPageFilter={setInspirationPageFilter}
-        handleShowColors={handleShowColors}
-        handleShowCombinations={handleShowCombinations}
-        listType={listType}
-        combinationListType={combinationListType}
-        handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
-        handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
-        handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
-        favoriteCombinationsData={favoriteCombinationsData}
-        colorListType={colorListType}
-        handleShowSwatchOne={handleShowSwatchOne}
-        handleShowSwatchTwo={handleShowSwatchTwo}
-        handleShowSwatchThree={handleShowSwatchThree}
-        handleShowSwatchFour={handleShowSwatchFour}
-        handleShowSwatchFive={handleShowSwatchFive}
-        handleShowSwatchSix={handleShowSwatchSix}
-        favoriteColorsData={favoriteColorsData}
-      />
-
-      <NavBarDesktop
-        inspirationPageFilter={inspirationPageFilter}
-        setInspirationPageFilter={setInspirationPageFilter}
-        handleShowColors={handleShowColors}
-        handleShowCombinations={handleShowCombinations}
-        listType={listType}
-        combinationListType={combinationListType}
-        handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
-        handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
-        handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
-        favoriteCombinationsData={favoriteCombinationsData}
-        colorListType={colorListType}
-        handleShowSwatchOne={handleShowSwatchOne}
-        handleShowSwatchTwo={handleShowSwatchTwo}
-        handleShowSwatchThree={handleShowSwatchThree}
-        handleShowSwatchFour={handleShowSwatchFour}
-        handleShowSwatchFive={handleShowSwatchFive}
-        handleShowSwatchSix={handleShowSwatchSix}
-        favoriteColorsData={favoriteColorsData}
-      />
 
       <ActionContext.Provider
         value={{
@@ -281,6 +236,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
           onToggleFavoriteCombination: handleToggleFavoriteCombination,
         }}
       >
+        <NavBar
+          handleShowColors={handleShowColors}
+          handleShowCombinations={handleShowCombinations}
+          handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+          handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+          handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          handleShowSwatchOne={handleShowSwatchOne}
+          handleShowSwatchTwo={handleShowSwatchTwo}
+          handleShowSwatchThree={handleShowSwatchThree}
+          handleShowSwatchFour={handleShowSwatchFour}
+          handleShowSwatchFive={handleShowSwatchFive}
+          handleShowSwatchSix={handleShowSwatchSix}
+        />
+
+        <NavBarDesktop
+          handleShowColors={handleShowColors}
+          handleShowCombinations={handleShowCombinations}
+          handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
+          handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
+          handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          handleShowSwatchOne={handleShowSwatchOne}
+          handleShowSwatchTwo={handleShowSwatchTwo}
+          handleShowSwatchThree={handleShowSwatchThree}
+          handleShowSwatchFour={handleShowSwatchFour}
+          handleShowSwatchFive={handleShowSwatchFive}
+          handleShowSwatchSix={handleShowSwatchSix}
+        />
+
         {children}
       </ActionContext.Provider>
 
@@ -310,7 +293,7 @@ const Header = styled.header`
   padding: 1vh 0 1vh 3vw;
 `;
 
-const SignInOutButton = styled.a<{ $isActive: boolean }>`
+const SignInOutButton = styled(Link)<{ $isActive: boolean }>`
   display: flex;
   align-items: center;
   margin-right: 2vw;

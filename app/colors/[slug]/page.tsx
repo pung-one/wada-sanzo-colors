@@ -25,5 +25,5 @@ export default async function ColorPage({
     };
   });
 
-  return <ColorDetail colorObject={color!} combinations={combinations!} />;
+  return <ColorDetail colorObject={color} combinations={combinations} />;
 }

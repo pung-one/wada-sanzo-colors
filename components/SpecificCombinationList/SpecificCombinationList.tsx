@@ -1,7 +1,9 @@
+"use client";
+
 import styled, { css } from "styled-components";
 import Link from "next/link";
 import { useContext, useState } from "react";
-import FavoriteMessage from "../FavoriteMessage";
+import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { ColorObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
@@ -48,13 +50,13 @@ export default function SpecificCombinationList({ combinations }: Props) {
                   {colorIndex === 0 && (
                     <Link
                       aria-label={`go to color-combination with nr ${combi1}`}
-                      href={`/combinations/${combi1}`}
+                      href={`/combinations/${combi1.id}`}
                     >
                       <StyledCombinationNumber
                         $isBright={isColorBright(rgb)}
                         $isOnLargeCombination={combi1.colors.length > 3}
                       >
-                        {`Combi #${combi1}`}
+                        {`Combi #${combi1.id}`}
                       </StyledCombinationNumber>
                     </Link>
                   )}

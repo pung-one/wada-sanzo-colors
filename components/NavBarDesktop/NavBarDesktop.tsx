@@ -1,35 +1,52 @@
+"use client";
+
 import styled from "styled-components";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
 import { SlArrowRight } from "react-icons/sl";
-import TabBar from "../TabBar";
-import CombinationsFilter from "../CombinationsFilter";
-import ColorFilter from "../ColorFilter";
+import CombinationsFilter from "../CombinationsFilter/CombinationsFilter";
+import ColorFilter from "../ColorFilter/ColorFilter";
+import { ActionContext } from "../Layout/Layout";
+import { TabBar } from "../TabBar/TabBar";
+import { usePathname } from "next/navigation";
+
+type Props = {
+  handleShowColors: () => void;
+  handleShowCombinations: () => void;
+  handleShowCombinationsWith2Colors: () => void;
+  handleShowCombinationsWith3Colors: () => void;
+  handleShowCombinationsWith4Colors: () => void;
+  handleShowSwatchOne: () => void;
+  handleShowSwatchTwo: () => void;
+  handleShowSwatchThree: () => void;
+  handleShowSwatchFour: () => void;
+  handleShowSwatchFive: () => void;
+  handleShowSwatchSix: () => void;
+};
 
 export default function NavBarDesktop({
-  inspirationPageFilter,
-  setInspirationPageFilter,
   handleShowColors,
   handleShowCombinations,
-  listType,
-  combinationListType,
   handleShowCombinationsWith2Colors,
   handleShowCombinationsWith3Colors,
   handleShowCombinationsWith4Colors,
-  favoriteCombinationsData,
-  colorListType,
   handleShowSwatchOne,
   handleShowSwatchTwo,
   handleShowSwatchThree,
   handleShowSwatchFour,
   handleShowSwatchFive,
   handleShowSwatchSix,
-  favoriteColorsData,
-}) {
+}: Props) {
   const [showTabBar, setShowTabBar] = useState(false);
-  const router = useRouter();
-  const route = router.route;
+  const route = usePathname();
+
+  const actionContext = useContext(ActionContext);
+
+  if (!actionContext) return <h1>Loading...</h1>;
+
+  const { listType, inspirationPageFilter, setInspirationPageFilter } =
+    actionContext;
+
   useEffect(() => {
     setShowTabBar(true);
   }, [route]);
@@ -37,28 +54,27 @@ export default function NavBarDesktop({
   return (
     <NavContainer>
       <NavPages>
-        <Link href={"/inspiration"} passHref legacyBehavior>
-          <NavButton
-            isActive={
-              route === "/inspiration" &&
-              inspirationPageFilter === "initialPage"
-            }
-            onClick={() => setInspirationPageFilter("initialPage")}
-          >
-            Inspiration
-          </NavButton>
-        </Link>
-        <Link href={"/"} passHref legacyBehavior>
-          <NavButton
-            isActive={route === "/"}
-            onClick={() => {
-              setShowTabBar(!showTabBar);
-            }}
-          >
-            <Arrow $isOpen={showTabBar} $isActive={route === "/"} />
-            Collection
-          </NavButton>
-        </Link>
+        <NavButton
+          href={"/inspiration"}
+          $isActive={
+            route === "/inspiration" && inspirationPageFilter === "initialPage"
+          }
+          onClick={() => setInspirationPageFilter("initialPage")}
+        >
+          Inspiration
+        </NavButton>
+
+        <NavButton
+          href={"/"}
+          $isActive={route === "/"}
+          onClick={() => {
+            setShowTabBar(!showTabBar);
+          }}
+        >
+          <Arrow $isOpen={showTabBar} $isActive={route === "/"} />
+          Collection
+        </NavButton>
+
         {route === "/" && showTabBar ? (
           <TabBar
             onShowColors={handleShowColors}
@@ -66,17 +82,18 @@ export default function NavBarDesktop({
             listType={listType}
           />
         ) : null}
-        <Link href={"/favorites"} passHref legacyBehavior>
-          <NavButton
-            isActive={route === "/favorites"}
-            onClick={() => {
-              setShowTabBar(!showTabBar);
-            }}
-          >
-            <Arrow $isOpen={showTabBar} $isActive={route === "/favorites"} />
-            Favorites
-          </NavButton>
-        </Link>
+
+        <NavButton
+          href={"/favorites"}
+          $isActive={route === "/favorites"}
+          onClick={() => {
+            setShowTabBar(!showTabBar);
+          }}
+        >
+          <Arrow $isOpen={showTabBar} $isActive={route === "/favorites"} />
+          Favorites
+        </NavButton>
+
         {route === "/favorites" && showTabBar ? (
           <TabBar
             onShowColors={handleShowColors}
@@ -84,32 +101,29 @@ export default function NavBarDesktop({
             listType={listType}
           />
         ) : null}
-        <Link href={"/about"} passHref legacyBehavior>
-          <NavButton isActive={route === "/about"}>About</NavButton>
-        </Link>
+
+        <NavButton href={"/about"} $isActive={route === "/about"}>
+          About
+        </NavButton>
       </NavPages>
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
         <ColorFilter
-          colorListType={colorListType}
           handleShowSwatchOne={handleShowSwatchOne}
           handleShowSwatchTwo={handleShowSwatchTwo}
           handleShowSwatchThree={handleShowSwatchThree}
           handleShowSwatchFour={handleShowSwatchFour}
           handleShowSwatchFive={handleShowSwatchFive}
           handleShowSwatchSix={handleShowSwatchSix}
-          favoriteColorsData={favoriteColorsData}
           isAtFavorites={route === "/favorites"}
         />
       ) : null}
       {(listType === "combinations" && route === "/") ||
       (listType === "combinations" && route === "/favorites") ? (
         <CombinationsFilter
-          combinationListType={combinationListType}
           onShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
           onShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
           onShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
-          favoriteCombinationsData={favoriteCombinationsData}
           isAtFavorites={route === "/favorites"}
         />
       ) : null}
@@ -140,7 +154,7 @@ const NavPages = styled.nav`
   width: 100%;
 `;
 
-const NavButton = styled.a`
+const NavButton = styled(Link)<{ $isActive?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,8 +162,8 @@ const NavButton = styled.a`
   height: 6vh;
   width: 100%;
   border-bottom: 1px solid black;
-  background-color: ${({ isActive }) => (isActive ? "black" : "white")};
-  color: ${({ isActive }) => (isActive ? "white" : "black")};
+  background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
+  color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   transition: all 0.1s;
   &:hover {
     cursor: pointer;
@@ -160,7 +174,7 @@ const NavButton = styled.a`
   }
 `;
 
-const Arrow = styled(SlArrowRight)`
+const Arrow = styled(SlArrowRight)<{ $isOpen: boolean; $isActive: boolean }>`
   position: absolute;
   left: 0;
   width: 10%;

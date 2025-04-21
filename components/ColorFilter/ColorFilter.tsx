@@ -1,18 +1,27 @@
 import { css } from "styled-components";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ActionContext } from "../Layout/Layout";
+
+type Props = {
+  handleShowSwatchOne: () => void;
+  handleShowSwatchTwo: () => void;
+  handleShowSwatchThree: () => void;
+  handleShowSwatchFour: () => void;
+  handleShowSwatchFive: () => void;
+  handleShowSwatchSix: () => void;
+  isAtFavorites: boolean;
+};
 
 export default function ColorFilter({
-  colorListType,
   handleShowSwatchOne,
   handleShowSwatchTwo,
   handleShowSwatchThree,
   handleShowSwatchFour,
   handleShowSwatchFive,
   handleShowSwatchSix,
-  favoriteColorsData,
   isAtFavorites,
-}) {
+}: Props) {
   const [favsSwatchOne, setFavsSwatchOne] = useState(0);
   const [favsSwatchTwo, setFavsSwatchTwo] = useState(0);
   const [favsSwatchThree, setFavsSwatchThree] = useState(0);
@@ -20,92 +29,106 @@ export default function ColorFilter({
   const [favsSwatchFive, setFavsSwatchFive] = useState(0);
   const [favsSwatchSix, setFavsSwatchSix] = useState(0);
 
+  const actionContext = useContext(ActionContext);
+
+  if (!actionContext) return <h1>Loading...</h1>;
+
+  const { favoriteColorsData, colorListType } = actionContext;
+
   useEffect(() => {
     setFavsSwatchOne(
       favoriteColorsData.filter(
         (color) => color.swatch === 0 && color.isFavorite
       ).length
     );
+
     setFavsSwatchTwo(
       favoriteColorsData.filter(
         (color) => color.swatch === 1 && color.isFavorite
       ).length
     );
+
     setFavsSwatchThree(
       favoriteColorsData.filter(
         (color) => color.swatch === 2 && color.isFavorite
       ).length
     );
+
     setFavsSwatchFour(
       favoriteColorsData.filter(
         (color) => color.swatch === 3 && color.isFavorite
       ).length
     );
+
     setFavsSwatchFive(
       favoriteColorsData.filter(
         (color) => color.swatch === 4 && color.isFavorite
       ).length
     );
+
     setFavsSwatchSix(
       favoriteColorsData.filter(
         (color) => color.swatch === 5 && color.isFavorite
       ).length
     );
   }, [favoriteColorsData]);
+
   return (
     <FilterContainer>
       <StyledButton
         onClick={() => handleShowSwatchOne()}
-        isActive={colorListType === 1}
-        swatch={"red/purple"}
+        $isActive={colorListType === 1}
+        $swatch={"red/purple"}
         aria-label={"only show colors from swatch nr. 1: red/purple"}
       >
-        <SwatchName isActive={colorListType === 1}>red/purple</SwatchName>
+        <SwatchName $isActive={colorListType === 1}>red/purple</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchOne}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchTwo()}
-        isActive={colorListType === 2}
-        swatch={"yellow/red"}
+        $isActive={colorListType === 2}
+        $swatch={"yellow/red"}
         aria-label={"only show colors from swatch nr. 2: yellow/red"}
       >
-        <SwatchName isActive={colorListType === 2}>yellow/red</SwatchName>
+        <SwatchName $isActive={colorListType === 2}>yellow/red</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchTwo}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchThree()}
-        isActive={colorListType === 3}
-        swatch={"yellow/green"}
+        $isActive={colorListType === 3}
+        $swatch={"yellow/green"}
         aria-label={"only show colors from swatch nr. 3: yellow/green"}
       >
-        <SwatchName isActive={colorListType === 3}>yellow/green</SwatchName>
+        <SwatchName $isActive={colorListType === 3}>yellow/green</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchThree}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchFour()}
-        isActive={colorListType === 4}
-        swatch={"blue/turquoise"}
+        $isActive={colorListType === 4}
+        $swatch={"blue/turquoise"}
         aria-label={"only show colors from swatch nr. 4: blue/turquoise"}
       >
-        <SwatchName isActive={colorListType === 4}>blue/turquoise</SwatchName>
+        <SwatchName $isActive={colorListType === 4}>blue/turquoise</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchFour}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchFive()}
-        isActive={colorListType === 5}
-        swatch={"blue/purple"}
+        $isActive={colorListType === 5}
+        $swatch={"blue/purple"}
         aria-label={"only show colors from swatch nr. 5: blue/purple"}
       >
-        <SwatchName isActive={colorListType === 5}>blue/purple</SwatchName>
+        <SwatchName $isActive={colorListType === 5}>blue/purple</SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchFive}</StyledNumber>}
       </StyledButton>
       <StyledButton
         onClick={() => handleShowSwatchSix()}
-        isActive={colorListType === 6}
-        swatch={"white/grey/black"}
+        $isActive={colorListType === 6}
+        $swatch={"white/grey/black"}
         aria-label={"only show colors from swatch nr. 6: white/grey/black"}
       >
-        <SwatchName isActive={colorListType === 6}>white/grey/black</SwatchName>
+        <SwatchName $isActive={colorListType === 6}>
+          white/grey/black
+        </SwatchName>
         {isAtFavorites && <StyledNumber>{favsSwatchSix}</StyledNumber>}
       </StyledButton>
     </FilterContainer>
@@ -134,7 +157,7 @@ const FilterContainer = styled.nav`
   }
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ $isActive: boolean; $swatch: string }>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -144,14 +167,14 @@ const StyledButton = styled.button`
   height: 6vh;
   width: 30%;
   overflow: hidden;
-  box-shadow: ${({ isActive }) => (isActive ? null : "0 0 2px black")};
+  box-shadow: ${({ $isActive }) => ($isActive ? null : "0 0 2px black")};
   transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
     box-shadow: none;
   }
   ${(props) =>
-    props.swatch === "red/purple"
+    props.$swatch === "red/purple"
       ? css`
           background: linear-gradient(
             90deg,
@@ -160,7 +183,7 @@ const StyledButton = styled.button`
             rgba(100, 45, 94, 1) 90%
           );
         `
-      : props.swatch === "yellow/red"
+      : props.$swatch === "yellow/red"
       ? css`
           background: linear-gradient(
             90deg,
@@ -169,7 +192,7 @@ const StyledButton = styled.button`
             rgba(107, 113, 64, 1) 90%
           );
         `
-      : props.swatch === "yellow/green"
+      : props.$swatch === "yellow/green"
       ? css`
           background: linear-gradient(
             90deg,
@@ -178,7 +201,7 @@ const StyledButton = styled.button`
             rgba(26, 116, 68, 1) 90%
           );
         `
-      : props.swatch === "blue/turquoise"
+      : props.$swatch === "blue/turquoise"
       ? css`
           background: linear-gradient(
             90deg,
@@ -187,7 +210,7 @@ const StyledButton = styled.button`
             rgba(18, 53, 78, 1) 90%
           );
         `
-      : props.swatch === "blue/purple"
+      : props.$swatch === "blue/purple"
       ? css`
           background: linear-gradient(
             90deg,
@@ -196,7 +219,7 @@ const StyledButton = styled.button`
             rgba(80, 19, 69, 1) 90%
           );
         `
-      : props.swatch === "white/grey/black"
+      : props.$swatch === "white/grey/black"
       ? css`
           background: linear-gradient(
             90deg,
@@ -206,16 +229,16 @@ const StyledButton = styled.button`
           );
         `
       : null}
-  background: ${({ isActive }) => (isActive ? "black" : "")};
+  background: ${({ $isActive }) => ($isActive ? "black" : "")};
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 26%;
     height: 3.5vh;
   }
 `;
 
-const SwatchName = styled.span`
+const SwatchName = styled.span<{ $isActive: boolean }>`
   color: white;
-  visibility: ${({ isActive }) => (isActive ? "visible" : "hidden")};
+  visibility: ${({ $isActive }) => ($isActive ? "visible" : "hidden")};
 `;
 
 const StyledNumber = styled.span`

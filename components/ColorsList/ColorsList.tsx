@@ -4,7 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useState, useEffect, useContext } from "react";
-import FavoriteMessage from "../FavoriteMessage";
+import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 import { ColorObject } from "@/lib/types";
 import { isColorBright } from "@/utils/helper";
 import { ActionContext } from "../Layout/Layout";

@@ -3,7 +3,7 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider/CopyFieldSlider";
-import FavoriteMessage from "@/components/FavoriteMessage";
+import FavoriteMessage from "@/components/FavoriteMessage/FavoriteMessage";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";

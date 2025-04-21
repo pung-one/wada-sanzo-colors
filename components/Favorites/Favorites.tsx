@@ -2,7 +2,7 @@
 
 import ColorsList from "@/components/ColorsList/ColorsList";
 import CombinationsList from "@/components/CombinationsList/CombinationsList";
-import { ColorObject, CombinationObject } from "@/lib/types";
+import { ColorObject } from "@/lib/types";
 import { useContext } from "react";
 import styled from "styled-components";
 import { ActionContext } from "../Layout/Layout";
@@ -17,12 +17,8 @@ export function Favorites({ colors }: Props) {
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const {
-    favoriteColorsData,
-    favoriteCombinationsData,
-    onToggleFavoriteColor,
-    listType,
-  } = actionContext;
+  const { favoriteColorsData, favoriteCombinationsData, listType } =
+    actionContext;
 
   const favoriteColors = favoriteColorsData?.filter(
     (color) => color.isFavorite

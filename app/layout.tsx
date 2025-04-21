@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { getSession, SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
+import NextAuthProvider from "@/components/NextAuthProvider/NextAuthProvider";
 
 export const metadata: Metadata = {
   title: "Wada Sanzo Colors",
@@ -45,17 +46,15 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getSession();
-
   return (
     <html lang="en" className={AvenirLTStdBook.className}>
       <body>
         <StyledComponentsRegistry>
           <GlobalStyle />
 
-          <SessionProvider session={session}>
+          <NextAuthProvider>
             <Layout>{children}</Layout>
-          </SessionProvider>
+          </NextAuthProvider>
 
           <Analytics />
         </StyledComponentsRegistry>
