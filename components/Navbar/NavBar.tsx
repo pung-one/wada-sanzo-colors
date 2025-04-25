@@ -9,17 +9,7 @@ import { ActionContext } from "../Layout/Layout";
 import { TabBar } from "../TabBar/TabBar";
 import { usePathname } from "next/navigation";
 
-type Props = {
-  setListType: (type: "colors" | "combinations") => void;
-  setColorListType: (type: number) => void;
-  setCombinationListType: (type: number) => void;
-};
-
-export default function NavBar({
-  setListType,
-  setCombinationListType,
-  setColorListType,
-}: Props) {
+export default function NavBar() {
   const route = usePathname();
   const [show, setShow] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -75,22 +65,14 @@ export default function NavBar({
           About
         </NavButton>
       </NavPages>
-      {route === "/" || route === "/favorites" ? (
-        <TabBar setListType={setListType} listType={listType} />
-      ) : null}
+      {route === "/" || route === "/favorites" ? <TabBar /> : null}
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
-        <ColorFilter
-          setColorListType={setColorListType}
-          isAtFavorites={route === "/favorites"}
-        />
+        <ColorFilter isAtFavorites={route === "/favorites"} />
       ) : null}
       {(listType === "combinations" && route === "/") ||
       (listType === "combinations" && route === "/favorites") ? (
-        <CombinationsFilter
-          setCombinationListType={setCombinationListType}
-          isAtFavorites={route === "/favorites"}
-        />
+        <CombinationsFilter isAtFavorites={route === "/favorites"} />
       ) : null}
     </NavContainer>
   );

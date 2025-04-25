@@ -4,14 +4,10 @@ import { useState, useEffect, useContext } from "react";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
-  setColorListType: (type: number) => void;
   isAtFavorites: boolean;
 };
 
-export default function ColorFilter({
-  setColorListType,
-  isAtFavorites,
-}: Props) {
+export default function ColorFilter({ isAtFavorites }: Props) {
   const [favsSwatchOne, setFavsSwatchOne] = useState(0);
   const [favsSwatchTwo, setFavsSwatchTwo] = useState(0);
   const [favsSwatchThree, setFavsSwatchThree] = useState(0);
@@ -23,7 +19,7 @@ export default function ColorFilter({
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { favoriteColorsData, colorListType } = actionContext;
+  const { favoriteColorsData, colorListType, setColorListType } = actionContext;
 
   useEffect(() => {
     setFavsSwatchOne(

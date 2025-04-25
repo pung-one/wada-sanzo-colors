@@ -13,8 +13,11 @@ import { usePathname } from "next/navigation";
 export type ContextProps = {
   setUser: (val: string) => void;
   listType: string;
+  setListType: (type: "colors" | "combinations") => void;
   combinationListType: number;
+  setCombinationListType: (type: number) => void;
   colorListType: number;
+  setColorListType: (type: number) => void;
   inspirationPageFilter: string;
   setInspirationPageFilter: (val: string) => void;
   favoriteColorsData: FavoriteColor[];
@@ -146,8 +149,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         value={{
           setUser: setUser,
           listType: listType,
+          setListType: setListType,
           combinationListType: combinationListType,
+          setCombinationListType: setCombinationListType,
           colorListType: colorListType,
+          setColorListType: setColorListType,
           inspirationPageFilter: inspirationPageFilter,
           setInspirationPageFilter: setInspirationPageFilter,
           favoriteColorsData: favoriteColorsData,
@@ -156,17 +162,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           onToggleFavoriteCombination: handleToggleFavoriteCombination,
         }}
       >
-        <NavBar
-          setListType={setListType}
-          setCombinationListType={setCombinationListType}
-          setColorListType={setColorListType}
-        />
+        <NavBar />
 
-        <NavBarDesktop
-          setListType={setListType}
-          setCombinationListType={setCombinationListType}
-          setColorListType={setColorListType}
-        />
+        <NavBarDesktop />
 
         {children}
       </ActionContext.Provider>

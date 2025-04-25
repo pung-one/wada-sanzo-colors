@@ -3,14 +3,10 @@ import styled from "styled-components";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
-  setCombinationListType: (type: number) => void;
   isAtFavorites: boolean;
 };
 
-export default function CombinationsFilter({
-  setCombinationListType,
-  isAtFavorites,
-}: Props) {
+export default function CombinationsFilter({ isAtFavorites }: Props) {
   const [favWithTwoColors, setFavWithTwoColors] = useState(0);
   const [favWithThreeColors, setFavWithThreeColors] = useState(0);
   const [favWithFourColors, setFavWithFourColors] = useState(0);
@@ -19,7 +15,11 @@ export default function CombinationsFilter({
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { favoriteCombinationsData, combinationListType } = actionContext;
+  const {
+    favoriteCombinationsData,
+    combinationListType,
+    setCombinationListType,
+  } = actionContext;
 
   useEffect(() => {
     setFavWithTwoColors(

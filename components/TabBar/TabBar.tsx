@@ -2,13 +2,16 @@
 
 import styled from "styled-components";
 import { TfiArrowRight } from "react-icons/tfi";
+import { useContext } from "react";
+import { ActionContext } from "../Layout/Layout";
 
-type Props = {
-  setListType: (type: "colors" | "combinations") => void;
-  listType: string;
-};
+export function TabBar() {
+  const actionContext = useContext(ActionContext);
 
-export function TabBar({ setListType, listType }: Props) {
+  if (!actionContext) return <h1>Loading...</h1>;
+
+  const { listType, setListType } = actionContext;
+
   return (
     <TabContainer>
       <MobileButtonContainer>

@@ -9,19 +9,8 @@ import ColorFilter from "../ColorFilter/ColorFilter";
 import { ActionContext } from "../Layout/Layout";
 import { TabBar } from "../TabBar/TabBar";
 import { usePathname } from "next/navigation";
-import { set } from "mongoose";
 
-type Props = {
-  setListType: (type: "colors" | "combinations") => void;
-  setCombinationListType: (type: number) => void;
-  setColorListType: (type: number) => void;
-};
-
-export default function NavBarDesktop({
-  setListType,
-  setCombinationListType,
-  setColorListType,
-}: Props) {
+export default function NavBarDesktop() {
   const [showTabBar, setShowTabBar] = useState(false);
   const route = usePathname();
 
@@ -60,9 +49,7 @@ export default function NavBarDesktop({
           Collection
         </NavButton>
 
-        {route === "/" && showTabBar ? (
-          <TabBar setListType={setListType} listType={listType} />
-        ) : null}
+        {route === "/" && showTabBar ? <TabBar /> : null}
 
         <NavButton
           href={"/favorites"}
@@ -75,9 +62,7 @@ export default function NavBarDesktop({
           Favorites
         </NavButton>
 
-        {route === "/favorites" && showTabBar ? (
-          <TabBar setListType={setListType} listType={listType} />
-        ) : null}
+        {route === "/favorites" && showTabBar ? <TabBar /> : null}
 
         <NavButton href={"/about"} $isActive={route === "/about"}>
           About
@@ -85,17 +70,11 @@ export default function NavBarDesktop({
       </NavPages>
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
-        <ColorFilter
-          setColorListType={setColorListType}
-          isAtFavorites={route === "/favorites"}
-        />
+        <ColorFilter isAtFavorites={route === "/favorites"} />
       ) : null}
       {(listType === "combinations" && route === "/") ||
       (listType === "combinations" && route === "/favorites") ? (
-        <CombinationsFilter
-          setCombinationListType={setCombinationListType}
-          isAtFavorites={route === "/favorites"}
-        />
+        <CombinationsFilter isAtFavorites={route === "/favorites"} />
       ) : null}
     </NavContainer>
   );
