@@ -22,8 +22,7 @@ export default function ColorsList({ colors }: Props) {
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { colorListType, favoriteColorsData, onToggleFavoriteColor } =
-    actionContext;
+  const { colorListType, favoriteColorsData } = actionContext;
 
   useEffect(() => {
     if (colorListType === 0) {

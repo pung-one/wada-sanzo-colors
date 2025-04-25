@@ -16,12 +16,7 @@ type Props = {
   handleShowCombinationsWith2Colors: () => void;
   handleShowCombinationsWith3Colors: () => void;
   handleShowCombinationsWith4Colors: () => void;
-  handleShowSwatchOne: () => void;
-  handleShowSwatchTwo: () => void;
-  handleShowSwatchThree: () => void;
-  handleShowSwatchFour: () => void;
-  handleShowSwatchFive: () => void;
-  handleShowSwatchSix: () => void;
+  setColorListType: (type: number) => void;
 };
 
 export default function NavBarDesktop({
@@ -30,12 +25,7 @@ export default function NavBarDesktop({
   handleShowCombinationsWith2Colors,
   handleShowCombinationsWith3Colors,
   handleShowCombinationsWith4Colors,
-  handleShowSwatchOne,
-  handleShowSwatchTwo,
-  handleShowSwatchThree,
-  handleShowSwatchFour,
-  handleShowSwatchFive,
-  handleShowSwatchSix,
+  setColorListType,
 }: Props) {
   const [showTabBar, setShowTabBar] = useState(false);
   const route = usePathname();
@@ -109,12 +99,7 @@ export default function NavBarDesktop({
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
         <ColorFilter
-          handleShowSwatchOne={handleShowSwatchOne}
-          handleShowSwatchTwo={handleShowSwatchTwo}
-          handleShowSwatchThree={handleShowSwatchThree}
-          handleShowSwatchFour={handleShowSwatchFour}
-          handleShowSwatchFive={handleShowSwatchFive}
-          handleShowSwatchSix={handleShowSwatchSix}
+          setColorListType={setColorListType}
           isAtFavorites={route === "/favorites"}
         />
       ) : null}

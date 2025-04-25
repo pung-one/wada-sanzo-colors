@@ -165,54 +165,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     }
   }
 
-  function handleShowSwatchOne() {
-    if (colorListType === 1) {
-      setColorListType(0);
-    } else {
-      setColorListType(1);
-    }
-  }
-
-  function handleShowSwatchTwo() {
-    if (colorListType === 2) {
-      setColorListType(0);
-    } else {
-      setColorListType(2);
-    }
-  }
-
-  function handleShowSwatchThree() {
-    if (colorListType === 3) {
-      setColorListType(0);
-    } else {
-      setColorListType(3);
-    }
-  }
-
-  function handleShowSwatchFour() {
-    if (colorListType === 4) {
-      setColorListType(0);
-    } else {
-      setColorListType(4);
-    }
-  }
-
-  function handleShowSwatchFive() {
-    if (colorListType === 5) {
-      setColorListType(0);
-    } else {
-      setColorListType(5);
-    }
-  }
-
-  function handleShowSwatchSix() {
-    if (colorListType === 6) {
-      setColorListType(0);
-    } else {
-      setColorListType(6);
-    }
-  }
-
   return (
     <>
       <Header>
@@ -242,12 +194,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
           handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
           handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
-          handleShowSwatchOne={handleShowSwatchOne}
-          handleShowSwatchTwo={handleShowSwatchTwo}
-          handleShowSwatchThree={handleShowSwatchThree}
-          handleShowSwatchFour={handleShowSwatchFour}
-          handleShowSwatchFive={handleShowSwatchFive}
-          handleShowSwatchSix={handleShowSwatchSix}
+          setColorListType={setColorListType}
         />
 
         <NavBarDesktop
@@ -256,12 +203,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
           handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
           handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
-          handleShowSwatchOne={handleShowSwatchOne}
-          handleShowSwatchTwo={handleShowSwatchTwo}
-          handleShowSwatchThree={handleShowSwatchThree}
-          handleShowSwatchFour={handleShowSwatchFour}
-          handleShowSwatchFive={handleShowSwatchFive}
-          handleShowSwatchSix={handleShowSwatchSix}
+          setColorListType={setColorListType}
         />
 
         {children}

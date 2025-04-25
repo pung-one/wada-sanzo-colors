@@ -56,7 +56,7 @@ export default async function RootLayout({
             <Layout>{children}</Layout>
           </NextAuthProvider>
 
-          <Analytics />
+          {/* <Analytics /> */}
         </StyledComponentsRegistry>
       </body>
     </html>

@@ -4,22 +4,12 @@ import { useState, useEffect, useContext } from "react";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
-  handleShowSwatchOne: () => void;
-  handleShowSwatchTwo: () => void;
-  handleShowSwatchThree: () => void;
-  handleShowSwatchFour: () => void;
-  handleShowSwatchFive: () => void;
-  handleShowSwatchSix: () => void;
+  setColorListType: (type: number) => void;
   isAtFavorites: boolean;
 };
 
 export default function ColorFilter({
-  handleShowSwatchOne,
-  handleShowSwatchTwo,
-  handleShowSwatchThree,
-  handleShowSwatchFour,
-  handleShowSwatchFive,
-  handleShowSwatchSix,
+  setColorListType,
   isAtFavorites,
 }: Props) {
   const [favsSwatchOne, setFavsSwatchOne] = useState(0);
@@ -76,7 +66,7 @@ export default function ColorFilter({
   return (
     <FilterContainer>
       <StyledButton
-        onClick={() => handleShowSwatchOne()}
+        onClick={() => setColorListType(colorListType === 1 ? 0 : 1)}
         $isActive={colorListType === 1}
         $swatch={"red/purple"}
         aria-label={"only show colors from swatch nr. 1: red/purple"}
@@ -85,7 +75,7 @@ export default function ColorFilter({
         {isAtFavorites && <StyledNumber>{favsSwatchOne}</StyledNumber>}
       </StyledButton>
       <StyledButton
-        onClick={() => handleShowSwatchTwo()}
+        onClick={() => setColorListType(colorListType === 2 ? 0 : 2)}
         $isActive={colorListType === 2}
         $swatch={"yellow/red"}
         aria-label={"only show colors from swatch nr. 2: yellow/red"}
@@ -94,7 +84,7 @@ export default function ColorFilter({
         {isAtFavorites && <StyledNumber>{favsSwatchTwo}</StyledNumber>}
       </StyledButton>
       <StyledButton
-        onClick={() => handleShowSwatchThree()}
+        onClick={() => setColorListType(colorListType === 3 ? 0 : 3)}
         $isActive={colorListType === 3}
         $swatch={"yellow/green"}
         aria-label={"only show colors from swatch nr. 3: yellow/green"}
@@ -103,7 +93,7 @@ export default function ColorFilter({
         {isAtFavorites && <StyledNumber>{favsSwatchThree}</StyledNumber>}
       </StyledButton>
       <StyledButton
-        onClick={() => handleShowSwatchFour()}
+        onClick={() => setColorListType(colorListType === 4 ? 0 : 4)}
         $isActive={colorListType === 4}
         $swatch={"blue/turquoise"}
         aria-label={"only show colors from swatch nr. 4: blue/turquoise"}
@@ -112,7 +102,7 @@ export default function ColorFilter({
         {isAtFavorites && <StyledNumber>{favsSwatchFour}</StyledNumber>}
       </StyledButton>
       <StyledButton
-        onClick={() => handleShowSwatchFive()}
+        onClick={() => setColorListType(colorListType === 5 ? 0 : 5)}
         $isActive={colorListType === 5}
         $swatch={"blue/purple"}
         aria-label={"only show colors from swatch nr. 5: blue/purple"}
@@ -121,7 +111,7 @@ export default function ColorFilter({
         {isAtFavorites && <StyledNumber>{favsSwatchFive}</StyledNumber>}
       </StyledButton>
       <StyledButton
-        onClick={() => handleShowSwatchSix()}
+        onClick={() => setColorListType(colorListType === 6 ? 0 : 6)}
         $isActive={colorListType === 6}
         $swatch={"white/grey/black"}
         aria-label={"only show colors from swatch nr. 6: white/grey/black"}
