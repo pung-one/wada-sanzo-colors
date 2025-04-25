@@ -3,16 +3,12 @@ import styled from "styled-components";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
-  onShowCombinationsWith2Colors: () => void;
-  onShowCombinationsWith3Colors: () => void;
-  onShowCombinationsWith4Colors: () => void;
+  setCombinationListType: (type: number) => void;
   isAtFavorites: boolean;
 };
 
 export default function CombinationsFilter({
-  onShowCombinationsWith2Colors,
-  onShowCombinationsWith3Colors,
-  onShowCombinationsWith4Colors,
+  setCombinationListType,
   isAtFavorites,
 }: Props) {
   const [favWithTwoColors, setFavWithTwoColors] = useState(0);
@@ -49,7 +45,9 @@ export default function CombinationsFilter({
   return (
     <FilterContainer>
       <StyledButton
-        onClick={() => onShowCombinationsWith2Colors()}
+        onClick={() =>
+          setCombinationListType(combinationListType === 2 ? 0 : 2)
+        }
         $isActive={combinationListType === 2}
         aria-label={"only show combinations with two colors"}
       >
@@ -61,7 +59,9 @@ export default function CombinationsFilter({
         <StyledBox $filter={2} $isActive={combinationListType === 2} />
       </StyledButton>
       <StyledButton
-        onClick={() => onShowCombinationsWith3Colors()}
+        onClick={() =>
+          setCombinationListType(combinationListType === 3 ? 0 : 3)
+        }
         $isActive={combinationListType === 3}
         aria-label={"only show combinations with three colors"}
       >
@@ -74,7 +74,9 @@ export default function CombinationsFilter({
         <StyledBox $filter={3} $isActive={combinationListType === 3} />
       </StyledButton>
       <StyledButton
-        onClick={() => onShowCombinationsWith4Colors()}
+        onClick={() =>
+          setCombinationListType(combinationListType === 4 ? 0 : 4)
+        }
         $isActive={combinationListType === 4}
         aria-label={"only show combinations with four colors"}
       >

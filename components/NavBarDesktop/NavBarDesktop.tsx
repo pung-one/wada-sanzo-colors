@@ -9,22 +9,17 @@ import ColorFilter from "../ColorFilter/ColorFilter";
 import { ActionContext } from "../Layout/Layout";
 import { TabBar } from "../TabBar/TabBar";
 import { usePathname } from "next/navigation";
+import { set } from "mongoose";
 
 type Props = {
-  handleShowColors: () => void;
-  handleShowCombinations: () => void;
-  handleShowCombinationsWith2Colors: () => void;
-  handleShowCombinationsWith3Colors: () => void;
-  handleShowCombinationsWith4Colors: () => void;
+  setListType: (type: "colors" | "combinations") => void;
+  setCombinationListType: (type: number) => void;
   setColorListType: (type: number) => void;
 };
 
 export default function NavBarDesktop({
-  handleShowColors,
-  handleShowCombinations,
-  handleShowCombinationsWith2Colors,
-  handleShowCombinationsWith3Colors,
-  handleShowCombinationsWith4Colors,
+  setListType,
+  setCombinationListType,
   setColorListType,
 }: Props) {
   const [showTabBar, setShowTabBar] = useState(false);
@@ -66,11 +61,7 @@ export default function NavBarDesktop({
         </NavButton>
 
         {route === "/" && showTabBar ? (
-          <TabBar
-            onShowColors={handleShowColors}
-            onShowCombinations={handleShowCombinations}
-            listType={listType}
-          />
+          <TabBar setListType={setListType} listType={listType} />
         ) : null}
 
         <NavButton
@@ -85,11 +76,7 @@ export default function NavBarDesktop({
         </NavButton>
 
         {route === "/favorites" && showTabBar ? (
-          <TabBar
-            onShowColors={handleShowColors}
-            onShowCombinations={handleShowCombinations}
-            listType={listType}
-          />
+          <TabBar setListType={setListType} listType={listType} />
         ) : null}
 
         <NavButton href={"/about"} $isActive={route === "/about"}>
@@ -106,9 +93,7 @@ export default function NavBarDesktop({
       {(listType === "combinations" && route === "/") ||
       (listType === "combinations" && route === "/favorites") ? (
         <CombinationsFilter
-          onShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
-          onShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
-          onShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          setCombinationListType={setCombinationListType}
           isAtFavorites={route === "/favorites"}
         />
       ) : null}

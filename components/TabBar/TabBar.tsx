@@ -2,22 +2,20 @@
 
 import styled from "styled-components";
 import { TfiArrowRight } from "react-icons/tfi";
-import { useState, useEffect } from "react";
 
 type Props = {
-  onShowColors: () => void;
-  onShowCombinations: () => void;
+  setListType: (type: "colors" | "combinations") => void;
   listType: string;
 };
 
-export function TabBar({ onShowColors, onShowCombinations, listType }: Props) {
+export function TabBar({ setListType, listType }: Props) {
   return (
     <TabContainer>
       <MobileButtonContainer>
         <StyledButton
           type="button"
           $isActive={listType === "colors"}
-          onClick={() => onShowColors()}
+          onClick={() => setListType("colors")}
         >
           Colors
         </StyledButton>
@@ -28,7 +26,7 @@ export function TabBar({ onShowColors, onShowCombinations, listType }: Props) {
         <StyledButton
           type="button"
           $isActive={listType === "colors"}
-          onClick={() => onShowColors()}
+          onClick={() => setListType("colors")}
         >
           Colors
         </StyledButton>
@@ -38,7 +36,7 @@ export function TabBar({ onShowColors, onShowCombinations, listType }: Props) {
         <StyledButton
           type="button"
           $isActive={listType === "combinations"}
-          onClick={() => onShowCombinations()}
+          onClick={() => setListType("combinations")}
         >
           Combinations
         </StyledButton>
@@ -49,7 +47,7 @@ export function TabBar({ onShowColors, onShowCombinations, listType }: Props) {
         <StyledButton
           type="button"
           $isActive={listType === "combinations"}
-          onClick={() => onShowCombinations()}
+          onClick={() => setListType("combinations")}
         >
           Combinations
         </StyledButton>

@@ -133,38 +133,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     });
   }
 
-  function handleShowColors() {
-    setListType("colors");
-  }
-
-  function handleShowCombinations() {
-    setListType("combinations");
-  }
-
-  function handleShowCombinationsWith2Colors() {
-    if (combinationListType === 2) {
-      setCombinationListType(0);
-    } else {
-      setCombinationListType(2);
-    }
-  }
-
-  function handleShowCombinationsWith3Colors() {
-    if (combinationListType === 3) {
-      setCombinationListType(0);
-    } else {
-      setCombinationListType(3);
-    }
-  }
-
-  function handleShowCombinationsWith4Colors() {
-    if (combinationListType === 4) {
-      setCombinationListType(0);
-    } else {
-      setCombinationListType(4);
-    }
-  }
-
   return (
     <>
       <Header>
@@ -189,20 +157,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }}
       >
         <NavBar
-          handleShowColors={handleShowColors}
-          handleShowCombinations={handleShowCombinations}
-          handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
-          handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
-          handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          setListType={setListType}
+          setCombinationListType={setCombinationListType}
           setColorListType={setColorListType}
         />
 
         <NavBarDesktop
-          handleShowColors={handleShowColors}
-          handleShowCombinations={handleShowCombinations}
-          handleShowCombinationsWith2Colors={handleShowCombinationsWith2Colors}
-          handleShowCombinationsWith3Colors={handleShowCombinationsWith3Colors}
-          handleShowCombinationsWith4Colors={handleShowCombinationsWith4Colors}
+          setListType={setListType}
+          setCombinationListType={setCombinationListType}
           setColorListType={setColorListType}
         />
 
