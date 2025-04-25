@@ -2,26 +2,15 @@
 
 import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { MdInfo } from "react-icons/md";
-import { ActionContext } from "../Layout/Layout";
 
 export function SignIn() {
   const { data: session } = useSession();
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 
-  const actionContext = useContext(ActionContext);
-
-  useEffect(() => {
-    if (session && actionContext) {
-      actionContext.setUser(session.user?.name || "public");
-    }
-    console.log(session);
-  }, [session]);
-
   async function handleSignOut() {
     setShowSignOutMessage(true);
-    actionContext?.setUser("public");
     setTimeout(() => signOut(), 1500);
   }
 

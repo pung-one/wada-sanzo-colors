@@ -44,12 +44,11 @@ export function CombinationDetail({
       />
       <Heading>
         <FavoriteButton
+          type="combi"
+          elementId={combination.id}
           isFavorite={favoriteStatus}
           isBright={true}
           isOnDetailCombination={true}
-          onToggleFavorite={() =>
-            actionContext.onToggleFavoriteCombination(combination.id)
-          }
           onShowFavMessage={() => handleShowFavMessage(combination.id)}
         />
         Combination #{combination.id}

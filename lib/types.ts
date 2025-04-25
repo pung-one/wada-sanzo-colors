@@ -17,10 +17,17 @@ export type CombinationObject = {
 export type FavoriteColor = {
   name: string;
   isFavorite: boolean;
-  swatch: number;
+  swatch?: number;
 };
 
 export type FavoriteCombination = {
   id: number;
   isFavorite: boolean;
+};
+
+export type FavData = {
+  _id: string;
+  user: string;
+  favoriteColors: FavoriteColor[];
+  favoriteCombinations: FavoriteCombination[];
 };

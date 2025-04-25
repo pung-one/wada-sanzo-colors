@@ -44,7 +44,7 @@ export default function ColorsList({ colors }: Props) {
 
   return (
     <List>
-      {arrayToBeRendered?.map(({ name, slug, rgb, hex, swatch }) => {
+      {arrayToBeRendered?.map(({ name, slug, rgb, hex }) => {
         const favoriteStatus = favoriteColorsData?.some(
           (color) => color.name === name
         );
@@ -63,12 +63,11 @@ export default function ColorsList({ colors }: Props) {
               isTriggered={name === favMessageName}
             />
             <FavoriteButton
+              type="color"
+              elementId={name}
               isBright={isColorBright(rgb)}
               isFavorite={favoriteStatus}
               isOnListElement={true}
-              onToggleFavorite={() =>
-                actionContext.onToggleFavoriteColor(name, swatch)
-              }
               onShowFavMessage={() => handleShowFavMessage(name)}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>

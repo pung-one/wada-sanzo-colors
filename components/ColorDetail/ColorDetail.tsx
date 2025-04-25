@@ -28,7 +28,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
   if (!actionContext || !colorObject || !combinations)
     return <h1>Loading...</h1>;
 
-  const { name, hex, rgb, swatch } = colorObject;
+  const { name, hex, rgb } = colorObject;
 
   function handleShowFavMessage(toggleValue: string) {
     setShowFavMessage(true);
@@ -49,12 +49,11 @@ export function ColorDetail({ colorObject, combinations }: Props) {
           isTriggered={name === favMessageName}
         />
         <FavoriteButton
+          type="color"
+          elementId={name}
           isOnDetailColor
           isBright={isColorBright(rgb)}
           isFavorite={!!favoriteStatus}
-          onToggleFavorite={() =>
-            actionContext.onToggleFavoriteColor(name, swatch)
-          }
           onShowFavMessage={() => handleShowFavMessage(name)}
         />
 

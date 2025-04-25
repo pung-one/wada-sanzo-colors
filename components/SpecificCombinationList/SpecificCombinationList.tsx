@@ -61,12 +61,11 @@ export default function SpecificCombinationList({ combinations }: Props) {
                     </Link>
                   )}
                   <FavoriteButton
+                    type="combi"
+                    elementId={combi1.id}
                     isFavorite={favoriteStatus}
                     isOnListElement={true}
                     isBright={isColorBright(rgb)}
-                    onToggleFavorite={() =>
-                      actionContext.onToggleFavoriteCombination(combi1.id)
-                    }
                     onShowFavMessage={() => handleShowFavMessage(combi1.id)}
                   />
                 </StyledColorBox>

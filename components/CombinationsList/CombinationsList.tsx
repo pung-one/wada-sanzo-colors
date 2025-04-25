@@ -23,11 +23,7 @@ export default function CombinationsList({ combinations }: Props) {
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const {
-    combinationListType,
-    favoriteCombinationsData,
-    onToggleFavoriteCombination,
-  } = actionContext;
+  const { combinationListType, favoriteCombinationsData } = actionContext;
 
   function handleShowFavMessage(toggleValue: number) {
     setShowFavMessage(true);
@@ -87,12 +83,11 @@ export default function CombinationsList({ combinations }: Props) {
                       </Link>
                     )}
                     <FavoriteButton
+                      type="combi"
+                      elementId={combination1.id}
                       isFavorite={favoriteStatus}
                       isOnListElement={true}
                       isBright={isColorBright(rgb)}
-                      onToggleFavorite={() =>
-                        onToggleFavoriteCombination(combination1.id)
-                      }
                       onShowFavMessage={() =>
                         handleShowFavMessage(combination1.id)
                       }

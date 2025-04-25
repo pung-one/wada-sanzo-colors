@@ -1,25 +1,41 @@
 import styled, { css } from "styled-components";
 import { TfiArrowDown } from "react-icons/tfi";
+import { toggleFavoriteColor, toggleFavoriteCombination } from "@/utils/helper";
+import { useSession } from "next-auth/react";
 
 type Props = {
+  type: "combi" | "color";
   isFavorite: boolean;
+  elementId: number | string;
   isOnListElement?: boolean;
   isOnDetailColor?: boolean;
   isOnDetailCombination?: boolean;
   isBright: boolean;
-  onToggleFavorite: () => void;
   onShowFavMessage: () => void;
 };
 
 export default function FavoriteButton({
+  type,
+  elementId,
   isFavorite,
   isOnListElement = false,
   isOnDetailColor = false,
   isOnDetailCombination = false,
   isBright,
-  onToggleFavorite,
   onShowFavMessage,
 }: Props) {
+  const { data: session } = useSession();
+
+  const user = session?.user?.name || "public";
+
+  function handleToggleFavorite() {
+    if (type === "color") {
+      toggleFavoriteColor(elementId as string, user);
+    } else {
+      toggleFavoriteCombination(elementId as number, user);
+    }
+  }
+
   return (
     <Button
       $isFavorite={isFavorite}
@@ -28,7 +44,7 @@ export default function FavoriteButton({
       $isOnColor={isOnDetailColor}
       $isOnCombination={isOnDetailCombination}
       onClick={() => {
-        onToggleFavorite();
+        handleToggleFavorite();
         onShowFavMessage();
       }}
       aria-label={"favor or defavor a color or combination"}

@@ -5,13 +5,13 @@ import NavBar from "../Navbar/NavBar";
 import NavBarDesktop from "../NavBarDesktop/NavBarDesktop";
 import Link from "next/link";
 import { createContext, useEffect, useState } from "react";
-import useSWR from "swr";
 import { useLocalStorage } from "@/utils/useLocalStorage";
-import { FavoriteColor, FavoriteCombination } from "@/lib/types";
+import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import useSWR from "swr";
 
 export type ContextProps = {
-  setUser: (val: string) => void;
   listType: string;
   setListType: (type: "colors" | "combinations") => void;
   combinationListType: number;
@@ -21,22 +21,25 @@ export type ContextProps = {
   inspirationPageFilter: string;
   setInspirationPageFilter: (val: string) => void;
   favoriteColorsData: FavoriteColor[];
-  onToggleFavoriteColor: (colorName: any, colorSwatch: any) => void;
   favoriteCombinationsData: FavoriteCombination[];
-  onToggleFavoriteCombination: (id: number) => void;
 };
 
 export const ActionContext = createContext<ContextProps | null>(null);
 
-const fetcher = (URL: string) => fetch(URL).then((response) => response.json());
+async function fetcher(url: string) {
+  const res = await fetch(url);
+  return await res.json();
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const route = usePathname();
 
-  const [user, setUser] = useState<string>("public");
+  const { data: session } = useSession();
 
-  const { data: favData, error: favDataError } = useSWR(
-    `/api/favorites/${user}`,
+  const user = session?.user?.name || "public";
+
+  const { data: favData, error: favDataError } = useSWR<FavData>(
+    user !== "public" ? `/api/favorites?user=${user}` : null,
     fetcher
   );
 
@@ -63,13 +66,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
   }, [route]);
 
   useEffect(() => {
-    if (favData && user !== "public") {
+    if (favData) {
       setFavoriteColorsData(favData?.favoriteColors);
       setFavoriteCombinationsData(favData?.favoriteCombinations);
     }
   }, [favData]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (user !== "public") {
       handleUpdateFavs(user);
     }
@@ -95,46 +98,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     } else {
       console.error(response.status);
     }
-  }
-
-  function handleToggleFavoriteColor(colorName: string, colorSwatch: number) {
-    setFavoriteColorsData(() => {
-      const favStatus = favoriteColorsData.find(
-        (element: any) => element.name === colorName
-      );
-      if (favStatus) {
-        return favoriteColorsData.map((color: any) =>
-          color.name === colorName
-            ? {
-                name: color.name,
-                swatch: color.swatch,
-                isFavorite: !color.isFavorite,
-              }
-            : color
-        );
-      }
-      return [
-        ...favoriteColorsData,
-        { name: colorName, swatch: colorSwatch, isFavorite: true },
-      ];
-    });
-  }
-
-  function handleToggleFavoriteCombination(id: number) {
-    setFavoriteCombinationsData(() => {
-      const favStatus = favoriteCombinationsData.find(
-        (element: any) => element.id === id
-      );
-      if (favStatus) {
-        return favoriteCombinationsData.map((combination: any) =>
-          combination.id === id
-            ? { id: combination.id, isFavorite: !combination.isFavorite }
-            : combination
-        );
-      }
-      return [...favoriteCombinationsData, { id: id, isFavorite: true }];
-    });
-  }
+  } */
 
   return (
     <>
@@ -147,7 +111,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       <ActionContext.Provider
         value={{
-          setUser: setUser,
           listType: listType,
           setListType: setListType,
           combinationListType: combinationListType,
@@ -157,9 +120,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           inspirationPageFilter: inspirationPageFilter,
           setInspirationPageFilter: setInspirationPageFilter,
           favoriteColorsData: favoriteColorsData,
-          onToggleFavoriteColor: handleToggleFavoriteColor,
           favoriteCombinationsData: favoriteCombinationsData,
-          onToggleFavoriteCombination: handleToggleFavoriteCombination,
         }}
       >
         <NavBar />
