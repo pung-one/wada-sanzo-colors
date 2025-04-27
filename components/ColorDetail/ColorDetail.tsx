@@ -27,8 +27,8 @@ export function ColorDetail({ colorObject, combinations }: Props) {
 
   const { name, hex, rgb } = colorObject;
 
-  const favoriteStatus = actionContext.favoriteColorsData.some(
-    (color) => color.name === name
+  const favoriteStatus = actionContext.favoriteColorsData.findIndex(
+    (color) => color.name === name && color.isFavorite
   );
 
   return (
@@ -39,7 +39,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
           elementId={name}
           isOnDetailColor
           isBright={isColorBright(rgb)}
-          isFavorite={favoriteStatus}
+          isFavorite={favoriteStatus !== -1}
         />
 
         <StyledHeadline $isBright={isColorBright(rgb)}>{name}</StyledHeadline>

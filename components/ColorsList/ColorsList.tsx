@@ -34,8 +34,8 @@ export default function ColorsList({ colors }: Props) {
   return (
     <List>
       {arrayToBeRendered?.map(({ name, slug, rgb, hex }) => {
-        const favoriteStatus = favoriteColorsData?.some(
-          (color) => color.name === name
+        const favoriteStatus = favoriteColorsData?.findIndex(
+          (color) => color.name === name && color.isFavorite
         );
 
         return (
@@ -44,7 +44,7 @@ export default function ColorsList({ colors }: Props) {
               type="color"
               elementId={name}
               isBright={isColorBright(rgb)}
-              isFavorite={favoriteStatus}
+              isFavorite={favoriteStatus !== -1}
               isOnListElement={true}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>

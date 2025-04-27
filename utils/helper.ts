@@ -1,4 +1,4 @@
-import { ColorObject } from "@/lib/types";
+import { ColorObject, FavoriteColor, FavoriteCombination } from "@/lib/types";
 
 export function createCombinationArray(data: ColorObject[]) {
   let combinationArray = [];
@@ -26,29 +26,15 @@ export function isColorBright(rgb: number[]) {
   }
 }
 
-export async function toggleFavoriteColor(colorName: string, user?: string) {
-  const stored = localStorage.getItem("favoriteColorsData") || "[]";
-  const favoriteColorsData: any[] = JSON.parse(stored);
-
-  const index = favoriteColorsData.findIndex((c) => c.name === colorName);
-
-  if (index !== -1) {
-    favoriteColorsData[index].isFavorite =
-      !favoriteColorsData[index].isFavorite;
-  } else {
-    favoriteColorsData.push({ name: colorName, isFavorite: true });
-  }
-
-  localStorage.setItem(
-    "favoriteColorsData",
-    JSON.stringify(favoriteColorsData)
-  );
-
+export async function updateDbFavoriteColor(
+  user: string,
+  favoriteColorsData: FavoriteColor[]
+) {
   if (user !== "public") {
     const body = {
       type: "favColorUpdate",
       user: user,
-      colorName: colorName,
+      favoriteColorsData: favoriteColorsData,
     };
 
     const response = await fetch(`/api/favorites/`, {
@@ -60,39 +46,22 @@ export async function toggleFavoriteColor(colorName: string, user?: string) {
     });
 
     if (response.ok) {
-      await response.json();
+      await response.text();
     } else {
       console.error(response.status);
     }
   }
 }
 
-export async function toggleFavoriteCombination(
-  combiId: number,
-  user?: string
+export async function updateDbFavoriteCombi(
+  user: string,
+  favoriteCombinationsData: FavoriteCombination[]
 ) {
-  const stored = localStorage.getItem("favoriteCombinationsData") || "[]";
-  const favoriteCombinationsData: any[] = JSON.parse(stored);
-
-  const index = favoriteCombinationsData.findIndex((c) => c.id === combiId);
-
-  if (index !== -1) {
-    favoriteCombinationsData[index].isFavorite =
-      !favoriteCombinationsData[index].isFavorite;
-  } else {
-    favoriteCombinationsData.push({ id: combiId, isFavorite: true });
-  }
-
-  localStorage.setItem(
-    "favoriteCombinationsData",
-    JSON.stringify(favoriteCombinationsData)
-  );
-
   if (user !== "public") {
     const body = {
       type: "favCombinationUpdate",
       user: user,
-      id: combiId,
+      favoriteCombinationsData: favoriteCombinationsData,
     };
 
     const response = await fetch(`/api/favorites/`, {
@@ -104,7 +73,7 @@ export async function toggleFavoriteCombination(
     });
 
     if (response.ok) {
-      await response.json();
+      await response.text();
     } else {
       console.error(response.status);
     }

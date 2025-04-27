@@ -3,6 +3,8 @@ import { TfiArrowDown } from "react-icons/tfi";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ActionContext } from "../Layout/Layout";
 import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
+import { updateDbFavoriteColor, updateDbFavoriteCombi } from "@/utils/helper";
+import { useSession } from "next-auth/react";
 
 type Props = {
   type: "combi" | "color";
@@ -28,6 +30,10 @@ export default function FavoriteButton({
 
   const actionContext = useContext(ActionContext);
 
+  const { data: session } = useSession();
+
+  const user = session?.user?.name || "public";
+
   async function handleToggleFavorite() {
     setFavMessageId(elementId);
 
@@ -42,25 +48,45 @@ export default function FavoriteButton({
 
       const index = stored.findIndex((c) => c.name === elementId);
 
+      let updated;
+
       if (index !== -1) {
-        stored[index].isFavorite = !stored[index].isFavorite;
+        updated = [...stored];
+        updated[index] = {
+          ...updated[index],
+          isFavorite: !updated[index].isFavorite,
+        };
       } else {
-        stored.push({ name: elementId as string, isFavorite: true });
+        updated = [...stored, { name: elementId as string, isFavorite: true }];
       }
 
-      actionContext?.setFavoriteColorsData(stored);
+      actionContext?.setFavoriteColorsData(updated);
+
+      localStorage.setItem("favoriteColorsData", JSON.stringify(updated));
+
+      updateDbFavoriteColor(user, updated);
     } else {
       const stored = actionContext?.favoriteCombinationsData || [];
 
       const index = stored.findIndex((c) => c.id === elementId);
 
+      let updated;
+
       if (index !== -1) {
-        stored[index].isFavorite = !stored[index].isFavorite;
+        updated = [...stored];
+        updated[index] = {
+          ...updated[index],
+          isFavorite: !updated[index].isFavorite,
+        };
       } else {
-        stored.push({ id: elementId as number, isFavorite: true });
+        updated = [...stored, { id: elementId as number, isFavorite: true }];
       }
 
-      actionContext?.setFavoriteCombinationsData(stored);
+      actionContext?.setFavoriteCombinationsData(updated);
+
+      localStorage.setItem("favoriteCombinationsData", JSON.stringify(updated));
+
+      updateDbFavoriteCombi(user, updated);
     }
   }
 

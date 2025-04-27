@@ -10,7 +10,7 @@ type Props = {
 export default function FavoriteMessage({ showFavMessage, isFavorite }: Props) {
   return (
     <FavMessage $showFavMessage={showFavMessage}>
-      {isFavorite ? "Removed from Favorites" : "Saved to Favorites"}
+      {isFavorite ? "Saved to Favorites" : "Removed from Favorites"}
     </FavMessage>
   );
 }

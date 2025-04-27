@@ -4,12 +4,17 @@ import styled from "styled-components";
 import NavBar from "../Navbar/NavBar";
 import NavBarDesktop from "../NavBarDesktop/NavBarDesktop";
 import Link from "next/link";
-import { createContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
-import { useUpdateFavData } from "@/lib/useUpdateFavData";
 
 export type ContextProps = {
   listType: string;
@@ -21,9 +26,9 @@ export type ContextProps = {
   inspirationPageFilter: string;
   setInspirationPageFilter: (val: string) => void;
   favoriteColorsData: FavoriteColor[];
-  setFavoriteColorsData: (val: FavoriteColor[]) => void;
+  setFavoriteColorsData: Dispatch<SetStateAction<FavoriteColor[]>>;
   favoriteCombinationsData: FavoriteCombination[];
-  setFavoriteCombinationsData: (val: FavoriteCombination[]) => void;
+  setFavoriteCombinationsData: Dispatch<SetStateAction<FavoriteCombination[]>>;
 };
 
 export const ActionContext = createContext<ContextProps | null>(null);
@@ -56,7 +61,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [favoriteCombinationsData, setFavoriteCombinationsData] = useState<
     FavoriteCombination[]
   >([]);
-
   const [listType, setListType] = useState<"colors" | "combinations">("colors");
 
   const [inspirationPageFilter, setInspirationPageFilter] =
@@ -71,14 +75,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
     setCombinationListType(0);
   }, [route]);
 
-  useUpdateFavData(
-    user,
-    favDataFromDb,
-    favoriteColorsData,
-    favoriteCombinationsData,
-    setFavoriteColorsData,
-    setFavoriteCombinationsData
-  );
+  useEffect(() => {
+    if (user !== "public" && favDataFromDb) {
+      setFavoriteColorsData(favDataFromDb?.favoriteColors);
+      setFavoriteCombinationsData(favDataFromDb?.favoriteCombinations);
+    } else {
+      setFavoriteColorsData(
+        JSON.parse(localStorage.getItem("favoriteColorsData") || "[]")
+      );
+      setFavoriteCombinationsData(
+        JSON.parse(localStorage.getItem("favoriteCombinationsData") || "[]")
+      );
+    }
+  }, [favDataFromDb]);
 
   return (
     <>

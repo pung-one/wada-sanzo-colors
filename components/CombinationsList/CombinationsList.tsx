@@ -25,22 +25,11 @@ export default function CombinationsList({ combinations }: Props) {
   useEffect(() => {
     if (combinationListType === 0) {
       setArrayToBeRendered(combinations);
-    } else if (combinationListType === 2) {
+    } else {
       setArrayToBeRendered(
         combinations.filter(
-          (combination) => combination.combination.length === 2
-        )
-      );
-    } else if (combinationListType === 3) {
-      setArrayToBeRendered(
-        combinations.filter(
-          (combination) => combination.combination.length === 3
-        )
-      );
-    } else if (combinationListType === 4) {
-      setArrayToBeRendered(
-        combinations.filter(
-          (combination) => combination.combination.length === 4
+          (combination) =>
+            combination.combination.length === combinationListType
         )
       );
     }
@@ -49,8 +38,9 @@ export default function CombinationsList({ combinations }: Props) {
   return (
     <List>
       {arrayToBeRendered?.map((combination1) => {
-        const favoriteStatus = favoriteCombinationsData.some(
-          (combination2) => combination2.id === combination1.id
+        const favoriteStatus = favoriteCombinationsData.findIndex(
+          (combination2) =>
+            combination2.id === combination1.id && combination2.isFavorite
         );
         return (
           <StyledCombinationContainer key={combination1.id}>
@@ -71,7 +61,7 @@ export default function CombinationsList({ combinations }: Props) {
                     <FavoriteButton
                       type="combi"
                       elementId={combination1.id}
-                      isFavorite={favoriteStatus}
+                      isFavorite={favoriteStatus !== -1}
                       isOnListElement={true}
                       isBright={isColorBright(rgb)}
                     />

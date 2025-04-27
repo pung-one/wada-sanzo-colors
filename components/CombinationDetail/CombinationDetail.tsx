@@ -24,8 +24,8 @@ export function CombinationDetail({
     setActiveIndex(index === activeIndex ? -1 : index);
   };
 
-  const favoriteStatus = actionContext.favoriteCombinationsData.some(
-    (comb) => comb.id == combination.id
+  const favoriteStatus = actionContext.favoriteCombinationsData.findIndex(
+    (comb) => comb.id == combination.id && comb.isFavorite
   );
 
   return (
@@ -34,7 +34,7 @@ export function CombinationDetail({
         <FavoriteButton
           type="combi"
           elementId={combination.id}
-          isFavorite={favoriteStatus}
+          isFavorite={favoriteStatus !== -1}
           isBright={true}
           isOnDetailCombination={true}
         />

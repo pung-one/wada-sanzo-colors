@@ -23,9 +23,11 @@ export default function SpecificCombinationList({ combinations }: Props) {
   return (
     <List>
       {combinations.map((combi1) => {
-        const favoriteStatus = actionContext.favoriteCombinationsData?.some(
-          (favCombination) => favCombination.id == combi1.id
-        );
+        const favoriteStatus =
+          actionContext.favoriteCombinationsData?.findIndex(
+            (favCombination) =>
+              favCombination.id == combi1.id && favCombination.isFavorite
+          );
 
         return (
           <StyledCombinationContainer key={combi1.id}>
@@ -48,7 +50,7 @@ export default function SpecificCombinationList({ combinations }: Props) {
                   <FavoriteButton
                     type="combi"
                     elementId={combi1.id}
-                    isFavorite={favoriteStatus}
+                    isFavorite={favoriteStatus !== -1}
                     isOnListElement={true}
                     isBright={isColorBright(rgb)}
                   />
