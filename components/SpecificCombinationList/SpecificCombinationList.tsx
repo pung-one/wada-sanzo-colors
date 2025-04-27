@@ -2,8 +2,7 @@
 
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import { useContext, useState } from "react";
-import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
+import { useContext } from "react";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { ColorObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
@@ -17,18 +16,9 @@ type Props = {
 };
 
 export default function SpecificCombinationList({ combinations }: Props) {
-  const [showFavMessage, setShowFavMessage] = useState(false);
-  const [favMessageId, setFavMessageId] = useState<number>();
-
   const actionContext = useContext(ActionContext);
 
   if (!actionContext) return <h1>Loading...</h1>;
-
-  function handleShowFavMessage(toggleValue: number) {
-    setShowFavMessage(true);
-    setFavMessageId(toggleValue);
-    const timer = setTimeout(() => setShowFavMessage(false), 1000);
-  }
 
   return (
     <List>
@@ -39,11 +29,6 @@ export default function SpecificCombinationList({ combinations }: Props) {
 
         return (
           <StyledCombinationContainer key={combi1.id}>
-            <FavoriteMessage
-              isFavorite={favoriteStatus}
-              showFavMessage={showFavMessage}
-              isTriggered={combi1.id === favMessageId}
-            />
             {combi1.colors.map(({ name, hex, rgb }, colorIndex) => {
               return (
                 <StyledColorBox key={name} $hex={hex}>
@@ -66,7 +51,6 @@ export default function SpecificCombinationList({ combinations }: Props) {
                     isFavorite={favoriteStatus}
                     isOnListElement={true}
                     isBright={isColorBright(rgb)}
-                    onShowFavMessage={() => handleShowFavMessage(combi1.id)}
                   />
                 </StyledColorBox>
               );

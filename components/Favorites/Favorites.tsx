@@ -46,9 +46,17 @@ export function Favorites({ colors }: Props) {
       {favoriteCombinationsList.length === 0 && listType === "combinations" && (
         <NoFavoritesInfo>No favorite combinations.</NoFavoritesInfo>
       )}
-      {listType === "colors" && <ColorsList colors={favoriteColorsList} />}
+      {listType === "colors" && (
+        <ColorsList
+          key={favoriteColorsData.length}
+          colors={favoriteColorsList}
+        />
+      )}
       {listType === "combinations" && (
-        <CombinationsList combinations={favoriteCombinationsList} />
+        <CombinationsList
+          key={favoriteCombinationsData.length}
+          combinations={favoriteCombinationsList}
+        />
       )}
     </PageContainer>
   );

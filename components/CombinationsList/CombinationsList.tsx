@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import Link from "next/link";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useContext, useEffect, useState } from "react";
-import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 import { isColorBright } from "@/utils/helper";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
@@ -14,8 +13,6 @@ type Props = {
 };
 
 export default function CombinationsList({ combinations }: Props) {
-  const [showFavMessage, setShowFavMessage] = useState(false);
-  const [favMessageId, setFavMessageId] = useState<number>();
   const [arrayToBeRendered, setArrayToBeRendered] =
     useState<CombinationObject[]>();
 
@@ -24,12 +21,6 @@ export default function CombinationsList({ combinations }: Props) {
   if (!actionContext) return <h1>Loading...</h1>;
 
   const { combinationListType, favoriteCombinationsData } = actionContext;
-
-  function handleShowFavMessage(toggleValue: number) {
-    setShowFavMessage(true);
-    setFavMessageId(toggleValue);
-    const timer = setTimeout(() => setShowFavMessage(false), 1000);
-  }
 
   useEffect(() => {
     if (combinationListType === 0) {
@@ -63,11 +54,6 @@ export default function CombinationsList({ combinations }: Props) {
         );
         return (
           <StyledCombinationContainer key={combination1.id}>
-            <FavoriteMessage
-              isFavorite={favoriteStatus}
-              showFavMessage={showFavMessage}
-              isTriggered={combination1.id === favMessageId}
-            />
             {combination1.combination?.map(
               ({ name, hex, rgb }, colorIndex, array) => {
                 return (
@@ -88,9 +74,6 @@ export default function CombinationsList({ combinations }: Props) {
                       isFavorite={favoriteStatus}
                       isOnListElement={true}
                       isBright={isColorBright(rgb)}
-                      onShowFavMessage={() =>
-                        handleShowFavMessage(combination1.id)
-                      }
                     />
                   </StyledColorBox>
                 );

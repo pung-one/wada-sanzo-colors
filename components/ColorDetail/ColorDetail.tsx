@@ -4,7 +4,6 @@ import { ColorObject } from "@/lib/types";
 import { useContext, useState } from "react";
 import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
-import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
 import { isColorBright } from "@/utils/helper";
@@ -20,8 +19,6 @@ type Props = {
 
 export function ColorDetail({ colorObject, combinations }: Props) {
   const [isActive, setIsActive] = useState(false);
-  const [showFavMessage, setShowFavMessage] = useState(false);
-  const [favMessageName, setFavMessageName] = useState("");
 
   const actionContext = useContext(ActionContext);
 
@@ -30,12 +27,6 @@ export function ColorDetail({ colorObject, combinations }: Props) {
 
   const { name, hex, rgb } = colorObject;
 
-  function handleShowFavMessage(toggleValue: string) {
-    setShowFavMessage(true);
-    setFavMessageName(toggleValue);
-    const timer = setTimeout(() => setShowFavMessage(false), 1000);
-  }
-
   const favoriteStatus = actionContext.favoriteColorsData.some(
     (color) => color.name === name
   );
@@ -43,18 +34,12 @@ export function ColorDetail({ colorObject, combinations }: Props) {
   return (
     <PageContainer>
       <StyledColorBox $hex={hex}>
-        <FavoriteMessage
-          isFavorite={favoriteStatus}
-          showFavMessage={showFavMessage}
-          isTriggered={name === favMessageName}
-        />
         <FavoriteButton
           type="color"
           elementId={name}
           isOnDetailColor
           isBright={isColorBright(rgb)}
-          isFavorite={!!favoriteStatus}
-          onShowFavMessage={() => handleShowFavMessage(name)}
+          isFavorite={favoriteStatus}
         />
 
         <StyledHeadline $isBright={isColorBright(rgb)}>{name}</StyledHeadline>

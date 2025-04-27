@@ -3,7 +3,6 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider/CopyFieldSlider";
-import FavoriteMessage from "@/components/FavoriteMessage/FavoriteMessage";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
@@ -13,8 +12,6 @@ export function CombinationDetail({
 }: {
   combination: CombinationObject;
 }) {
-  const [showFavMessage, setShowFavMessage] = useState<boolean>(false);
-  const [favMessageId, setFavMessageId] = useState<number>();
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   const actionContext = useContext(ActionContext);
@@ -30,18 +27,9 @@ export function CombinationDetail({
   const favoriteStatus = actionContext.favoriteCombinationsData.some(
     (comb) => comb.id == combination.id
   );
-  function handleShowFavMessage(toggleValue: number) {
-    setShowFavMessage(true);
-    setFavMessageId(toggleValue);
-    const timer = setTimeout(() => setShowFavMessage(false), 1000);
-  }
+
   return (
     <PageContainer>
-      <FavoriteMessage
-        isFavorite={favoriteStatus}
-        showFavMessage={showFavMessage}
-        isTriggered={combination.id == favMessageId}
-      />
       <Heading>
         <FavoriteButton
           type="combi"
@@ -49,7 +37,6 @@ export function CombinationDetail({
           isFavorite={favoriteStatus}
           isBright={true}
           isOnDetailCombination={true}
-          onShowFavMessage={() => handleShowFavMessage(combination.id)}
         />
         Combination #{combination.id}
       </Heading>

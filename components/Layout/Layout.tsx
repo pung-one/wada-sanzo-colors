@@ -5,11 +5,11 @@ import NavBar from "../Navbar/NavBar";
 import NavBarDesktop from "../NavBarDesktop/NavBarDesktop";
 import Link from "next/link";
 import { createContext, useEffect, useState } from "react";
-import { useLocalStorage } from "@/utils/useLocalStorage";
 import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import { useUpdateFavData } from "@/lib/useUpdateFavData";
 
 export type ContextProps = {
   listType: string;
@@ -21,14 +21,20 @@ export type ContextProps = {
   inspirationPageFilter: string;
   setInspirationPageFilter: (val: string) => void;
   favoriteColorsData: FavoriteColor[];
+  setFavoriteColorsData: (val: FavoriteColor[]) => void;
   favoriteCombinationsData: FavoriteCombination[];
+  setFavoriteCombinationsData: (val: FavoriteCombination[]) => void;
 };
 
 export const ActionContext = createContext<ContextProps | null>(null);
 
 async function fetcher(url: string) {
-  const res = await fetch(url);
-  return await res.json();
+  try {
+    const res = await fetch(url);
+    return await res.json();
+  } catch (e) {
+    console.error(e);
+  }
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -38,20 +44,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const user = session?.user?.name || "public";
 
-  const { data: favData, error: favDataError } = useSWR<FavData>(
+  const { data: favDataFromDb, error: favDataError } = useSWR<FavData>(
     user !== "public" ? `/api/favorites?user=${user}` : null,
     fetcher
   );
 
-  const [favoriteColorsData, setFavoriteColorsData] = useLocalStorage(
-    "favoriteColorsData",
+  const [favoriteColorsData, setFavoriteColorsData] = useState<FavoriteColor[]>(
     []
   );
 
-  const [favoriteCombinationsData, setFavoriteCombinationsData] =
-    useLocalStorage("favoriteCombinationsData", []);
+  const [favoriteCombinationsData, setFavoriteCombinationsData] = useState<
+    FavoriteCombination[]
+  >([]);
 
-  const [listType, setListType] = useLocalStorage("listType", "colors");
+  const [listType, setListType] = useState<"colors" | "combinations">("colors");
 
   const [inspirationPageFilter, setInspirationPageFilter] =
     useState("initialPage");
@@ -65,40 +71,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
     setCombinationListType(0);
   }, [route]);
 
-  useEffect(() => {
-    if (favData) {
-      setFavoriteColorsData(favData?.favoriteColors);
-      setFavoriteCombinationsData(favData?.favoriteCombinations);
-    }
-  }, [favData]);
-
-  /* useEffect(() => {
-    if (user !== "public") {
-      handleUpdateFavs(user);
-    }
-  }, [favoriteColorsData, favoriteCombinationsData]);
-
-  async function handleUpdateFavs(user: string) {
-    const body = {
-      user: user,
-      favoriteColors: favoriteColorsData,
-      favoriteCombinations: favoriteCombinationsData,
-    };
-
-    const response = await fetch(`/api/favorites/${user}`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      await response.json();
-    } else {
-      console.error(response.status);
-    }
-  } */
+  useUpdateFavData(
+    user,
+    favDataFromDb,
+    favoriteColorsData,
+    favoriteCombinationsData,
+    setFavoriteColorsData,
+    setFavoriteCombinationsData
+  );
 
   return (
     <>
@@ -120,7 +100,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
           inspirationPageFilter: inspirationPageFilter,
           setInspirationPageFilter: setInspirationPageFilter,
           favoriteColorsData: favoriteColorsData,
+          setFavoriteColorsData: setFavoriteColorsData,
           favoriteCombinationsData: favoriteCombinationsData,
+          setFavoriteCombinationsData: setFavoriteCombinationsData,
         }}
       >
         <NavBar />

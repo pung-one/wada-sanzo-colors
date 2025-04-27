@@ -18,8 +18,6 @@ export async function GET(req: NextRequest) {
       user: user,
     });
 
-    //revalidatePath("/adminaogwgzsrm");
-
     return Response.json(favData);
   } catch (e) {
     console.error(e);
@@ -43,27 +41,27 @@ export async function PUT(req: Request) {
 
     if (request.type === "favColorUpdate") {
       await favorites.updateOne(
-        { user: user, "favoriteColors.name": request.colorName },
+        { user: user },
         {
-          $bit: {
-            "favoriteColors.$.isFavorite": { xor: 1 },
+          $set: {
+            favoriteColors: request.favoriteColorsData,
           },
-        }
+        },
+        { upsert: true }
       );
     } else if (request.type === "favCombinationUpdate") {
       await favorites.updateOne(
-        { user: user, "favoriteCombinations.id": request.id },
+        { user: user },
         {
-          $bit: {
-            "favoriteCombinations.$.isFavorite": { xor: 1 },
+          $set: {
+            favoriteCombinations: request.favoriteCombinationsData,
           },
-        }
+        },
+        { upsert: true }
       );
     } else {
       return new Response("Internal Server Error", { status: 500 });
     }
-
-    //revalidatePath("/adminaogwgzsrm");
 
     return new Response("Favorite status updated.", {
       status: 200,

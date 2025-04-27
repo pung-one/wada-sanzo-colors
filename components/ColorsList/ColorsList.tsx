@@ -4,7 +4,6 @@ import Link from "next/link";
 import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useState, useEffect, useContext } from "react";
-import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 import { ColorObject } from "@/lib/types";
 import { isColorBright } from "@/utils/helper";
 import { ActionContext } from "../Layout/Layout";
@@ -14,8 +13,6 @@ type Props = {
 };
 
 export default function ColorsList({ colors }: Props) {
-  const [showFavMessage, setShowFavMessage] = useState(false);
-  const [favMessageName, setFavMessageName] = useState("");
   const [arrayToBeRendered, setArrayToBeRendered] = useState<ColorObject[]>();
 
   const actionContext = useContext(ActionContext);
@@ -27,48 +24,28 @@ export default function ColorsList({ colors }: Props) {
   useEffect(() => {
     if (colorListType === 0) {
       setArrayToBeRendered(colors);
-    } else if (colorListType === 1) {
-      setArrayToBeRendered(colors.filter((color) => color.swatch === 0));
-    } else if (colorListType === 2) {
-      setArrayToBeRendered(colors.filter((color) => color.swatch === 1));
-    } else if (colorListType === 3) {
-      setArrayToBeRendered(colors.filter((color) => color.swatch === 2));
-    } else if (colorListType === 4) {
-      setArrayToBeRendered(colors.filter((color) => color.swatch === 3));
-    } else if (colorListType === 5) {
-      setArrayToBeRendered(colors.filter((color) => color.swatch === 4));
-    } else if (colorListType === 6) {
-      setArrayToBeRendered(colors.filter((color) => color.swatch === 5));
+    } else {
+      setArrayToBeRendered(
+        colors.filter((color) => color.swatch === colorListType - 1)
+      );
     }
   }, [colorListType, favoriteColorsData]);
 
   return (
-    <List>
+    <List key={favoriteColorsData.length}>
       {arrayToBeRendered?.map(({ name, slug, rgb, hex }) => {
         const favoriteStatus = favoriteColorsData?.some(
           (color) => color.name === name
         );
 
-        function handleShowFavMessage(toggleValue: string) {
-          setShowFavMessage(true);
-          setFavMessageName(toggleValue);
-          const timer = setTimeout(() => setShowFavMessage(false), 1000);
-        }
-
         return (
           <ColorBox key={name} $isBright={isColorBright(rgb)} $hex={hex}>
-            <FavoriteMessage
-              isFavorite={favoriteStatus}
-              showFavMessage={showFavMessage}
-              isTriggered={name === favMessageName}
-            />
             <FavoriteButton
               type="color"
               elementId={name}
               isBright={isColorBright(rgb)}
               isFavorite={favoriteStatus}
               isOnListElement={true}
-              onShowFavMessage={() => handleShowFavMessage(name)}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
               <StyledColorName $isBright={isColorBright(rgb)}>

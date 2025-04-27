@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components";
 import { TfiArrowDown } from "react-icons/tfi";
-import { toggleFavoriteColor, toggleFavoriteCombination } from "@/utils/helper";
 import { useSession } from "next-auth/react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { ActionContext } from "../Layout/Layout";
+import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 
 type Props = {
   type: "combi" | "color";
@@ -11,7 +13,6 @@ type Props = {
   isOnDetailColor?: boolean;
   isOnDetailCombination?: boolean;
   isBright: boolean;
-  onShowFavMessage: () => void;
 };
 
 export default function FavoriteButton({
@@ -22,35 +23,75 @@ export default function FavoriteButton({
   isOnDetailColor = false,
   isOnDetailCombination = false,
   isBright,
-  onShowFavMessage,
 }: Props) {
-  const { data: session } = useSession();
+  const [favMessageId, setFavMessageId] = useState<string | number>("");
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const user = session?.user?.name || "public";
+  const actionContext = useContext(ActionContext);
 
-  function handleToggleFavorite() {
+  async function handleToggleFavorite() {
+    setFavMessageId(elementId);
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => setFavMessageId("false"), 1000);
+
     if (type === "color") {
-      toggleFavoriteColor(elementId as string, user);
+      const stored = actionContext?.favoriteColorsData || [];
+
+      const index = stored.findIndex((c) => c.name === elementId);
+
+      if (index !== -1) {
+        stored[index].isFavorite = !stored[index].isFavorite;
+      } else {
+        stored.push({ name: elementId as string, isFavorite: true });
+      }
+
+      actionContext?.setFavoriteColorsData(stored);
     } else {
-      toggleFavoriteCombination(elementId as number, user);
+      const stored = actionContext?.favoriteCombinationsData || [];
+
+      const index = stored.findIndex((c) => c.id === elementId);
+
+      if (index !== -1) {
+        stored[index].isFavorite = !stored[index].isFavorite;
+      } else {
+        stored.push({ id: elementId as number, isFavorite: true });
+      }
+
+      actionContext?.setFavoriteCombinationsData(stored);
     }
   }
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <Button
-      $isFavorite={isFavorite}
-      $isBright={isBright}
-      $isOnList={isOnListElement}
-      $isOnColor={isOnDetailColor}
-      $isOnCombination={isOnDetailCombination}
-      onClick={() => {
-        handleToggleFavorite();
-        onShowFavMessage();
-      }}
-      aria-label={"favor or defavor a color or combination"}
-    >
-      <Arrow $isFavorite={isFavorite} $isBright={isBright} />
-    </Button>
+    <>
+      <FavoriteMessage
+        isFavorite={isFavorite}
+        showFavMessage={favMessageId === elementId}
+      />
+
+      <Button
+        $isFavorite={isFavorite}
+        $isBright={isBright}
+        $isOnList={isOnListElement}
+        $isOnColor={isOnDetailColor}
+        $isOnCombination={isOnDetailCombination}
+        onClick={handleToggleFavorite}
+        aria-label={"favor or defavor a color or combination"}
+      >
+        <Arrow $isFavorite={isFavorite} $isBright={isBright} />
+      </Button>
+    </>
   );
 }
 
