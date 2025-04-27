@@ -23,8 +23,6 @@ export type ContextProps = {
   setCombinationListType: (type: number) => void;
   colorListType: number;
   setColorListType: (type: number) => void;
-  inspirationPageFilter: string;
-  setInspirationPageFilter: (val: string) => void;
   favoriteColorsData: FavoriteColor[];
   setFavoriteColorsData: Dispatch<SetStateAction<FavoriteColor[]>>;
   favoriteCombinationsData: FavoriteCombination[];
@@ -62,9 +60,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
     FavoriteCombination[]
   >([]);
   const [listType, setListType] = useState<"colors" | "combinations">("colors");
-
-  const [inspirationPageFilter, setInspirationPageFilter] =
-    useState("initialPage");
 
   const [combinationListType, setCombinationListType] = useState(0);
 
@@ -106,8 +101,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           setCombinationListType: setCombinationListType,
           colorListType: colorListType,
           setColorListType: setColorListType,
-          inspirationPageFilter: inspirationPageFilter,
-          setInspirationPageFilter: setInspirationPageFilter,
           favoriteColorsData: favoriteColorsData,
           setFavoriteColorsData: setFavoriteColorsData,
           favoriteCombinationsData: favoriteCombinationsData,

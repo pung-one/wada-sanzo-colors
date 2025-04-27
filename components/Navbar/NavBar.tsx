@@ -29,8 +29,7 @@ export default function NavBar() {
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { listType, inspirationPageFilter, setInspirationPageFilter } =
-    actionContext;
+  const { listType } = actionContext;
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -46,10 +45,7 @@ export default function NavBar() {
       <NavPages>
         <NavButton
           href={"/inspiration"}
-          $isActive={
-            route === "/inspiration" && inspirationPageFilter === "initialPage"
-          }
-          onClick={() => setInspirationPageFilter("initialPage")}
+          $isActive={route.includes("inspiration")}
         >
           Inspiration
         </NavButton>

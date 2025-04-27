@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 import chroma from "chroma-js";
 import { useState } from "react";
@@ -6,44 +8,51 @@ import { ImArrowDown } from "react-icons/im";
 import { isColorBright } from "@/utils/helper";
 import { ColorObject } from "@/lib/types";
 
-export default function ColorPicker({ colors }: { colors: ColorObject[] }) {
+type Reducer = {
+  color: ColorObject | undefined;
+  distance: number;
+};
+
+export function ColorPicker({ colors }: { colors: ColorObject[] }) {
   const [closestColor, setClosestColor] = useState<ColorObject>();
-  const [isColorPicked, setIsColorPicked] = useState(false);
+  const [inputColor, setInputColor] = useState<string>("");
 
   function handleCompare(event: any) {
     event.preventDefault();
-    const inputColor = event.target.color.value;
 
-    let closestDist: number | undefined = undefined;
+    const closest = colors.reduce(
+      (closest: Reducer, color: ColorObject) => {
+        const distance = chroma.distance(inputColor, color.hex);
 
-    colors.forEach((currColor, currInd) => {
-      let dist = chroma.distance(inputColor, currColor.hex);
-      if (!closestDist || closestDist > dist) {
-        closestDist = dist;
-        setClosestColor(colors[currInd]);
-      } else {
-        return;
-      }
-    });
+        return distance < closest.distance
+          ? { color: color, distance: distance }
+          : closest;
+      },
+      { color: undefined, distance: Infinity }
+    );
+
+    setClosestColor(closest.color);
   }
 
   return (
-    <>
-      <StyledForm onSubmit={(e) => handleCompare}>
+    <PageContainer>
+      <StyledForm onSubmit={handleCompare}>
         <label htmlFor="color">
           <h1>Pick a Color</h1>
         </label>
         <Arrow />
+
         <ColorInput
           id="color"
           type="color"
-          defaultValue="#b5b1d8"
-          onClick={() => setIsColorPicked(true)}
+          value={inputColor || "#bf5892"}
+          onChange={(e) => setInputColor(e.target.value)}
         />
-        {isColorPicked && (
+        {inputColor && (
           <StyledButton type="submit">Find from collection</StyledButton>
         )}
       </StyledForm>
+
       {closestColor && (
         <ResultContainer>
           <p>The most similar color from the collection:</p>
@@ -57,9 +66,17 @@ export default function ColorPicker({ colors }: { colors: ColorObject[] }) {
           </StyledLink>
         </ResultContainer>
       )}
-    </>
+    </PageContainer>
   );
 }
+
+const PageContainer = styled.main`
+  position: relative;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 70%;
+    margin-left: 30%;
+  }
+`;
 
 const StyledForm = styled.form`
   padding-top: 17vh;

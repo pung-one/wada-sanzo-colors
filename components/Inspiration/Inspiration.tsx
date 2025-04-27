@@ -2,35 +2,32 @@
 
 import styled from "styled-components";
 import Link from "next/link";
-import ColorPicker from "@/components/ColorPicker/ColorPicker";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ActionContext } from "../Layout/Layout";
-import { ColorObject } from "@/lib/types";
-import { createCombinationArray } from "@/utils/helper";
+import { ColorObject, CombinationObject } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
-export function Inspiration({ colors }: { colors: ColorObject[] }) {
-  let randomCombination: any;
+type Props = {
+  colors: ColorObject[];
+  combinations: CombinationObject[];
+};
+
+export default function Inspiration({ colors, combinations }: Props) {
+  const [randomCombination, setRandomCombination] = useState<CombinationObject>(
+    combinations[276]
+  );
+
+  const router = useRouter();
 
   const actionContext = useContext(ActionContext);
 
+  useEffect(() => {
+    setRandomCombination(combinations[Math.floor(Math.random() * 348) || 276]);
+  }, [combinations]);
+
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { inspirationPageFilter, setInspirationPageFilter } = actionContext;
-
-  const randomColorSlug = colors[Math.floor(Math.random() * 159)]?.slug;
-  const randomCombinationId = Math.floor(Math.random() * 348);
-
-  const combinationArray = createCombinationArray(colors);
-
   function createRandomCombinationCssGradient() {
-    randomCombination = combinationArray.find(
-      (combi) => combi.id == randomCombinationId
-    );
-
-    if (!randomCombination) {
-      return;
-    }
-
     if (randomCombination.combination.length === 2) {
       const randomGradient = `linear-gradient(180deg, rgba(${randomCombination.combination[0].rgb[0]},${randomCombination.combination[0].rgb[1]},${randomCombination.combination[0].rgb[2]},1) 0%, rgba(${randomCombination.combination[1].rgb[0]},${randomCombination.combination[1].rgb[1]},${randomCombination.combination[1].rgb[2]},1) 100%)`;
       return randomGradient;
@@ -42,31 +39,39 @@ export function Inspiration({ colors }: { colors: ColorObject[] }) {
       return randomGradient;
     }
   }
-  const randomGradient = createRandomCombinationCssGradient();
 
   return (
     <PageContainer>
-      {inspirationPageFilter === "initialPage" && (
-        <ButtonContainer $background={randomGradient!}>
-          <StyledButton
-            onClick={() => setInspirationPageFilter("Pick Rainbow Color")}
-          >
-            Pick Rainbow Color
-          </StyledButton>
-          <StyledLink href={`/colors/${randomColorSlug}`}>
-            Random Color
-          </StyledLink>
-          <StyledLink href={`/combinations/${Math.floor(Math.random() * 348)}`}>
-            Random Combination
-          </StyledLink>
-          <EasterEgg href={`/combinations/${randomCombination.id}`}>
-            Background Combination
-          </EasterEgg>
-        </ButtonContainer>
-      )}
-      {inspirationPageFilter === "Pick Rainbow Color" && (
-        <ColorPicker colors={colors} />
-      )}
+      <ButtonContainer $background={createRandomCombinationCssGradient()}>
+        <StyledButton onClick={() => router.push("inspiration/color-picker")}>
+          Color Picker
+        </StyledButton>
+
+        <StyledButton
+          onClick={() =>
+            router.push(
+              `/colors/${
+                colors[Math.floor(Math.random() * 159)]?.slug ||
+                "grayish-lavender--a"
+              }`
+            )
+          }
+        >
+          Random Color
+        </StyledButton>
+
+        <StyledButton
+          onClick={() =>
+            router.push(`/combinations/${Math.floor(Math.random() * 348)}`)
+          }
+        >
+          Random Combination
+        </StyledButton>
+
+        <EasterEgg href={`/combinations/${randomCombination?.id || 276}`}>
+          Background Combination
+        </EasterEgg>
+      </ButtonContainer>
     </PageContainer>
   );
 }
@@ -79,7 +84,7 @@ const PageContainer = styled.main`
   }
 `;
 
-const ButtonContainer = styled.section<{ $background: string }>`
+const ButtonContainer = styled.section<{ $background?: string }>`
   position: relative;
   display: flex;
   flex-direction: column;
