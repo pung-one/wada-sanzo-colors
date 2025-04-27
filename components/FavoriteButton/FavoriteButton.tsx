@@ -1,6 +1,5 @@
 import styled, { css } from "styled-components";
 import { TfiArrowDown } from "react-icons/tfi";
-import { useSession } from "next-auth/react";
 import { useContext, useEffect, useRef, useState } from "react";
 import { ActionContext } from "../Layout/Layout";
 import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";

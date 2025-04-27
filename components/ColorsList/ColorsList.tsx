@@ -32,7 +32,7 @@ export default function ColorsList({ colors }: Props) {
   }, [colorListType, favoriteColorsData]);
 
   return (
-    <List key={favoriteColorsData.length}>
+    <List>
       {arrayToBeRendered?.map(({ name, slug, rgb, hex }) => {
         const favoriteStatus = favoriteColorsData?.some(
           (color) => color.name === name
