@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export type ColorObject = {
   name: string;
   combinations: number[];
@@ -26,7 +28,7 @@ export type FavoriteCombination = {
 };
 
 export type FavData = {
-  _id: string;
+  _id: ObjectId;
   user: string;
   favoriteColors: FavoriteColor[];
   favoriteCombinations: FavoriteCombination[];

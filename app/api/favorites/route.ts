@@ -1,4 +1,5 @@
 import clientPromise from "@/db/mongodb";
+import { ObjectId } from "mongodb";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -14,11 +15,28 @@ export async function GET(req: NextRequest) {
     const database = client.db("colors");
     const favorites = database.collection("favorites");
 
-    const favData = await favorites.findOne({
+    let favData = await favorites.findOne({
       user: user,
     });
 
-    return Response.json(favData);
+    if (!favData) {
+      const defaultFavData = {
+        _id: new ObjectId(),
+        user: user,
+        favoriteColors: [],
+        favoriteCombinations: [],
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      await favorites.insertOne(defaultFavData);
+
+      favData = { ...defaultFavData };
+    }
+
+    const { createdAt, updatedAt, ...responseData } = favData;
+
+    return Response.json(responseData);
   } catch (e) {
     console.error(e);
     return new Response("Internal Server Error", { status: 500 });
@@ -45,6 +63,7 @@ export async function PUT(req: Request) {
         {
           $set: {
             favoriteColors: request.favoriteColorsData,
+            updatedAt: new Date(),
           },
         },
         { upsert: true }
@@ -55,6 +74,7 @@ export async function PUT(req: Request) {
         {
           $set: {
             favoriteCombinations: request.favoriteCombinationsData,
+            updatedAt: new Date(),
           },
         },
         { upsert: true }

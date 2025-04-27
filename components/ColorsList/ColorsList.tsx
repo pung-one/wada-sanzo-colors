@@ -33,7 +33,7 @@ export default function ColorsList({ colors }: Props) {
 
   return (
     <List>
-      {arrayToBeRendered?.map(({ name, slug, rgb, hex }) => {
+      {arrayToBeRendered?.map(({ name, slug, rgb, hex, swatch }) => {
         const favoriteStatus = favoriteColorsData?.findIndex(
           (color) => color.name === name && color.isFavorite
         );
@@ -43,6 +43,7 @@ export default function ColorsList({ colors }: Props) {
             <FavoriteButton
               type="color"
               elementId={name}
+              swatch={swatch}
               isBright={isColorBright(rgb)}
               isFavorite={favoriteStatus !== -1}
               isOnListElement={true}

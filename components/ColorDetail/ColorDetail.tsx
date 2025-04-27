@@ -25,7 +25,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
   if (!actionContext || !colorObject || !combinations)
     return <h1>Loading...</h1>;
 
-  const { name, hex, rgb } = colorObject;
+  const { name, hex, rgb, swatch } = colorObject;
 
   const favoriteStatus = actionContext.favoriteColorsData.findIndex(
     (color) => color.name === name && color.isFavorite
@@ -37,6 +37,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
         <FavoriteButton
           type="color"
           elementId={name}
+          swatch={swatch}
           isOnDetailColor
           isBright={isColorBright(rgb)}
           isFavorite={favoriteStatus !== -1}

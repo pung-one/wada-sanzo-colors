@@ -8,56 +8,11 @@ type Props = {
 };
 
 export default function ColorFilter({ isAtFavorites }: Props) {
-  const [favsSwatchOne, setFavsSwatchOne] = useState(0);
-  const [favsSwatchTwo, setFavsSwatchTwo] = useState(0);
-  const [favsSwatchThree, setFavsSwatchThree] = useState(0);
-  const [favsSwatchFour, setFavsSwatchFour] = useState(0);
-  const [favsSwatchFive, setFavsSwatchFive] = useState(0);
-  const [favsSwatchSix, setFavsSwatchSix] = useState(0);
-
   const actionContext = useContext(ActionContext);
 
   if (!actionContext) return <h1>Loading...</h1>;
 
   const { favoriteColorsData, colorListType, setColorListType } = actionContext;
-
-  useEffect(() => {
-    setFavsSwatchOne(
-      favoriteColorsData.filter(
-        (color) => color.swatch === 0 && color.isFavorite
-      ).length
-    );
-
-    setFavsSwatchTwo(
-      favoriteColorsData.filter(
-        (color) => color.swatch === 1 && color.isFavorite
-      ).length
-    );
-
-    setFavsSwatchThree(
-      favoriteColorsData.filter(
-        (color) => color.swatch === 2 && color.isFavorite
-      ).length
-    );
-
-    setFavsSwatchFour(
-      favoriteColorsData.filter(
-        (color) => color.swatch === 3 && color.isFavorite
-      ).length
-    );
-
-    setFavsSwatchFive(
-      favoriteColorsData.filter(
-        (color) => color.swatch === 4 && color.isFavorite
-      ).length
-    );
-
-    setFavsSwatchSix(
-      favoriteColorsData.filter(
-        (color) => color.swatch === 5 && color.isFavorite
-      ).length
-    );
-  }, [favoriteColorsData]);
 
   return (
     <FilterContainer>
@@ -68,7 +23,15 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         aria-label={"only show colors from swatch nr. 1: red/purple"}
       >
         <SwatchName $isActive={colorListType === 1}>red/purple</SwatchName>
-        {isAtFavorites && <StyledNumber>{favsSwatchOne}</StyledNumber>}
+        {isAtFavorites && (
+          <StyledNumber>
+            {
+              favoriteColorsData.filter(
+                (color) => color.swatch === 0 && color.isFavorite
+              ).length
+            }
+          </StyledNumber>
+        )}
       </StyledButton>
       <StyledButton
         onClick={() => setColorListType(colorListType === 2 ? 0 : 2)}
@@ -77,7 +40,15 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         aria-label={"only show colors from swatch nr. 2: yellow/red"}
       >
         <SwatchName $isActive={colorListType === 2}>yellow/red</SwatchName>
-        {isAtFavorites && <StyledNumber>{favsSwatchTwo}</StyledNumber>}
+        {isAtFavorites && (
+          <StyledNumber>
+            {
+              favoriteColorsData.filter(
+                (color) => color.swatch === 1 && color.isFavorite
+              ).length
+            }
+          </StyledNumber>
+        )}
       </StyledButton>
       <StyledButton
         onClick={() => setColorListType(colorListType === 3 ? 0 : 3)}
@@ -86,7 +57,15 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         aria-label={"only show colors from swatch nr. 3: yellow/green"}
       >
         <SwatchName $isActive={colorListType === 3}>yellow/green</SwatchName>
-        {isAtFavorites && <StyledNumber>{favsSwatchThree}</StyledNumber>}
+        {isAtFavorites && (
+          <StyledNumber>
+            {
+              favoriteColorsData.filter(
+                (color) => color.swatch === 2 && color.isFavorite
+              ).length
+            }
+          </StyledNumber>
+        )}
       </StyledButton>
       <StyledButton
         onClick={() => setColorListType(colorListType === 4 ? 0 : 4)}
@@ -95,7 +74,15 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         aria-label={"only show colors from swatch nr. 4: blue/turquoise"}
       >
         <SwatchName $isActive={colorListType === 4}>blue/turquoise</SwatchName>
-        {isAtFavorites && <StyledNumber>{favsSwatchFour}</StyledNumber>}
+        {isAtFavorites && (
+          <StyledNumber>
+            {
+              favoriteColorsData.filter(
+                (color) => color.swatch === 3 && color.isFavorite
+              ).length
+            }
+          </StyledNumber>
+        )}
       </StyledButton>
       <StyledButton
         onClick={() => setColorListType(colorListType === 5 ? 0 : 5)}
@@ -104,7 +91,15 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         aria-label={"only show colors from swatch nr. 5: blue/purple"}
       >
         <SwatchName $isActive={colorListType === 5}>blue/purple</SwatchName>
-        {isAtFavorites && <StyledNumber>{favsSwatchFive}</StyledNumber>}
+        {isAtFavorites && (
+          <StyledNumber>
+            {
+              favoriteColorsData.filter(
+                (color) => color.swatch === 4 && color.isFavorite
+              ).length
+            }
+          </StyledNumber>
+        )}
       </StyledButton>
       <StyledButton
         onClick={() => setColorListType(colorListType === 6 ? 0 : 6)}
@@ -115,7 +110,15 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         <SwatchName $isActive={colorListType === 6}>
           white/grey/black
         </SwatchName>
-        {isAtFavorites && <StyledNumber>{favsSwatchSix}</StyledNumber>}
+        {isAtFavorites && (
+          <StyledNumber>
+            {
+              favoriteColorsData.filter(
+                (color) => color.swatch === 5 && color.isFavorite
+              ).length
+            }
+          </StyledNumber>
+        )}
       </StyledButton>
     </FilterContainer>
   );

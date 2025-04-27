@@ -10,6 +10,7 @@ type Props = {
   type: "combi" | "color";
   isFavorite: boolean;
   elementId: number | string;
+  swatch?: number;
   isOnListElement?: boolean;
   isOnDetailColor?: boolean;
   isOnDetailCombination?: boolean;
@@ -19,6 +20,7 @@ type Props = {
 export default function FavoriteButton({
   type,
   elementId,
+  swatch,
   isFavorite,
   isOnListElement = false,
   isOnDetailColor = false,
@@ -57,7 +59,10 @@ export default function FavoriteButton({
           isFavorite: !updated[index].isFavorite,
         };
       } else {
-        updated = [...stored, { name: elementId as string, isFavorite: true }];
+        updated = [
+          ...stored,
+          { name: elementId as string, swatch: swatch, isFavorite: true },
+        ];
       }
 
       actionContext?.setFavoriteColorsData(updated);
