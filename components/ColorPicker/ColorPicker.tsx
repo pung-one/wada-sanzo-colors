@@ -45,7 +45,7 @@ export function ColorPicker({ colors }: { colors: ColorObject[] }) {
         <ColorInput
           id="color"
           type="color"
-          value={inputColor || "#bf5892"}
+          value={inputColor || "#62c6bf"}
           onChange={(e) => setInputColor(e.target.value)}
         />
         {inputColor && (

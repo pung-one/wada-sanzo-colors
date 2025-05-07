@@ -61,22 +61,25 @@ export function TabBar() {
 
 const TabContainer = styled.nav`
   display: flex;
-  justify-content: space-around;
+  //justify-content: space-around;
   align-items: center;
   width: 100%;
   height: 9vh;
-  padding: 1vh 0 1vh;
+  gap: 1vh;
+  padding: 1vh;
   background-color: white;
   border-bottom: 1px solid black;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     height: 100%;
     flex-direction: column;
     padding: 0;
+    gap: initial;
   }
 `;
 
 const MobileButtonContainer = styled.section`
   display: initial;
+  flex: 1;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     display: none;
   }
@@ -106,7 +109,7 @@ const StyledButton = styled.button<{ $isActive?: boolean }>`
   background-color: white;
   border: 1px solid black;
   height: 6vh;
-  width: 45%;
+  width: 100%;
   box-shadow: ${({ $isActive }) => ($isActive ? null : "0 0 2px black")};
   background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
