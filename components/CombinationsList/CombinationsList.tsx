@@ -80,7 +80,7 @@ const List = styled.ul`
   padding-top: 33.5vh;
   list-style-type: 0;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    padding-top: 16.5vh;
+    padding-top: 160px;
   }
 `;
 

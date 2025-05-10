@@ -17,7 +17,7 @@ import { useSession } from "next-auth/react";
 import useSWR from "swr";
 
 export type ContextProps = {
-  listType: string;
+  listType: "colors" | "combinations";
   setListType: (type: "colors" | "combinations") => void;
   combinationListType: number;
   setCombinationListType: (type: number) => void;
@@ -131,31 +131,29 @@ const Header = styled.header`
   justify-content: space-between;
   z-index: 6;
   width: 100%;
-  height: 6.5vh;
+  height: 60px;
   top: 0;
-  font-size: 2vh;
   font-weight: lighter;
   background-color: white;
   border-bottom: 1px solid black;
-  padding: 1vh 0 1vh 3vw;
+  padding: 10px 20px;
 `;
 
 const SignInOutButton = styled(Link)<{ $isActive: boolean }>`
-  display: flex;
-  align-items: center;
-  margin-right: 2vw;
-  height: 4.5vh;
-  font-size: 1.8vh;
-  font-weight: normal;
-  padding: 0 1.5vw 0 1.5vw;
+  padding: 10px;
+  border: 1px solid black;
+  font-size: 0.8rem;
+  white-space: nowrap;
   background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
-  border: 1px solid black;
   box-shadow: ${({ $isActive }) => ($isActive ? "" : "0 0 2px black")};
   transition: all 0.2s;
   &:hover {
     cursor: pointer;
     box-shadow: none;
+  }
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    font-size: 1rem;
   }
 `;
 
@@ -164,7 +162,6 @@ const DonationButton = styled.a`
   position: fixed;
   bottom: 10px;
   left: 10px;
-  font-size: 1.8vh;
   font-weight: normal;
   padding: 10px;
   background-color: white;

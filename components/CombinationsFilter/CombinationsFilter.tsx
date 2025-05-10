@@ -105,7 +105,7 @@ const FilterContainer = styled.nav`
   border-bottom: 1px solid black;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     position: fixed;
-    top: 6.5vh;
+    top: 60px;
     right: 0;
     gap: 1.5vh;
     width: 70%;

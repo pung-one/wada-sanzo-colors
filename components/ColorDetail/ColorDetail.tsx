@@ -66,7 +66,7 @@ const PageContainer = styled.main`
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
-    margin-top: 6.5vh;
+    margin-top: 60px;
   }
 `;
 
@@ -83,7 +83,7 @@ const StyledColorBox = styled.header<{ $hex: string }>`
 
 const StyledHeadline = styled.h1<{ $isBright: boolean }>`
   color: ${({ $isBright }) => ($isBright ? "black" : "white")};
-  font-size: 3vh;
+  font-size: 1.5rem;
   font-weight: lighter;
   padding: 2vh 0 4vh;
 `;

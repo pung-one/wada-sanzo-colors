@@ -64,6 +64,6 @@ const PageContainer = styled.main`
 
 const NoFavoritesInfo = styled.p`
   padding-top: 50vh;
-  font-size: 3vh;
+  font-size: 1.5rem;
   text-align: center;
 `;

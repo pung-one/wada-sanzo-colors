@@ -1,6 +1,6 @@
 import { css } from "styled-components";
 import styled from "styled-components";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
@@ -22,7 +22,6 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         $swatch={"red/purple"}
         aria-label={"only show colors from swatch nr. 1: red/purple"}
       >
-        <SwatchName $isActive={colorListType === 1}>red/purple</SwatchName>
         {isAtFavorites && (
           <StyledNumber>
             {
@@ -33,13 +32,13 @@ export default function ColorFilter({ isAtFavorites }: Props) {
           </StyledNumber>
         )}
       </StyledButton>
+
       <StyledButton
         onClick={() => setColorListType(colorListType === 2 ? 0 : 2)}
         $isActive={colorListType === 2}
         $swatch={"yellow/red"}
         aria-label={"only show colors from swatch nr. 2: yellow/red"}
       >
-        <SwatchName $isActive={colorListType === 2}>yellow/red</SwatchName>
         {isAtFavorites && (
           <StyledNumber>
             {
@@ -50,13 +49,13 @@ export default function ColorFilter({ isAtFavorites }: Props) {
           </StyledNumber>
         )}
       </StyledButton>
+
       <StyledButton
         onClick={() => setColorListType(colorListType === 3 ? 0 : 3)}
         $isActive={colorListType === 3}
         $swatch={"yellow/green"}
         aria-label={"only show colors from swatch nr. 3: yellow/green"}
       >
-        <SwatchName $isActive={colorListType === 3}>yellow/green</SwatchName>
         {isAtFavorites && (
           <StyledNumber>
             {
@@ -67,13 +66,13 @@ export default function ColorFilter({ isAtFavorites }: Props) {
           </StyledNumber>
         )}
       </StyledButton>
+
       <StyledButton
         onClick={() => setColorListType(colorListType === 4 ? 0 : 4)}
         $isActive={colorListType === 4}
         $swatch={"blue/turquoise"}
         aria-label={"only show colors from swatch nr. 4: blue/turquoise"}
       >
-        <SwatchName $isActive={colorListType === 4}>blue/turquoise</SwatchName>
         {isAtFavorites && (
           <StyledNumber>
             {
@@ -84,13 +83,13 @@ export default function ColorFilter({ isAtFavorites }: Props) {
           </StyledNumber>
         )}
       </StyledButton>
+
       <StyledButton
         onClick={() => setColorListType(colorListType === 5 ? 0 : 5)}
         $isActive={colorListType === 5}
         $swatch={"blue/purple"}
         aria-label={"only show colors from swatch nr. 5: blue/purple"}
       >
-        <SwatchName $isActive={colorListType === 5}>blue/purple</SwatchName>
         {isAtFavorites && (
           <StyledNumber>
             {
@@ -101,15 +100,13 @@ export default function ColorFilter({ isAtFavorites }: Props) {
           </StyledNumber>
         )}
       </StyledButton>
+
       <StyledButton
         onClick={() => setColorListType(colorListType === 6 ? 0 : 6)}
         $isActive={colorListType === 6}
         $swatch={"white/grey/black"}
         aria-label={"only show colors from swatch nr. 6: white/grey/black"}
       >
-        <SwatchName $isActive={colorListType === 6}>
-          white/grey/black
-        </SwatchName>
         {isAtFavorites && (
           <StyledNumber>
             {
@@ -129,31 +126,24 @@ const FilterContainer = styled.nav`
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
+  gap: 10px;
   width: 100%;
-  height: 18vh;
-  padding: 1vh 0 1vh;
+  padding: 10px;
   background-color: white;
   border-bottom: 1px solid black;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     position: fixed;
-    top: 6.5vh;
-    right: 0;
-    gap: 1.5vh;
+    top: 60px;
     width: 70%;
-    height: 12vh;
-    padding: 1.5vh 0 1.5vh;
     margin-left: 30%;
   }
 `;
 
 const StyledButton = styled.button<{ $isActive: boolean; $swatch: string }>`
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
   border: 1px solid black;
-  height: 6vh;
+  height: 40px;
+  flex-grow: 1;
   width: 30%;
   overflow: hidden;
   box-shadow: ${({ $isActive }) => ($isActive ? null : "0 0 2px black")};
@@ -161,6 +151,19 @@ const StyledButton = styled.button<{ $isActive: boolean; $swatch: string }>`
   &:hover {
     cursor: pointer;
     box-shadow: none;
+  }
+
+  &:before {
+    display: ${({ $isActive }) => ($isActive ? "initial" : "none")};
+    content: ${({ $swatch }) => `"${$swatch}"`};
+    position: absolute;
+    color: white;
+    font-size: 0.8rem;
+    line-height: 40px;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100%;
   }
   ${(props) =>
     props.$swatch === "red/purple"
@@ -219,21 +222,12 @@ const StyledButton = styled.button<{ $isActive: boolean; $swatch: string }>`
         `
       : null}
   background: ${({ $isActive }) => ($isActive ? "black" : "")};
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    width: 26%;
-    height: 3.5vh;
-  }
-`;
-
-const SwatchName = styled.span<{ $isActive: boolean }>`
-  color: white;
-  visibility: ${({ $isActive }) => ($isActive ? "visible" : "hidden")};
 `;
 
 const StyledNumber = styled.span`
   position: absolute;
-  right: 1vw;
-  bottom: 0.5vh;
-  font-size: 1.5vh;
+  right: 5px;
+  bottom: 5px;
+  font-size: 0.6rem;
   color: white;
 `;

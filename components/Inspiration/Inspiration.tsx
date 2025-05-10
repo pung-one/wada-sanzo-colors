@@ -91,7 +91,7 @@ const ButtonContainer = styled.section<{ $background?: string }>`
   justify-content: center;
   align-items: center;
   height: 93.5vh;
-  top: 6.5vh;
+  top: 60px;
   gap: 10vh;
   background: ${({ $background }) => $background};
 `;

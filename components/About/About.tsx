@@ -107,14 +107,14 @@ const PageContainer = styled.main`
 const Article = styled.article`
   text-align: start;
   margin-top: 5vh;
-  line-height: 2.8vh;
+  line-height: 1.5rem;
 `;
 
 const Headline = styled.h2`
   margin-bottom: 2.5vh;
   font-weight: lighter;
   line-height: 3.5vh;
-  font-size: 3vh;
+  font-size: 1.5rem;
 `;
 
 const Footer = styled.footer`
