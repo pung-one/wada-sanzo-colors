@@ -62,7 +62,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
 const PageContainer = styled.main`
   display: flex;
   flex-direction: column;
-  margin-top: 15.5vh;
+  margin-top: 120px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
@@ -72,9 +72,9 @@ const PageContainer = styled.main`
 
 const StyledColorBox = styled.header<{ $hex: string }>`
   position: relative;
-  height: 30vh;
+  height: 250px;
   display: flex;
-  padding: 3vh 0 0 0;
+  padding: 40px 0 0 0;
   align-items: center;
   flex-direction: column;
   overflow-x: hidden;
@@ -85,5 +85,4 @@ const StyledHeadline = styled.h1<{ $isBright: boolean }>`
   color: ${({ $isBright }) => ($isBright ? "black" : "white")};
   font-size: 1.5rem;
   font-weight: lighter;
-  padding: 2vh 0 4vh;
 `;

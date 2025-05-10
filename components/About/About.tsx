@@ -70,6 +70,7 @@ export function About() {
 
       <Footer>
         <Headline>Impressum</Headline>
+
         <Info>
           GitHub:{" "}
           <Link href="https://github.com/pung-one" target="_blank">
@@ -79,6 +80,7 @@ export function About() {
           (if you want to support me please use the &quot;Donate&quot; button in
           the lower left corner)
         </Info>
+
         <Info>
           Source of Digital Color Collection:{" "}
           <Link
@@ -94,31 +96,30 @@ export function About() {
 }
 
 const PageContainer = styled.main`
-  padding: 15vh 5vw 2vh 5vw;
+  padding: 130px 20px;
   display: flex;
   flex-direction: column;
   float: left;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
-    padding: 7vh 5vw 10vh 5vw;
+    padding: 60px 50px;
   }
 `;
 const Article = styled.article`
   text-align: start;
-  margin-top: 5vh;
+  margin-top: 50px;
   line-height: 1.5rem;
 `;
 
 const Headline = styled.h2`
-  margin-bottom: 2.5vh;
+  margin-bottom: 30px;
   font-weight: lighter;
-  line-height: 3.5vh;
   font-size: 1.5rem;
 `;
 
 const Footer = styled.footer`
-  margin: 5vh 0 10vh;
+  margin: 50px 0;
 `;
 
 const Link = styled.a`
@@ -126,5 +127,5 @@ const Link = styled.a`
 `;
 
 const Info = styled.aside`
-  margin-bottom: 2vh;
+  margin-bottom: 20px;
 `;

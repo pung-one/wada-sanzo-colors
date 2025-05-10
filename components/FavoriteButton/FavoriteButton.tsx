@@ -129,7 +129,6 @@ const Arrow = styled(TfiArrowDown)<{
   $isFavorite: boolean;
   $isBright: boolean;
 }>`
-  font-size: 1.7vh;
   fill: ${(props) =>
     props.$isFavorite && props.$isBright
       ? "white"
@@ -153,8 +152,8 @@ const Button = styled.button<{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 3.5vh;
-  height: 3.5vh;
+  width: 30px;
+  height: 30px;
   background-color: ${({ $isFavorite, $isBright }) =>
     $isFavorite && $isBright
       ? "black"
@@ -174,7 +173,7 @@ const Button = styled.button<{
     props.$isOnColor &&
     css`
       right: 6%;
-      top: 19%;
+      top: 16%;
     `};
   ${(props) =>
     props.$isOnCombination &&
@@ -185,7 +184,7 @@ const Button = styled.button<{
   &:hover {
     cursor: pointer;
     ${Arrow} {
-      font-size: 2.2vh;
+      transform: scale(1.1);
     }
   }
   transition: all 0.2s;

@@ -77,7 +77,7 @@ export default function CombinationsList({ combinations }: Props) {
 }
 
 const List = styled.ul`
-  padding-top: 33.5vh;
+  padding-top: 270px;
   list-style-type: 0;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     padding-top: 160px;
@@ -89,8 +89,11 @@ const StyledCombinationContainer = styled.li`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 2vh;
-  height: 25vh;
+  margin-top: 20px;
+  height: 200px;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    height: 250px;
+  }
 `;
 
 const StyledColorBox = styled.div<{ $hex: string }>`
@@ -104,9 +107,9 @@ const StyledCombinationNumber = styled.span<{
   $isOnLargeCombination: boolean;
 }>`
   position: absolute;
-  font-size: 2.5vh;
+  font-size: 1rem;
   font-weight: lighter;
-  padding: 2vh 0 0 3vh;
+  padding: 20px;
   text-decoration: underline;
   color: ${({ $isBright }) => ($isBright ? "black" : "white")};
   ${(props) =>
@@ -116,4 +119,8 @@ const StyledCombinationNumber = styled.span<{
           overflow-wrap: break-word;
         `
       : null}
+
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    font-size: 1.5rem;
+  }
 `;
