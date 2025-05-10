@@ -77,7 +77,7 @@ export default function CombinationsList({ combinations }: Props) {
 }
 
 const List = styled.ul`
-  padding-top: 270px;
+  padding-top: 220px;
   list-style-type: 0;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     padding-top: 160px;
