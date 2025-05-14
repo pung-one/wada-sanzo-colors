@@ -78,7 +78,10 @@ export default function Inspiration({ colors, combinations }: Props) {
 
 const PageContainer = styled.main`
   position: relative;
+  padding-top: 80px;
+  height: 100vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    padding-top: 60px;
     width: 70%;
     margin-left: 30%;
   }
@@ -86,35 +89,20 @@ const PageContainer = styled.main`
 
 const ButtonContainer = styled.section<{ $background?: string }>`
   position: relative;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 93.5vh;
-  top: 60px;
-  gap: 10vh;
+  justify-content: center;
+  gap: 40px;
   background: ${({ $background }) => $background};
 `;
 
 const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
-  padding: 5vh;
+  padding: 30px;
   width: 60%;
-  box-shadow: 0 0 4px black;
-  transition: all 0.2s;
-  &:hover {
-    cursor: pointer;
-    box-shadow: none;
-  }
-`;
-
-const StyledLink = styled(Link)`
-  background-color: white;
-  border: 1px solid black;
-  padding: 5vh;
-  width: 60%;
-  text-align: center;
   box-shadow: 0 0 4px black;
   transition: all 0.2s;
   &:hover {
@@ -125,14 +113,14 @@ const StyledLink = styled(Link)`
 
 const EasterEgg = styled(Link)`
   position: absolute;
-  bottom: 2vh;
-  right: 2vw;
+  bottom: 10px;
+  right: 10px;
   background-color: white;
   border: 1px solid black;
-  font-size: 1.5vh;
-  padding: 1vh;
-  width: 20%;
+  font-size: 0.6rem;
   text-align: center;
+  padding: 10px;
+  width: min-content;
   box-shadow: 0 0 4px black;
   transition: all 0.2s;
   &:hover {

@@ -18,12 +18,13 @@ export function SignIn() {
     <PageContainer>
       <SessionStatus>
         <InfoSymbol />
-        <SessionStatusText>
+        <p>
           {session
             ? `You are signed in as "${session?.user?.name}".`
             : "You are not signed in."}
-        </SessionStatusText>
+        </p>
       </SessionStatus>
+
       <Article>
         When signed in, your favorite Colors and Combinations will be stored for
         you to access them later.
@@ -41,6 +42,7 @@ export function SignIn() {
         </a>{" "}
         for maintenance and development.)
       </Article>
+
       <ButtonContainer>
         {session ? (
           <>
@@ -79,7 +81,7 @@ const PageContainer = styled.main`
   flex-direction: column;
   text-align: center;
   align-items: center;
-  padding-top: 20vh;
+  padding-top: 150px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
@@ -89,23 +91,21 @@ const PageContainer = styled.main`
 const SessionStatus = styled.span`
   display: flex;
   align-items: center;
-  gap: 2vw;
+  gap: 10px;
   border: 1px solid black;
-  padding: 2vw;
+  padding: 20px;
 `;
 
 const InfoSymbol = styled(MdInfo)`
-  font-size: 4vh;
-`;
-
-const SessionStatusText = styled.p`
-  font-size: 2.5vh;
+  font-size: 2rem;
 `;
 
 const Article = styled.article`
   position: relative;
-  padding-top: 5vh;
-  width: 80%;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 0 20px;
+  text-align: left;
   a {
     text-decoration: underline;
   }
@@ -114,19 +114,18 @@ const Article = styled.article`
 const ButtonContainer = styled.div`
   position: relative;
   display: flex;
+  gap: 30px;
   align-items: center;
   flex-direction: column;
   width: 100%;
-  padding: 8vh 0 3vh;
 `;
 
 const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
-  padding: 5vh;
+  padding: 30px;
   width: 60%;
   box-shadow: 0 0 4px black;
-  margin-bottom: 5vh;
   &:hover {
     cursor: pointer;
     box-shadow: none;
@@ -138,10 +137,8 @@ const SigningOutMessage = styled.aside<{ $showSignOutMessage: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50vw;
-  height: 8vh;
-  font-size: 2.5vh;
   z-index: 11;
+  padding: 20px 30px;
   background-color: white;
   border: 1px solid black;
   overflow: hidden;
