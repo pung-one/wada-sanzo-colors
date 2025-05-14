@@ -5,7 +5,6 @@ import chroma from "chroma-js";
 import { useState } from "react";
 import Link from "next/link";
 import { ImArrowDown } from "react-icons/im";
-import { isColorBright } from "@/utils/helper";
 import { ColorObject } from "@/lib/types";
 
 type Reducer = {
@@ -32,6 +31,8 @@ export function ColorPicker({ colors }: { colors: ColorObject[] }) {
     );
 
     setClosestColor(closest.color);
+
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   return (
@@ -60,7 +61,7 @@ export function ColorPicker({ colors }: { colors: ColorObject[] }) {
             href={`/colors/${closestColor?.slug}`}
             $hex={closestColor?.hex}
           >
-            <ColorName $isBright={isColorBright(closestColor?.rgb)}>
+            <ColorName $isBright={closestColor?.isBright}>
               {closestColor?.name}
             </ColorName>
           </StyledLink>
@@ -79,20 +80,20 @@ const PageContainer = styled.main`
 `;
 
 const StyledForm = styled.form`
-  padding-top: 17vh;
+  padding-top: 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3vh;
+  gap: 30px;
 `;
 
 const Arrow = styled(ImArrowDown)`
-  font-size: 4vh;
+  font-size: 2.5rem;
 `;
 
 const ColorInput = styled.input`
-  width: 60vw;
-  height: 20vh;
+  width: 70%;
+  height: 150px;
   background-color: white;
   box-shadow: 0 2px 5px black;
   &:hover {
@@ -103,8 +104,8 @@ const ColorInput = styled.input`
 const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
-  padding: 3vh;
-  width: 40vw;
+  padding: 30px;
+  width: 300px;
   box-shadow: 0 2px 5px black;
   &:hover {
     cursor: pointer;
@@ -116,17 +117,17 @@ const ResultContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4vh;
-  margin-top: 3vh;
-  gap: 4vh;
+  padding: 40px;
+  margin: 30px 0 100px;
+  gap: 30px;
 `;
 
 const StyledLink = styled(Link)<{ $hex: string }>`
   background-color: ${({ $hex }) => $hex};
-  font-size: 2vh;
+  font-size: 2rem;
   border: 1px solid black;
-  padding: 5vh;
-  width: 60vw;
+  padding: 40px;
+  width: 80%;
   box-shadow: 0 2px 5px black;
 `;
 

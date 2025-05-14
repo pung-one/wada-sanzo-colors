@@ -58,7 +58,8 @@ export default function CombinationsFilter({ isAtFavorites }: Props) {
             {favWithTwoColors}
           </StyledNumber>
         )}
-        <StyledBox $filter={2} $isActive={combinationListType === 2} />
+        <div />
+        <div />
       </StyledButton>
       <StyledButton
         onClick={() =>
@@ -72,8 +73,9 @@ export default function CombinationsFilter({ isAtFavorites }: Props) {
             {favWithThreeColors}
           </StyledNumber>
         )}
-        <StyledBox $filter={3} $isActive={combinationListType === 3} />
-        <StyledBox $filter={3} $isActive={combinationListType === 3} />
+        <div />
+        <div />
+        <div />
       </StyledButton>
       <StyledButton
         onClick={() =>
@@ -87,65 +89,61 @@ export default function CombinationsFilter({ isAtFavorites }: Props) {
             {favWithFourColors}
           </StyledNumber>
         )}
-        <StyledBox $filter={4} $isActive={combinationListType === 4} />
-        <StyledBox $filter={4} $isActive={combinationListType === 4} />
-        <StyledBox $filter={4} $isActive={combinationListType === 4} />
+        <div />
+        <div />
+        <div />
+        <div />
       </StyledButton>
     </FilterContainer>
   );
 }
 
-const FilterContainer = styled.nav`
+const FilterContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 10px;
   width: 100%;
-  height: 9vh;
+  padding: 10px;
   background-color: white;
   border-bottom: 1px solid black;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    gap: 15px;
+    padding: 15px;
     position: fixed;
-    top: 6.5vh;
-    right: 0;
-    gap: 1.5vh;
+    top: 60px;
     width: 70%;
-    height: 10vh;
-    padding: 1.5vh 0 1.5vh;
     margin-left: 30%;
   }
 `;
 
 const StyledButton = styled.button<{ $isActive: boolean }>`
-  display: flex;
   position: relative;
-  align-items: center;
-  background-color: white;
+  flex: 1;
+  display: flex;
+  gap: 1px;
   border: 1px solid black;
-  width: 30%;
-  height: 6vh;
+  height: 40px;
   overflow: hidden;
   box-shadow: ${({ $isActive }) => ($isActive ? null : "0 0 2px black")};
-  background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
+  background-color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   transition: box-shadow 0.1s;
   &:hover {
     cursor: pointer;
     box-shadow: none;
   }
-`;
-
-const StyledBox = styled.div<{ $isActive: boolean; $filter: number }>`
-  border-right: ${({ $isActive }) =>
-    $isActive ? "1px solid white" : "1px solid black"};
-  width: ${({ $filter }) =>
-    $filter === 2 ? "50%" : $filter === 3 ? "33.3%" : "25%"};
-  height: 6vh;
+  div {
+    flex: 1;
+    height: 100%;
+    background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
+  }
 `;
 
 const StyledNumber = styled.span<{ $isActive: boolean }>`
   position: absolute;
-  right: 1vw;
-  bottom: 0.5vh;
-  font-size: 1.5vh;
+  right: 5px;
+  bottom: 3px;
+  font-size: 0.7rem;
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
 `;

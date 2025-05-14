@@ -6,7 +6,6 @@ import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
-import { isColorBright } from "@/utils/helper";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
@@ -18,14 +17,12 @@ type Props = {
 };
 
 export function ColorDetail({ colorObject, combinations }: Props) {
-  const [isActive, setIsActive] = useState(false);
-
   const actionContext = useContext(ActionContext);
 
   if (!actionContext || !colorObject || !combinations)
     return <h1>Loading...</h1>;
 
-  const { name, hex, rgb, swatch } = colorObject;
+  const { name, hex, rgb, swatch, isBright } = colorObject;
 
   const favoriteStatus = actionContext.favoriteColorsData.findIndex(
     (color) => color.name === name && color.isFavorite
@@ -39,17 +36,15 @@ export function ColorDetail({ colorObject, combinations }: Props) {
           elementId={name}
           swatch={swatch}
           isOnDetailColor
-          isBright={isColorBright(rgb)}
+          isBright={isBright}
           isFavorite={favoriteStatus !== -1}
         />
 
-        <StyledHeadline $isBright={isColorBright(rgb)}>{name}</StyledHeadline>
+        <StyledHeadline $isBright={isBright}>{name}</StyledHeadline>
 
         <CopyFieldSlider
           isLargeCombination
           color={colorObject}
-          isActive={isActive}
-          onHandleSlide={() => setIsActive(!isActive)}
           needColorName={false}
         />
       </StyledColorBox>
@@ -60,21 +55,20 @@ export function ColorDetail({ colorObject, combinations }: Props) {
 }
 
 const PageContainer = styled.main`
-  display: flex;
-  flex-direction: column;
-  margin-top: 15.5vh;
+  margin-top: 120px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
-    margin-top: 6.5vh;
+    margin-top: 60px;
   }
 `;
 
 const StyledColorBox = styled.header<{ $hex: string }>`
   position: relative;
-  height: 30vh;
+  height: 250px;
+  width: 100%;
   display: flex;
-  padding: 3vh 0 0 0;
+  padding: 40px 0 0 0;
   align-items: center;
   flex-direction: column;
   overflow-x: hidden;
@@ -83,7 +77,6 @@ const StyledColorBox = styled.header<{ $hex: string }>`
 
 const StyledHeadline = styled.h1<{ $isBright: boolean }>`
   color: ${({ $isBright }) => ($isBright ? "black" : "white")};
-  font-size: 3vh;
+  font-size: 1.5rem;
   font-weight: lighter;
-  padding: 2vh 0 4vh;
 `;

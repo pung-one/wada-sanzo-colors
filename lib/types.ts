@@ -8,7 +8,8 @@ export type ColorObject = {
   lab: number[];
   rgb: number[];
   hex: string;
-  slug?: string;
+  isBright: boolean;
+  slug: string;
 };
 
 export type CombinationObject = {

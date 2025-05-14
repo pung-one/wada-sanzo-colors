@@ -1,6 +1,7 @@
+import { isColorBright } from "@/utils/helper";
 import { ColorObject } from "../lib/types";
 
-const colors: ColorObject[] = [
+const colors = [
   {
     name: "Hermosa Pink",
     combinations: [176, 227, 273],
@@ -1469,9 +1470,11 @@ const colors: ColorObject[] = [
 export const colorsWithSlug: ColorObject[] = colors.map((color) => {
   return {
     ...color,
+    isBright: isColorBright(color.rgb),
     slug: color.name
       .toLocaleLowerCase()
       .replace("/", "")
+      .replace("|", "")
       .split(" ")
       .join("-")
       .replace("--", "-"),

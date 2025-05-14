@@ -22,17 +22,18 @@ const FavMessage = styled.span<{
   $showMessage: boolean;
   $isLarge: boolean;
 }>`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
-  left: ${({ $isLarge }) => ($isLarge ? "14%" : "")};
-  width: ${({ $isLarge }) => ($isLarge ? "60%" : "40%")};
-  padding: 2vh;
+  left: 50%;
+  padding: 20px;
   z-index: 5;
+  font-size: 0.7rem;
   background-color: white;
   border: 1px solid black;
   overflow-x: hidden;
-  transform: ${({ $showMessage }) => ($showMessage ? "scale(1)" : "scale(0)")};
+  transform: ${({ $showMessage }) =>
+    $showMessage ? "scale(1) translateX(-50%)" : "scale(0) translateX(-50%)"};
   transition: all 0.2s;
 `;

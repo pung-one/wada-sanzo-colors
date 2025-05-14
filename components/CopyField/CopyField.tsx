@@ -25,20 +25,17 @@ export default function CopyField({
         onShowMessage();
       }}
     >
-      {label}
+      copy {label}
     </StyledButton>
   );
 }
 
 const StyledButton = styled.button<{ $isLarge: boolean }>`
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
+  flex-basis: 40%;
   background-color: white;
   border: 1px solid black;
-  width: 100%;
-  height: ${({ $isLarge }) => ($isLarge ? "100%" : "75%")};
+  font-size: 0.8rem;
+  padding: 10px;
   box-shadow: 0 0 3px black;
   &:hover {
     cursor: pointer;

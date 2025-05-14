@@ -9,6 +9,7 @@ import ColorFilter from "../ColorFilter/ColorFilter";
 import { ActionContext } from "../Layout/Layout";
 import { TabBar } from "../TabBar/TabBar";
 import { usePathname } from "next/navigation";
+import { TfiArrowRight } from "react-icons/tfi";
 
 export default function NavBarDesktop() {
   const [showTabBar, setShowTabBar] = useState(false);
@@ -41,11 +42,27 @@ export default function NavBarDesktop() {
             setShowTabBar(!showTabBar);
           }}
         >
-          <Arrow $isOpen={showTabBar} $isActive={route === "/"} />
+          <SlArrowRight />
           Collection
         </NavButton>
 
-        {route === "/" && showTabBar ? <TabBar /> : null}
+        <SecondaryContainer $open={route === "/"}>
+          <SecondaryNavButton
+            onClick={() => actionContext.setListType("colors")}
+            $isActive={listType === "colors"}
+          >
+            <TfiArrowRight />
+            Colors
+          </SecondaryNavButton>
+
+          <SecondaryNavButton
+            onClick={() => actionContext.setListType("combinations")}
+            $isActive={listType === "combinations"}
+          >
+            <TfiArrowRight />
+            Combinations
+          </SecondaryNavButton>
+        </SecondaryContainer>
 
         <NavButton
           href={"/favorites"}
@@ -54,20 +71,38 @@ export default function NavBarDesktop() {
             setShowTabBar(!showTabBar);
           }}
         >
-          <Arrow $isOpen={showTabBar} $isActive={route === "/favorites"} />
+          <SlArrowRight />
           Favorites
         </NavButton>
 
-        {route === "/favorites" && showTabBar ? <TabBar /> : null}
+        <SecondaryContainer $open={route === "/favorites"}>
+          <SecondaryNavButton
+            onClick={() => actionContext.setListType("colors")}
+            $isActive={listType === "colors"}
+          >
+            <TfiArrowRight />
+            Colors
+          </SecondaryNavButton>
+
+          <SecondaryNavButton
+            onClick={() => actionContext.setListType("combinations")}
+            $isActive={listType === "combinations"}
+          >
+            <TfiArrowRight />
+            Combinations
+          </SecondaryNavButton>
+        </SecondaryContainer>
 
         <NavButton href={"/about"} $isActive={route === "/about"}>
           About
         </NavButton>
       </NavPages>
+
       {(listType === "colors" && route === "/") ||
       (listType === "colors" && route === "/favorites") ? (
         <ColorFilter isAtFavorites={route === "/favorites"} />
       ) : null}
+
       {(listType === "combinations" && route === "/") ||
       (listType === "combinations" && route === "/favorites") ? (
         <CombinationsFilter isAtFavorites={route === "/favorites"} />
@@ -78,7 +113,7 @@ export default function NavBarDesktop() {
 
 const NavContainer = styled.div`
   position: fixed;
-  top: 6.5vh;
+  top: 60px;
   z-index: 5;
   left: 0;
   width: 30%;
@@ -94,21 +129,17 @@ const NavPages = styled.nav`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
   width: 100%;
 `;
 
 const NavButton = styled(Link)<{ $isActive?: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2vh;
-  height: 6vh;
+  text-align: center;
   width: 100%;
+  padding: 20px;
   border-bottom: 1px solid black;
   background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
   color: ${({ $isActive }) => ($isActive ? "white" : "black")};
+  pointer-events: ${({ $isActive }) => ($isActive ? "none" : "initial")};
   transition: all 0.1s;
   &:hover {
     cursor: pointer;
@@ -117,14 +148,53 @@ const NavButton = styled(Link)<{ $isActive?: boolean }>`
   &:active {
     box-shadow: inset 0 0 3px black;
   }
+  svg {
+    position: absolute;
+    left: 0;
+    width: 10%;
+    transition: transform 0.3s;
+    fill: ${(props) => (props.$isActive ? "white" : "black")};
+    transform: ${(props) => (props.$isActive ? "rotate(90deg)" : "")};
+  }
 `;
 
-const Arrow = styled(SlArrowRight)<{ $isOpen: boolean; $isActive: boolean }>`
-  position: absolute;
-  left: 0;
-  width: 10%;
-  fill: ${(props) => (props.$isActive ? "white" : "black")};
-  transform: ${(props) =>
-    props.$isOpen && props.$isActive ? "rotate(90deg)" : ""};
-  transition: transform 0.3s;
+const SecondaryContainer = styled.div<{ $open: boolean }>`
+  transition: height 0.2s ease;
+  height: ${({ $open }) => ($open ? "120px" : "0")};
+  border-bottom: ${({ $open }) => ($open ? "1px solid black" : "none")};
+
+  overflow: hidden;
+`;
+
+const SecondaryNavButton = styled.button<{
+  $isActive?: boolean;
+}>`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90%;
+  margin-left: 10%;
+  height: 60px;
+  border: none;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
+  color: ${({ $isActive }) => ($isActive ? "white" : "black")};
+  pointer-events: ${({ $isActive }) => ($isActive ? "none" : "initial")};
+  transition: all 0.1s;
+  &:hover {
+    cursor: pointer;
+    box-shadow: inset 0 0 2px black;
+  }
+  &:active {
+    box-shadow: inset 0 0 3px black;
+  }
+  svg {
+    position: absolute;
+    left: ${(props) => (props.$isActive ? "-10%" : "-30%")};
+    fill: black;
+    transition: left 0.3s;
+  }
 `;

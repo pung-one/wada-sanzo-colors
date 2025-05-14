@@ -4,7 +4,6 @@ import styled, { css } from "styled-components";
 import Link from "next/link";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useContext, useEffect, useState } from "react";
-import { isColorBright } from "@/utils/helper";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
 
@@ -45,13 +44,13 @@ export default function CombinationsList({ combinations }: Props) {
         return (
           <StyledCombinationContainer key={combination1.id}>
             {combination1.combination?.map(
-              ({ name, hex, rgb }, colorIndex, array) => {
+              ({ name, hex, isBright }, colorIndex, array) => {
                 return (
                   <StyledColorBox key={name} $hex={hex}>
                     {colorIndex === 0 && (
                       <Link href={`/combinations/${combination1.id}`}>
                         <StyledCombinationNumber
-                          $isBright={isColorBright(rgb)}
+                          $isBright={isBright}
                           $isOnLargeCombination={array.length > 3}
                         >
                           {`Combi #${combination1.id}`}
@@ -63,7 +62,7 @@ export default function CombinationsList({ combinations }: Props) {
                       elementId={combination1.id}
                       isFavorite={favoriteStatus !== -1}
                       isOnListElement={true}
-                      isBright={isColorBright(rgb)}
+                      isBright={isBright}
                     />
                   </StyledColorBox>
                 );
@@ -77,10 +76,9 @@ export default function CombinationsList({ combinations }: Props) {
 }
 
 const List = styled.ul`
-  padding-top: 220px;
-  list-style-type: 0;
+  padding-top: 240px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    padding-top: 160px;
+    padding-top: 130px;
   }
 `;
 
@@ -107,7 +105,6 @@ const StyledCombinationNumber = styled.span<{
   $isOnLargeCombination: boolean;
 }>`
   position: absolute;
-  font-size: 1rem;
   font-weight: lighter;
   padding: 20px;
   text-decoration: underline;
@@ -115,8 +112,8 @@ const StyledCombinationNumber = styled.span<{
   ${(props) =>
     props.$isOnLargeCombination
       ? css`
-          max-width: 23vw;
-          overflow-wrap: break-word;
+          max-width: 23%;
+          white-space: break-spaces;
         `
       : null}
 

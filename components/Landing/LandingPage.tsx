@@ -28,7 +28,7 @@ export default function LandingPage({ colors, combinations }: Props) {
 
 const PageContainer = styled.main`
   position: relative;
-  margin: 0 0 2vh;
+  margin: 0 0 20px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
