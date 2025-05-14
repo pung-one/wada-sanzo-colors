@@ -13,5 +13,6 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 18px;
     padding: 0;
     color: black;
+    scroll-behavior: smooth;
   } 
 `;

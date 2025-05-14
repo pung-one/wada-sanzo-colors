@@ -31,6 +31,8 @@ export function ColorPicker({ colors }: { colors: ColorObject[] }) {
     );
 
     setClosestColor(closest.color);
+
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   return (
