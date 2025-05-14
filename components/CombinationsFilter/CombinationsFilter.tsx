@@ -133,6 +133,7 @@ const StyledButton = styled.button<{ $isActive: boolean }>`
   }
   div {
     flex: 1;
+    height: 100%;
     background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
   }
 `;

@@ -5,7 +5,6 @@ import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useState, useEffect, useContext } from "react";
 import { ColorObject } from "@/lib/types";
-import { isColorBright } from "@/utils/helper";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
@@ -33,25 +32,23 @@ export default function ColorsList({ colors }: Props) {
 
   return (
     <List>
-      {arrayToBeRendered?.map(({ name, slug, rgb, hex, swatch }) => {
+      {arrayToBeRendered?.map(({ name, slug, isBright, hex, swatch }) => {
         const favoriteStatus = favoriteColorsData?.findIndex(
           (color) => color.name === name && color.isFavorite
         );
 
         return (
-          <ColorBox key={name} $isBright={isColorBright(rgb)} $hex={hex}>
+          <ColorBox key={name} $isBright={isBright} $hex={hex}>
             <FavoriteButton
               type="color"
               elementId={name}
               swatch={swatch}
-              isBright={isColorBright(rgb)}
+              isBright={isBright}
               isFavorite={favoriteStatus !== -1}
               isOnListElement={true}
             />
             <Link aria-label={`got to color ${name}`} href={`/colors/${slug}`}>
-              <StyledColorName $isBright={isColorBright(rgb)}>
-                {name}
-              </StyledColorName>
+              <StyledColorName $isBright={isBright}>{name}</StyledColorName>
             </Link>
           </ColorBox>
         );

@@ -16,12 +16,15 @@ export default function NavBar() {
 
   function handleScroll() {
     if (typeof window !== "undefined") {
-      if (window.scrollY > lastScrollY && window.scrollY > 50) {
-        setShow(false);
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 50) {
+        if (show) setShow(false);
       } else {
-        setShow(true);
+        if (!show) setShow(true);
       }
-      setLastScrollY(window.scrollY);
+
+      setLastScrollY(currentScrollY);
     }
   }
 
@@ -32,12 +35,22 @@ export default function NavBar() {
   const { listType } = actionContext;
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [lastScrollY]);
 
   return (

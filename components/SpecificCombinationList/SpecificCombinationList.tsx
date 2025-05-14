@@ -6,7 +6,6 @@ import { useContext } from "react";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { ColorObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
-import { isColorBright } from "@/utils/helper";
 
 type Props = {
   combinations: {
@@ -31,7 +30,7 @@ export default function SpecificCombinationList({ combinations }: Props) {
 
         return (
           <StyledCombinationContainer key={combi1.id}>
-            {combi1.colors.map(({ name, hex, rgb }, colorIndex) => {
+            {combi1.colors.map(({ name, hex, isBright }, colorIndex) => {
               return (
                 <StyledColorBox key={name} $hex={hex}>
                   {colorIndex === 0 && (
@@ -40,7 +39,7 @@ export default function SpecificCombinationList({ combinations }: Props) {
                       href={`/combinations/${combi1.id}`}
                     >
                       <StyledCombinationNumber
-                        $isBright={isColorBright(rgb)}
+                        $isBright={isBright}
                         $isOnLargeCombination={combi1.colors.length > 3}
                       >
                         {`Combi #${combi1.id}`}
@@ -52,7 +51,7 @@ export default function SpecificCombinationList({ combinations }: Props) {
                     elementId={combi1.id}
                     isFavorite={favoriteStatus !== -1}
                     isOnListElement={true}
-                    isBright={isColorBright(rgb)}
+                    isBright={isBright}
                   />
                 </StyledColorBox>
               );

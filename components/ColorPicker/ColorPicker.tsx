@@ -5,7 +5,6 @@ import chroma from "chroma-js";
 import { useState } from "react";
 import Link from "next/link";
 import { ImArrowDown } from "react-icons/im";
-import { isColorBright } from "@/utils/helper";
 import { ColorObject } from "@/lib/types";
 
 type Reducer = {
@@ -60,7 +59,7 @@ export function ColorPicker({ colors }: { colors: ColorObject[] }) {
             href={`/colors/${closestColor?.slug}`}
             $hex={closestColor?.hex}
           >
-            <ColorName $isBright={isColorBright(closestColor?.rgb)}>
+            <ColorName $isBright={closestColor?.isBright}>
               {closestColor?.name}
             </ColorName>
           </StyledLink>

@@ -6,7 +6,6 @@ import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
-import { isColorBright } from "@/utils/helper";
 import { ActionContext } from "../Layout/Layout";
 
 type Props = {
@@ -23,7 +22,7 @@ export function ColorDetail({ colorObject, combinations }: Props) {
   if (!actionContext || !colorObject || !combinations)
     return <h1>Loading...</h1>;
 
-  const { name, hex, rgb, swatch } = colorObject;
+  const { name, hex, rgb, swatch, isBright } = colorObject;
 
   const favoriteStatus = actionContext.favoriteColorsData.findIndex(
     (color) => color.name === name && color.isFavorite
@@ -37,11 +36,11 @@ export function ColorDetail({ colorObject, combinations }: Props) {
           elementId={name}
           swatch={swatch}
           isOnDetailColor
-          isBright={isColorBright(rgb)}
+          isBright={isBright}
           isFavorite={favoriteStatus !== -1}
         />
 
-        <StyledHeadline $isBright={isColorBright(rgb)}>{name}</StyledHeadline>
+        <StyledHeadline $isBright={isBright}>{name}</StyledHeadline>
 
         <CopyFieldSlider
           isLargeCombination

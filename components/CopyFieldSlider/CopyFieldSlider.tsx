@@ -6,7 +6,6 @@ import styled, { css } from "styled-components";
 import { useState } from "react";
 import CopyColorCodeMessage from "../CopyColorCodeMessage/CopyColorCodeMessage";
 import { ColorObject } from "@/lib/types";
-import { isColorBright } from "@/utils/helper";
 
 type Props = {
   isLargeCombination: boolean;
@@ -25,7 +24,7 @@ export default function CopyFieldSlider({
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const [label, setLabel] = useState("");
 
-  const { slug, name, hex, rgb, cmyk, lab } = color;
+  const { slug, name, hex, rgb, cmyk, lab, isBright } = color;
 
   function handleShowMessage(label: string) {
     setShowMessage(true);
@@ -51,7 +50,7 @@ export default function CopyFieldSlider({
         $isLarge={isLargeCombination}
         $isActive={open}
         aria-label={"show and hide color-codes"}
-        $isBright={isColorBright(rgb)}
+        $isBright={isBright}
       >
         {!isLargeCombination && index === 0 ? (
           <SlArrowRight />
@@ -62,10 +61,7 @@ export default function CopyFieldSlider({
 
       {needColorName && (
         <Link href={`/colors/${slug}`}>
-          <StyledColorName
-            $isLarge={isLargeCombination}
-            $isBright={isColorBright(rgb)}
-          >
+          <StyledColorName $isLarge={isLargeCombination} $isBright={isBright}>
             {name}
           </StyledColorName>
         </Link>

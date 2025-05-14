@@ -81,7 +81,7 @@ const PageContainer = styled.main`
   flex-direction: column;
   text-align: center;
   align-items: center;
-  padding-top: 150px;
+  padding: 150px 0 100px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
