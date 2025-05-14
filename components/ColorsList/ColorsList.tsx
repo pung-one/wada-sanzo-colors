@@ -60,7 +60,7 @@ export default function ColorsList({ colors }: Props) {
 const List = styled.ul`
   padding-top: 290px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    padding-top: 170px;
+    padding-top: 185px;
   }
 `;
 

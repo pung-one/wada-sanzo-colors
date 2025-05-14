@@ -108,6 +108,8 @@ const FilterContainer = styled.div`
   background-color: white;
   border-bottom: 1px solid black;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    gap: 15px;
+    padding: 15px;
     position: fixed;
     top: 60px;
     width: 70%;
