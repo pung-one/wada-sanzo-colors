@@ -3,7 +3,7 @@ import { SlArrowLeft } from "react-icons/sl";
 import { SlArrowRight } from "react-icons/sl";
 import Link from "next/link";
 import styled, { css } from "styled-components";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CopyColorCodeMessage from "../CopyColorCodeMessage/CopyColorCodeMessage";
 import { ColorObject } from "@/lib/types";
 
@@ -24,12 +24,17 @@ export default function CopyFieldSlider({
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const [label, setLabel] = useState("");
 
+  let timeoutRef = useRef<NodeJS.Timeout>(null);
+
   const { slug, name, hex, rgb, cmyk, lab, isBright } = color;
 
   function handleShowMessage(label: string) {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
     setShowMessage(true);
     setLabel(label);
-    setTimeout(() => setShowMessage(false), 1500);
+    timeoutRef.current = setTimeout(() => setShowMessage(false), 1500);
   }
 
   return (
@@ -145,11 +150,7 @@ const StyledButton = styled.button<{
       ? css`
           left: 0%;
         `
-      : /* : !$isLeftBox && !$isLarge
-      ? css`
-          left: -10%;
-        ` */
-        css`
+      : css`
           left: -20%;
         `}
   &:hover {
@@ -177,8 +178,8 @@ const CopyFieldContainer = styled.div<{ $isLarge: boolean }>`
   position: relative;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   margin: ${({ $isLarge }) => ($isLarge ? "20px 20px 0" : "20px 0 0")};
 `;

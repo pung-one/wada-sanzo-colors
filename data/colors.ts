@@ -1474,6 +1474,7 @@ export const colorsWithSlug: ColorObject[] = colors.map((color) => {
     slug: color.name
       .toLocaleLowerCase()
       .replace("/", "")
+      .replace("|", "")
       .split(" ")
       .join("-")
       .replace("--", "-"),
