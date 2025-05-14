@@ -121,7 +121,7 @@ export default function ColorFilter({ isAtFavorites }: Props) {
   );
 }
 
-const FilterContainer = styled.nav`
+const FilterContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;

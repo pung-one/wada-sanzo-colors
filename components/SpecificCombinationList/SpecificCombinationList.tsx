@@ -75,8 +75,11 @@ const StyledCombinationContainer = styled.li`
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 2vh;
-  height: 25vh;
+  margin-top: 20px;
+  height: 200px;
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    height: 250px;
+  }
 `;
 
 const StyledColorBox = styled.div<{ $hex: string }>`
@@ -90,16 +93,15 @@ const StyledCombinationNumber = styled.span<{
   $isOnLargeCombination: boolean;
 }>`
   position: absolute;
-  font-size: 2.5vh;
   font-weight: lighter;
-  padding: 2vh 0 0 3vh;
+  padding: 20px;
   text-decoration: underline;
   color: ${({ $isBright }) => ($isBright ? "black" : "white")};
   ${(props) =>
     props.$isOnLargeCombination
       ? css`
-          max-width: 23vw;
-          overflow-wrap: break-word;
+          max-width: 23%;
+          white-space: break-spaces;
         `
       : null}
 `;

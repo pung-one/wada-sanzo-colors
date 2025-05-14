@@ -55,7 +55,7 @@ export function Favorites({ colors }: Props) {
 }
 
 const PageContainer = styled.main`
-  margin: 0 0 2vh;
+  margin: 0 0 20px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
     margin-left: 30%;
@@ -63,7 +63,7 @@ const PageContainer = styled.main`
 `;
 
 const NoFavoritesInfo = styled.p`
-  padding-top: 50vh;
+  padding-top: 350px;
   font-size: 1.5rem;
   text-align: center;
 `;

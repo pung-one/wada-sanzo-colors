@@ -59,7 +59,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [favoriteCombinationsData, setFavoriteCombinationsData] = useState<
     FavoriteCombination[]
   >([]);
-  const [listType, setListType] = useState<"colors" | "combinations">("colors");
+  const [listType, setListType] = useState<"colors" | "combinations">(
+    "combinations"
+  );
 
   const [combinationListType, setCombinationListType] = useState(0);
 

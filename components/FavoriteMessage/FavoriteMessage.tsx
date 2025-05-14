@@ -24,8 +24,8 @@ const FavMessage = styled.span<{
   align-items: center;
   top: 40%;
   right: 50%;
-  width: 250px;
-  height: 6vh;
+  padding: 10px;
+  font-size: 0.8rem;
   z-index: 10;
   background-color: white;
   border: 1px solid black;

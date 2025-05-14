@@ -61,11 +61,9 @@ export default function ColorsList({ colors }: Props) {
 }
 
 const List = styled.ul`
-  padding-top: 42.5vh;
-  list-style: none;
-  list-style-type: 0;
+  padding-top: 290px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    padding-top: 18.5vh;
+    padding-top: 160px;
   }
 `;
 
@@ -77,8 +75,9 @@ const ColorBox = styled.li<{
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 25vh;
-  margin-top: 2vh;
+  width: 100%;
+  margin-top: 20px;
+  height: 200px;
   overflow-x: hidden;
   background-color: ${({ $hex }) => $hex};
   color: ${({ $isBright }) => ($isBright ? "black" : "white")};
@@ -89,9 +88,9 @@ const StyledColorName = styled.p<{
 }>`
   position: absolute;
   left: 0;
-  font-size: 2.5vh;
+  font-size: 1rem;
   font-weight: lighter;
-  padding: 2vh 0 0 3vh;
+  padding: 20px;
   text-decoration: underline;
   color: ${({ $isBright }) => ($isBright ? "black" : "white")};
 `;

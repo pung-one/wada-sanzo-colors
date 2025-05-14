@@ -16,7 +16,7 @@ export function OlliJonasPaul() {
 }
 
 const PageContainer = styled.main`
-  margin: 0 0 2vh;
+  margin: 0 0 20px;
   display: flex;
   flex-direction: column;
   gap: 50px;

@@ -12,17 +12,11 @@ export function CombinationDetail({
 }: {
   combination: CombinationObject;
 }) {
-  const [activeIndex, setActiveIndex] = useState<number>(-1);
-
   const actionContext = useContext(ActionContext);
 
   if (!actionContext) return <h1>Loading...</h1>;
 
   const isLargeCombination = combination.combination.length > 2;
-
-  const handleSlide = (index: number) => {
-    setActiveIndex(index === activeIndex ? -1 : index);
-  };
 
   const favoriteStatus = actionContext.favoriteCombinationsData.findIndex(
     (comb) => comb.id == combination.id && comb.isFavorite
@@ -31,6 +25,7 @@ export function CombinationDetail({
   return (
     <PageContainer>
       <Heading>
+        Combination #{combination.id}
         <FavoriteButton
           type="combi"
           elementId={combination.id}
@@ -38,7 +33,6 @@ export function CombinationDetail({
           isBright={true}
           isOnDetailCombination={true}
         />
-        Combination #{combination.id}
       </Heading>
       <CombinationContainer $isLarge={isLargeCombination}>
         {combination.combination.map((color, index) => {
@@ -48,8 +42,6 @@ export function CombinationDetail({
                 isLargeCombination={isLargeCombination}
                 color={color}
                 index={index}
-                onHandleSlide={() => handleSlide(index)}
-                isActive={index === activeIndex}
                 needColorName={true}
               />
             </ColorBox>
@@ -61,31 +53,32 @@ export function CombinationDetail({
 }
 
 const PageContainer = styled.main`
+  padding-top: 120px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 15.5vh;
-  height: 84.5vh;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    padding-top: 60px;
     width: 70%;
-    margin: 60px 0 0 30%;
-    height: 93.5vh;
+    margin-left: 30%;
   }
 `;
 
 const Heading = styled.header`
   position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
-  padding: 3vh;
-  height: 11vh;
+  padding: 0 20px;
+  height: 75px;
   border-bottom: 1px solid black;
-  font-size: 4vh;
+  font-size: 1.5rem;
   font-weight: lighter;
 `;
 
 const CombinationContainer = styled.div<{ $isLarge: boolean }>`
   display: flex;
-  height: 84.5vh;
+  flex: 1;
   width: 100%;
   flex-direction: ${({ $isLarge }) => ($isLarge ? "column" : null)};
   overflow-x: hidden;
@@ -94,8 +87,5 @@ const CombinationContainer = styled.div<{ $isLarge: boolean }>`
 const ColorBox = styled.div<{ $hex: string }>`
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: ${({ $hex }) => $hex};
 `;

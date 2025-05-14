@@ -28,8 +28,9 @@ const FavMessage = styled.span<{
   align-items: center;
   left: ${({ $isLarge }) => ($isLarge ? "14%" : "")};
   width: ${({ $isLarge }) => ($isLarge ? "60%" : "40%")};
-  padding: 2vh;
+  padding: 10px;
   z-index: 5;
+  font-size: 0.7rem;
   background-color: white;
   border: 1px solid black;
   overflow-x: hidden;

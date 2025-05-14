@@ -77,8 +77,7 @@ export default function CombinationsList({ combinations }: Props) {
 }
 
 const List = styled.ul`
-  padding-top: 270px;
-  list-style-type: 0;
+  padding-top: 240px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     padding-top: 160px;
   }
@@ -107,7 +106,6 @@ const StyledCombinationNumber = styled.span<{
   $isOnLargeCombination: boolean;
 }>`
   position: absolute;
-  font-size: 1rem;
   font-weight: lighter;
   padding: 20px;
   text-decoration: underline;
@@ -115,12 +113,8 @@ const StyledCombinationNumber = styled.span<{
   ${(props) =>
     props.$isOnLargeCombination
       ? css`
-          max-width: 23vw;
-          overflow-wrap: break-word;
+          max-width: 23%;
+          white-space: break-spaces;
         `
       : null}
-
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    font-size: 1.5rem;
-  }
 `;

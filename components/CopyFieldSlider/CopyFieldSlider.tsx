@@ -1,5 +1,6 @@
 import CopyField from "@/components/CopyField/CopyField";
 import { SlArrowLeft } from "react-icons/sl";
+import { SlArrowRight } from "react-icons/sl";
 import Link from "next/link";
 import styled, { css } from "styled-components";
 import { useState } from "react";
@@ -11,8 +12,6 @@ type Props = {
   isLargeCombination: boolean;
   color: ColorObject;
   index?: number;
-  onHandleSlide: () => void;
-  isActive: boolean;
   needColorName: boolean;
 };
 
@@ -20,11 +19,10 @@ export default function CopyFieldSlider({
   isLargeCombination,
   color,
   index,
-  onHandleSlide,
-  isActive,
   needColorName,
 }: Props) {
-  const [showMessage, setShowMessage] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [showMessage, setShowMessage] = useState<boolean>(false);
   const [label, setLabel] = useState("");
 
   const { slug, name, hex, rgb, cmyk, lab } = color;
@@ -36,65 +34,73 @@ export default function CopyFieldSlider({
   }
 
   return (
-    <>
-      <SliderContainer
-        $isLarge={isLargeCombination}
+    <SliderContainer
+      $isLarge={isLargeCombination}
+      $isLeftBox={!isLargeCombination && index === 0}
+      $isActive={open}
+    >
+      <CopyColorCodeMessage
+        isLarge={isLargeCombination}
+        showMessage={showMessage}
+        label={label}
+      />
+
+      <StyledButton
+        onClick={() => setOpen(!open)}
         $isLeftBox={!isLargeCombination && index === 0}
-        $isActive={isActive}
+        $isLarge={isLargeCombination}
+        $isActive={open}
+        aria-label={"show and hide color-codes"}
+        $isBright={isColorBright(rgb)}
       >
-        <CopyColorCodeMessage
+        {!isLargeCombination && index === 0 ? (
+          <SlArrowRight />
+        ) : (
+          <SlArrowLeft />
+        )}
+      </StyledButton>
+
+      {needColorName && (
+        <Link href={`/colors/${slug}`}>
+          <StyledColorName
+            $isLarge={isLargeCombination}
+            $isBright={isColorBright(rgb)}
+          >
+            {name}
+          </StyledColorName>
+        </Link>
+      )}
+
+      <CopyFieldContainer $isLarge={isLargeCombination}>
+        <CopyField
+          label={"HEX"}
+          value={hex}
           isLarge={isLargeCombination}
-          showMessage={showMessage}
-          label={label}
+          onShowMessage={() => handleShowMessage("HEX")}
         />
 
-        <StyledButton
-          onClick={() => onHandleSlide()}
-          $isLeftBox={!isLargeCombination && index === 0}
-          $isLarge={isLargeCombination}
-          $isActive={isActive}
-          aria-label={"show and hide color-codes"}
-        >
-          <Arrow $isBright={isColorBright(rgb)} />
-        </StyledButton>
-        {needColorName && (
-          <Link href={`/colors/${slug}`}>
-            <StyledColorName
-              $isLarge={isLargeCombination}
-              $isBright={isColorBright(rgb)}
-            >
-              {name}
-            </StyledColorName>
-          </Link>
-        )}
-        <CopyFieldContainer $isLarge={isLargeCombination}>
-          <CopyField
-            label={"HEX"}
-            value={hex}
-            isLarge={isLargeCombination}
-            onShowMessage={() => handleShowMessage("HEX")}
-          />
-          <CopyField
-            label={"RGB"}
-            value={rgb}
-            isLarge={isLargeCombination}
-            onShowMessage={() => handleShowMessage("RGB")}
-          />
-          <CopyField
-            label={"CMYK"}
-            value={cmyk}
-            isLarge={isLargeCombination}
-            onShowMessage={() => handleShowMessage("CMYK")}
-          />
-          <CopyField
-            label={"LAB"}
-            value={lab}
-            isLarge={isLargeCombination}
-            onShowMessage={() => handleShowMessage("LAB")}
-          />
-        </CopyFieldContainer>
-      </SliderContainer>
-    </>
+        <CopyField
+          label={"RGB"}
+          value={rgb}
+          isLarge={isLargeCombination}
+          onShowMessage={() => handleShowMessage("RGB")}
+        />
+
+        <CopyField
+          label={"CMYK"}
+          value={cmyk}
+          isLarge={isLargeCombination}
+          onShowMessage={() => handleShowMessage("CMYK")}
+        />
+
+        <CopyField
+          label={"LAB"}
+          value={lab}
+          isLarge={isLargeCombination}
+          onShowMessage={() => handleShowMessage("LAB")}
+        />
+      </CopyFieldContainer>
+    </SliderContainer>
   );
 }
 
@@ -104,21 +110,16 @@ const SliderContainer = styled.aside<{
   $isActive: boolean;
 }>`
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: ${({ $isLarge }) => ($isLarge ? "2vh 0 1vh" : "8vh 0 10vh")};
-  width: 100%;
-  height: 100%;
+  width: ${({ $isLarge }) => ($isLarge ? "100%" : "100%")};
   transform: ${({ $isActive, $isLeftBox }) =>
     $isActive && $isLeftBox
-      ? "translate(85%)"
+      ? "translate(100%, -50%)"
       : $isActive
-      ? "translate(-85%)"
-      : ""};
-  right: ${({ $isLeftBox }) => ($isLeftBox ? null : "-88%")};
-  left: ${({ $isLeftBox }) => ($isLeftBox ? "-88%" : null)};
+      ? "translate(-100%, -50%)"
+      : "translate(0, -50%)"};
+  right: ${({ $isLeftBox }) => ($isLeftBox ? null : "-100%")};
+  left: ${({ $isLeftBox }) => ($isLeftBox ? "-100%" : null)};
+  top: 50%;
   transition: transform 0.3s;
 `;
 
@@ -126,38 +127,42 @@ const StyledButton = styled.button<{
   $isLeftBox: boolean;
   $isLarge: boolean;
   $isActive: boolean;
+  $isBright: boolean;
 }>`
   position: absolute;
   z-index: 2;
   background: none;
   border: none;
-  transform: ${({ $isActive, $isLeftBox }) =>
-    $isLeftBox && $isActive
-      ? "rotate(360deg)"
-      : $isActive || $isLeftBox
-      ? "rotate(180deg)"
-      : null};
+  top: 50%;
+  transform-origin: center;
+  transform: ${({ $isActive }) =>
+    $isActive
+      ? "rotateY(180deg) translateY(-50%)"
+      : "rotateY(0deg)  translateY(-50%)"};
   transition: transform 0.3s;
-  ${({ $isLeftBox, $isLarge }) =>
+  ${({ $isLeftBox, $isLarge, $isActive }) =>
     $isLeftBox
       ? css`
-          right: -15%;
+          right: -20%;
         `
-      : !$isLeftBox && !$isLarge
+      : $isActive
       ? css`
-          left: -15%;
+          left: 0%;
         `
-      : css`
-          left: 0;
+      : /* : !$isLeftBox && !$isLarge
+      ? css`
+          left: -10%;
+        ` */
+        css`
+          left: -20%;
         `}
   &:hover {
     cursor: pointer;
   }
-`;
-
-const Arrow = styled(SlArrowLeft)<{ $isBright: boolean }>`
-  font-size: 4vh;
-  fill: ${(props) => (props.$isBright ? "black" : "white")};
+  svg {
+    font-size: 1.8rem;
+    fill: ${({ $isBright }) => ($isBright ? "black" : "white")};
+  }
 `;
 
 const StyledColorName = styled.h2<{
@@ -174,13 +179,10 @@ const StyledColorName = styled.h2<{
 
 const CopyFieldContainer = styled.div<{ $isLarge: boolean }>`
   position: relative;
-  display: grid;
-  grid-template: ${({ $isLarge }) =>
-    $isLarge ? "1fr 1fr / 1fr 1fr" : "1fr 1fr 1fr 1fr / 1fr"};
-  justify-items: center;
-  padding: ${({ $isLarge }) => ($isLarge ? "2vh 0 0 0" : "5vh 0 0")};
-  gap: ${({ $isLarge }) => ($isLarge ? "1vh" : "")};
-  height: ${({ $isLarge }) => ($isLarge ? "100%" : "80%")};
-  width: ${({ $isLarge }) => ($isLarge ? "60%" : "50%")};
-  padding-bottom: 2vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  margin: ${({ $isLarge }) => ($isLarge ? "20px 20px 0" : "20px 0 0")};
 `;

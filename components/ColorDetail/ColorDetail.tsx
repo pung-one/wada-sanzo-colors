@@ -18,8 +18,6 @@ type Props = {
 };
 
 export function ColorDetail({ colorObject, combinations }: Props) {
-  const [isActive, setIsActive] = useState(false);
-
   const actionContext = useContext(ActionContext);
 
   if (!actionContext || !colorObject || !combinations)
@@ -48,8 +46,6 @@ export function ColorDetail({ colorObject, combinations }: Props) {
         <CopyFieldSlider
           isLargeCombination
           color={colorObject}
-          isActive={isActive}
-          onHandleSlide={() => setIsActive(!isActive)}
           needColorName={false}
         />
       </StyledColorBox>
@@ -60,8 +56,6 @@ export function ColorDetail({ colorObject, combinations }: Props) {
 }
 
 const PageContainer = styled.main`
-  display: flex;
-  flex-direction: column;
   margin-top: 120px;
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     width: 70%;
@@ -73,6 +67,7 @@ const PageContainer = styled.main`
 const StyledColorBox = styled.header<{ $hex: string }>`
   position: relative;
   height: 250px;
+  width: 100%;
   display: flex;
   padding: 40px 0 0 0;
   align-items: center;
