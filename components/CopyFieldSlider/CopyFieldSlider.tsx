@@ -146,6 +146,10 @@ const StyledButton = styled.button<{
       ? css`
           right: -20%;
         `
+      : $isActive && !$isLarge
+      ? css`
+          left: -20%;
+        `
       : $isActive
       ? css`
           left: 0%;
@@ -155,8 +159,12 @@ const StyledButton = styled.button<{
         `}
   &:hover {
     cursor: pointer;
+    svg {
+      font-size: 2rem;
+    }
   }
   svg {
+    transition: font-size 0.2s ease;
     font-size: 1.8rem;
     fill: ${({ $isBright }) => ($isBright ? "black" : "white")};
   }
