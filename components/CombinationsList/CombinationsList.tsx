@@ -89,9 +89,6 @@ const StyledCombinationContainer = styled.li`
   width: 100%;
   margin-top: 20px;
   height: 200px;
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    height: 250px;
-  }
 `;
 
 const StyledColorBox = styled.div<{ $hex: string }>`
@@ -116,8 +113,4 @@ const StyledCombinationNumber = styled.span<{
           white-space: break-spaces;
         `
       : null}
-
-  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
-    font-size: 1.5rem;
-  }
 `;
