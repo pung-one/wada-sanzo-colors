@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: "https://www.wada-sanzo-colors.com",
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "monthly",
       priority: 1,
     },
     {
@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...colorsWithSlug.map((c) => ({
       url: `https://www.wada-sanzo-colors.com/colors/${c.slug}`,
       lastModified: new Date(),
-      changeFrequency: "yearly" as
+      changeFrequency: "never" as
         | "yearly"
         | "always"
         | "hourly"
@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...createCombinationArray(colorsWithSlug).map((c) => ({
       url: `https://www.wada-sanzo-colors.com/combinations/${c.id}`,
       lastModified: new Date(),
-      changeFrequency: "yearly" as
+      changeFrequency: "never" as
         | "yearly"
         | "always"
         | "hourly"
