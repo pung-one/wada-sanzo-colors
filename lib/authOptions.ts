@@ -34,7 +34,7 @@ export const authOptions: AuthOptions = {
       return session;
     },
   },
-  cookies: {
+  /* cookies: {
     pkceCodeVerifier: {
       name: "next-auth.pkce.code_verifier",
       options: {
@@ -44,5 +44,5 @@ export const authOptions: AuthOptions = {
         secure: true,
       },
     },
-  },
+  }, */
 };
