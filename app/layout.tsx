@@ -3,7 +3,6 @@ import StyledComponentsRegistry from "../lib/registry";
 import { GlobalStyle } from "../styles";
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { getSession, SessionProvider } from "next-auth/react";
 import localFont from "next/font/local";
 import NextAuthProvider from "@/components/NextAuthProvider/NextAuthProvider";
 

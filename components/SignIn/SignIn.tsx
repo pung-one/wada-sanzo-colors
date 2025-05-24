@@ -62,13 +62,22 @@ export function SignIn() {
             >
               Sign in with Google
             </StyledButton>
+
             <StyledButton
+              onClick={() => {
+                signIn("apple");
+              }}
+            >
+              Sign in with Apple
+            </StyledButton>
+
+            {/* <StyledButton
               onClick={() => {
                 signIn("github");
               }}
             >
               Sign in with Github
-            </StyledButton>
+            </StyledButton> */}
           </>
         )}
       </ButtonContainer>

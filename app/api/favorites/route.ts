@@ -1,42 +1,103 @@
 import clientPromise from "@/db/mongodb";
 import { ObjectId } from "mongodb";
-import { NextRequest } from "next/server";
+import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
+import { jwtVerify, createRemoteJWKSet } from "jose";
+
+const googleJWKS = createRemoteJWKSet(
+  new URL("https://www.googleapis.com/oauth2/v3/certs")
+);
+
+const appleJWKS = createRemoteJWKSet(
+  new URL("https://appleid.apple.com/auth/keys")
+);
+
+async function verifyGoogleJwt(id_token?: string) {
+  const { payload } = await jwtVerify(id_token ?? "", googleJWKS, {
+    issuer: "https://accounts.google.com",
+    audience: process.env.GOOGLE_ID,
+  });
+
+  return payload;
+}
+
+async function verifyAppleJwt(id_token?: string) {
+  const { payload } = await jwtVerify(id_token ?? "", appleJWKS, {
+    issuer: "https://appleid.apple.com",
+    audience: process.env.APPLE_ID,
+  });
+
+  return payload;
+}
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
-  const user = searchParams.get("user");
+  const idProvider = searchParams.get("idProvider");
 
-  if (!user || user === "public") {
-    return new Response("User not found", { status: 400 });
+  const headersList = await headers();
+  const id_token = headersList.get("Authorization")?.replace("Bearer ", "");
+
+  let userInfo;
+
+  if (idProvider === "google") {
+    userInfo = await verifyGoogleJwt(id_token);
+  }
+
+  if (idProvider === "apple") {
+    userInfo = await verifyAppleJwt(id_token);
+  }
+
+  if (!userInfo) {
+    return new Response("Unauthenticated", { status: 401 });
   }
 
   try {
     const client = await clientPromise;
     const database = client.db("colors");
-    const favorites = database.collection("favorites");
+    const users = database.collection("users");
 
-    let favData = await favorites.findOne({
-      user: user,
+    let userEntryByEmail;
+    let userEntryByName;
+
+    userEntryByEmail = await users.findOne({
+      email: userInfo.email,
     });
 
-    if (!favData) {
-      const defaultFavData = {
+    if (!userEntryByEmail) {
+      userEntryByName = await users.findOneAndUpdate(
+        {
+          user: userInfo.name,
+        },
+        { $set: { email: userInfo.email } },
+        { returnDocument: "after" }
+      );
+    }
+
+    if (!userEntryByEmail && !userEntryByName) {
+      const newUserEntry = {
         _id: new ObjectId(),
-        user: user,
+        user: userInfo.name,
+        email: userInfo.email,
         favoriteColors: [],
         favoriteCombinations: [],
         createdAt: new Date(),
         updatedAt: new Date(),
       };
 
-      await favorites.insertOne(defaultFavData);
+      await users.insertOne(newUserEntry);
 
-      favData = { ...defaultFavData };
+      userEntryByEmail = { ...newUserEntry };
     }
 
-    const { createdAt, updatedAt, ...responseData } = favData;
+    const userEntry = userEntryByEmail ?? userEntryByName;
 
-    return Response.json(responseData);
+    if (!userEntry) {
+      return new Response("User not found", { status: 404 });
+    }
+
+    const { createdAt, updatedAt, ...responseData } = userEntry;
+
+    return NextResponse.json(responseData);
   } catch (e) {
     console.error(e);
     return new Response("Internal Server Error", { status: 500 });
