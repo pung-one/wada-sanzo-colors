@@ -116,7 +116,7 @@ export async function PUT(req: Request) {
   try {
     const client = await clientPromise;
     const database = client.db("colors");
-    const favorites = database.collection("favorites");
+    const favorites = database.collection("users");
 
     if (request.type === "favColorUpdate") {
       await favorites.updateOne(
