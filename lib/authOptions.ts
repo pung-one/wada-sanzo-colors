@@ -34,15 +34,16 @@ export const authOptions: AuthOptions = {
       return session;
     },
   },
-  /* cookies: {
+  cookies: {
     pkceCodeVerifier: {
       name: "next-auth.pkce.code_verifier",
       options: {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: "lax",
         path: "/",
         secure: true,
+        maxAge: 900,
       },
     },
-  }, */
+  },
 };
