@@ -39,10 +39,9 @@ export const authOptions: AuthOptions = {
       name: "next-auth.pkce.code_verifier",
       options: {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "none",
         path: "/",
         secure: true,
-        maxAge: 900,
       },
     },
   },
