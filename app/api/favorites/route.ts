@@ -78,6 +78,7 @@ export async function GET(req: NextRequest) {
         _id: new ObjectId(),
         user: userInfo.name,
         email: userInfo.email,
+        idProvider: idProvider,
         favoriteColors: [],
         favoriteCombinations: [],
         createdAt: new Date(),
