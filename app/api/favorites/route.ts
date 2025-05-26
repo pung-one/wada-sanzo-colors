@@ -70,7 +70,8 @@ export async function GET(req: NextRequest) {
       sub: userInfo.sub,
     });
 
-    if (!userEntryBySub) {
+    //to match old user documents
+    if (!userEntryBySub && idProvider === "google") {
       userEntryByName = await users.findOneAndUpdate(
         {
           user: userInfo.name,
@@ -160,12 +161,12 @@ export async function PUT(req: Request) {
     const users = db.collection("users");
 
     const fieldToUpdate =
-      request.type === "favColorUpdate"
+      type === "favColorUpdate"
         ? {
             favoriteColors: request.favoriteColorsData,
             updatedAt: new Date(),
           }
-        : request.type === "favCombinationUpdate"
+        : type === "favCombinationUpdate"
         ? {
             favoriteCombinations: request.favoriteCombinationsData,
             updatedAt: new Date(),
