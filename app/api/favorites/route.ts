@@ -188,7 +188,8 @@ export async function PUT(req: Request) {
       { returnDocument: "after" }
     );
 
-    if (!updatedEntryBySub) {
+    //should not be necessary and will be removed
+    if (!updatedEntryBySub && idProvider === "google") {
       updatedEntryByName = await users.findOneAndUpdate(
         {
           user: userInfo.name,
