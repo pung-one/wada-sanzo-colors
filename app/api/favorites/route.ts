@@ -43,6 +43,8 @@ export async function GET(req: NextRequest) {
 
   let userInfo;
 
+  console.log(userInfo);
+
   try {
     userInfo =
       idProvider === "google"
