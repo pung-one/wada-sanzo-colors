@@ -58,8 +58,6 @@ export async function GET(req: NextRequest) {
     return new Response("Unauthenticated", { status: 401 });
   }
 
-  console.log(userInfo);
-
   try {
     const client = await clientPromise;
     const database = client.db("colors");
@@ -163,12 +161,12 @@ export async function PUT(req: Request) {
     const users = db.collection("users");
 
     const fieldToUpdate =
-      request.type === "favColorUpdate"
+      type === "favColorUpdate"
         ? {
             favoriteColors: request.favoriteColorsData,
             updatedAt: new Date(),
           }
-        : request.type === "favCombinationUpdate"
+        : type === "favCombinationUpdate"
         ? {
             favoriteCombinations: request.favoriteCombinationsData,
             updatedAt: new Date(),
