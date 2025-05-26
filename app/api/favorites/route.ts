@@ -158,25 +158,47 @@ export async function PUT(req: Request) {
     const db = client.db("colors");
     const users = db.collection("users");
 
-    const userFilter = { sub: userInfo.sub };
-    const updateOps: any = {
-      updatedAt: new Date(),
-    };
+    const fieldToUpdate =
+      request.type === "favColorUpdate"
+        ? {
+            favoriteColors: request.favoriteColorsData,
+            updatedAt: new Date(),
+          }
+        : request.type === "favCombinationUpdate"
+        ? {
+            favoriteCombinations: request.favoriteCombinationsData,
+            updatedAt: new Date(),
+          }
+        : null;
 
-    switch (type) {
-      case "favColorUpdate":
-        updateOps.favoriteColors = request.favoriteColorsData;
-        break;
-
-      case "favCombinationUpdate":
-        updateOps.favoriteCombinations = request.favoriteCombinationsData;
-        break;
-
-      default:
-        return new Response("Unsupported update type", { status: 400 });
+    if (!fieldToUpdate) {
+      return new Response("Could not process request type", { status: 404 });
     }
 
-    await users.updateOne(userFilter, { $set: updateOps }, { upsert: true });
+    let updatedEntryBySub;
+    let updatedEntryByName;
+
+    updatedEntryBySub = await users.findOneAndUpdate(
+      {
+        sub: userInfo.sub,
+      },
+      { $set: fieldToUpdate },
+      { returnDocument: "after" }
+    );
+
+    if (!updatedEntryBySub) {
+      updatedEntryByName = await users.findOneAndUpdate(
+        {
+          user: userInfo.name,
+        },
+        { $set: fieldToUpdate },
+        { returnDocument: "after" }
+      );
+    }
+
+    if (!updatedEntryBySub && !updatedEntryByName) {
+      return new Response("User not found", { status: 404 });
+    }
 
     return new Response("Update successful", { status: 200 });
   } catch (err) {
