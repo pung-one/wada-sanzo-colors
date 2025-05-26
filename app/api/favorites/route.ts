@@ -75,7 +75,9 @@ export async function GET(req: NextRequest) {
     if (!userEntryBySub) {
       userEntryByName = await users.findOneAndUpdate(
         {
+          //to match old user documents
           user: userInfo.name,
+          $or: [{ sub: { $exists: false } }, { sub: null }],
         },
         {
           $set: {
