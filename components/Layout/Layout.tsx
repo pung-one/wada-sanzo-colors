@@ -15,6 +15,7 @@ import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
 
 export type ContextProps = {
   listType: "colors" | "combinations";
@@ -122,6 +123,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       >
         Donate
       </DonationButton>
+
+      <AnnouncementModal />
     </>
   );
 }
