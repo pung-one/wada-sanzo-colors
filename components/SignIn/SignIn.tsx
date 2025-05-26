@@ -46,7 +46,7 @@ export function SignIn() {
         <PrivacyInfo>
           Cookies are used to manage your login session after signing in with
           Google or Apple. These are essential for authentication and not used
-          for tracking. We also store your name, email, and login provider in
+          for tracking. Also your name, email, and login provider is stored in
           our database to manage your account.
         </PrivacyInfo>
       </Article>
