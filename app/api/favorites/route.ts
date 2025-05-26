@@ -43,8 +43,6 @@ export async function GET(req: NextRequest) {
 
   let userInfo;
 
-  console.log(userInfo);
-
   try {
     userInfo =
       idProvider === "google"
@@ -59,6 +57,8 @@ export async function GET(req: NextRequest) {
   if (!userInfo?.sub) {
     return new Response("Unauthenticated", { status: 401 });
   }
+
+  console.log(userInfo);
 
   try {
     const client = await clientPromise;
