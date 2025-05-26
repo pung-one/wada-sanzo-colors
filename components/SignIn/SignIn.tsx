@@ -41,6 +41,14 @@ export function SignIn() {
           donation
         </a>{" "}
         for maintenance and development.)
+        <br />
+        <br />
+        <PrivacyInfo>
+          Cookies are used to manage your login session after signing in with
+          Google or Apple. These are essential for authentication and not used
+          for tracking. We also store your name, email, and login provider in
+          our database to manage your account.
+        </PrivacyInfo>
       </Article>
 
       <ButtonContainer>
@@ -70,14 +78,6 @@ export function SignIn() {
             >
               Sign in with Apple
             </StyledButton>
-
-            {/* <StyledButton
-              onClick={() => {
-                signIn("github");
-              }}
-            >
-              Sign in with Github
-            </StyledButton> */}
           </>
         )}
       </ButtonContainer>
@@ -118,6 +118,10 @@ const Article = styled.article`
   a {
     text-decoration: underline;
   }
+`;
+
+const PrivacyInfo = styled.p`
+  font-size: 14px;
 `;
 
 const ButtonContainer = styled.div`
