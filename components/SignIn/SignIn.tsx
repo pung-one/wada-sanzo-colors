@@ -20,9 +20,9 @@ export function SignIn() {
         <InfoSymbol />
         <p>
           {session
-            ? `You are signed in with "${
+            ? `You are signed in with ${
                 session?.idProvider === "google" ? "Google" : "Apple"
-              }".`
+              }.`
             : "You are not signed in."}
         </p>
       </SessionStatus>
