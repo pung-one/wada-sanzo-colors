@@ -27,32 +27,6 @@ export function SignIn() {
         </p>
       </SessionStatus>
 
-      <Article>
-        After signing in, your favorite Colors and Combinations will be stored
-        for you to access them later.
-        <br />
-        <br />
-        Whithout signing in, they will only be stored in the browser.
-        <br />
-        <br />
-        (This service is free, but i appreciate a{" "}
-        <a
-          href="https://www.paypal.com/donate/?hosted_button_id=PAFRAKM2HQWVY"
-          target="_blank"
-        >
-          donation
-        </a>{" "}
-        for maintenance and development.)
-        <br />
-        <br />
-        <PrivacyInfo>
-          Cookies are used to manage your login session after signing in with
-          Google or Apple. These are essential for authentication and not used
-          for tracking. Also your name, email, and login provider is stored in
-          our database to manage your account.
-        </PrivacyInfo>
-      </Article>
-
       <ButtonContainer>
         {session ? (
           <>
@@ -83,6 +57,32 @@ export function SignIn() {
           </>
         )}
       </ButtonContainer>
+
+      <Article>
+        After signing in, your favorite Colors and Combinations will be stored
+        for you to access them later.
+        <br />
+        <br />
+        Whithout signing in, they will only be stored in the browser.
+        <br />
+        <br />
+        (This service is free, but i appreciate a{" "}
+        <a
+          href="https://www.paypal.com/donate/?hosted_button_id=PAFRAKM2HQWVY"
+          target="_blank"
+        >
+          donation
+        </a>{" "}
+        for maintenance and development.)
+        <br />
+        <br />
+        <PrivacyInfo>
+          Cookies are used to manage your login session after signing in with
+          Google or Apple. These are essential for authentication and not used
+          for tracking. Also your name, email, and login provider is stored in
+          our database to manage your account.
+        </PrivacyInfo>
+      </Article>
     </PageContainer>
   );
 }
@@ -105,6 +105,7 @@ const SessionStatus = styled.span`
   gap: 10px;
   border: 1px solid black;
   padding: 20px;
+  margin-bottom: 50px;
 `;
 
 const InfoSymbol = styled(MdInfo)`
@@ -138,8 +139,7 @@ const ButtonContainer = styled.div`
 const StyledButton = styled.button`
   background-color: white;
   border: 1px solid black;
-  padding: 30px;
-  width: 60%;
+  padding: 20px;
   box-shadow: 0 0 4px black;
   &:hover {
     cursor: pointer;
@@ -148,7 +148,7 @@ const StyledButton = styled.button`
 `;
 
 const SigningOutMessage = styled.aside<{ $showSignOutMessage: boolean }>`
-  position: relative;
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
