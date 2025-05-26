@@ -124,7 +124,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         Donate
       </DonationButton>
 
-      <AnnouncementModal />
+      {/* <AnnouncementModal /> */}
     </>
   );
 }
