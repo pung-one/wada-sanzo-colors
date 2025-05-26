@@ -15,6 +15,7 @@ import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
+import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
 
 export type ContextProps = {
   listType: "colors" | "combinations";
@@ -31,9 +32,11 @@ export type ContextProps = {
 
 export const ActionContext = createContext<ContextProps | null>(null);
 
-async function fetcher(url: string) {
+async function fetcher(url: string, id_token?: string) {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${id_token}` },
+    });
     return await res.json();
   } catch (e) {
     console.error(e);
@@ -45,11 +48,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const { data: session } = useSession();
 
-  const user = session?.user?.name || "public";
-
   const { data: favDataFromDb, error: favDataError } = useSWR<FavData>(
-    user !== "public" ? `/api/favorites?user=${user}` : null,
-    fetcher
+    !session ? null : `/api/favorites?idProvider=${session?.idProvider}`,
+    (url: string) => fetcher(url, session?.id_token)
   );
 
   const [favoriteColorsData, setFavoriteColorsData] = useState<FavoriteColor[]>(
@@ -73,7 +74,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   }, [route]);
 
   useEffect(() => {
-    if (user !== "public" && favDataFromDb) {
+    if (favDataFromDb) {
       setFavoriteColorsData(favDataFromDb?.favoriteColors);
       setFavoriteCombinationsData(favDataFromDb?.favoriteCombinations);
     } else {
@@ -122,6 +123,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
       >
         Donate
       </DonationButton>
+
+      {/* <AnnouncementModal /> */}
     </>
   );
 }

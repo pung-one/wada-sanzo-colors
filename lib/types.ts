@@ -30,7 +30,10 @@ export type FavoriteCombination = {
 
 export type FavData = {
   _id: ObjectId;
-  user: string;
+  user?: string;
+  name?: string;
+  email?: string;
+  idProvider?: string;
   favoriteColors: FavoriteColor[];
   favoriteCombinations: FavoriteCombination[];
 };

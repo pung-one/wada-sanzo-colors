@@ -20,14 +20,14 @@ export function SignIn() {
         <InfoSymbol />
         <p>
           {session
-            ? `You are signed in as "${session?.user?.name}".`
+            ? `You are signed in as "${session?.user?.email}".`
             : "You are not signed in."}
         </p>
       </SessionStatus>
 
       <Article>
-        When signed in, your favorite Colors and Combinations will be stored for
-        you to access them later.
+        After signing in, your favorite Colors and Combinations will be stored
+        for you to access them later.
         <br />
         <br />
         Whithout signing in, they will only be stored in the browser.
@@ -41,6 +41,14 @@ export function SignIn() {
           donation
         </a>{" "}
         for maintenance and development.)
+        <br />
+        <br />
+        <PrivacyInfo>
+          Cookies are used to manage your login session after signing in with
+          Google or Apple. These are essential for authentication and not used
+          for tracking. Also your name, email, and login provider is stored in
+          our database to manage your account.
+        </PrivacyInfo>
       </Article>
 
       <ButtonContainer>
@@ -62,12 +70,13 @@ export function SignIn() {
             >
               Sign in with Google
             </StyledButton>
+
             <StyledButton
               onClick={() => {
-                signIn("github");
+                signIn("apple");
               }}
             >
-              Sign in with Github
+              Sign in with Apple
             </StyledButton>
           </>
         )}
@@ -109,6 +118,10 @@ const Article = styled.article`
   a {
     text-decoration: underline;
   }
+`;
+
+const PrivacyInfo = styled.p`
+  font-size: 14px;
 `;
 
 const ButtonContainer = styled.div`
