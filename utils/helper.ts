@@ -1,4 +1,5 @@
 import { ColorObject, FavoriteColor, FavoriteCombination } from "@/lib/types";
+import { Session } from "next-auth";
 
 export function createCombinationArray(data: ColorObject[]) {
   let combinationArray = [];
@@ -27,20 +28,21 @@ export function isColorBright(rgb: number[]) {
 }
 
 export async function updateDbFavoriteColor(
-  user: string,
+  session: Session | null,
   favoriteColorsData: FavoriteColor[]
 ) {
-  if (user !== "public") {
+  if (session) {
     const body = {
+      idProvider: session.idProvider,
       type: "favColorUpdate",
-      user: user,
       favoriteColorsData: favoriteColorsData,
     };
 
-    const response = await fetch(`/api/favorites/`, {
+    const response = await fetch(`/api/favorites`, {
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
+        Authorization: `Bearer ${session.id_token}`,
         "Content-Type": "application/json",
       },
     });
@@ -54,20 +56,21 @@ export async function updateDbFavoriteColor(
 }
 
 export async function updateDbFavoriteCombi(
-  user: string,
+  session: Session | null,
   favoriteCombinationsData: FavoriteCombination[]
 ) {
-  if (user !== "public") {
+  if (session) {
     const body = {
+      idProvider: session.idProvider,
       type: "favCombinationUpdate",
-      user: user,
       favoriteCombinationsData: favoriteCombinationsData,
     };
 
-    const response = await fetch(`/api/favorites/`, {
+    const response = await fetch(`/api/favorites`, {
       method: "PUT",
       body: JSON.stringify(body),
       headers: {
+        Authorization: `Bearer ${session.id_token}`,
         "Content-Type": "application/json",
       },
     });

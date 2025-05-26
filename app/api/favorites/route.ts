@@ -37,17 +37,24 @@ export async function GET(req: NextRequest) {
   const headersList = await headers();
   const id_token = headersList.get("Authorization")?.replace("Bearer ", "");
 
+  if (!id_token || !idProvider) {
+    return new Response("Missing credentials", { status: 400 });
+  }
+
   let userInfo;
 
-  if (idProvider === "google") {
-    userInfo = await verifyGoogleJwt(id_token);
+  try {
+    userInfo =
+      idProvider === "google"
+        ? await verifyGoogleJwt(id_token)
+        : idProvider === "apple"
+        ? await verifyAppleJwt(id_token)
+        : null;
+  } catch {
+    return new Response("Invalid token", { status: 401 });
   }
 
-  if (idProvider === "apple") {
-    userInfo = await verifyAppleJwt(id_token);
-  }
-
-  if (!userInfo) {
+  if (!userInfo?.sub) {
     return new Response("Unauthenticated", { status: 401 });
   }
 
@@ -56,29 +63,37 @@ export async function GET(req: NextRequest) {
     const database = client.db("colors");
     const users = database.collection("users");
 
-    let userEntryByEmail;
+    let userEntryBySub;
     let userEntryByName;
 
-    userEntryByEmail = await users.findOne({
-      email: userInfo.email,
+    userEntryBySub = await users.findOne({
+      sub: userInfo.sub,
     });
 
-    if (!userEntryByEmail) {
+    if (!userEntryBySub) {
       userEntryByName = await users.findOneAndUpdate(
         {
           user: userInfo.name,
         },
-        { $set: { email: userInfo.email } },
+        {
+          $set: {
+            email: userInfo.email,
+            idProvider: idProvider as string,
+            name: userInfo.name,
+            sub: userInfo.sub,
+          },
+        },
         { returnDocument: "after" }
       );
     }
 
-    if (!userEntryByEmail && !userEntryByName) {
+    if (!userEntryBySub && !userEntryByName) {
       const newUserEntry = {
         _id: new ObjectId(),
-        user: userInfo.name,
+        name: userInfo.name,
         email: userInfo.email,
-        idProvider: idProvider,
+        sub: userInfo.sub,
+        idProvider: idProvider as string,
         favoriteColors: [],
         favoriteCombinations: [],
         createdAt: new Date(),
@@ -87,16 +102,20 @@ export async function GET(req: NextRequest) {
 
       await users.insertOne(newUserEntry);
 
-      userEntryByEmail = { ...newUserEntry };
+      userEntryBySub = { ...newUserEntry };
     }
 
-    const userEntry = userEntryByEmail ?? userEntryByName;
+    const userEntry = userEntryBySub ?? userEntryByName;
 
     if (!userEntry) {
       return new Response("User not found", { status: 404 });
     }
 
-    const { createdAt, updatedAt, ...responseData } = userEntry;
+    const responseData = { ...userEntry };
+    delete responseData.createdAt;
+    delete responseData.updatedAt;
+    delete responseData.sub;
+    delete responseData.idProvider;
 
     return NextResponse.json(responseData);
   } catch (e) {
@@ -108,48 +127,60 @@ export async function GET(req: NextRequest) {
 export async function PUT(req: Request) {
   const request = await req.json();
 
-  const user = request.user;
+  const { idProvider, type } = request;
 
-  if (!user || user === "public") {
-    return new Response("User not found", { status: 400 });
+  const headersList = await headers();
+  const id_token = headersList.get("Authorization")?.replace("Bearer ", "");
+
+  if (!id_token || !idProvider) {
+    return new Response("Missing credentials", { status: 400 });
+  }
+
+  let userInfo;
+
+  try {
+    userInfo =
+      idProvider === "google"
+        ? await verifyGoogleJwt(id_token)
+        : idProvider === "apple"
+        ? await verifyAppleJwt(id_token)
+        : null;
+  } catch {
+    return new Response("Invalid token", { status: 401 });
+  }
+
+  if (!userInfo?.sub) {
+    return new Response("Unauthenticated", { status: 401 });
   }
 
   try {
     const client = await clientPromise;
-    const database = client.db("colors");
-    const favorites = database.collection("users");
+    const db = client.db("colors");
+    const users = db.collection("users");
 
-    if (request.type === "favColorUpdate") {
-      await favorites.updateOne(
-        { user: user },
-        {
-          $set: {
-            favoriteColors: request.favoriteColorsData,
-            updatedAt: new Date(),
-          },
-        },
-        { upsert: true }
-      );
-    } else if (request.type === "favCombinationUpdate") {
-      await favorites.updateOne(
-        { user: user },
-        {
-          $set: {
-            favoriteCombinations: request.favoriteCombinationsData,
-            updatedAt: new Date(),
-          },
-        },
-        { upsert: true }
-      );
-    } else {
-      return new Response("Internal Server Error", { status: 500 });
+    const userFilter = { sub: userInfo.sub };
+    const updateOps: any = {
+      updatedAt: new Date(),
+    };
+
+    switch (type) {
+      case "favColorUpdate":
+        updateOps.favoriteColors = request.favoriteColorsData;
+        break;
+
+      case "favCombinationUpdate":
+        updateOps.favoriteCombinations = request.favoriteCombinationsData;
+        break;
+
+      default:
+        return new Response("Unsupported update type", { status: 400 });
     }
 
-    return new Response("Favorite status updated.", {
-      status: 200,
-    });
-  } catch (e) {
-    console.error(e);
+    await users.updateOne(userFilter, { $set: updateOps }, { upsert: true });
+
+    return new Response("Update successful", { status: 200 });
+  } catch (err) {
+    console.error("PUT error:", err);
     return new Response("Internal Server Error", { status: 500 });
   }
 }

@@ -34,8 +34,6 @@ export default function FavoriteButton({
 
   const { data: session } = useSession();
 
-  const user = session?.user?.name || "public";
-
   async function handleToggleFavorite() {
     setFavMessageId(elementId);
 
@@ -69,7 +67,7 @@ export default function FavoriteButton({
 
       localStorage.setItem("favoriteColorsData", JSON.stringify(updated));
 
-      updateDbFavoriteColor(user, updated);
+      updateDbFavoriteColor(session, updated);
     } else {
       const stored = actionContext?.favoriteCombinationsData || [];
 
@@ -91,7 +89,7 @@ export default function FavoriteButton({
 
       localStorage.setItem("favoriteCombinationsData", JSON.stringify(updated));
 
-      updateDbFavoriteCombi(user, updated);
+      updateDbFavoriteCombi(session, updated);
     }
   }
 

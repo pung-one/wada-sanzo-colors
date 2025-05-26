@@ -20,14 +20,14 @@ export function SignIn() {
         <InfoSymbol />
         <p>
           {session
-            ? `You are signed in as "${session?.user?.name}".`
+            ? `You are signed in as "${session?.user?.email}".`
             : "You are not signed in."}
         </p>
       </SessionStatus>
 
       <Article>
-        When signed in, your favorite Colors and Combinations will be stored for
-        you to access them later.
+        After signing in, your favorite Colors and Combinations will be stored
+        for you to access them later.
         <br />
         <br />
         Whithout signing in, they will only be stored in the browser.
