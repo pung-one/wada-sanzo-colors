@@ -72,12 +72,11 @@ export async function GET(req: NextRequest) {
       sub: userInfo.sub,
     });
 
-    if (!userEntryBySub) {
+    //to match old user documents
+    if (!userEntryBySub && idProvider === "google") {
       userEntryByName = await users.findOneAndUpdate(
         {
-          //to match old user documents
           user: userInfo.name,
-          $or: [{ sub: { $exists: false } }, { sub: null }],
         },
         {
           $set: {
