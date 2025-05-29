@@ -84,7 +84,6 @@ export async function GET(req: NextRequest) {
             idProvider: idProvider as string,
             name: userInfo.name,
             sub: userInfo.sub,
-            updatedAt: new Date(),
           },
         },
         { returnDocument: "after" }
