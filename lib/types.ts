@@ -29,11 +29,6 @@ export type FavoriteCombination = {
 };
 
 export type FavData = {
-  _id: ObjectId;
-  user?: string;
-  name?: string;
-  email?: string;
-  idProvider?: string;
   updatedAt: Date;
   favoriteColors: FavoriteColor[];
   favoriteCombinations: FavoriteCombination[];
