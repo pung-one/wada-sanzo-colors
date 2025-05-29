@@ -34,6 +34,7 @@ export type FavData = {
   name?: string;
   email?: string;
   idProvider?: string;
+  updatedAt: Date;
   favoriteColors: FavoriteColor[];
   favoriteCombinations: FavoriteCombination[];
 };

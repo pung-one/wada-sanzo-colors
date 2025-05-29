@@ -2,6 +2,8 @@ import Google from "next-auth/providers/google";
 import Apple from "next-auth/providers/apple";
 import { AuthOptions } from "next-auth";
 
+export const validProviders = ["google", "apple"];
+
 export const authOptions: AuthOptions = {
   providers: [
     Google({
@@ -25,12 +27,25 @@ export const authOptions: AuthOptions = {
         token.idProvider = account.provider;
         token.user = user;
       }
+      if (!token.idProvider) {
+        console.warn("JWT callback: token.idProvider is missing!", {
+          token,
+          account,
+          user,
+        });
+      }
       return token;
     },
     async session({ session, token }) {
       session.id_token = token.id_token as string;
       session.idProvider = token.idProvider as "google" | "apple";
 
+      if (!session.idProvider) {
+        console.warn("Session callback: session.idProvider is missing!", {
+          session,
+          token,
+        });
+      }
       return session;
     },
   },

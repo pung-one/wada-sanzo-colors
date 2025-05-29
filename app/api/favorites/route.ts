@@ -3,6 +3,7 @@ import { ObjectId } from "mongodb";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify, createRemoteJWKSet } from "jose";
+import { validProviders } from "@/lib/authOptions";
 
 const googleJWKS = createRemoteJWKSet(
   new URL("https://www.googleapis.com/oauth2/v3/certs")
@@ -37,8 +38,8 @@ export async function GET(req: NextRequest) {
   const headersList = await headers();
   const id_token = headersList.get("Authorization")?.replace("Bearer ", "");
 
-  if (!id_token || !idProvider) {
-    return new Response("Missing credentials", { status: 400 });
+  if (!id_token || !idProvider || !validProviders.includes(idProvider)) {
+    return new Response("Missing or invalid credentials", { status: 400 });
   }
 
   let userInfo;
@@ -116,7 +117,6 @@ export async function GET(req: NextRequest) {
 
     const responseData = { ...userEntry };
     delete responseData.createdAt;
-    delete responseData.updatedAt;
     delete responseData.sub;
     delete responseData.idProvider;
 

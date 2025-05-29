@@ -13,9 +13,10 @@ import {
 } from "react";
 import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import useSWR from "swr";
 import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
+import { validProviders } from "@/lib/authOptions";
 
 export type ContextProps = {
   listType: "colors" | "combinations";
@@ -49,7 +50,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
 
   const { data: favDataFromDb, error: favDataError } = useSWR<FavData>(
-    !session ? null : `/api/favorites?idProvider=${session?.idProvider}`,
+    !session || !validProviders.includes(session?.idProvider)
+      ? null
+      : `/api/favorites?idProvider=${session?.idProvider}`,
     (url: string) => fetcher(url, session?.id_token)
   );
 
@@ -67,6 +70,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [combinationListType, setCombinationListType] = useState(0);
 
   const [colorListType, setColorListType] = useState(0);
+
+  useEffect(() => {
+    if (session && !validProviders.includes(session.idProvider)) {
+      signOut();
+    }
+  }, [session]);
 
   useEffect(() => {
     setColorListType(0);
