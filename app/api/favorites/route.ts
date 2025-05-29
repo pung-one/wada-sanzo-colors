@@ -50,6 +50,8 @@ export async function GET(req: NextRequest) {
         : idProvider === "apple"
         ? await verifyAppleJwt(id_token)
         : null;
+
+    console.log(`USERINFO WITH IDP "${idProvider}": `, userInfo);
   } catch {
     return new Response("Invalid token", { status: 401 });
   }
