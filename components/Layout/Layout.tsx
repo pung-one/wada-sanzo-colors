@@ -65,6 +65,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [favoriteCombinationsData, setFavoriteCombinationsData] = useState<
     FavoriteCombination[]
   >([]);
+
   const [listType, setListType] = useState<"colors" | "combinations">(
     "combinations"
   );
@@ -72,6 +73,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [combinationListType, setCombinationListType] = useState(0);
 
   const [colorListType, setColorListType] = useState(0);
+
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     if (session && !validProviders.includes(session.idProvider)) {
@@ -136,7 +139,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         Donate
       </DonationButton>
 
-      {/* <AnnouncementModal /> */}
+      <AnnouncementModal show={showModal} onClose={() => setShowModal(false)} />
     </>
   );
 }

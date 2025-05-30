@@ -102,7 +102,6 @@ export async function GET(req: NextRequest) {
         favoriteColors: [],
         favoriteCombinations: [],
         createdAt: new Date(),
-        updatedAt: new Date(),
       };
 
       await users.insertOne(newUserEntry);

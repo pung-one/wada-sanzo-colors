@@ -1,11 +1,27 @@
+import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
 
-export function AnnouncementModal() {
-  const [show, setShow] = useState(true);
+export function AnnouncementModal({
+  show,
+  onClose,
+}: {
+  show: boolean;
+  onClose: () => void;
+}) {
   return (
-    <Container $show={show} onClick={() => setShow(false)}>
-      <p>New iOS App coming soon!</p>
+    <Container $show={show} onClick={onClose}>
+      <p>
+        Due to recent changes to the login system, please{" "}
+        <Link href={"/signin"}>log out and log in again</Link> to ensure your
+        favorites are saved correctly.
+        <br />
+        <br />
+        <span>
+          If you experience any issues, clearing your browsers cache and logging
+          in again may help.
+        </span>
+      </p>
 
       <CloseButton />
     </Container>
@@ -24,9 +40,15 @@ const Container = styled.div<{ $show: boolean }>`
   background-color: white;
   border: 1px solid black;
   p {
-    padding: 20px 0;
+    padding: 20px 10px;
     text-align: center;
     flex: 1;
+  }
+  span {
+    font-size: 14px;
+  }
+  a {
+    text-decoration: underline;
   }
 `;
 
