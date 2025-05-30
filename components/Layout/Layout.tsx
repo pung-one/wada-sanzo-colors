@@ -12,7 +12,7 @@ import {
   useState,
 } from "react";
 import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import useSWR from "swr";
 import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
@@ -47,6 +47,8 @@ async function fetcher(url: string, id_token?: string) {
 export function Layout({ children }: { children: React.ReactNode }) {
   const route = usePathname();
 
+  const router = useRouter();
+
   const { data: session } = useSession();
 
   const { data: favDataFromDb, error: favDataError } = useSWR<FavData>(
@@ -74,6 +76,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (session && !validProviders.includes(session.idProvider)) {
       signOut();
+      router.replace("/signin");
     }
   }, [session]);
 
