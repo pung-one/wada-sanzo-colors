@@ -91,7 +91,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (favDataFromDb) {
       setFavoriteColorsData(favDataFromDb?.favoriteColors);
+      localStorage.setItem(
+        "favoriteColorsData",
+        JSON.stringify(favDataFromDb.favoriteColors)
+      );
+
       setFavoriteCombinationsData(favDataFromDb?.favoriteCombinations);
+      localStorage.setItem(
+        "favoriteCombinationsData",
+        JSON.stringify(favDataFromDb?.favoriteCombinations)
+      );
     } else {
       setFavoriteColorsData(
         JSON.parse(localStorage.getItem("favoriteColorsData") || "[]")
