@@ -13,7 +13,7 @@ export const authOptions: AuthOptions = {
     }),
     Apple({
       id: "apple",
-      clientId: process.env.APPLE_ID ?? "",
+      clientId: process.env.APPLE_WEB_ID ?? "",
       clientSecret: process.env.APPLE_SECRET ?? "",
     }),
   ],

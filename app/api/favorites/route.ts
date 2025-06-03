@@ -23,10 +23,15 @@ async function verifyGoogleJwt(id_token?: string) {
   return payload;
 }
 
+const APPLE_AUDIENCE = [
+  process.env.APPLE_WEB_ID ?? "",
+  process.env.APPLE_MOBILE_ID ?? "",
+].filter((a) => !!a);
+
 async function verifyAppleJwt(id_token?: string) {
   const { payload } = await jwtVerify(id_token ?? "", appleJWKS, {
     issuer: "https://appleid.apple.com",
-    audience: process.env.APPLE_ID,
+    audience: APPLE_AUDIENCE,
   });
 
   return payload;
