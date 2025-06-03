@@ -34,14 +34,23 @@ export type ContextProps = {
 export const ActionContext = createContext<ContextProps | null>(null);
 
 async function fetcher(url: string, id_token?: string) {
-  try {
-    const res = await fetch(url, {
-      headers: { Authorization: `Bearer ${id_token}` },
-    });
-    return await res.json();
-  } catch (e) {
-    console.error(e);
+  const res = await fetch(url, {
+    headers: { Authorization: `Bearer ${id_token}` },
+  });
+
+  if (res.status === 401 || res.status === 404 || res.status === 400) {
+    const error = new Error(res.statusText);
+    (error as any).status = res.status;
+    throw error;
   }
+
+  if (!res.ok) {
+    const error = new Error("An error occurred");
+    (error as any).status = res.status;
+    throw error;
+  }
+
+  return await res.json();
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -82,6 +91,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       router.replace("/signin");
     }
   }, [session]);
+
+  useEffect(() => {
+    if (favDataError) {
+      signOut();
+      router.replace("/signin");
+    }
+  }, [favDataError, router]);
 
   useEffect(() => {
     setColorListType(0);
