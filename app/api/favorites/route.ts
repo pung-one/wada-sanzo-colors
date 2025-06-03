@@ -59,7 +59,8 @@ export async function GET(req: NextRequest) {
         : null;
 
     console.log(`USERINFO WITH IDP "${idProvider}": `, userInfo);
-  } catch {
+  } catch (err) {
+    console.error("Invalid token for idProvider", idProvider, err);
     return new Response("Invalid token", { status: 401 });
   }
 
