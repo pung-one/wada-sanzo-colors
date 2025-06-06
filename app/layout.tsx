@@ -4,7 +4,8 @@ import { GlobalStyle } from "../styles";
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
-import NextAuthProvider from "@/components/NextAuthProvider/NextAuthProvider";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 
 export const metadata: Metadata = {
   title: "Wada Sanzo Colors",
@@ -51,9 +52,11 @@ export default async function RootLayout({
         <StyledComponentsRegistry>
           <GlobalStyle />
 
-          <NextAuthProvider>
-            <Layout>{children}</Layout>
-          </NextAuthProvider>
+          <GoogleOAuthProvider clientId={process.env.GOOGLE_ID ?? ""}>
+            <AuthProvider>
+              <Layout>{children}</Layout>
+            </AuthProvider>
+          </GoogleOAuthProvider>
         </StyledComponentsRegistry>
 
         <Analytics />

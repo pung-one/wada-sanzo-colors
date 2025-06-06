@@ -4,7 +4,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { ActionContext } from "../Layout/Layout";
 import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
 import { updateDbFavoriteColor, updateDbFavoriteCombi } from "@/utils/helper";
-import { useSession } from "next-auth/react";
 
 type Props = {
   type: "combi" | "color";
@@ -31,8 +30,6 @@ export default function FavoriteButton({
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const actionContext = useContext(ActionContext);
-
-  const { data: session } = useSession();
 
   async function handleToggleFavorite() {
     setFavMessageId(elementId);
@@ -67,7 +64,7 @@ export default function FavoriteButton({
 
       localStorage.setItem("favoriteColorsData", JSON.stringify(updated));
 
-      updateDbFavoriteColor(session, updated);
+      updateDbFavoriteColor(null, updated);
     } else {
       const stored = actionContext?.favoriteCombinationsData || [];
 
@@ -89,7 +86,7 @@ export default function FavoriteButton({
 
       localStorage.setItem("favoriteCombinationsData", JSON.stringify(updated));
 
-      updateDbFavoriteCombi(session, updated);
+      updateDbFavoriteCombi(null, updated);
     }
   }
 

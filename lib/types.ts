@@ -33,3 +33,9 @@ export type FavData = {
   favoriteColors: FavoriteColor[];
   favoriteCombinations: FavoriteCombination[];
 };
+
+export type NormalizedUser = {
+  name?: string;
+  email: string;
+  userId: string;
+};

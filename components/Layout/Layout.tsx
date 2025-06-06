@@ -13,10 +13,10 @@ import {
 } from "react";
 import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
 import { usePathname, useRouter } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
 import useSWR from "swr";
 import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
-import { validProviders } from "@/lib/authOptions";
+import { useAuth } from "../auth/AuthProvider";
+import { validProviders } from "@/utils/auth";
 
 export type ContextProps = {
   listType: "colors" | "combinations";
@@ -33,7 +33,7 @@ export type ContextProps = {
 
 export const ActionContext = createContext<ContextProps | null>(null);
 
-async function fetcher(url: string, id_token?: string) {
+async function fetcher(url: string, id_token?: string | null) {
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${id_token}` },
   });
@@ -58,13 +58,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const router = useRouter();
 
-  const { data: session } = useSession();
+  const { idToken, idProvider } = useAuth();
 
   const { data: favDataFromDb, error: favDataError } = useSWR<FavData>(
-    !session || !validProviders.includes(session?.idProvider)
+    !idToken || !validProviders.includes(idProvider ?? "")
       ? null
-      : `/api/favorites?idProvider=${session?.idProvider}`,
-    (url: string) => fetcher(url, session?.id_token)
+      : `/api/favorites?idProvider=${idProvider}`,
+    (url: string) => fetcher(url, idToken)
   );
 
   const [favoriteColorsData, setFavoriteColorsData] = useState<FavoriteColor[]>(
@@ -85,16 +85,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const [showModal, setShowModal] = useState(true);
 
-  useEffect(() => {
-    if (session && !validProviders.includes(session.idProvider)) {
-      signOut();
+  /*  useEffect(() => {
+    if (!validProviders.includes(idProvider)) {
+      //signOut();
       router.replace("/signin");
     }
-  }, [session]);
+  }, []); */
 
   useEffect(() => {
     if (favDataError) {
-      signOut();
+      //signOut();
       router.replace("/signin");
     }
   }, [favDataError, router]);

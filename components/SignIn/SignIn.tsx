@@ -1,18 +1,22 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
 import { useState } from "react";
 import { MdInfo } from "react-icons/md";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { useAuth } from "../auth/AuthProvider";
 
 export function SignIn() {
-  const { data: session } = useSession();
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 
+  const { signInWithGoogle } = useAuth();
+
   async function handleSignOut() {
-    setShowSignOutMessage(true);
-    setTimeout(() => signOut(), 1500);
+    /* setShowSignOutMessage(true);
+    setTimeout(() => signOut(), 1500); */
   }
+
+  const session: { idProvider?: string } = { idProvider: undefined };
 
   return (
     <PageContainer>
@@ -28,34 +32,26 @@ export function SignIn() {
       </SessionStatus>
 
       <ButtonContainer>
-        {session ? (
-          <>
-            <StyledButton onClick={() => handleSignOut()}>
-              Sign Out
-            </StyledButton>
-            <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
-              Signing out...
-            </SigningOutMessage>
-          </>
-        ) : (
-          <>
-            <StyledButton
-              onClick={() => {
-                signIn("google");
-              }}
-            >
-              Sign in with Google
-            </StyledButton>
+        <>
+          <StyledButton onClick={() => handleSignOut()}>Sign Out</StyledButton>
+          <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
+            Signing out...
+          </SigningOutMessage>
+        </>
+        <>
+          <StyledButton onClick={() => signInWithGoogle()}>
+            Sign in with Google
+          </StyledButton>
 
-            <StyledButton
-              onClick={() => {
-                signIn("apple");
-              }}
-            >
-              Sign in with Apple
-            </StyledButton>
-          </>
-        )}
+          <StyledButton onClick={() => {}}>Sign in with Apple</StyledButton>
+          <StyledButton
+            onClick={() => {
+              googleLogout();
+            }}
+          >
+            Sign out
+          </StyledButton>
+        </>
       </ButtonContainer>
 
       <Article>
