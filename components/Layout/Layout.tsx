@@ -11,12 +11,16 @@ import {
   useEffect,
   useState,
 } from "react";
-import { FavData, FavoriteColor, FavoriteCombination } from "@/lib/types";
+import {
+  FavData,
+  FavoriteColor,
+  FavoriteCombination,
+  validProviders,
+} from "@/lib/types";
 import { usePathname, useRouter } from "next/navigation";
 import useSWR from "swr";
 import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
 import { useAuth } from "../auth/AuthProvider";
-import { validProviders } from "@/utils/auth";
 
 export type ContextProps = {
   listType: "colors" | "combinations";
@@ -61,9 +65,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { idToken, idProvider } = useAuth();
 
   const { data: favDataFromDb, error: favDataError } = useSWR<FavData>(
-    !idToken || !validProviders.includes(idProvider ?? "")
-      ? null
-      : `/api/favorites?idProvider=${idProvider}`,
+    !idToken || !validProviders.includes(idProvider ?? "") ? null : null,
+    /* : `/api/favorites?idProvider=${idProvider}`, */
     (url: string) => fetcher(url, idToken)
   );
 

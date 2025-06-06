@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-
 export type ColorObject = {
   name: string;
   combinations: number[];
@@ -39,3 +37,7 @@ export type NormalizedUser = {
   email: string;
   userId: string;
 };
+
+export type ValidIdProviders = "google" | "apple";
+
+export const validProviders = ["google", "apple"];

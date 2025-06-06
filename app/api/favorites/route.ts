@@ -3,8 +3,7 @@ import { ObjectId } from "mongodb";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify, createRemoteJWKSet } from "jose";
-import { validProviders } from "@/lib/authOptions";
-import { FavData } from "@/lib/types";
+import { FavData, validProviders } from "@/lib/types";
 
 const googleJWKS = createRemoteJWKSet(
   new URL("https://www.googleapis.com/oauth2/v3/certs")
