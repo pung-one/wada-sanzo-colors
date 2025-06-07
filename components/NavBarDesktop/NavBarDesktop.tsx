@@ -7,7 +7,6 @@ import { SlArrowRight } from "react-icons/sl";
 import CombinationsFilter from "../CombinationsFilter/CombinationsFilter";
 import ColorFilter from "../ColorFilter/ColorFilter";
 import { ActionContext } from "../Layout/Layout";
-import { TabBar } from "../TabBar/TabBar";
 import { usePathname } from "next/navigation";
 import { TfiArrowRight } from "react-icons/tfi";
 

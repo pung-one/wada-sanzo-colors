@@ -7,35 +7,34 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { ActionContext } from "../Layout/Layout";
 import { createCombinationArray } from "@/utils/helper";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   colors: ColorObject[];
 };
 
 export function Favorites({ colors }: Props) {
+  const { favoriteCombinations, favoriteColors } = useFavorites();
+
   const actionContext = useContext(ActionContext);
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { favoriteColorsData, favoriteCombinationsData, listType } =
-    actionContext;
+  const { listType } = actionContext;
 
-  const favoriteColors = favoriteColorsData?.filter(
-    (color) => color.isFavorite
-  );
   const favoriteColorsList = colors.filter((color1) =>
-    favoriteColors?.some((color2) => color2.name === color1.name)
+    favoriteColors
+      ?.filter((color) => color.isFavorite)
+      .some((color2) => color2.name === color1.name)
   );
 
   const allCombinationsArray = createCombinationArray(colors);
-  const favoriteCombinations = favoriteCombinationsData?.filter(
-    (combination) => combination.isFavorite
-  );
+
   const favoriteCombinationsList = allCombinationsArray?.filter(
     (combination1) =>
-      favoriteCombinations?.some(
-        (combination2) => combination2.id === combination1.id
-      )
+      favoriteCombinations
+        ?.filter((combination) => combination.isFavorite)
+        .some((combination2) => combination2.id === combination1.id)
   );
 
   return (

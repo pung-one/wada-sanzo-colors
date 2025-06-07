@@ -2,8 +2,7 @@
 
 import styled from "styled-components";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
-import { ActionContext } from "../Layout/Layout";
+import { useEffect, useState } from "react";
 import { ColorObject, CombinationObject } from "@/lib/types";
 import { useRouter } from "next/navigation";
 
@@ -19,13 +18,9 @@ export default function Inspiration({ colors, combinations }: Props) {
 
   const router = useRouter();
 
-  const actionContext = useContext(ActionContext);
-
   useEffect(() => {
     setRandomCombination(combinations[Math.floor(Math.random() * 348) || 276]);
   }, [combinations]);
-
-  if (!actionContext) return <h1>Loading...</h1>;
 
   function createRandomCombinationCssGradient() {
     if (randomCombination.combination.length === 2) {

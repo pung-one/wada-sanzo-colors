@@ -6,6 +6,7 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useContext, useEffect, useState } from "react";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   combinations: CombinationObject[];
@@ -15,11 +16,13 @@ export default function CombinationsList({ combinations }: Props) {
   const [arrayToBeRendered, setArrayToBeRendered] =
     useState<CombinationObject[]>();
 
+  const { favoriteCombinations } = useFavorites();
+
   const actionContext = useContext(ActionContext);
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { combinationListType, favoriteCombinationsData } = actionContext;
+  const { combinationListType } = actionContext;
 
   useEffect(() => {
     if (combinationListType === 0) {
@@ -32,12 +35,12 @@ export default function CombinationsList({ combinations }: Props) {
         )
       );
     }
-  }, [combinationListType, favoriteCombinationsData]);
+  }, [combinationListType, favoriteCombinations]);
 
   return (
     <List>
       {arrayToBeRendered?.map((combination1) => {
-        const favoriteStatus = favoriteCombinationsData.findIndex(
+        const favoriteStatus = favoriteCombinations.findIndex(
           (combination2) =>
             combination2.id === combination1.id && combination2.isFavorite
         );

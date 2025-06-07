@@ -29,54 +29,12 @@ export type ContextProps = {
   setCombinationListType: (type: number) => void;
   colorListType: number;
   setColorListType: (type: number) => void;
-  favoriteColorsData: FavoriteColor[];
-  setFavoriteColorsData: Dispatch<SetStateAction<FavoriteColor[]>>;
-  favoriteCombinationsData: FavoriteCombination[];
-  setFavoriteCombinationsData: Dispatch<SetStateAction<FavoriteCombination[]>>;
 };
 
 export const ActionContext = createContext<ContextProps | null>(null);
 
-async function fetcher(url: string, id_token?: string | null) {
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${id_token}` },
-  });
-
-  if (res.status === 401 || res.status === 404 || res.status === 400) {
-    const error = new Error(res.statusText);
-    (error as any).status = res.status;
-    throw error;
-  }
-
-  if (!res.ok) {
-    const error = new Error("An error occurred");
-    (error as any).status = res.status;
-    throw error;
-  }
-
-  return await res.json();
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
   const route = usePathname();
-
-  const router = useRouter();
-
-  const { idToken, idProvider } = useAuth();
-
-  const { data: favDataFromDb, error: favDataError } = useSWR<FavData>(
-    !idToken || !validProviders.includes(idProvider ?? "") ? null : null,
-    /* : `/api/favorites?idProvider=${idProvider}`, */
-    (url: string) => fetcher(url, idToken)
-  );
-
-  const [favoriteColorsData, setFavoriteColorsData] = useState<FavoriteColor[]>(
-    []
-  );
-
-  const [favoriteCombinationsData, setFavoriteCombinationsData] = useState<
-    FavoriteCombination[]
-  >([]);
 
   const [listType, setListType] = useState<"colors" | "combinations">(
     "combinations"
@@ -88,47 +46,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const [showModal, setShowModal] = useState(true);
 
-  /*  useEffect(() => {
-    if (!validProviders.includes(idProvider)) {
-      //signOut();
-      router.replace("/signin");
-    }
-  }, []); */
-
-  useEffect(() => {
-    if (favDataError) {
-      //signOut();
-      router.replace("/signin");
-    }
-  }, [favDataError, router]);
-
   useEffect(() => {
     setColorListType(0);
     setCombinationListType(0);
   }, [route]);
-
-  useEffect(() => {
-    if (favDataFromDb) {
-      setFavoriteColorsData(favDataFromDb?.favoriteColors);
-      localStorage.setItem(
-        "favoriteColorsData",
-        JSON.stringify(favDataFromDb.favoriteColors)
-      );
-
-      setFavoriteCombinationsData(favDataFromDb?.favoriteCombinations);
-      localStorage.setItem(
-        "favoriteCombinationsData",
-        JSON.stringify(favDataFromDb?.favoriteCombinations)
-      );
-    } else {
-      setFavoriteColorsData(
-        JSON.parse(localStorage.getItem("favoriteColorsData") || "[]")
-      );
-      setFavoriteCombinationsData(
-        JSON.parse(localStorage.getItem("favoriteCombinationsData") || "[]")
-      );
-    }
-  }, [favDataFromDb]);
 
   return (
     <>
@@ -147,10 +68,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
           setCombinationListType: setCombinationListType,
           colorListType: colorListType,
           setColorListType: setColorListType,
-          favoriteColorsData: favoriteColorsData,
-          setFavoriteColorsData: setFavoriteColorsData,
-          favoriteCombinationsData: favoriteCombinationsData,
-          setFavoriteCombinationsData: setFavoriteCombinationsData,
         }}
       >
         <NavBar />

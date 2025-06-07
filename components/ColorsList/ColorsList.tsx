@@ -6,6 +6,7 @@ import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { useState, useEffect, useContext } from "react";
 import { ColorObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   colors: ColorObject[];
@@ -15,10 +16,11 @@ export default function ColorsList({ colors }: Props) {
   const [arrayToBeRendered, setArrayToBeRendered] = useState<ColorObject[]>();
 
   const actionContext = useContext(ActionContext);
+  const { favoriteColors } = useFavorites();
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { colorListType, favoriteColorsData } = actionContext;
+  const { colorListType } = actionContext;
 
   useEffect(() => {
     if (colorListType === 0) {
@@ -28,12 +30,12 @@ export default function ColorsList({ colors }: Props) {
         colors.filter((color) => color.swatch === colorListType - 1)
       );
     }
-  }, [colorListType, favoriteColorsData]);
+  }, [colorListType, favoriteColors]);
 
   return (
     <List>
       {arrayToBeRendered?.map(({ name, slug, isBright, hex, swatch }) => {
-        const favoriteStatus = favoriteColorsData?.findIndex(
+        const favoriteStatus = favoriteColors?.findIndex(
           (color) => color.name === name && color.isFavorite
         );
 

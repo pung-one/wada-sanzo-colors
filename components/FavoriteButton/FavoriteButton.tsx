@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
 import { TfiArrowDown } from "react-icons/tfi";
-import { useContext, useEffect, useRef, useState } from "react";
-import { ActionContext } from "../Layout/Layout";
+import { useEffect, useRef, useState } from "react";
 import FavoriteMessage from "../FavoriteMessage/FavoriteMessage";
-import { updateDbFavoriteColor, updateDbFavoriteCombi } from "@/utils/helper";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   type: "combi" | "color";
@@ -29,7 +28,7 @@ export default function FavoriteButton({
   const [favMessageId, setFavMessageId] = useState<string | number>("");
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const actionContext = useContext(ActionContext);
+  const { toggleFavoriteColor, toggleFavoriteCombination } = useFavorites();
 
   async function handleToggleFavorite() {
     setFavMessageId(elementId);
@@ -41,52 +40,9 @@ export default function FavoriteButton({
     timeoutRef.current = setTimeout(() => setFavMessageId("false"), 1000);
 
     if (type === "color") {
-      const stored = actionContext?.favoriteColorsData || [];
-
-      const index = stored.findIndex((c) => c.name === elementId);
-
-      let updated;
-
-      if (index !== -1) {
-        updated = [...stored];
-        updated[index] = {
-          ...updated[index],
-          isFavorite: !updated[index].isFavorite,
-        };
-      } else {
-        updated = [
-          ...stored,
-          { name: elementId as string, swatch: swatch, isFavorite: true },
-        ];
-      }
-
-      actionContext?.setFavoriteColorsData(updated);
-
-      localStorage.setItem("favoriteColorsData", JSON.stringify(updated));
-
-      updateDbFavoriteColor(null, updated);
+      toggleFavoriteColor(elementId as string, swatch as number);
     } else {
-      const stored = actionContext?.favoriteCombinationsData || [];
-
-      const index = stored.findIndex((c) => c.id === elementId);
-
-      let updated;
-
-      if (index !== -1) {
-        updated = [...stored];
-        updated[index] = {
-          ...updated[index],
-          isFavorite: !updated[index].isFavorite,
-        };
-      } else {
-        updated = [...stored, { id: elementId as number, isFavorite: true }];
-      }
-
-      actionContext?.setFavoriteCombinationsData(updated);
-
-      localStorage.setItem("favoriteCombinationsData", JSON.stringify(updated));
-
-      updateDbFavoriteCombi(null, updated);
+      toggleFavoriteCombination(elementId as number);
     }
   }
 

@@ -3,6 +3,7 @@
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { ActionContext } from "../Layout/Layout";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   isAtFavorites: boolean;
@@ -13,24 +14,22 @@ export default function CombinationsFilter({ isAtFavorites }: Props) {
   const [favWithThreeColors, setFavWithThreeColors] = useState(0);
   const [favWithFourColors, setFavWithFourColors] = useState(0);
 
+  const { favoriteCombinations } = useFavorites();
+
   const actionContext = useContext(ActionContext);
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const {
-    favoriteCombinationsData,
-    combinationListType,
-    setCombinationListType,
-  } = actionContext;
+  const { combinationListType, setCombinationListType } = actionContext;
 
   useEffect(() => {
     setFavWithTwoColors(
-      favoriteCombinationsData?.filter(
+      favoriteCombinations?.filter(
         (combination) => combination.id <= 120 && combination.isFavorite
       ).length
     );
     setFavWithThreeColors(
-      favoriteCombinationsData?.filter(
+      favoriteCombinations?.filter(
         (combination) =>
           combination.id > 120 &&
           combination.id <= 240 &&
@@ -38,11 +37,11 @@ export default function CombinationsFilter({ isAtFavorites }: Props) {
       ).length
     );
     setFavWithFourColors(
-      favoriteCombinationsData?.filter(
+      favoriteCombinations?.filter(
         (combination) => combination.id > 240 && combination.isFavorite
       ).length
     );
-  }, [favoriteCombinationsData]);
+  }, [favoriteCombinations]);
 
   return (
     <FilterContainer>
