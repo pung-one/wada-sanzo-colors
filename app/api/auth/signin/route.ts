@@ -38,7 +38,8 @@ export async function POST(req: NextRequest) {
     const user = await createOrGetUser(idProvider, {
       sub: payload.sub,
       name: payload.name || "",
-      email: payload.email_verified ? payload.email : "",
+      email:
+        payload.email_verified || idProvider === "google" ? payload.email : "",
     });
 
     const sessionToken = await new SignJWT(user)
