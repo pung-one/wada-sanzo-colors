@@ -7,6 +7,7 @@ import { useAuth } from "../auth/AuthProvider";
 import { LoadingOverlay } from "../LoadingOverlay/LoadingOverlay";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { PiSignOut } from "react-icons/pi";
 
 export function SignIn() {
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
@@ -58,7 +59,7 @@ export function SignIn() {
         {user ? (
           <>
             <StyledButton onClick={() => handleSignOut()}>
-              Sign Out
+              <span>Sign Out</span> <PiSignOut />
             </StyledButton>
 
             <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
