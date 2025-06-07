@@ -107,7 +107,7 @@ const appleJWKS = createRemoteJWKSet(
 );
 
 const APPLE_AUDIENCE = [
-  process.env.APPLE_WEB_ID ?? "",
+  process.env.NEXT_PUBLIC_APPLE_WEB_ID ?? "",
   process.env.APPLE_MOBILE_ID ?? "",
 ].filter((a) => !!a);
 
