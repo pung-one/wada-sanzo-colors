@@ -1,51 +1,24 @@
-import { createOrGetUser, exchangeGoogleAuthCode } from "@/utils/auth";
-import { createRemoteJWKSet, jwtVerify } from "jose";
+import {
+  createOrGetUser,
+  exchangeGoogleAuthCode,
+  verifyAppleIdToken,
+  verifyGoogleIdToken,
+} from "@/utils/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { SignJWT } from "jose";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
-const googleJWKS = createRemoteJWKSet(
-  new URL("https://www.googleapis.com/oauth2/v3/certs")
-);
-
-async function verifyGoogleIdToken(id_token?: string) {
-  const { payload } = await jwtVerify(id_token ?? "", googleJWKS, {
-    issuer: "https://accounts.google.com",
-    audience: process.env.GOOGLE_ID,
-  });
-
-  return payload;
-}
-
-const appleJWKS = createRemoteJWKSet(
-  new URL("https://appleid.apple.com/auth/keys")
-);
-
-const APPLE_AUDIENCE = [
-  process.env.APPLE_WEB_ID ?? "",
-  process.env.APPLE_MOBILE_ID ?? "",
-].filter((a) => !!a);
-
-async function verifyAppleJwt(id_token?: string) {
-  const { payload } = await jwtVerify(id_token ?? "", appleJWKS, {
-    issuer: "https://appleid.apple.com",
-    audience: APPLE_AUDIENCE,
-  });
-
-  return payload;
-}
-
 export async function POST(req: NextRequest) {
   try {
     // mobile app sends id_token, web app sends auth-code
-    const { id_token, code } = await req.json();
+    const { idProvider, id_token, code } = await req.json();
 
     let tokenToVerify: string;
 
     if (id_token) {
       tokenToVerify = id_token;
-    } else if (code) {
+    } else if (code && idProvider === "google") {
       const tokens = await exchangeGoogleAuthCode(code);
       tokenToVerify = tokens.id_token;
     } else {
@@ -55,9 +28,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const payload = await verifyGoogleIdToken(tokenToVerify);
+    const payload =
+      idProvider === "google"
+        ? await verifyGoogleIdToken(tokenToVerify)
+        : await verifyAppleIdToken(tokenToVerify);
 
-    const user = await createOrGetUser("google", {
+    const user = await createOrGetUser(idProvider, {
       sub: payload.sub,
       name: payload.name,
       email: payload.email,

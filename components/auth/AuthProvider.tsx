@@ -7,6 +7,7 @@ import {
   useGoogleLogin,
 } from "@react-oauth/google";
 import { useRouter } from "next/navigation";
+import { appleAuthHelpers, AppleAuthResponse } from "react-apple-signin-auth";
 
 type AuthContextType = {
   user?: NormalizedUser;
@@ -47,12 +48,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signInWithGoogle = useGoogleLogin({
     onSuccess: async (codeResponse) => {
       try {
-        const res = await fetch("/api/auth/google", {
+        const res = await fetch("/api/auth/signin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ code: codeResponse.code }),
+          body: JSON.stringify({
+            idProvider: "google",
+            code: codeResponse.code,
+          }),
         });
 
         if (!res.ok) {
@@ -76,7 +80,49 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     flow: "auth-code",
   });
 
-  async function signInWithApple() {}
+  async function signInWithApple() {
+    appleAuthHelpers.signIn({
+      authOptions: {
+        /** Client ID - eg: 'com.example.com' */
+        clientId: process.env.APPLE_WEB_ID!,
+        /** Requested scopes, seperated by spaces - eg: 'email name' */
+        scope: "email name",
+        /** Apple's redirectURI - must be one of the URIs you added to the serviceID - the undocumented trick in apple docs is that you should call auth from a page that is listed as a redirectURI, localhost fails */
+        redirectURI: "https://example.com",
+        /** State string that is returned with the apple response */
+        state: "state",
+        /** Nonce */
+        nonce: "nonce",
+        /** Uses popup auth instead of redirection */
+        usePopup: true,
+      }, // REQUIRED
+      onSuccess: async (response: AppleAuthResponse) => {
+        const res = await fetch("/api/auth/signin", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            idProvider: "apple",
+            id_token: response.authorization.id_token,
+          }),
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error("Apple auth failed:", errorText);
+
+          throw new Error("Failed to authenticate with Google");
+        }
+
+        const { user } = await res.json();
+
+        setUser(user);
+        setSessionExpired(false);
+      },
+      onError: (error: any) => console.error(error),
+    });
+  }
 
   useEffect(() => {
     async function getUser() {

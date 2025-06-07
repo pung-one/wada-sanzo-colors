@@ -2,7 +2,7 @@
 
 import clientPromise from "@/db/mongodb";
 import { NormalizedUser, ValidIdProviders } from "@/lib/types";
-import { JWTPayload } from "jose";
+import { createRemoteJWKSet, JWTPayload, jwtVerify } from "jose";
 import { ObjectId } from "mongodb";
 
 export async function createOrGetUser(
@@ -65,6 +65,8 @@ export async function createOrGetUser(
   };
 }
 
+// GOOGLE VERIFY
+
 export async function exchangeGoogleAuthCode(code: string) {
   const res = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -84,4 +86,36 @@ export async function exchangeGoogleAuthCode(code: string) {
   }
 
   return res.json();
+}
+
+const googleJWKS = createRemoteJWKSet(
+  new URL("https://www.googleapis.com/oauth2/v3/certs")
+);
+
+export async function verifyGoogleIdToken(id_token?: string) {
+  const { payload } = await jwtVerify(id_token ?? "", googleJWKS, {
+    issuer: "https://accounts.google.com",
+    audience: process.env.GOOGLE_ID,
+  });
+
+  return payload;
+}
+
+// APPLE VERIFY
+const appleJWKS = createRemoteJWKSet(
+  new URL("https://appleid.apple.com/auth/keys")
+);
+
+const APPLE_AUDIENCE = [
+  process.env.APPLE_WEB_ID ?? "",
+  process.env.APPLE_MOBILE_ID ?? "",
+].filter((a) => !!a);
+
+export async function verifyAppleIdToken(id_token?: string) {
+  const { payload } = await jwtVerify(id_token ?? "", appleJWKS, {
+    issuer: "https://appleid.apple.com",
+    audience: APPLE_AUDIENCE,
+  });
+
+  return payload;
 }
