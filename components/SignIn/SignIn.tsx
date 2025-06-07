@@ -49,7 +49,7 @@ export function SignIn() {
     <PageContainer>
       <LoadingOverlay visible={isLoading} />
 
-      <SessionStatus>
+      <SessionStatus key={user?.name || ""}>
         <InfoSymbol />
 
         {getInfoText()}
