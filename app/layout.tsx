@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next";
 import localFont from "next/font/local";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { FavoritesProvider } from "@/components/FavoritesProvider/FavoritesProvider";
 
 export const metadata: Metadata = {
   title: "Wada Sanzo Colors",
@@ -54,7 +55,9 @@ export default async function RootLayout({
 
           <GoogleOAuthProvider clientId={process.env.GOOGLE_ID ?? ""}>
             <AuthProvider>
-              <Layout>{children}</Layout>
+              <FavoritesProvider>
+                <Layout>{children}</Layout>
+              </FavoritesProvider>
             </AuthProvider>
           </GoogleOAuthProvider>
         </StyledComponentsRegistry>

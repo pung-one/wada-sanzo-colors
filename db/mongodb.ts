@@ -1,7 +1,5 @@
 import { MongoClient } from "mongodb";
 
-//console.log("MONGODB CLIENT IMPORTED", new Error().stack);
-
 const uri = process.env.MONGODB_URI!;
 const options = {
   maxPoolSize: 10,

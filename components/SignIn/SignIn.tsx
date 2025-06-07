@@ -8,18 +8,13 @@ import { useAuth } from "../auth/AuthProvider";
 export function SignIn() {
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 
-  const {
-    user,
-    idProvider,
-    sessionExpired,
-    signInWithGoogle,
-    signInWithApple,
-    signOut,
-  } = useAuth();
+  const { user, sessionExpired, signInWithGoogle, signInWithApple, signOut } =
+    useAuth();
 
   async function handleSignOut() {
     setShowSignOutMessage(true);
-    setTimeout(() => signOut(), 1500);
+    await signOut();
+    setShowSignOutMessage(false);
   }
 
   function getInfoText() {
@@ -27,16 +22,16 @@ export function SignIn() {
       return <p>Your session expired. Please login again.</p>;
     } else if (user?.name) {
       return <p>{`You are signed in as ${user.name}.`}</p>;
-    } else if (idProvider === "google" && user?.email) {
+    } else if (user?.idProvider === "google" && user?.email) {
       return <p>{`You are signed in as ${user.email}.`}</p>;
-    } else if (user && idProvider) {
+    } else if (user && user.idProvider) {
       return (
         <p>{`You are signed in with ${
-          idProvider === "google" ? "Google" : "Apple"
+          user.idProvider === "google" ? "Google" : "Apple"
         }.`}</p>
       );
     } else {
-      <p>Your are not signed in.</p>;
+      return <p>Your are not signed in.</p>;
     }
   }
 
@@ -49,22 +44,27 @@ export function SignIn() {
       </SessionStatus>
 
       <ButtonContainer>
-        <>
-          <StyledButton onClick={() => handleSignOut()}>Sign Out</StyledButton>
+        {user ? (
+          <>
+            <StyledButton onClick={() => handleSignOut()}>
+              Sign Out
+            </StyledButton>
 
-          <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
-            Signing out...
-          </SigningOutMessage>
-        </>
-        <>
-          <StyledButton onClick={() => signInWithGoogle()}>
-            Sign in with Google
-          </StyledButton>
+            <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
+              Signing out...
+            </SigningOutMessage>
+          </>
+        ) : (
+          <>
+            <StyledButton onClick={() => signInWithGoogle()}>
+              Sign in with Google
+            </StyledButton>
 
-          <StyledButton onClick={() => signInWithApple()}>
-            Sign in with Apple
-          </StyledButton>
-        </>
+            <StyledButton onClick={() => signInWithApple()}>
+              Sign in with Apple
+            </StyledButton>
+          </>
+        )}
       </ButtonContainer>
 
       <Article>

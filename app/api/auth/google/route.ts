@@ -18,6 +18,24 @@ async function verifyGoogleIdToken(id_token?: string) {
   return payload;
 }
 
+const appleJWKS = createRemoteJWKSet(
+  new URL("https://appleid.apple.com/auth/keys")
+);
+
+const APPLE_AUDIENCE = [
+  process.env.APPLE_WEB_ID ?? "",
+  process.env.APPLE_MOBILE_ID ?? "",
+].filter((a) => !!a);
+
+async function verifyAppleJwt(id_token?: string) {
+  const { payload } = await jwtVerify(id_token ?? "", appleJWKS, {
+    issuer: "https://appleid.apple.com",
+    audience: APPLE_AUDIENCE,
+  });
+
+  return payload;
+}
+
 export async function POST(req: NextRequest) {
   try {
     // mobile app sends id_token, web app sends auth-code
@@ -37,12 +55,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("CODE: ", code);
-    console.log("TOKEN: ", tokenToVerify);
-
     const payload = await verifyGoogleIdToken(tokenToVerify);
-
-    console.log("PAYLOAD: ", payload);
 
     const user = await createOrGetUser("google", {
       sub: payload.sub,
@@ -55,8 +68,6 @@ export async function POST(req: NextRequest) {
       .setIssuedAt()
       .setExpirationTime("30d")
       .sign(secret);
-
-    console.log("SESSION TOKEN: ", sessionToken);
 
     if (code) {
       // web app: set cookie

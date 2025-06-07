@@ -2,40 +2,9 @@ import clientPromise from "@/db/mongodb";
 import { ObjectId } from "mongodb";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { jwtVerify, createRemoteJWKSet } from "jose";
-import { FavData, validProviders } from "@/lib/types";
+import { jwtVerify } from "jose";
+import { FavData } from "@/lib/types";
 import { JOSEError, JWTClaimValidationFailed, JWTExpired } from "jose/errors";
-
-const googleJWKS = createRemoteJWKSet(
-  new URL("https://www.googleapis.com/oauth2/v3/certs")
-);
-
-const appleJWKS = createRemoteJWKSet(
-  new URL("https://appleid.apple.com/auth/keys")
-);
-
-async function verifyGoogleJwt(id_token?: string) {
-  const { payload } = await jwtVerify(id_token ?? "", googleJWKS, {
-    issuer: "https://accounts.google.com",
-    audience: process.env.GOOGLE_ID,
-  });
-
-  return payload;
-}
-
-const APPLE_AUDIENCE = [
-  process.env.APPLE_WEB_ID ?? "",
-  process.env.APPLE_MOBILE_ID ?? "",
-].filter((a) => !!a);
-
-async function verifyAppleJwt(id_token?: string) {
-  const { payload } = await jwtVerify(id_token ?? "", appleJWKS, {
-    issuer: "https://appleid.apple.com",
-    audience: APPLE_AUDIENCE,
-  });
-
-  return payload;
-}
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
@@ -156,7 +125,24 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json("Update successful");
   } catch (err) {
-    console.error("PUT error:", err);
+    if (err instanceof JWTExpired) {
+      console.error("Token expired at:", err.payload.exp);
+      return NextResponse.json({ error: "Session expired." }, { status: 401 });
+    }
+
+    if (err instanceof JWTClaimValidationFailed) {
+      console.error("Claim validation failed:", err.claim);
+      return NextResponse.json(
+        { error: "Invalid token claims" },
+        { status: 403 }
+      );
+    }
+
+    if (err instanceof JOSEError) {
+      console.error("JOSE error:", err.message);
+      return NextResponse.json({ error: "Invalid token" }, { status: 403 });
+    }
+
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

@@ -37,12 +37,11 @@ export const FavoritesProvider = ({
   >([]);
   const [favoriteColors, setFavoriteColors] = useState<FavoriteColor[]>([]);
 
-  const { idProvider, user } = useAuth();
+  const { user, handleSessionResponse } = useAuth();
 
   async function toggleFavoriteCombination(id: number) {
     let updated: FavoriteCombination[] = [];
 
-    console.log("UPDATED 1: ", updated);
     setFavoriteCombinations((prev) => {
       const idx = prev.findIndex((c) => c.id === id);
       if (idx !== -1) {
@@ -58,11 +57,11 @@ export const FavoritesProvider = ({
       return updated;
     });
 
-    console.log("UPDATED 2: ", updated);
     localStorage.setItem("favoriteCombinationsData", JSON.stringify(updated));
 
-    if (idProvider && user) {
-      await updateDbFavoriteCombi(updated);
+    if (user) {
+      const res = await updateDbFavoriteCombi(updated);
+      await handleSessionResponse(res);
     }
   }
 
@@ -85,8 +84,9 @@ export const FavoritesProvider = ({
 
     localStorage.setItem("favoriteColorsData", JSON.stringify(updated));
 
-    if (idProvider && user) {
-      await updateDbFavoriteColor(updated);
+    if (user) {
+      const res = await updateDbFavoriteColor(updated);
+      await handleSessionResponse(res);
     }
   }
 

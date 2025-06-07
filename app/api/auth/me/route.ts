@@ -22,9 +22,9 @@ export async function GET(req: NextRequest) {
   try {
     const { payload } = await jwtVerify(token, secret);
 
-    const { userId, name, email } = payload;
+    const { userId, name, email, idProvider } = payload;
 
-    return NextResponse.json({ userId, name, email });
+    return NextResponse.json({ userId, name, email, idProvider });
   } catch (err) {
     if (err instanceof JWTExpired) {
       console.error("Token expired at:", err.payload.exp);

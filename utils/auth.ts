@@ -61,6 +61,7 @@ export async function createOrGetUser(
     userId: userEntry._id.toString(),
     name: userEntry.name,
     email: userEntry.email,
+    idProvider: idProvider,
   };
 }
 

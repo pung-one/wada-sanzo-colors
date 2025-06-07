@@ -6,27 +6,43 @@ import {
   OverridableTokenClientConfig,
   useGoogleLogin,
 } from "@react-oauth/google";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 type AuthContextType = {
-  idProvider?: "google" | "apple";
   user?: NormalizedUser;
   sessionExpired: boolean;
   signInWithGoogle: (overrideConfig?: OverridableTokenClientConfig) => void;
   signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
+  handleSessionResponse: (res: Response) => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<NormalizedUser>();
-  const [idProvider, setIdProvider] = useState<"google" | "apple">();
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
 
   const router = useRouter();
 
-  async function signOut() {}
+  async function signOut() {
+    setUser(undefined);
+    await fetch("/api/auth/logout", { method: "POST" });
+  }
+
+  async function handleSessionResponse(res: Response) {
+    if (res.ok) {
+      const userInfo = await res.json();
+      setUser(userInfo);
+      setSessionExpired(false);
+    } else if (res.status === 401) {
+      await signOut();
+      setSessionExpired(true);
+      router.push("/signin");
+    } else if (res.status === 403) {
+      router.push("/signin");
+    }
+  }
 
   const signInWithGoogle = useGoogleLogin({
     onSuccess: async (codeResponse) => {
@@ -49,9 +65,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const { user } = await res.json();
 
         setUser(user);
-        setIdProvider("google");
-
-        console.log("Successfully signed in with Google:", user);
+        setSessionExpired(false);
       } catch (err) {
         console.error("Google sign-in error:", err);
       }
@@ -67,17 +81,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     async function getUser() {
       try {
-        const res = await fetch("auth/me");
+        const res = await fetch("/api/auth/me");
 
-        if (res.ok) {
-          const userInfo = await res.json();
-          setUser(userInfo);
-        } else if (res.status === 401) {
-          setSessionExpired(true);
-          router.push("/signin");
-        } else if (res.status === 403) {
-          router.push("/signin");
-        }
+        handleSessionResponse(res);
       } catch (e) {
         console.error(e);
       }
@@ -91,12 +97,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
-        idProvider,
         user,
         sessionExpired,
         signInWithGoogle,
         signInWithApple,
         signOut,
+        handleSessionResponse,
       }}
     >
       {children}

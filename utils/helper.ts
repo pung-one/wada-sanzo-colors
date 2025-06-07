@@ -57,11 +57,7 @@ export async function updateDbFavoriteColor(
     },
   });
 
-  if (response.ok) {
-    await response.text();
-  } else {
-    console.error(response.status);
-  }
+  return response;
 }
 
 export async function updateDbFavoriteCombi(
@@ -80,9 +76,5 @@ export async function updateDbFavoriteCombi(
     },
   });
 
-  if (response.ok) {
-    await response.text();
-  } else {
-    console.error(response.status);
-  }
+  return response;
 }

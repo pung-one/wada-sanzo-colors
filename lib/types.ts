@@ -32,12 +32,11 @@ export type FavData = {
   favoriteCombinations: FavoriteCombination[];
 };
 
+export type ValidIdProviders = "google" | "apple";
+
 export type NormalizedUser = {
   name?: string;
   email: string;
   userId: string;
+  idProvider: ValidIdProviders;
 };
-
-export type ValidIdProviders = "google" | "apple";
-
-export const validProviders = ["google", "apple"];
