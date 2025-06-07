@@ -32,7 +32,7 @@ export function SignIn() {
       return <p>Your session expired. Please login again.</p>;
     } else if (user?.name) {
       return <p>{`You are signed in as ${user.name}.`}</p>;
-    } else if (user?.idProvider === "google" && user?.email) {
+    } else if (user?.email) {
       return <p>{`You are signed in as ${user.email}.`}</p>;
     } else if (user && user.idProvider) {
       return (
