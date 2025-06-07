@@ -26,9 +26,9 @@ export function isColorBright(rgb: number[]) {
   }
 }
 
-export async function getRemoteFavData(idProvider: "google" | "apple") {
+export async function getRemoteFavData() {
   try {
-    const response = await fetch(`/api/favorites?idProvider=${idProvider}`);
+    const response = await fetch(`/api/favorites`);
 
     if (response.ok) {
       const data = await response.json();

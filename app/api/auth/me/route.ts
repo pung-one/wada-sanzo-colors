@@ -6,22 +6,20 @@ import { JOSEError, JWTClaimValidationFailed, JWTExpired } from "jose/errors";
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
 export async function GET(req: NextRequest) {
+  // Check token from cookie (web)
+  const cookieToken = req.cookies.get("token")?.value;
+
+  // Check Authorization header (React Native)
+  const headersList = await headers();
+  const bearerToken = headersList.get("Authorization")?.replace("Bearer ", "");
+
+  const token = cookieToken || bearerToken;
+
+  if (!token) {
+    return NextResponse.json({ error: "No session token." }, { status: 404 });
+  }
+
   try {
-    // Check token from cookie (web)
-    const cookieToken = req.cookies.get("token")?.value;
-
-    // Check Authorization header (React Native)
-    const headersList = await headers();
-    const bearerToken = headersList
-      .get("Authorization")
-      ?.replace("Bearer ", "");
-
-    const token = cookieToken || bearerToken;
-
-    if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const { payload } = await jwtVerify(token, secret);
 
     const { userId, name, email } = payload;
@@ -43,10 +41,10 @@ export async function GET(req: NextRequest) {
 
     if (err instanceof JOSEError) {
       console.error("JOSE error:", err.message);
-      return NextResponse.json({ error: "Invalid token" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid token" }, { status: 403 });
     }
 
     console.error("Session validation failed:", err);
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 }

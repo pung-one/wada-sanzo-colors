@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify, createRemoteJWKSet } from "jose";
 import { FavData, validProviders } from "@/lib/types";
+import { JOSEError, JWTClaimValidationFailed, JWTExpired } from "jose/errors";
 
 const googleJWKS = createRemoteJWKSet(
   new URL("https://www.googleapis.com/oauth2/v3/certs")
@@ -36,88 +37,36 @@ async function verifyAppleJwt(id_token?: string) {
   return payload;
 }
 
+const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
+
 export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const idProvider = searchParams.get("idProvider");
+  // Check token from cookie (web)
+  const cookieToken = req.cookies.get("token")?.value;
 
+  // Check Authorization header (React Native)
   const headersList = await headers();
-  const id_token = headersList.get("Authorization")?.replace("Bearer ", "");
+  const bearerToken = headersList.get("Authorization")?.replace("Bearer ", "");
 
-  if (!id_token || !idProvider || !validProviders.includes(idProvider)) {
-    return new Response("Missing or invalid credentials", { status: 400 });
-  }
+  const token = cookieToken || bearerToken;
 
-  let userInfo;
-
-  try {
-    userInfo =
-      idProvider === "google"
-        ? await verifyGoogleJwt(id_token)
-        : idProvider === "apple"
-        ? await verifyAppleJwt(id_token)
-        : null;
-
-    console.log(`USERINFO WITH IDP "${idProvider}": `, userInfo);
-  } catch (err) {
-    console.error("Invalid token for idProvider", idProvider, err);
-    return new Response("Invalid token", { status: 401 });
-  }
-
-  if (!userInfo?.sub) {
-    return new Response("Unauthenticated", { status: 401 });
+  if (!token) {
+    return NextResponse.json({ error: "No session token." }, { status: 404 });
   }
 
   try {
+    const { payload } = await jwtVerify(token, secret);
+    const userId = payload.userId as string;
+
     const client = await clientPromise;
     const database = client.db("colors");
     const users = database.collection("users");
 
-    let userEntryBySub;
-    let userEntryByName;
-
-    userEntryBySub = await users.findOne({
-      sub: userInfo.sub,
+    const userEntry = await users.findOne({
+      _id: new ObjectId(userId),
     });
 
-    //to match old user documents
-    if (!userEntryBySub && idProvider === "google") {
-      userEntryByName = await users.findOneAndUpdate(
-        {
-          user: userInfo.name,
-        },
-        {
-          $set: {
-            email: userInfo.email,
-            idProvider: idProvider as string,
-            name: userInfo.name,
-            sub: userInfo.sub,
-          },
-        },
-        { returnDocument: "after" }
-      );
-    }
-
-    if (!userEntryBySub && !userEntryByName) {
-      const newUserEntry = {
-        _id: new ObjectId(),
-        name: userInfo.name,
-        email: userInfo.email,
-        sub: userInfo.sub,
-        idProvider: idProvider as string,
-        favoriteColors: [],
-        favoriteCombinations: [],
-        createdAt: new Date(),
-      };
-
-      await users.insertOne(newUserEntry);
-
-      userEntryBySub = { ...newUserEntry };
-    }
-
-    const userEntry = userEntryBySub ?? userEntryByName;
-
     if (!userEntry) {
-      return new Response("User not found", { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     const responseData: FavData = {
@@ -127,45 +76,51 @@ export async function GET(req: NextRequest) {
     };
 
     return NextResponse.json(responseData);
-  } catch (e) {
-    console.error(e);
-    return new Response("Internal Server Error", { status: 500 });
+  } catch (err) {
+    if (err instanceof JWTExpired) {
+      return NextResponse.json({ error: "Session expired." }, { status: 401 });
+    }
+
+    if (err instanceof JWTClaimValidationFailed) {
+      return NextResponse.json(
+        { error: "Invalid token claims" },
+        { status: 403 }
+      );
+    }
+
+    if (err instanceof JOSEError) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 403 });
+    }
+
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 }
 
-export async function PUT(req: Request) {
-  const request = await req.json();
+export async function PUT(req: NextRequest) {
+  // Check token from cookie (web)
+  const cookieToken = req.cookies.get("token")?.value;
 
-  const { idProvider, type } = request;
-
+  // Check Authorization header (React Native)
   const headersList = await headers();
-  const id_token = headersList.get("Authorization")?.replace("Bearer ", "");
+  const bearerToken = headersList.get("Authorization")?.replace("Bearer ", "");
 
-  if (!id_token || !idProvider) {
-    return new Response("Missing credentials", { status: 400 });
-  }
+  const token = cookieToken || bearerToken;
 
-  let userInfo;
-
-  try {
-    userInfo =
-      idProvider === "google"
-        ? await verifyGoogleJwt(id_token)
-        : idProvider === "apple"
-        ? await verifyAppleJwt(id_token)
-        : null;
-  } catch {
-    return new Response("Invalid token", { status: 401 });
-  }
-
-  if (!userInfo?.sub) {
-    return new Response("Unauthenticated", { status: 401 });
+  if (!token) {
+    return NextResponse.json({ error: "No session token." }, { status: 404 });
   }
 
   try {
+    const { payload } = await jwtVerify(token, secret);
+    const userId = payload.userId as string;
+
     const client = await clientPromise;
-    const db = client.db("colors");
-    const users = db.collection("users");
+    const database = client.db("colors");
+    const users = database.collection("users");
+
+    const request = await req.json();
+
+    const { type } = request;
 
     const fieldToUpdate =
       type === "favColorUpdate"
@@ -181,38 +136,30 @@ export async function PUT(req: Request) {
         : null;
 
     if (!fieldToUpdate) {
-      return new Response("Could not process request type", { status: 404 });
+      return NextResponse.json(
+        { error: "Could not process request type" },
+        { status: 404 }
+      );
     }
 
-    let updatedEntryBySub;
-    let updatedEntryByName;
-
-    updatedEntryBySub = await users.findOneAndUpdate(
+    const updatedEntry = await users.findOneAndUpdate(
       {
-        sub: userInfo.sub,
+        _id: new ObjectId(userId),
       },
       { $set: fieldToUpdate },
       { returnDocument: "after" }
     );
 
-    //should not be necessary and will be removed
-    if (!updatedEntryBySub && idProvider === "google") {
-      updatedEntryByName = await users.findOneAndUpdate(
-        {
-          user: userInfo.name,
-        },
-        { $set: fieldToUpdate },
-        { returnDocument: "after" }
-      );
+    if (!updatedEntry) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    if (!updatedEntryBySub && !updatedEntryByName) {
-      return new Response("User not found", { status: 404 });
-    }
-
-    return new Response("Update successful", { status: 200 });
+    return NextResponse.json("Update successful");
   } catch (err) {
     console.error("PUT error:", err);
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

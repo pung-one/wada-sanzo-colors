@@ -104,8 +104,8 @@ export const FavoritesProvider = ({
   }, []);
 
   async function syncWithDb() {
-    if (idProvider && user) {
-      const favData: FavData = await getRemoteFavData(idProvider);
+    if (user) {
+      const favData: FavData = await getRemoteFavData();
 
       localStorage.setItem(
         "favoriteColorsData",

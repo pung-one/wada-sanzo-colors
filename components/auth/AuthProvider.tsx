@@ -6,10 +6,12 @@ import {
   OverridableTokenClientConfig,
   useGoogleLogin,
 } from "@react-oauth/google";
+import { useRouter } from "next/router";
 
 type AuthContextType = {
   idProvider?: "google" | "apple";
   user?: NormalizedUser;
+  sessionExpired: boolean;
   signInWithGoogle: (overrideConfig?: OverridableTokenClientConfig) => void;
   signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -20,6 +22,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<NormalizedUser>();
   const [idProvider, setIdProvider] = useState<"google" | "apple">();
+  const [sessionExpired, setSessionExpired] = useState<boolean>(false);
+
+  const router = useRouter();
 
   async function signOut() {}
 
@@ -60,14 +65,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   async function signInWithApple() {}
 
   useEffect(() => {
-    console.log("USER: ", user);
-  }, [user]);
+    async function getUser() {
+      try {
+        const res = await fetch("auth/me");
+
+        if (res.ok) {
+          const userInfo = await res.json();
+          setUser(userInfo);
+        } else if (res.status === 401) {
+          setSessionExpired(true);
+          router.push("/signin");
+        } else if (res.status === 403) {
+          router.push("/signin");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    if (!user) {
+      getUser();
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
         idProvider,
         user,
+        sessionExpired,
         signInWithGoogle,
         signInWithApple,
         signOut,

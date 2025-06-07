@@ -8,24 +8,44 @@ import { useAuth } from "../auth/AuthProvider";
 export function SignIn() {
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 
-  const { user, signInWithGoogle, signInWithApple, signOut } = useAuth();
+  const {
+    user,
+    idProvider,
+    sessionExpired,
+    signInWithGoogle,
+    signInWithApple,
+    signOut,
+  } = useAuth();
 
   async function handleSignOut() {
     setShowSignOutMessage(true);
     setTimeout(() => signOut(), 1500);
   }
 
+  function getInfoText() {
+    if (sessionExpired) {
+      return <p>Your session expired. Please login again.</p>;
+    } else if (user?.name) {
+      return <p>{`You are signed in as ${user.name}.`}</p>;
+    } else if (idProvider === "google" && user?.email) {
+      return <p>{`You are signed in as ${user.email}.`}</p>;
+    } else if (user && idProvider) {
+      return (
+        <p>{`You are signed in with ${
+          idProvider === "google" ? "Google" : "Apple"
+        }.`}</p>
+      );
+    } else {
+      <p>Your are not signed in.</p>;
+    }
+  }
+
   return (
     <PageContainer>
       <SessionStatus>
         <InfoSymbol />
-        {/* <p>
-          {session
-            ? `You are signed in with ${
-                session?.idProvider === "google" ? "Google" : "Apple"
-              }.`
-            : "You are not signed in."}
-        </p> */}
+
+        {getInfoText()}
       </SessionStatus>
 
       <ButtonContainer>
