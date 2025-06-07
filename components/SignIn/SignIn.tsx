@@ -1,58 +1,78 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
 import styled from "styled-components";
 import { useState } from "react";
 import { MdInfo } from "react-icons/md";
+import { useAuth } from "../auth/AuthProvider";
+import { LoadingOverlay } from "../LoadingOverlay/LoadingOverlay";
+import { FaApple } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export function SignIn() {
-  const { data: session } = useSession();
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
+
+  const {
+    user,
+    sessionExpired,
+    signInWithGoogle,
+    signInWithApple,
+    signOut,
+    isLoading,
+  } = useAuth();
 
   async function handleSignOut() {
     setShowSignOutMessage(true);
-    setTimeout(() => signOut(), 1500);
+    await signOut();
+    setShowSignOutMessage(false);
+  }
+
+  function getInfoText() {
+    if (sessionExpired) {
+      return <p>Your session expired. Please login again.</p>;
+    } else if (user?.name) {
+      return <p>{`You are signed in as ${user.name}.`}</p>;
+    } else if (user?.idProvider === "google" && user?.email) {
+      return <p>{`You are signed in as ${user.email}.`}</p>;
+    } else if (user && user.idProvider) {
+      return (
+        <p>{`You are signed in with ${
+          user.idProvider === "google" ? "Google" : "Apple"
+        }.`}</p>
+      );
+    } else {
+      return <p>Your are not signed in.</p>;
+    }
   }
 
   return (
     <PageContainer>
+      <LoadingOverlay visible={isLoading} />
+
       <SessionStatus>
         <InfoSymbol />
-        <p>
-          {session
-            ? `You are signed in with ${
-                session?.idProvider === "google" ? "Google" : "Apple"
-              }.`
-            : "You are not signed in."}
-        </p>
+
+        {getInfoText()}
       </SessionStatus>
 
       <ButtonContainer>
-        {session ? (
+        {user ? (
           <>
             <StyledButton onClick={() => handleSignOut()}>
               Sign Out
             </StyledButton>
+
             <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
               Signing out...
             </SigningOutMessage>
           </>
         ) : (
           <>
-            <StyledButton
-              onClick={() => {
-                signIn("google");
-              }}
-            >
-              Sign in with Google
+            <StyledButton onClick={() => signInWithGoogle()}>
+              <FcGoogle /> <span>Sign in with Google</span>
             </StyledButton>
 
-            <StyledButton
-              onClick={() => {
-                signIn("apple");
-              }}
-            >
-              Sign in with Apple
+            <StyledButton onClick={() => signInWithApple()}>
+              <FaApple /> <span>Sign in with Apple</span>
             </StyledButton>
           </>
         )}
@@ -88,6 +108,7 @@ export function SignIn() {
 }
 
 const PageContainer = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -137,13 +158,22 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
+  display: flex;
+  gap: 8;
+  align-items: center;
+  justify-content: space-between;
   background-color: white;
   border: 1px solid black;
-  padding: 20px;
+  height: 48px;
+  width: 220px;
+  padding: 0 12px;
   box-shadow: 0 0 4px black;
   &:hover {
     cursor: pointer;
     box-shadow: none;
+  }
+  span {
+    flex: 1;
   }
 `;
 

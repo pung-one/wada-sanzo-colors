@@ -1,24 +1,26 @@
 "use client";
 
 import styled from "styled-components";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import CopyFieldSlider from "@/components/CopyFieldSlider/CopyFieldSlider";
 import { CombinationObject } from "@/lib/types";
 import { ActionContext } from "../Layout/Layout";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 export function CombinationDetail({
   combination,
 }: {
   combination: CombinationObject;
 }) {
+  const { favoriteCombinations } = useFavorites();
   const actionContext = useContext(ActionContext);
 
   if (!actionContext) return <h1>Loading...</h1>;
 
   const isLargeCombination = combination.combination.length > 2;
 
-  const favoriteStatus = actionContext.favoriteCombinationsData.findIndex(
+  const favoriteStatus = favoriteCombinations.findIndex(
     (comb) => comb.id == combination.id && comb.isFavorite
   );
 

@@ -1,5 +1,3 @@
-import { ObjectId } from "mongodb";
-
 export type ColorObject = {
   name: string;
   combinations: number[];
@@ -32,4 +30,13 @@ export type FavData = {
   updatedAt: Date;
   favoriteColors: FavoriteColor[];
   favoriteCombinations: FavoriteCombination[];
+};
+
+export type ValidIdProviders = "google" | "apple";
+
+export type NormalizedUser = {
+  name?: string;
+  email: string;
+  userId: string;
+  idProvider: ValidIdProviders;
 };

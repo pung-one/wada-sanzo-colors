@@ -2,6 +2,7 @@ import { css } from "styled-components";
 import styled from "styled-components";
 import { useContext } from "react";
 import { ActionContext } from "../Layout/Layout";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   isAtFavorites: boolean;
@@ -9,10 +10,11 @@ type Props = {
 
 export default function ColorFilter({ isAtFavorites }: Props) {
   const actionContext = useContext(ActionContext);
+  const { favoriteColors } = useFavorites();
 
   if (!actionContext) return <h1>Loading...</h1>;
 
-  const { favoriteColorsData, colorListType, setColorListType } = actionContext;
+  const { colorListType, setColorListType } = actionContext;
 
   return (
     <FilterContainer>
@@ -25,7 +27,7 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         {isAtFavorites && (
           <StyledNumber>
             {
-              favoriteColorsData.filter(
+              favoriteColors.filter(
                 (color) => color.swatch === 0 && color.isFavorite
               ).length
             }
@@ -42,7 +44,7 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         {isAtFavorites && (
           <StyledNumber>
             {
-              favoriteColorsData.filter(
+              favoriteColors.filter(
                 (color) => color.swatch === 1 && color.isFavorite
               ).length
             }
@@ -59,7 +61,7 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         {isAtFavorites && (
           <StyledNumber>
             {
-              favoriteColorsData.filter(
+              favoriteColors.filter(
                 (color) => color.swatch === 2 && color.isFavorite
               ).length
             }
@@ -76,7 +78,7 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         {isAtFavorites && (
           <StyledNumber>
             {
-              favoriteColorsData.filter(
+              favoriteColors.filter(
                 (color) => color.swatch === 3 && color.isFavorite
               ).length
             }
@@ -93,7 +95,7 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         {isAtFavorites && (
           <StyledNumber>
             {
-              favoriteColorsData.filter(
+              favoriteColors.filter(
                 (color) => color.swatch === 4 && color.isFavorite
               ).length
             }
@@ -110,7 +112,7 @@ export default function ColorFilter({ isAtFavorites }: Props) {
         {isAtFavorites && (
           <StyledNumber>
             {
-              favoriteColorsData.filter(
+              favoriteColors.filter(
                 (color) => color.swatch === 5 && color.isFavorite
               ).length
             }

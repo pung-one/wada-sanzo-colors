@@ -2,10 +2,9 @@
 
 import styled, { css } from "styled-components";
 import Link from "next/link";
-import { useContext } from "react";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import { ColorObject } from "@/lib/types";
-import { ActionContext } from "../Layout/Layout";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   combinations: {
@@ -15,18 +14,15 @@ type Props = {
 };
 
 export default function SpecificCombinationList({ combinations }: Props) {
-  const actionContext = useContext(ActionContext);
-
-  if (!actionContext) return <h1>Loading...</h1>;
+  const { favoriteCombinations } = useFavorites();
 
   return (
     <List>
       {combinations.map((combi1) => {
-        const favoriteStatus =
-          actionContext.favoriteCombinationsData?.findIndex(
-            (favCombination) =>
-              favCombination.id == combi1.id && favCombination.isFavorite
-          );
+        const favoriteStatus = favoriteCombinations.findIndex(
+          (favCombination) =>
+            favCombination.id == combi1.id && favCombination.isFavorite
+        );
 
         return (
           <StyledCombinationContainer key={combi1.id}>

@@ -1,12 +1,11 @@
 "use client";
 
 import { ColorObject } from "@/lib/types";
-import { useContext, useState } from "react";
 import styled from "styled-components";
 import FavoriteButton from "../FavoriteButton/FavoriteButton";
 import CopyFieldSlider from "../CopyFieldSlider/CopyFieldSlider";
 import SpecificCombinationList from "../SpecificCombinationList/SpecificCombinationList";
-import { ActionContext } from "../Layout/Layout";
+import { useFavorites } from "../FavoritesProvider/FavoritesProvider";
 
 type Props = {
   colorObject?: ColorObject;
@@ -17,14 +16,13 @@ type Props = {
 };
 
 export function ColorDetail({ colorObject, combinations }: Props) {
-  const actionContext = useContext(ActionContext);
+  const { favoriteColors } = useFavorites();
 
-  if (!actionContext || !colorObject || !combinations)
-    return <h1>Loading...</h1>;
+  if (!colorObject || !combinations) return <h1>Loading...</h1>;
 
-  const { name, hex, rgb, swatch, isBright } = colorObject;
+  const { name, hex, swatch, isBright } = colorObject;
 
-  const favoriteStatus = actionContext.favoriteColorsData.findIndex(
+  const favoriteStatus = favoriteColors.findIndex(
     (color) => color.name === name && color.isFavorite
   );
 

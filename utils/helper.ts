@@ -1,5 +1,4 @@
 import { ColorObject, FavoriteColor, FavoriteCombination } from "@/lib/types";
-import { Session } from "next-auth";
 
 export function createCombinationArray(data: ColorObject[]) {
   let combinationArray = [];
@@ -27,58 +26,55 @@ export function isColorBright(rgb: number[]) {
   }
 }
 
-export async function updateDbFavoriteColor(
-  session: Session | null,
-  favoriteColorsData: FavoriteColor[]
-) {
-  if (session) {
-    const body = {
-      idProvider: session.idProvider,
-      type: "favColorUpdate",
-      favoriteColorsData: favoriteColorsData,
-    };
-
-    const response = await fetch(`/api/favorites`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        Authorization: `Bearer ${session.id_token}`,
-        "Content-Type": "application/json",
-      },
-    });
+export async function getRemoteFavData() {
+  try {
+    const response = await fetch(`/api/favorites`);
 
     if (response.ok) {
-      await response.text();
+      const data = await response.json();
+      return data;
     } else {
       console.error(response.status);
     }
+  } catch (e) {
+    console.error(e);
   }
 }
 
+export async function updateDbFavoriteColor(
+  favoriteColorsData: FavoriteColor[]
+) {
+  const body = {
+    type: "favColorUpdate",
+    favoriteColorsData: favoriteColorsData,
+  };
+
+  const response = await fetch(`/api/favorites`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response;
+}
+
 export async function updateDbFavoriteCombi(
-  session: Session | null,
   favoriteCombinationsData: FavoriteCombination[]
 ) {
-  if (session) {
-    const body = {
-      idProvider: session.idProvider,
-      type: "favCombinationUpdate",
-      favoriteCombinationsData: favoriteCombinationsData,
-    };
+  const body = {
+    type: "favCombinationUpdate",
+    favoriteCombinationsData: favoriteCombinationsData,
+  };
 
-    const response = await fetch(`/api/favorites`, {
-      method: "PUT",
-      body: JSON.stringify(body),
-      headers: {
-        Authorization: `Bearer ${session.id_token}`,
-        "Content-Type": "application/json",
-      },
-    });
+  const response = await fetch(`/api/favorites`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-    if (response.ok) {
-      await response.text();
-    } else {
-      console.error(response.status);
-    }
-  }
+  return response;
 }
