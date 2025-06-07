@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdInfo } from "react-icons/md";
 import { useAuth } from "../auth/AuthProvider";
 import { LoadingOverlay } from "../LoadingOverlay/LoadingOverlay";
@@ -44,6 +44,12 @@ export function SignIn() {
       return <p>Your are not signed in.</p>;
     }
   }
+
+  console.log(user);
+
+  useEffect(() => {
+    console.log("in effect", user);
+  }, [user]);
 
   return (
     <PageContainer>

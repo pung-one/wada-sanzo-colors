@@ -19,7 +19,7 @@ type AuthContextType = {
   signInWithGoogle: (overrideConfig?: OverridableTokenClientConfig) => void;
   signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
-  handleSessionResponse: (res: Response) => Promise<void>;
+  handleSessionResponseError: (res: Response) => Promise<void>;
   isLoading: boolean;
 };
 
@@ -37,12 +37,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await fetch("/api/auth/logout", { method: "POST" });
   }
 
-  async function handleSessionResponse(res: Response) {
-    if (res.ok) {
-      const userInfo = await res.json();
-      setUser(userInfo);
-      setSessionExpired(false);
-    } else if (res.status === 401) {
+  async function handleSessionResponseError(res: Response) {
+    if (res.status === 401) {
       await signOut();
       setSessionExpired(true);
       router.push("/signin");
@@ -141,7 +137,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         const res = await fetch("/api/auth/me");
 
-        handleSessionResponse(res);
+        if (res.ok) {
+          const userInfo = await res.json();
+          setUser(userInfo);
+          setSessionExpired(false);
+        } else {
+          handleSessionResponseError(res);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -160,7 +162,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signInWithGoogle,
         signInWithApple,
         signOut,
-        handleSessionResponse,
+        handleSessionResponseError,
         isLoading,
       }}
     >

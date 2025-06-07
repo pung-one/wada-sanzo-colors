@@ -37,7 +37,7 @@ export const FavoritesProvider = ({
   >([]);
   const [favoriteColors, setFavoriteColors] = useState<FavoriteColor[]>([]);
 
-  const { user, handleSessionResponse } = useAuth();
+  const { user, handleSessionResponseError } = useAuth();
 
   async function toggleFavoriteCombination(id: number) {
     let updated: FavoriteCombination[] = [];
@@ -61,7 +61,7 @@ export const FavoritesProvider = ({
 
     if (user) {
       const res = await updateDbFavoriteCombi(updated);
-      await handleSessionResponse(res);
+      await handleSessionResponseError(res);
     }
   }
 
@@ -86,7 +86,7 @@ export const FavoritesProvider = ({
 
     if (user) {
       const res = await updateDbFavoriteColor(updated);
-      await handleSessionResponse(res);
+      await handleSessionResponseError(res);
     }
   }
 
