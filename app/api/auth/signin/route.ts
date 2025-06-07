@@ -33,10 +33,12 @@ export async function POST(req: NextRequest) {
         ? await verifyGoogleIdToken(tokenToVerify)
         : await verifyAppleIdToken(tokenToVerify);
 
+    console.log("PAYLOAD: ", payload);
+
     const user = await createOrGetUser(idProvider, {
       sub: payload.sub,
       name: payload.name || "",
-      email: payload.ememail_verified ? payload.email : "",
+      email: payload.email_verified ? payload.email : "",
     });
 
     const sessionToken = await new SignJWT(user)
