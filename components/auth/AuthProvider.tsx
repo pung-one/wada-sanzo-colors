@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           throw new Error("Failed to authenticate with Google");
         }
 
-        const { user, token } = await res.json();
+        const { user } = await res.json();
 
         setUser(user);
         setIdProvider("google");

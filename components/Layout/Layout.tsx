@@ -4,23 +4,9 @@ import styled from "styled-components";
 import NavBar from "../Navbar/NavBar";
 import NavBarDesktop from "../NavBarDesktop/NavBarDesktop";
 import Link from "next/link";
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import {
-  FavData,
-  FavoriteColor,
-  FavoriteCombination,
-  validProviders,
-} from "@/lib/types";
-import { usePathname, useRouter } from "next/navigation";
-import useSWR from "swr";
+import { createContext, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
-import { useAuth } from "../auth/AuthProvider";
 
 export type ContextProps = {
   listType: "colors" | "combinations";

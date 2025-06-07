@@ -20,6 +20,7 @@ async function verifyGoogleIdToken(id_token?: string) {
 
 export async function POST(req: NextRequest) {
   try {
+    // mobile app sends id_token, web app sends auth-code
     const { id_token, code } = await req.json();
 
     let tokenToVerify: string;
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
       email: payload.email,
     });
 
-    const sessionToken = await new SignJWT({ userId: user.userId })
+    const sessionToken = await new SignJWT(user)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
       .setExpirationTime("30d")
@@ -57,10 +58,11 @@ export async function POST(req: NextRequest) {
 
     console.log("SESSION TOKEN: ", sessionToken);
 
-    const response = NextResponse.json({ user, token: sessionToken });
-
-    // If it's a web login, set cookie
     if (code) {
+      // web app: set cookie
+
+      const response = NextResponse.json({ user });
+
       response.cookies.set("token", sessionToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
@@ -68,9 +70,18 @@ export async function POST(req: NextRequest) {
         path: "/",
         maxAge: 60 * 60 * 24 * 30, // 30 days
       });
-    }
 
-    return response;
+      return response;
+    } else if (id_token) {
+      // mobile app: send token
+
+      return NextResponse.json({ user, token: sessionToken });
+    } else {
+      return NextResponse.json(
+        { error: "Authentication failed" },
+        { status: 500 }
+      );
+    }
   } catch (err) {
     console.error("Google auth failed:", err);
     return NextResponse.json(

@@ -3,37 +3,35 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { MdInfo } from "react-icons/md";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import { useAuth } from "../auth/AuthProvider";
 
 export function SignIn() {
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 
-  const { signInWithGoogle } = useAuth();
+  const { user, signInWithGoogle, signInWithApple, signOut } = useAuth();
 
   async function handleSignOut() {
-    /* setShowSignOutMessage(true);
-    setTimeout(() => signOut(), 1500); */
+    setShowSignOutMessage(true);
+    setTimeout(() => signOut(), 1500);
   }
-
-  const session: { idProvider?: string } = { idProvider: undefined };
 
   return (
     <PageContainer>
       <SessionStatus>
         <InfoSymbol />
-        <p>
+        {/* <p>
           {session
             ? `You are signed in with ${
                 session?.idProvider === "google" ? "Google" : "Apple"
               }.`
             : "You are not signed in."}
-        </p>
+        </p> */}
       </SessionStatus>
 
       <ButtonContainer>
         <>
           <StyledButton onClick={() => handleSignOut()}>Sign Out</StyledButton>
+
           <SigningOutMessage $showSignOutMessage={showSignOutMessage}>
             Signing out...
           </SigningOutMessage>
@@ -43,13 +41,8 @@ export function SignIn() {
             Sign in with Google
           </StyledButton>
 
-          <StyledButton onClick={() => {}}>Sign in with Apple</StyledButton>
-          <StyledButton
-            onClick={() => {
-              googleLogout();
-            }}
-          >
-            Sign out
+          <StyledButton onClick={() => signInWithApple()}>
+            Sign in with Apple
           </StyledButton>
         </>
       </ButtonContainer>
