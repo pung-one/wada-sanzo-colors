@@ -24,9 +24,6 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const appleWebId = process.env.NEXT_PUBLIC_APPLE_WEB_ID;
-const appleRedirectUri = process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI;
-
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<NormalizedUser>();
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
@@ -90,27 +87,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useScript(appleAuthHelpers.APPLE_SCRIPT_SRC);
 
   async function signInWithApple() {
-    console.log("button pressed");
-    console.log(appleWebId);
-    console.log(appleRedirectUri);
     await appleAuthHelpers.signIn({
       authOptions: {
-        /** Client ID - eg: 'com.example.com' */
-        clientId: appleWebId!,
-        /** Requested scopes, seperated by spaces - eg: 'email name' */
+        clientId: process.env.NEXT_PUBLIC_APPLE_WEB_ID!,
         scope: "email name",
-        /** Apple's redirectURI - must be one of the URIs you added to the serviceID - the undocumented trick in apple docs is that you should call auth from a page that is listed as a redirectURI, localhost fails */
-        redirectURI: appleRedirectUri!,
-        /** State string that is returned with the apple response */
+        redirectURI: process.env.NEXT_PUBLIC_APPLE_REDIRECT_URI!,
         state: "state",
-        /** Nonce */
         nonce: "nonce",
-        /** Uses popup auth instead of redirection */
         usePopup: true,
-      }, // REQUIRED
+      },
       onSuccess: async (response: AppleAuthResponse) => {
-        console.log("CLIENT RESPONSE: ", response);
-
         const res = await fetch("/api/auth/signin", {
           method: "POST",
           headers: {

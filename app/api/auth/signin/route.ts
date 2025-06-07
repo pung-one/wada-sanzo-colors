@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
     let tokenToVerify: string;
 
     if (id_token) {
-      console.log("ID TOKEN: ", id_token);
       tokenToVerify = id_token;
     } else if (code && idProvider === "google") {
       const tokens = await exchangeGoogleAuthCode(code);
@@ -33,8 +32,6 @@ export async function POST(req: NextRequest) {
       idProvider === "google"
         ? await verifyGoogleIdToken(tokenToVerify)
         : await verifyAppleIdToken(tokenToVerify);
-
-    console.log("PAYLOAD: ", payload);
 
     const user = await createOrGetUser(idProvider, {
       sub: payload.sub,
