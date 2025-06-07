@@ -20,6 +20,7 @@ type AuthContextType = {
   signInWithApple: () => Promise<void>;
   signOut: () => Promise<void>;
   handleSessionResponse: (res: Response) => Promise<void>;
+  isLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,6 +28,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<NormalizedUser>();
   const [sessionExpired, setSessionExpired] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -51,6 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const signInWithGoogle = useGoogleLogin({
     onSuccess: async (codeResponse) => {
+      setIsLoading(true);
       try {
         const res = await fetch("/api/auth/signin", {
           method: "POST",
@@ -67,6 +70,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           const errorText = await res.text();
           console.error("Google auth failed:", errorText);
 
+          setIsLoading(false);
           throw new Error("Failed to authenticate with Google");
         }
 
@@ -77,9 +81,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } catch (err) {
         console.error("Google sign-in error:", err);
       }
+      setIsLoading(false);
     },
     onError: (error) => {
       console.error("Google login popup error:", error);
+      setIsLoading(false);
     },
     flow: "auth-code",
   });
@@ -87,6 +93,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useScript(appleAuthHelpers.APPLE_SCRIPT_SRC);
 
   async function signInWithApple() {
+    setIsLoading(true);
     await appleAuthHelpers.signIn({
       authOptions: {
         clientId: process.env.NEXT_PUBLIC_APPLE_WEB_ID!,
@@ -112,6 +119,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           const errorText = await res.text();
           console.error("Apple auth failed:", errorText);
 
+          setIsLoading(false);
           throw new Error("Failed to authenticate with Google");
         }
 
@@ -119,8 +127,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         setUser(user);
         setSessionExpired(false);
+        setIsLoading(false);
       },
-      onError: (error: any) => console.error(error),
+      onError: (error: any) => {
+        console.error("Apple login popup error:", error);
+        setIsLoading(false);
+      },
     });
   }
 
@@ -149,6 +161,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signInWithApple,
         signOut,
         handleSessionResponse,
+        isLoading,
       }}
     >
       {children}

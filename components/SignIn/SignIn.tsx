@@ -4,12 +4,21 @@ import styled from "styled-components";
 import { useState } from "react";
 import { MdInfo } from "react-icons/md";
 import { useAuth } from "../auth/AuthProvider";
+import { LoadingOverlay } from "../LoadingOverlay/LoadingOverlay";
+import { FaApple } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 export function SignIn() {
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
 
-  const { user, sessionExpired, signInWithGoogle, signInWithApple, signOut } =
-    useAuth();
+  const {
+    user,
+    sessionExpired,
+    signInWithGoogle,
+    signInWithApple,
+    signOut,
+    isLoading,
+  } = useAuth();
 
   async function handleSignOut() {
     setShowSignOutMessage(true);
@@ -37,6 +46,8 @@ export function SignIn() {
 
   return (
     <PageContainer>
+      <LoadingOverlay visible={isLoading} />
+
       <SessionStatus>
         <InfoSymbol />
 
@@ -57,11 +68,11 @@ export function SignIn() {
         ) : (
           <>
             <StyledButton onClick={() => signInWithGoogle()}>
-              Sign in with Google
+              <FcGoogle /> <span>Sign in with Google</span>
             </StyledButton>
 
             <StyledButton onClick={() => signInWithApple()}>
-              Sign in with Apple
+              <FaApple /> <span>Sign in with Apple</span>
             </StyledButton>
           </>
         )}
@@ -97,6 +108,7 @@ export function SignIn() {
 }
 
 const PageContainer = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -146,13 +158,22 @@ const ButtonContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
+  display: flex;
+  gap: 8;
+  align-items: center;
+  justify-content: space-between;
   background-color: white;
   border: 1px solid black;
-  padding: 20px;
+  height: 48px;
+  width: 220px;
+  padding: 0 12px;
   box-shadow: 0 0 4px black;
   &:hover {
     cursor: pointer;
     box-shadow: none;
+  }
+  span {
+    flex: 1;
   }
 `;
 
