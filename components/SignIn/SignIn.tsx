@@ -80,10 +80,10 @@ export function SignIn() {
       </ButtonContainer>
 
       <Article>
-        After signing in, your favorite Colors and Combinations will be stored
-        for you to access them later.
+        You can find your favorite Colors and Combinations under "Favorites".
         <br />
         <br />
+        After signing in, they will be stored for you to access them later.
         Whithout signing in, they will only be stored in the browser.
         <br />
         <br />

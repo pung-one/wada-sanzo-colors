@@ -6,6 +6,7 @@ import NavBarDesktop from "../NavBarDesktop/NavBarDesktop";
 import Link from "next/link";
 import { createContext, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { PiUserCircleLight } from "react-icons/pi";
 import { AnnouncementModal } from "../AnnouncementModal/AnnouncementModal";
 
 export type ContextProps = {
@@ -42,7 +43,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <Header>
         A Dictionary of Color Combinations
         <SignInOutButton $isActive={route === "/signin"} href={"/signin"}>
-          Sign In/Out
+          <PiUserCircleLight /> <span>Profile</span>
         </SignInOutButton>
       </Header>
 
@@ -91,17 +92,28 @@ const Header = styled.header`
 `;
 
 const SignInOutButton = styled(Link)<{ $isActive: boolean }>`
-  padding: 10px;
+  display: flex;
+  height: 40px;
+  align-items: center;
+  gap: 5px;
+  padding: 0 10px;
   border: 1px solid black;
   font-size: 0.8rem;
   white-space: nowrap;
   background-color: ${({ $isActive }) => ($isActive ? "black" : "white")};
-  color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   box-shadow: ${({ $isActive }) => ($isActive ? "" : "0 0 2px black")};
   transition: all 0.2s;
   &:hover {
     cursor: pointer;
     box-shadow: none;
+  }
+  svg {
+    font-size: 1.3rem;
+    fill: ${({ $isActive }) => ($isActive ? "white" : "black")};
+  }
+  span {
+    margin-bottom: -3px;
+    color: ${({ $isActive }) => ($isActive ? "white" : "black")};
   }
   @media screen and (min-width: 1024px), screen and (orientation: landscape) {
     font-size: 1rem;
