@@ -38,8 +38,8 @@ export async function POST(req: NextRequest) {
 
     const user = await createOrGetUser(idProvider, {
       sub: payload.sub,
-      name: payload.name,
-      email: payload.email,
+      name: payload.name || "",
+      email: payload.ememail_verified ? payload.email : "",
     });
 
     const sessionToken = await new SignJWT(user)
@@ -48,32 +48,20 @@ export async function POST(req: NextRequest) {
       .setExpirationTime("30d")
       .sign(secret);
 
-    if (code) {
-      // web app: set cookie
+    const response = NextResponse.json({ user, token: sessionToken });
 
-      const response = NextResponse.json({ user });
+    response.cookies.set("token", sessionToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30, // 30 days
+    });
 
-      response.cookies.set("token", sessionToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
-        maxAge: 60 * 60 * 24 * 30, // 30 days
-      });
-
-      return response;
-    } else if (id_token) {
-      // mobile app: send token
-
-      return NextResponse.json({ user, token: sessionToken });
-    } else {
-      return NextResponse.json(
-        { error: "Authentication failed" },
-        { status: 500 }
-      );
-    }
+    return response;
   } catch (err) {
-    console.error("Google auth failed:", err);
+    console.error("Auth failed:", err);
+
     return NextResponse.json(
       { error: "Authentication failed" },
       { status: 500 }
