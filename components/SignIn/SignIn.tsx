@@ -89,8 +89,9 @@ export function SignIn() {
         You can find your favorite Colors and Combinations under "Favorites".
         <br />
         <br />
-        After signing in, they will be stored for you to access them later.
-        Whithout signing in, they will only be stored in the browser.
+        After signing in, your favorites will be saved to your account so you
+        can access them anytime, on any device. Without signing in, favorites
+        are only stored in your browser.
         <br />
         <br />
         (This service is free, but i appreciate a{" "}
@@ -105,9 +106,9 @@ export function SignIn() {
         <br />
         <PrivacyInfo>
           Cookies are used to manage your login session after signing in with
-          Google or Apple. These are essential for authentication and not used
-          for tracking. Also your name, email, and login provider is stored in a
-          database to manage your account.
+          Google or Apple. These cookies are essential for authentication and
+          are <b>not</b> used for tracking. Your name, email, and login provider
+          are stored securely in our database to manage your account.
         </PrivacyInfo>
       </Article>
     </PageContainer>
@@ -153,6 +154,9 @@ const Article = styled.article`
 
 const PrivacyInfo = styled.p`
   font-size: 14px;
+  * {
+    font-size: 14px;
+  }
 `;
 
 const ButtonContainer = styled.div`
