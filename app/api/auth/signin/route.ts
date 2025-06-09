@@ -16,8 +16,6 @@ export async function POST(req: NextRequest) {
 
     const isMobile = req.headers.get("x-platform") === "mobile";
 
-    console.log("PLATFORM HEADER: ", req.headers.get("x-platform"));
-
     let tokenToVerify: string;
 
     if (id_token) {
