@@ -8,13 +8,18 @@ export async function GET(req: NextRequest) {
   const isMobile = req.headers.get("x-platform") === "mobile";
   let token;
 
+  console.log("PLATFORM HEADER: ", req.headers.get("x-platform"));
+
   if (isMobile) {
+    console.log("IS MOBILE");
     // mobile app requests
     token = req.headers.get("authorization")?.replace("Bearer ", "");
   } else {
+    console.log("IS WEB BROWSER");
     // web browser requests
     token = req.cookies.get("token")?.value;
   }
+  console.log("TOKEN: ", token);
 
   if (!token) {
     return NextResponse.json({ error: "No session token." }, { status: 404 });

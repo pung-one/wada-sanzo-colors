@@ -45,12 +45,6 @@ export function SignIn() {
     }
   }
 
-  console.log(user);
-
-  useEffect(() => {
-    console.log("in effect", user);
-  }, [user]);
-
   return (
     <PageContainer>
       <LoadingOverlay visible={isLoading} />
