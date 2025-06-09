@@ -137,10 +137,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         const res = await fetch("/api/auth/me");
 
-        if (res.ok) {
+        if (res.status === 200) {
           const userInfo = await res.json();
+
+          if (!userInfo.userId) {
+            return;
+          }
+
           setUser(userInfo);
           setSessionExpired(false);
+        } else if (res.status === 204) {
+          return;
         } else {
           handleSessionResponseError(res);
         }

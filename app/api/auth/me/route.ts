@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
   console.log("TOKEN: ", token);
 
   if (!token) {
-    return NextResponse.json({ error: "No session token." }, { status: 404 });
+    return NextResponse.json({ userId: null }, { status: 200 });
   }
 
   try {
