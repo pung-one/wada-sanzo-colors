@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
     // mobile app sends id_token, web app sends auth-code
     const { idProvider, id_token, code } = await req.json();
 
+    const isMobile = req.headers.get("x-platform") === "mobile";
+
     let tokenToVerify: string;
 
     if (id_token) {
@@ -50,13 +52,16 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({ user, token: sessionToken });
 
-    response.cookies.set("token", sessionToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-    });
+    // token cookie is only set for browser logins
+    if (!isMobile) {
+      response.cookies.set("token", sessionToken, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30, // 30 days
+      });
+    }
 
     return response;
   } catch (err) {

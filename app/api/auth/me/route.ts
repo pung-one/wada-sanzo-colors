@@ -1,24 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify } from "jose";
-import { headers } from "next/headers";
 import { JOSEError, JWTClaimValidationFailed, JWTExpired } from "jose/errors";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET!);
 
 export async function GET(req: NextRequest) {
-  // Check token from cookie (web)
-  const cookieToken = req.cookies.get("token")?.value;
+  const isMobile = req.headers.get("x-platform") === "mobile";
+  let token;
 
-  // Check Authorization header (React Native)
-  const headersList = await headers();
-
-  console.log("HEADERS LIST: ", headersList);
-
-  const bearerToken = headersList.get("Authorization")?.replace("Bearer ", "");
-
-  console.log("BEARER TOKEN: ", bearerToken);
-
-  const token = cookieToken || bearerToken;
+  if (isMobile) {
+    // mobile app requests
+    token = req.headers.get("authorization")?.replace("Bearer ", "");
+  } else {
+    // web browser requests
+    token = req.cookies.get("token")?.value;
+  }
 
   if (!token) {
     return NextResponse.json({ error: "No session token." }, { status: 404 });
