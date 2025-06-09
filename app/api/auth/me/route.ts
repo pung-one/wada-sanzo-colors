@@ -11,7 +11,12 @@ export async function GET(req: NextRequest) {
 
   // Check Authorization header (React Native)
   const headersList = await headers();
+
+  console.log("HEADERS LIST: ", headersList);
+
   const bearerToken = headersList.get("Authorization")?.replace("Bearer ", "");
+
+  console.log("BEARER TOKEN: ", bearerToken);
 
   const token = cookieToken || bearerToken;
 
