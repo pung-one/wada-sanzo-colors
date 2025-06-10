@@ -42,7 +42,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       await signOut();
       setSessionExpired(true);
       router.push("/signin");
-    } else if (res.status === 403) {
+    } else if (res.status === 403 || res.status === 404) {
+      await signOut();
       router.push("/signin");
     }
   }

@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
   const token = cookieToken || bearerToken;
 
   if (!token) {
+    console.log("NO TOKEN");
     return NextResponse.json({ error: "No session token." }, { status: 404 });
   }
 
@@ -35,6 +36,7 @@ export async function GET(req: NextRequest) {
     });
 
     if (!userEntry) {
+      console.log("NO USER ENTRY");
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
@@ -76,6 +78,7 @@ export async function PUT(req: NextRequest) {
   const token = cookieToken || bearerToken;
 
   if (!token) {
+    console.log("NO TOKEN");
     return NextResponse.json({ error: "No session token." }, { status: 404 });
   }
 
@@ -120,6 +123,7 @@ export async function PUT(req: NextRequest) {
     );
 
     if (!updatedEntry) {
+      console.log("NO USER ENTRY");
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
