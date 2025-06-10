@@ -102,7 +102,7 @@ export function SignIn() {
           Cookies are used to manage your login session after signing in with
           Google or Apple. These cookies are essential for authentication and
           are <b>not</b> used for tracking. Your name, email, and login provider
-          are stored securely in our database to manage your account.
+          are stored securely in a database to manage your account.
         </PrivacyInfo>
       </Article>
     </PageContainer>
