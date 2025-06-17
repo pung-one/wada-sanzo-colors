@@ -48,7 +48,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={AvenirLTStdBook.className}>
+    <html lang="en" className={AvenirLTStdBook.variable}>
       <body>
         <StyledComponentsRegistry>
           <GlobalStyle />
