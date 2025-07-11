@@ -12,18 +12,15 @@ export function About() {
           <Link href="https://en.wikipedia.org/wiki/Sanzo_Wada" target="_blank">
             Wada Sanzo
           </Link>{" "}
-          (1883-1967) was a Japanese artist, teacher, and researcher who devoted
-          his life to the study of color theory. He believed that color was not
-          just a decorative element, but a powerful tool for communication and
-          expression. Wada developed his own unique color system, which was
-          based on the traditional Japanese sense of color, as well as Western
-          color theory. Wada&apos;s color system focused on the relationships
-          between colors and their emotional and cultural associations. He
-          categorized colors into different schemes, such as monochromatic,
-          complementary, triadic, and more. He also explored the use of color in
-          different artistic mediums, such as painting, printmaking, and textile
-          design. Wada&apos;s work on color theory had a significant impact on
-          the development of modern graphic design in Japan. His teachings and
+          (1883-1967) was a Japanese painter, costume designer and researcher
+          who devoted his life to the study of color theory. He believed that
+          color was not just a decorative element, but a powerful tool for
+          communication and expression. Wada developed his own unique color
+          system, which was intended to capture traditional Japanese perceptions
+          of color. He also explored the use of color in different artistic
+          mediums, such as painting, printmaking, and textile design.
+          Wada&apos;s work on color theory had a significant impact on the
+          development of modern graphic design in Japan. His teachings and
           philosophy influenced generations of designers and artists, and his
           ideas about color continue to be studied and applied in various fields
           today.
