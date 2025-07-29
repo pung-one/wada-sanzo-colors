@@ -1,0 +1,26 @@
+.pageContainer {
+  margin: 120px 0 20px;
+  span {
+    text-align: center;
+  }
+  @media screen and (min-width: 1024px), screen and (orientation: landscape) {
+    width: 70%;
+    margin: 60px 0 20px 30%;
+  }
+}
+
+.article {
+  padding: 50px 20px;
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 50px;
+  }
+  p {
+    margin-bottom: 30px;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
