@@ -2,6 +2,7 @@
 
 import styled from "styled-components";
 import { RxExternalLink } from "react-icons/rx";
+import { AppStoreLink } from "../AppStoreLink/AppStoreLink";
 
 export function About() {
   return (
@@ -26,6 +27,7 @@ export function About() {
           today.
         </p>
       </Article>
+
       <Article>
         <Headline>A Dictionary of Color Combinations Vol. 1</Headline>
         <p>
@@ -63,6 +65,33 @@ export function About() {
             .
           </b>
         </p>
+      </Article>
+
+      <Article>
+        <Headline>iOS App W.S. Colors</Headline>
+        <ul>
+          <li>
+            Use the built-in <b>color scanner</b> to match real-world colors
+            with those from the collection and find harmonious combinations for
+            your project.
+          </li>
+
+          <li>
+            Browse 348 harmonious color palettes from the original collection.
+          </li>
+
+          <li>
+            Instantly copy CMYK, RGB, HEX, and LAB values for any color or
+            palette.
+          </li>
+
+          <li>
+            Save favorite palettes and access them on any other device via the
+            website.
+          </li>
+        </ul>
+
+        <AppStoreLink />
       </Article>
 
       <Footer>
@@ -107,6 +136,13 @@ const Article = styled.article`
   text-align: start;
   margin-top: 50px;
   line-height: 1.5rem;
+  ul {
+    list-style-position: inside;
+    margin-bottom: 30px;
+  }
+  li {
+    margin-bottom: 5px;
+  }
 `;
 
 const Headline = styled.h2`

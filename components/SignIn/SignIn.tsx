@@ -8,6 +8,7 @@ import { LoadingOverlay } from "../LoadingOverlay/LoadingOverlay";
 import { FaApple } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { PiSignOut } from "react-icons/pi";
+import { AppStoreLink } from "../AppStoreLink/AppStoreLink";
 
 export function SignIn() {
   const [showSignOutMessage, setShowSignOutMessage] = useState(false);
@@ -84,8 +85,15 @@ export function SignIn() {
         <br />
         <br />
         After signing in, your favorites will be saved to your account so you
-        can access them anytime, on any device. Without signing in, favorites
-        are only stored in your browser.
+        can access them anytime, on any device via the website or on your phone
+        via the{" "}
+        <a href="" target="_blank">
+          iOS App
+        </a>
+        . Without signing in, favorites are only stored in your browser.
+        <br />
+        <br />
+        <AppStoreLink />
         <br />
         <br />
         (This service is free, but i appreciate a{" "}

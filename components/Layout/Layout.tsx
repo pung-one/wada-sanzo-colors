@@ -41,7 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header>
-        A Dictionary of Color Combinations
+        <Link href={"/"}>A Dictionary of Color Combinations</Link>
         <SignInOutButton $isActive={route === "/signin"} href={"/signin"}>
           <PiUserCircleLight /> <span>Profile</span>
         </SignInOutButton>
