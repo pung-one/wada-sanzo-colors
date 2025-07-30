@@ -31,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const [colorListType, setColorListType] = useState(0);
 
-  /* const [showModal, setShowModal] = useState(true); */
+  const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     setColorListType(0);
@@ -71,7 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         Donate
       </DonationButton>
 
-      {/* <AnnouncementModal show={showModal} onClose={() => setShowModal(false)} /> */}
+      <AnnouncementModal show={showModal} onClose={() => setShowModal(false)} />
     </>
   );
 }
