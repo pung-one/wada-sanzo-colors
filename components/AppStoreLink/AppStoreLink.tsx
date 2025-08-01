@@ -7,7 +7,10 @@ import Image from "next/image";
 
 export function AppStoreLink() {
   return (
-    <Container href="" target="_blank">
+    <Container
+      href="https://apps.apple.com/us/app/w-s-colors/id6749268443"
+      target="_blank"
+    >
       <ScreenshotContainer>
         <StyledImage
           src={Screenshot1}

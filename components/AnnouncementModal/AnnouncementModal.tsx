@@ -37,6 +37,7 @@ export function AnnouncementModal({
           website.
         </li>
       </ul>
+
       <AppStoreLink />
 
       <p>
@@ -72,6 +73,7 @@ const Container = styled.div<{ $show: boolean }>`
   box-shadow: 0 0 60px grey;
   h2 {
     text-align: center;
+    font-size: 2rem;
   }
   p {
     max-width: 600px;
